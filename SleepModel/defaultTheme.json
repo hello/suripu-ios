@@ -1,0 +1,8 @@
+{
+    
+    "style.theme" : {
+        "style.appearance.navigation.title.color" : "@color/grey.6",
+        "style.appearance.navigation.title.font" : "@font/h6"
+    }
+
+}

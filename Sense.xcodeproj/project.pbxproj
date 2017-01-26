@@ -186,6 +186,20 @@
 		BF3583941CB443ED00760CD4 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3583931CB443ED00760CD4 /* Sounds.xcassets */; };
 		BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */; };
 		BF3583A11CB5C03700760CD4 /* HEMSleepSoundActionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */; };
+		BF37132B1E6E28E300EF9BAB /* defaultTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713291E6E28E300EF9BAB /* defaultTheme.json */; };
+		BF37132C1E6E28E300EF9BAB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132A1E6E28E300EF9BAB /* Theme.swift */; };
+		BF37132F1E6E28EF00EF9BAB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132D1E6E28EF00EF9BAB /* Color.swift */; };
+		BF3713301E6E28EF00EF9BAB /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = BF37132E1E6E28EF00EF9BAB /* colors.json */; };
+		BF3713331E6E28F800EF9BAB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713311E6E28F800EF9BAB /* Font.swift */; };
+		BF3713341E6E28F800EF9BAB /* fonts.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713321E6E28F800EF9BAB /* fonts.json */; };
+		BF3713361E6E28FF00EF9BAB /* SenseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */; };
+		BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */; };
+		BF3713381E6E290800EF9BAB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132A1E6E28E300EF9BAB /* Theme.swift */; };
+		BF3713391E6E290B00EF9BAB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713311E6E28F800EF9BAB /* Font.swift */; };
+		BF37133A1E6E290E00EF9BAB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132D1E6E28EF00EF9BAB /* Color.swift */; };
+		BF3713401E6E297D00EF9BAB /* ColorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133D1E6E297D00EF9BAB /* ColorSpec.m */; };
+		BF3713411E6E297D00EF9BAB /* FontSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133E1E6E297D00EF9BAB /* FontSpec.m */; };
+		BF3713421E6E297D00EF9BAB /* ThemeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF37133F1E6E297D00EF9BAB /* ThemeSpec.m */; };
 		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
@@ -860,6 +874,16 @@
 		BF35839D1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundStatusCheckOperation.m; sourceTree = "<group>"; };
 		BF35839F1CB5C03700760CD4 /* HEMSleepSoundActionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundActionOperation.h; sourceTree = "<group>"; };
 		BF3583A01CB5C03700760CD4 /* HEMSleepSoundActionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundActionOperation.m; sourceTree = "<group>"; };
+		BF3713291E6E28E300EF9BAB /* defaultTheme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = defaultTheme.json; sourceTree = "<group>"; };
+		BF37132A1E6E28E300EF9BAB /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		BF37132D1E6E28EF00EF9BAB /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		BF37132E1E6E28EF00EF9BAB /* colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = colors.json; sourceTree = "<group>"; };
+		BF3713311E6E28F800EF9BAB /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		BF3713321E6E28F800EF9BAB /* fonts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fonts.json; sourceTree = "<group>"; };
+		BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenseStyle.swift; sourceTree = "<group>"; };
+		BF37133D1E6E297D00EF9BAB /* ColorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSpec.m; sourceTree = "<group>"; };
+		BF37133E1E6E297D00EF9BAB /* FontSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontSpec.m; sourceTree = "<group>"; };
+		BF37133F1E6E297D00EF9BAB /* ThemeSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeSpec.m; sourceTree = "<group>"; };
 		BF3926C61E00AF63006BE166 /* Scrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		BF398C271D9F24BE009EEF59 /* Expansions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Expansions.xcassets; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
@@ -1519,6 +1543,7 @@
 				BF3583881CAC8F0D00760CD4 /* Force Touch */,
 				BFE375DC1CEB982A0029EE66 /* Social */,
 				BF55D8791CA4844400379FBF /* Sounds */,
+				BF3713251E6E28BD00EF9BAB /* Styles */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				8AC49F8F1981B92100C2BD63 /* Timeline */,
 				8AC276A91A3CE54C00B082D9 /* Trends */,
@@ -1562,6 +1587,7 @@
 				BFC99BC21B6BED28008F7F0D /* Review */,
 				BFDFCEA01B729F96000DA303 /* Sensors */,
 				BF8C09311C2A0B9A005AB5A7 /* Settings */,
+				BF37133C1E6E296E00EF9BAB /* Styles */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				BF71BDA31C485AD500919D0F /* Timeline */,
 				BF6D9B761C6C192E00774322 /* Trends */,
@@ -2264,6 +2290,54 @@
 				BF3583911CB441B000760CD4 /* HEMAudioButton.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		BF3713251E6E28BD00EF9BAB /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */,
+				BF3713281E6E28D300EF9BAB /* Theme */,
+				BF3713271E6E28CE00EF9BAB /* Font */,
+				BF3713261E6E28C700EF9BAB /* Color */,
+			);
+			name = Styles;
+			sourceTree = "<group>";
+		};
+		BF3713261E6E28C700EF9BAB /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				BF37132D1E6E28EF00EF9BAB /* Color.swift */,
+				BF37132E1E6E28EF00EF9BAB /* colors.json */,
+			);
+			name = Color;
+			sourceTree = "<group>";
+		};
+		BF3713271E6E28CE00EF9BAB /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				BF3713311E6E28F800EF9BAB /* Font.swift */,
+				BF3713321E6E28F800EF9BAB /* fonts.json */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
+		BF3713281E6E28D300EF9BAB /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				BF3713291E6E28E300EF9BAB /* defaultTheme.json */,
+				BF37132A1E6E28E300EF9BAB /* Theme.swift */,
+			);
+			name = Theme;
+			sourceTree = "<group>";
+		};
+		BF37133C1E6E296E00EF9BAB /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				BF37133D1E6E297D00EF9BAB /* ColorSpec.m */,
+				BF37133E1E6E297D00EF9BAB /* FontSpec.m */,
+				BF37133F1E6E297D00EF9BAB /* ThemeSpec.m */,
+			);
+			name = Styles;
 			sourceTree = "<group>";
 		};
 		BF3926C81E00B166006BE166 /* Protocols */ = {
@@ -3760,6 +3834,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF3713341E6E28F800EF9BAB /* fonts.json in Resources */,
 				BFCB89481BFBCAEA00A72ED3 /* TZCountryCodes.plist in Resources */,
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
 				BF53D8C61D931AEE00C24F9D /* RoomConditionsExtension.storyboard in Resources */,
@@ -3779,7 +3854,9 @@
 				BF0B15E91DF2256300DF2373 /* PillDFU.storyboard in Resources */,
 				BFA540EF1BCEF10A007AF607 /* HEMIntroDescriptionView.xib in Resources */,
 				8AD3312E1BB08DCB00DFF95A /* Questions.xcassets in Resources */,
+				BF37132B1E6E28E300EF9BAB /* defaultTheme.json in Resources */,
 				8AD3313F1BB0A93600DFF95A /* Onboarding.xcassets in Resources */,
+				BF3713301E6E28EF00EF9BAB /* colors.json in Resources */,
 				BF53D8CB1D931AF900C24F9D /* Sense.entitlements in Resources */,
 				8AD331261BB0836700DFF95A /* Alarm.xcassets in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
@@ -4122,6 +4199,7 @@
 				BF238DF41D1C634400F6E62C /* HEMInsightActionPresenter.m in Sources */,
 				8AF18E2A1BC31A7800EEF412 /* HEMAlertTextView.m in Sources */,
 				BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */,
+				BF37132C1E6E28E300EF9BAB /* Theme.swift in Sources */,
 				BFD7E7A51D9B45E0007DB6E4 /* HEMLogUtils.m in Sources */,
 				BF3583921CB441B000760CD4 /* HEMAudioButton.m in Sources */,
 				BF5BACF91C5C186000347185 /* HEMTrendsGraphsPresenter.m in Sources */,
@@ -4201,6 +4279,7 @@
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
 				BF238DE71D1A15FC00F6E62C /* HEMShareContentProvider.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,
+				BF3713361E6E28FF00EF9BAB /* SenseStyle.swift in Sources */,
 				BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */,
 				BF6952671C570C9A000A8E85 /* HEMTimelineHandHoldingPresenter.m in Sources */,
 				BFF14C2E1C64178F00AD3773 /* HEMBarChartView.m in Sources */,
@@ -4276,6 +4355,7 @@
 				BFD7E7AD1D9C3E19007DB6E4 /* HEMExpansionListPresenter.m in Sources */,
 				BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
+				BF37132F1E6E28EF00EF9BAB /* Color.swift in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
@@ -4335,6 +4415,7 @@
 				BF78E9941B21199B0015949F /* HEMSupportViewController.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,
 				BF5F97311DB6C80D00EF460B /* HEMVolumeControlPresenter.m in Sources */,
+				BF3713331E6E28F800EF9BAB /* Font.swift in Sources */,
 				BF6D9B751C6A689100774322 /* HEMTrendsScoreLabel.m in Sources */,
 				BFD7E79D1D9B2D0E007DB6E4 /* HEMSettingsPresenter.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
@@ -4502,21 +4583,28 @@
 				BFC5E6791BA75B0300D7C606 /* SENAnalyticsHEMAppAnalyticsSpec.m in Sources */,
 				BF8C094D1C335386005AB5A7 /* HEMDeviceServiceSpec.m in Sources */,
 				BFA884BB1C1A4DBC00613069 /* HEMTimeZoneAlertServiceSpec.m in Sources */,
+				BF3713381E6E290800EF9BAB /* Theme.swift in Sources */,
+				BF3713421E6E297D00EF9BAB /* ThemeSpec.m in Sources */,
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
 				BFA884B91C1A40C200613069 /* HEMDeviceAlertServiceSpec.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF71BDA51C485B2800919D0F /* HEMTimelineServiceSpec.m in Sources */,
 				BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */,
+				BF3713401E6E297D00EF9BAB /* ColorSpec.m in Sources */,
+				BF3713411E6E297D00EF9BAB /* FontSpec.m in Sources */,
 				BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */,
+				BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */,
 				BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */,
 				BFF93EA31D19AD080038419A /* HEMAlarmServiceSpec.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,
 				BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */,
+				BF37133A1E6E290E00EF9BAB /* Color.swift in Sources */,
 				BF812A9A1B6827CD00BF672F /* HEMAppUsageSpec.m in Sources */,
 				8B1DB6E31C18D99A006C8AFF /* HEMSelectHostPresenterSpec.m in Sources */,
+				BF3713391E6E290B00EF9BAB /* Font.swift in Sources */,
 				BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */,
 				8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */,
 				BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */,
@@ -4746,7 +4834,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 645CDA400FCEFAF1CE273637 /* Pods-SenseApp-Sense.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
@@ -4819,7 +4906,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B17615B39D25C4F006BA0C14 /* Pods-SenseApp-Sense.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
@@ -5212,7 +5298,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 541055DBD085814436590F0F /* Pods-SenseApp-Sense.beta.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;
@@ -5456,7 +5541,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION = NO;

@@ -1,0 +1,53 @@
+{
+    "white" : { "style.color.hex" : "FFFFFF" },
+    "black.light" : { "style.color.hex" : "000000", "style.color.alpha" : 0.12 },
+    "white.light" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.12 },
+    
+    "grey.1" : { "style.color.hex" : "F8F8F9" },
+    "grey.2" : { "style.color.hex" : "E8EAED" },
+    "grey.3" : { "style.color.hex" : "B9BFC8" },
+    "grey.4" : { "style.color.hex" : "8B95A4" },
+    "grey.5" : { "style.color.hex" : "5C6B7F" },
+    "grey.6" : { "style.color.hex" : "162B48" },
+    "grey.7" : { "style.color.hex" : "0C1B30" },
+
+    "blue.1" : { "style.color.hex" : "F7FCFF" },
+    "blue.2" : { "style.color.hex" : "E5F5FF" },
+    "blue.3" : { "style.color.hex" : "B2E1FF" },
+    "blue.4" : { "style.color.hex" : "7FCDFF" },
+    "blue.5" : { "style.color.hex" : "4CB9FF" },
+    "blue.6" : { "style.color.hex" : "009AFF" },
+    "blue.7" : { "style.color.hex" : "0083D9" },
+    
+    "green.1" : { "style.color.hex" : "F9FEFD" },
+    "green.2" : { "style.color.hex" : "EBFCF7" },
+    "green.3" : { "style.color.hex" : "C3F4E6" },
+    "green.4" : { "style.color.hex" : "9BECD4" },
+    "green.5" : { "style.color.hex" : "72E4C3" },
+    "green.6" : { "style.color.hex" : "36D8A9" },
+    "green.7" : { "style.color.hex" : "21BD90" },
+    
+    "yellow.1" : { "style.color.hex" : "FFFDF8" },
+    "yellow.2" : { "style.color.hex" : "FFF9E8" },
+    "yellow.3" : { "style.color.hex" : "FFEBB9" },
+    "yellow.4" : { "style.color.hex" : "FFDE8B" },
+    "yellow.5" : { "style.color.hex" : "FFD05D" },
+    "yellow.6" : { "style.color.hex" : "FFBC17" },
+    "yellow.7" : { "style.color.hex" : "E9AD1A" },
+    
+    "orange.1" : { "style.color.hex" : "FFFCFA" },
+    "orange.2" : { "style.color.hex" : "FFF5EC" },
+    "orange.3" : { "style.color.hex" : "FFE0C6" },
+    "orange.4" : { "style.color.hex" : "FFCBA1" },
+    "orange.5" : { "style.color.hex" : "FFB67B" },
+    "orange.6" : { "style.color.hex" : "FF9742" },
+    "orange.7" : { "style.color.hex" : "E88A3D" },
+
+    "red.1" : { "style.color.hex" : "FFFCFB" },
+    "red.2" : { "style.color.hex" : "FFF4F2" },
+    "red.3" : { "style.color.hex" : "FFC8BB" },
+    "red.4" : { "style.color.hex" : "FFB2A0" },
+    "red.5" : { "style.color.hex" : "FF9177" },
+    "red.6" : { "style.color.hex" : "FF6B47" },
+    "red.7" : { "style.color.hex" : "E35533" }
+}

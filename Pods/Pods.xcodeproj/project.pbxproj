@@ -171,6 +171,8 @@
 		1CB0E29DF58E26409429331BD719098B /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2D0222F76BAB5BFBB8B1F2DAA4E0F3D2 /* zh-Hans.lproj */; };
 		1CC6C2A96A01734A01F41B7AC8AEF590 /* SENTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F00AD032DF1AACFDE4006CD2FA5D8F4 /* SENTrends.m */; };
 		1D0C393EF82D639858BC11F5E619D818 /* SecureDFUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9BB83630F696DCCB9D5E0CE56D8A39 /* SecureDFUService.swift */; };
+		1D82B380FD3E065A7D6343FBCB4EDDEF /* Pods-SenseApp-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1CAEDECA9E86699CEC4C70BF6C24C8 /* Pods-SenseApp-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DA85BF09B46571EEEE4E880A64387C3 /* SENService.h in Headers */ = {isa = PBXBuildFile; fileRef = AD462A3872316E82E40385584DEE453E /* SENService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DF6185F8AB2C3E54345128DE081EA00 /* BFTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF1BDAF8086B880D10B55C87CED10C3 /* BFTask.m */; };
 		1E72699B9C95850F46BB3B43C48858B5 /* KWBeSubclassOfClassMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E342671205B6C2BE7D7D29B610730A6C /* KWBeSubclassOfClassMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		1E9777C016696220D373344CC2CA1F5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
@@ -278,7 +280,6 @@
 		3373B74C96CC676C139EB56BEF8ADB21 /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5589B44707A615101B162406733C3A /* AFAutoPurgingImageCache.m */; };
 		33867083462CD169696A438F60258940 /* BFTask+Exceptions.h in Headers */ = {isa = PBXBuildFile; fileRef = A1D9D4D3617F8FA5798C3CAD331A341D /* BFTask+Exceptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33BC623F6F06D4326699090DC74EE011 /* SENSenseVoiceSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 95B9CD69D548546D98DE427802808C7E /* SENSenseVoiceSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		33C74799544FED027B08955A47FCA749 /* Pods-SenseApp-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1CAEDECA9E86699CEC4C70BF6C24C8 /* Pods-SenseApp-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34575CB231C93595FDC2626B0BEF4311 /* KWGenericMatchingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 75ADBB2A972C4B47ABD680111F0AC128 /* KWGenericMatchingAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		345941D66E92A5DDBFDA7E56C93F6012 /* NAPickerCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B56D755FD3B6BB457678D7F97E52F8DB /* NAPickerCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3482CFDEBE7858DD3EB9EF87EE600B5C /* FBSDKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FAC307F5F36E03A1BAC51AB262932 /* FBSDKBase64.m */; };
@@ -782,6 +783,7 @@
 		9E85F243EC7CAE570057D2C358D6F522 /* SORelativeDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = A48DB88F8D01016F6EE963CE2EFFDC6F /* SORelativeDateTransformer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9E9C3C88860122555BB1FECAC5E326BF /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBF304132690D8DAF950670309F0D26 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9ED36729FBBE9858E7B47C2335CDEE29 /* iOSDFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD854D75F99835EB41DE7EC3FDD8A71 /* iOSDFULibrary.framework */; };
+		9F3C9FB95A87B112F618F93CDE9814B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
 		9F09FD4936B9247568B68A83E20F77C8 /* SENExpansion.m in Sources */ = {isa = PBXBuildFile; fileRef = AA80E897358C5A79935B962F90D45106 /* SENExpansion.m */; };
 		9F8838396CA2347D3462EFAED1DC7011 /* FBSDKDeviceRequestsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FD91BF0C9469B722023A07A2F421F7 /* FBSDKDeviceRequestsHelper.m */; };
 		9FB956B499D4B99BA22D53BD8BB5C592 /* RFC3339DateTool.h in Headers */ = {isa = PBXBuildFile; fileRef = BFD9A11887B4DF3658AF761173E962C1 /* RFC3339DateTool.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -876,6 +878,8 @@
 		B1E1F1689CAE0392E4CFE08990D8114C /* FBSDKURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F5A76F1E783ED3AA1C62292823584781 /* FBSDKURLConnection.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B208A7CA0809CB89ACE3C99B9B948071 /* KWExistVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F51B13344B7DB49A1AAE086920D1AD62 /* KWExistVerifier.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		B20D6EC8B49D5CA5C75D7E1D9EDCC971 /* Pods-SenseApp-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8AD527F9E14607AEEB46E98372B9D /* Pods-SenseApp-Tests-dummy.m */; };
+		B23F5789DB715C5E12AE30E5921006A6 /* SENAPITrends.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4ABCAD46105A3838EBC4851CD75902 /* SENAPITrends.m */; };
+		B27FF486FEA3314DF4CFB2DBCB1BEE30 /* SENAPIDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFC82CE3606B6E699E4EBE66C56BC1C /* SENAPIDevice.m */; };
 		B28B002707A2CE4832AC4C05C96D5ACF /* FBSDKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4ECF708CFC279AA86629903D8983 /* FBSDKCrypto.m */; };
 		B2DFF9AA4138E8F6FC07E430047BA481 /* BarLineScatterCandleBubbleChartDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D4FDFF8FAA74A8CC19BAAC17F3F49 /* BarLineScatterCandleBubbleChartDataProvider.swift */; };
 		B3416F56597705C386CF4323A485BDAB /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FE6CF63861734987DB4937002673368A /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1094,6 +1098,7 @@
 		DFA0D7C018ADF27D2CB4EECD3AC83514 /* KWRespondToSelectorMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ED68DB95B016B691EE1B8C0429D06F88 /* KWRespondToSelectorMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		DFCC151AE9A77870C042392B41688AB3 /* SEGIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C8C9C875FF9B50EA919EE546F1653A0 /* SEGIntegrationFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E028614CC4F722AF3B7DEF4749FA6E2D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7D2A00A23E5DED72C82C21607F527F /* Accelerate.framework */; };
+		E02EC3A512654F278F377EA86E14975D /* Pods-SenseApp-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8AD527F9E14607AEEB46E98372B9D /* Pods-SenseApp-Tests-dummy.m */; };
 		E0499AB922CBD3753F53B1ECB1BE7E04 /* FBSDKLoginError.h in Headers */ = {isa = PBXBuildFile; fileRef = 40B2B564B09F0A8FB386D20D81519A3E /* FBSDKLoginError.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E05875ED9F97B2B6BE9F7C817EB8A11B /* KSCrashSentry.c in Sources */ = {isa = PBXBuildFile; fileRef = A091EC5BAB326B181EE4C1AD67C6E161 /* KSCrashSentry.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		E0D70428315904DEA29DFB698DBD4158 /* SENTimelineMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ED18EB9254E8CB545AD96CFBB8BB54 /* SENTimelineMetric.m */; };
@@ -1216,7 +1221,6 @@
 		FCC7C0CA21F893DAB4DABB0C9B27059D /* FBSDKCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = EA22954A0179ACF136B31EC1484AA758 /* FBSDKCrypto.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		FDA4BD35A2563BBF55952BAA36B61664 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 77EC1F110CE9E42A64C3C7C7E31D4F4D /* DDAbstractDatabaseLogger.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		FDD8682551C7B6FF90A065F1D54591C9 /* FBSDKSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = AF1E60633032A49E9E65A108BC5B348D /* FBSDKSettings+Internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		FDECA5657CE16A549074547F9F08D7A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
 		FDED0703184A67D1190DB3E2C21A5436 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 99F325AE49FEAE9CE9A0DBDAF9011CC6 /* FacebookSDKStrings.bundle */; };
 		FE34681263F78C33CFEDDF57A3AEE9E8 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3089AF0CDA3DFA5EF24C5E3EDA0F7DF7 /* PieChartView.swift */; };
 		FEC676D85255885EE0809F6A7E1CFDFC /* FBSDKGraphRequestMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = C042D8FA886EE061E1F6076C5A026204 /* FBSDKGraphRequestMetadata.m */; };
@@ -1244,6 +1248,13 @@
 			remoteGlobalIDString = AFE205A735C4330A00AF6A7514703066;
 			remoteInfo = CocoaLumberjack;
 		};
+		05AAC954B5D56EA0C1AF56170C7851B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7083AAAAC66B316826B571E5AE68285A;
+			remoteInfo = Kiwi;
+		};
 		0BB5EBCAAA34E38B5E564AD7FD82D525 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1265,13 +1276,6 @@
 			remoteGlobalIDString = D33A971E36C7D614827B65C7112CAB71;
 			remoteInfo = Bolts;
 		};
-		1736D30A538E3C63747F198D604DB0FE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5DF5A0FC1F146F58BDC77A7F2EFE2C67;
-			remoteInfo = "NSJSONSerialization-NSNullRemoval";
-		};
 		180D3B85598BFE2CAB3888677599464D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1286,6 +1290,13 @@
 			remoteGlobalIDString = 8A669E19CDAA52BAFA7452B7A7ED0852;
 			remoteInfo = Zip;
 		};
+		19C95A82C9D446E327E6E64C6E43459F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4910D8C5696549390F9F97968C04319C;
+			remoteInfo = AttributedMarkdown;
+		};
 		1C9FDC43135E7438D41CDCE9F015946B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1293,12 +1304,19 @@
 			remoteGlobalIDString = 8CE83AF783BFDD2B5CDEF75C5337891C;
 			remoteInfo = SenseKit;
 		};
-		1E2A675E029199B57DCA14E7DF09E8BC /* PBXContainerItemProxy */ = {
+		2140FF830589DDFBB5FAF00A865E361A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = DA4650554C93FE206C1831D218CC5313;
-			remoteInfo = FXKeychain;
+			remoteGlobalIDString = CC43F1F6808293DD4144E854D226F1D9;
+			remoteInfo = CGFloatType;
+		};
+		21B2E52E80F88F00E8DE10965BA8FBE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81281507DD58B11E2FBF79621111470E;
+			remoteInfo = SHSProtoBuf;
 		};
 		21F6D5B6439610684E22E0962EED8EEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1314,19 +1332,19 @@
 			remoteGlobalIDString = 0C4AA72D925A79B666BF66C721FD3969;
 			remoteInfo = FBSDKCoreKit;
 		};
+		30C6E1C7DE048EA8F4D9B3BC2A4BAF53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8CE83AF783BFDD2B5CDEF75C5337891C;
+			remoteInfo = SenseKit;
+		};
 		32C57BEEBE1C4F4132F3713182B2AECD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AFE205A735C4330A00AF6A7514703066;
 			remoteInfo = CocoaLumberjack;
-		};
-		3A2F53B57FE452ED826F951E40DC2892 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7083AAAAC66B316826B571E5AE68285A;
-			remoteInfo = Kiwi;
 		};
 		422630E5E32C774CFCF6F7EF59DA005C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1398,19 +1416,19 @@
 			remoteGlobalIDString = EE4B97162E929E0FFF9C66563E822851;
 			remoteInfo = SVWebViewController;
 		};
-		58B085C6C80A233577BC4AC9B5B657AA /* PBXContainerItemProxy */ = {
+		5DA8FFA465318422F74A8B3007307130 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 81281507DD58B11E2FBF79621111470E;
-			remoteInfo = SHSProtoBuf;
+			remoteGlobalIDString = 5DF5A0FC1F146F58BDC77A7F2EFE2C67;
+			remoteInfo = "NSJSONSerialization-NSNullRemoval";
 		};
-		65971A7291738AEB94D7DBA34B08F159 /* PBXContainerItemProxy */ = {
+		60273E922DA0BE046AEBF3B434F8BEB8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E6616D11C80301E90D8CB81B7A87E769;
-			remoteInfo = AFNetworking;
+			remoteGlobalIDString = 4538E5F13858A88DD15935800BF8C439;
+			remoteInfo = LGBluetooth;
 		};
 		6C2A7BCC03E669C6B8161173AF7ED50D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1418,6 +1436,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = E54D09BB3E012243C460017BFBE97383;
 			remoteInfo = Analytics;
+		};
+		6F0017BF459CB578806F5C7576512850 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5CA8A06ABA0A0EBD26EC903993226DC5;
+			remoteInfo = iOSDFULibrary;
 		};
 		6FE4BCE0605AB80ECA802D628829E4E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1447,26 +1472,12 @@
 			remoteGlobalIDString = E6616D11C80301E90D8CB81B7A87E769;
 			remoteInfo = AFNetworking;
 		};
-		9220803F24FA94E0E04DCC02F1B2AD84 /* PBXContainerItemProxy */ = {
+		9A1DF823E22D25A897EAF3EC616DCE65 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B4B87BB631549FDE80725CDCC969026B;
 			remoteInfo = SORelativeDateTransformer;
-		};
-		9B7BBB2B2300AD82F2EA3DC832599D6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 35D3596D9F0B22911F2577A5A8A2D27B;
-			remoteInfo = Nocilla;
-		};
-		9BF6F9A1DDB4BE5FF99E1AE29FEEB7BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5CA8A06ABA0A0EBD26EC903993226DC5;
-			remoteInfo = iOSDFULibrary;
 		};
 		A16AC9D1F4F4A5ECCBE01AA02BB0995A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1475,13 +1486,6 @@
 			remoteGlobalIDString = D33A971E36C7D614827B65C7112CAB71;
 			remoteInfo = Bolts;
 		};
-		A5DF9DDD9231A21BC96D215B7DBE45CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC43F1F6808293DD4144E854D226F1D9;
-			remoteInfo = CGFloatType;
-		};
 		A7FECA49AC51F8C7347DFE572D271198 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1489,12 +1493,19 @@
 			remoteGlobalIDString = DA4650554C93FE206C1831D218CC5313;
 			remoteInfo = FXKeychain;
 		};
-		A8867DCF9F8A238D4D359F75E658D2C9 /* PBXContainerItemProxy */ = {
+		A91A97F4EF3FAB0F5186F19AAC63A1E7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8CE83AF783BFDD2B5CDEF75C5337891C;
-			remoteInfo = SenseKit;
+			remoteGlobalIDString = E6616D11C80301E90D8CB81B7A87E769;
+			remoteInfo = AFNetworking;
+		};
+		AB02045939090C3551CA2BB90714BFD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A669E19CDAA52BAFA7452B7A7ED0852;
+			remoteInfo = Zip;
 		};
 		ABDC3C763365E9FBA551679303A6C521 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1509,6 +1520,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 81281507DD58B11E2FBF79621111470E;
 			remoteInfo = SHSProtoBuf;
+		};
+		B54CBC5E4ADD8C836A5F22B8AD274463 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA4650554C93FE206C1831D218CC5313;
+			remoteInfo = FXKeychain;
 		};
 		B836979CE3DC7B9D23EB7A4C25E3132B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1538,13 +1556,6 @@
 			remoteGlobalIDString = 8A669E19CDAA52BAFA7452B7A7ED0852;
 			remoteInfo = Zip;
 		};
-		C90266C3F064F12E590E2EEFA2A47309 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4538E5F13858A88DD15935800BF8C439;
-			remoteInfo = LGBluetooth;
-		};
 		D079DE61EB6BBB321959F8B1701533BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1566,26 +1577,12 @@
 			remoteGlobalIDString = 21DA9B152CF174C07508C8990338B6C5;
 			remoteInfo = Bugsnag;
 		};
-		DB5B0A5A242B1008553509A26BFE3E26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8A669E19CDAA52BAFA7452B7A7ED0852;
-			remoteInfo = Zip;
-		};
 		DBF27C429D4D09A40114C3DA450B12F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D33A971E36C7D614827B65C7112CAB71;
 			remoteInfo = Bolts;
-		};
-		DC3229C8B9FE22B25318616A3268ADE1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AFE205A735C4330A00AF6A7514703066;
-			remoteInfo = CocoaLumberjack;
 		};
 		DCEF550DB8942D5CE5F479A718560AC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1608,6 +1605,13 @@
 			remoteGlobalIDString = DA4650554C93FE206C1831D218CC5313;
 			remoteInfo = FXKeychain;
 		};
+		E40AFAB9D846B735145EA32EBD5469D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 35D3596D9F0B22911F2577A5A8A2D27B;
+			remoteInfo = Nocilla;
+		};
 		E475D297C0EFB9385631386F2CAAA57E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -1622,14 +1626,14 @@
 			remoteGlobalIDString = 1554BC0D880CE09DE8B2CA595254F732;
 			remoteInfo = NAPickerView;
 		};
-		F1F0B523AC1BE04C2A00D2F6E8BA8594 /* PBXContainerItemProxy */ = {
+		EDCEAFB5538CA0F803834622F43B1E5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4910D8C5696549390F9F97968C04319C;
-			remoteInfo = AttributedMarkdown;
+			remoteGlobalIDString = AFE205A735C4330A00AF6A7514703066;
+			remoteInfo = CocoaLumberjack;
 		};
-		F36BFB0337721BDC110CDA57733280EA /* PBXContainerItemProxy */ = {
+		F1F0B523AC1BE04C2A00D2F6E8BA8594 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -1656,6 +1660,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = E6616D11C80301E90D8CB81B7A87E769;
 			remoteInfo = AFNetworking;
+		};
+		FEAAD213C7A152124AC3714F7ED72135 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 038CED0159A58BE883EB204F870C3727;
+			remoteInfo = Charts;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -3138,14 +3149,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5C0D13C7198A11FCF93E80DA035A8FCB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FDECA5657CE16A549074547F9F08D7A6 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		852385266E74B7969069DD00175AE552 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3188,6 +3191,14 @@
 			files = (
 				A20CA3861235624AAC3A028CD8B3F9EA /* Foundation.framework in Frameworks */,
 				118A45DA2E11F80760C7DB459CAE89C6 /* Zip.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B22DCC762159EFAE48C6B9AA91E25F0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F3C9FB95A87B112F618F93CDE9814B1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5609,6 +5620,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6F85AADB047B8BA27299B60990CFB849 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D82B380FD3E065A7D6343FBCB4EDDEF /* Pods-SenseApp-Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		794500DC6ABF6694FEC891F76F6DC6D8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -6029,14 +6048,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DE10B5F781A44A76B9D30EC298EEBDC4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				33C74799544FED027B08955A47FCA749 /* Pods-SenseApp-Tests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E279E852860CDEF09B8141B5B33099BB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -6085,37 +6096,6 @@
 			name = Charts;
 			productName = Charts;
 			productReference = F780EC6D2CDA4D08B6055D7ADF2E7A0D /* Charts.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		091794B4FBEB6DB438276BDB3FB19B62 /* Pods-SenseApp-Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 28E0D79F5F2B7B711F0312EC41A7F07E /* Build configuration list for PBXNativeTarget "Pods-SenseApp-Tests" */;
-			buildPhases = (
-				597B43C0810D1A9B1F087550437F613C /* Sources */,
-				5C0D13C7198A11FCF93E80DA035A8FCB /* Frameworks */,
-				DE10B5F781A44A76B9D30EC298EEBDC4 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				185A13412676EAF857D5CB80E90AF889 /* PBXTargetDependency */,
-				5B2C7812A635FF2E94862ED5749F7A92 /* PBXTargetDependency */,
-				93709055ADB73A01BA398B73717DC244 /* PBXTargetDependency */,
-				6A137D7E3A9AA76C369173F175A1F811 /* PBXTargetDependency */,
-				387998E7CE54562519EE1B5E7396EBC3 /* PBXTargetDependency */,
-				C2ACE3BA310BA83844FEA7E77FA9D411 /* PBXTargetDependency */,
-				1000391D6B70A1AA183E97F5E250C0E9 /* PBXTargetDependency */,
-				22F1A16FF4F18938A6B29F4CEB338163 /* PBXTargetDependency */,
-				686C242D1EF3A18172CFF9C00032B029 /* PBXTargetDependency */,
-				59B66C48313FE7D7770485E15A4751FF /* PBXTargetDependency */,
-				C4F84524A4B2DAA1DEF67A5555725AB3 /* PBXTargetDependency */,
-				BE15AA5E85EED341CD112621B3238F85 /* PBXTargetDependency */,
-				3A0030D0108EB6525C3193AEE024BF93 /* PBXTargetDependency */,
-				35B797AE4D7AED385049A47DC466342C /* PBXTargetDependency */,
-			);
-			name = "Pods-SenseApp-Tests";
-			productName = "Pods-SenseApp-Tests";
-			productReference = 943547DEE49A5985356C700AF51BCA85 /* Pods_SenseApp_Tests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		0C4AA72D925A79B666BF66C721FD3969 /* FBSDKCoreKit */ = {
@@ -6593,6 +6573,38 @@
 			productReference = AEA60182E79610EEBA19B42ACC3E81F5 /* SVWebViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		FE6A6AF0DD32E2C668802C4F2279A08B /* Pods-SenseApp-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8E179AC46EC693418043789198B2542 /* Build configuration list for PBXNativeTarget "Pods-SenseApp-Tests" */;
+			buildPhases = (
+				349CE2381B3169258F82FA8607394BA0 /* Sources */,
+				B22DCC762159EFAE48C6B9AA91E25F0C /* Frameworks */,
+				6F85AADB047B8BA27299B60990CFB849 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF66CD597EB8D7E4AE3E8298EAFCBDED /* PBXTargetDependency */,
+				BE05DA2ED9A58D063A09CA1FA042DC36 /* PBXTargetDependency */,
+				A0D818CEC2795EE2F1EE39A55268C9D8 /* PBXTargetDependency */,
+				933653B7664DB12AC85BD5DA05B595BE /* PBXTargetDependency */,
+				8DE69E245B170BC399CB05DA405ED447 /* PBXTargetDependency */,
+				F8BB3BD4B0EF8EC5746F174C82ECCC55 /* PBXTargetDependency */,
+				057EB9BE79CC574ED798124DC716694B /* PBXTargetDependency */,
+				16B1E8868BC5FAD92F6F0AF6D2159812 /* PBXTargetDependency */,
+				92E3A689D71EE9469F5E878E6AC0FF38 /* PBXTargetDependency */,
+				C81931DC866BEA214B58EE6D20EBB0E2 /* PBXTargetDependency */,
+				BECCCD258CEDA87B7FF508623345E1CB /* PBXTargetDependency */,
+				3BBCCE3D36D267137B7999E575AA23C0 /* PBXTargetDependency */,
+				07F2A18C9921DAF0777D0D85E96CDEAD /* PBXTargetDependency */,
+				6F41B0508B0534B9FA8A8B6A363E7638 /* PBXTargetDependency */,
+				E525FEA9434DC219B4D66D87CA933367 /* PBXTargetDependency */,
+			);
+			name = "Pods-SenseApp-Tests";
+			productName = "Pods-SenseApp-Tests";
+			productReference = 943547DEE49A5985356C700AF51BCA85 /* Pods_SenseApp_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -6633,7 +6645,7 @@
 				5DF5A0FC1F146F58BDC77A7F2EFE2C67 /* NSJSONSerialization-NSNullRemoval */,
 				725A12ECD9890CA27E02387F3DD39554 /* Pods-SenseApp-RoomConditionsExtension */,
 				51363873A3C661947E74B25ECCE3F313 /* Pods-SenseApp-Sense */,
-				091794B4FBEB6DB438276BDB3FB19B62 /* Pods-SenseApp-Tests */,
+				FE6A6AF0DD32E2C668802C4F2279A08B /* Pods-SenseApp-Tests */,
 				8CE83AF783BFDD2B5CDEF75C5337891C /* SenseKit */,
 				81281507DD58B11E2FBF79621111470E /* SHSProtoBuf */,
 				B4B87BB631549FDE80725CDCC969026B /* SORelativeDateTransformer */,
@@ -6835,6 +6847,88 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2D0F323E59EB4C50B5117E8E65B8871C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCFA0CF719D094702565297B000217B0 /* Model.m in Sources */,
+				E584AFD83357A25D2DF23D63A3075976 /* SENAccount.m in Sources */,
+				491273AEF0DEADD80A9B88C8B430FA75 /* SENAlarm.m in Sources */,
+				FBD1585C4CC26BA5DA3993E0D46E7909 /* SENAlarmCollection.m in Sources */,
+				2A862239108DCD631870DD703ADF49E9 /* SENAnalytics.m in Sources */,
+				38CC96F0574AE941E0E63C5D1EB226F4 /* SENAnalyticsLogger.m in Sources */,
+				F499EC3BFBB3D884F4E170717D5D4948 /* SENAnswer.m in Sources */,
+				77763520F3D067EEF7A04F99231C75D5 /* SENAPIAccount.m in Sources */,
+				A01E519BC103B5358A4CB2744E96C1F6 /* SENAPIAlarms.m in Sources */,
+				ED2B9EC61F61EF5252E2D7A2F9D2B12A /* SENAPIAppFeedback.m in Sources */,
+				43919154410501DF6115D6D95F792ECC /* SENAPIAppStats.m in Sources */,
+				6AF03CA7D0BDE0C9042B57737536F47E /* SENAPIClient.m in Sources */,
+				B27FF486FEA3314DF4CFB2DBCB1BEE30 /* SENAPIDevice.m in Sources */,
+				E5589F66839BC168AF159D2C7C4AA52E /* SENAPIExpansion.m in Sources */,
+				CAD34D6D2F5B6AF9E65CB762451BED6C /* SENAPIInsight.m in Sources */,
+				301D8D74CA87F2D58C0D3D10CEC8761A /* SENAPINotification.m in Sources */,
+				CB3BE4FC1971152F27986F258B9B437B /* SENAPIPhoto.m in Sources */,
+				CF90AE06EC37CBC6645B64F9D796C03E /* SENAPIPreferences.m in Sources */,
+				EC58F097B56E393CECA91D59647EF52F /* SENAPIQuestions.m in Sources */,
+				12B478422D45E1276D8AA91874C8B72F /* SENAPISensor.m in Sources */,
+				C6E8442D4CBF449D6E91694729FF793C /* SENAPIShare.m in Sources */,
+				386F2E6A9648D1D82180AAA5FCF9CED7 /* SENAPISleepSounds.m in Sources */,
+				FB2A18E2574CF98B29AE9DD9A097E6A5 /* SENAPISpeech.m in Sources */,
+				7E27169BB957C8EC56797B60F517EF37 /* SENAPISupport.m in Sources */,
+				AD64E9627CD60171B59CECA473E23056 /* SENAPISystemAlerts.m in Sources */,
+				4819A2399DB15F1C660FC16F935843EB /* SENAPITimeline.m in Sources */,
+				EA61C9ADE36776736AD9EA4A02D658C2 /* SENAPITimeZone.m in Sources */,
+				B23F5789DB715C5E12AE30E5921006A6 /* SENAPITrends.m in Sources */,
+				38086828A9C77F35663252F569280751 /* SENAppStats.m in Sources */,
+				E471CB695D0EBB952B5E0D7F2A39CA33 /* SENAppUnreadStats.m in Sources */,
+				51A27DFE346B3C74E437DB3ADEEF8359 /* SENAuthorizationService.m in Sources */,
+				6443EF05FD5BE6431BF202378B4F8E88 /* SENCondition.m in Sources */,
+				BABA04220ECBEB893A14E5AA14074E56 /* SENConditionRange.m in Sources */,
+				885D10212DE054F16B2736B3A1194771 /* SENDeviceMetadata.m in Sources */,
+				FBABA39F444649DC3346E70928F3AF93 /* SENDevicePairingInfo.m in Sources */,
+				6B2BB11F317E51D5A73506308AF81B58 /* SENDFUStatus.m in Sources */,
+				5835713C54FF8EA974B242BE4D394BCF /* SENExpansion.m in Sources */,
+				BB5932DD536CBD95D13D96EE2C22BC94 /* SENInsight.m in Sources */,
+				8CE38F299B0EE9D0C9DFF12E1AE7954F /* SENKeyedArchiver.m in Sources */,
+				259F9E6C77429AC465BCB965893D38B0 /* SENLocalPreferences.m in Sources */,
+				B7F8096B519049BE1BBEB7305E218357 /* SENPairedDevices.m in Sources */,
+				044A7AF0965A8D7350116C2D832AA892 /* SENPeripheralManager.m in Sources */,
+				697A24EFC445CAD66F51881B6D59A2C2 /* SENPillMetadata.m in Sources */,
+				6917D162711089B571E47773BCFF04F3 /* SENPreference.m in Sources */,
+				AA25F9F8A63663142DE531F7292BD160 /* SENQuestion.m in Sources */,
+				FBAC3F2EDCA6704F87BA752A5FD06337 /* SENRemoteImage.m in Sources */,
+				12EA95C0ABFE0702886893745C28009D /* SenseKit-dummy.m in Sources */,
+				C205BA3CFAD4F360196E204F61A3359E /* SENSense.m in Sources */,
+				27078E63F5ABF72E0411D5E195BBBCDB /* SENSenseManager.m in Sources */,
+				F0812DC071CBBDAC612C74FD3697F882 /* SENSenseMessage.pb.m in Sources */,
+				BCC810B0534C7450BBC5316A5214A946 /* SENSenseMetadata.m in Sources */,
+				9064B5E6930852D39379D3B72753F182 /* SENSenseVoiceSettings.m in Sources */,
+				3B94C76D127A9A5444579DF7067205C2 /* SENSenseWiFiStatus.m in Sources */,
+				2C8E62D959BA7B7943185BA2198CD117 /* SENSensor.m in Sources */,
+				57D1CCE516E49BCF277E994DED30EF3A /* SENSensorDataRequest.m in Sources */,
+				5E2943A9760E2C9AD9701E465080D6F6 /* SENSensorStatus.m in Sources */,
+				0F26E338DF45767E92090A107A401013 /* SENService.m in Sources */,
+				9717EA008A4D26E4F0965761D15BF18C /* SENServiceDevice.m in Sources */,
+				4266AD25F83857D9FB129A1FB4B5CF3F /* SENSleepPill.m in Sources */,
+				57FB6A5C53796A8C136012D0544398BF /* SENSleepPillManager.m in Sources */,
+				49D7A2928618BE233B98F4B11A993507 /* SENSleepSoundDurations.m in Sources */,
+				39A6F9582E1AB3CEB205EE0C42D40C15 /* SENSleepSoundRequest.m in Sources */,
+				0DC66E89A853412A18F2A8046918571F /* SENSleepSounds.m in Sources */,
+				CF3EAC7F7C2E70C3A5010D28E8389C31 /* SENSleepSoundsState.m in Sources */,
+				02DAAA40B2F614A7FA459945988A39E4 /* SENSleepSoundStatus.m in Sources */,
+				A27410F6B9A928D500804F6012C80686 /* SENSound.m in Sources */,
+				324D97355166802A3EA19211D32DD721 /* SENSpeechResult.m in Sources */,
+				18EAEDD2498E0573EBC7864212755944 /* SENSupportTopic.m in Sources */,
+				E8C8802114048B00977CA3681E6A1A52 /* SENSwapStatus.m in Sources */,
+				3C93A35CE412175A2A9656A9801E21B5 /* SENSystemAlert.m in Sources */,
+				7A31491B5239EFA35B048EA085A2F444 /* SENTimeline.m in Sources */,
+				2EEF241334AA8F63B4B93119EC1C9E34 /* SENTimelineMetric.m in Sources */,
+				0DC0C0D8C7021DD8A608921565637EAD /* SENTimelineSegment.m in Sources */,
+				38C606D0C35C54F646E3EEB2F97281D5 /* SENTrends.m in Sources */,
+				7EEFBA9C7D48FA27C4AFBFF4BDBDC0B2 /* SENTrendsGraph.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		43F7486A0D2BF811B2F09C8DA5817A14 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6860,14 +6954,6 @@
 				62BE31D4374C4837F13916CE55F516DD /* NAPickerCell.m in Sources */,
 				1C1144D19DED6E253F9C410756D58A7C /* NAPickerView-dummy.m in Sources */,
 				E22AED5B8BA33D7DF30AF8ABE3B1ACFB /* NAPickerView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		597B43C0810D1A9B1F087550437F613C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B20D6EC8B49D5CA5C75D7E1D9EDCC971 /* Pods-SenseApp-Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7520,6 +7606,18 @@
 			target = 5DF5A0FC1F146F58BDC77A7F2EFE2C67 /* NSJSONSerialization-NSNullRemoval */;
 			targetProxy = 6FE4BCE0605AB80ECA802D628829E4E1 /* PBXContainerItemProxy */;
 		};
+		057EB9BE79CC574ED798124DC716694B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Kiwi;
+			target = 7083AAAAC66B316826B571E5AE68285A /* Kiwi */;
+			targetProxy = 05AAC954B5D56EA0C1AF56170C7851B2 /* PBXContainerItemProxy */;
+		};
+		07F2A18C9921DAF0777D0D85E96CDEAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SenseKit;
+			target = 8CE83AF783BFDD2B5CDEF75C5337891C /* SenseKit */;
+			targetProxy = 30C6E1C7DE048EA8F4D9B3BC2A4BAF53 /* PBXContainerItemProxy */;
+		};
 		0880568F2E70298B4CF2421257E8823C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Bugsnag;
@@ -7532,23 +7630,17 @@
 			target = 8A669E19CDAA52BAFA7452B7A7ED0852 /* Zip */;
 			targetProxy = F757969808EBE6845A58AA022818A71B /* PBXContainerItemProxy */;
 		};
-		1000391D6B70A1AA183E97F5E250C0E9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LGBluetooth;
-			target = 4538E5F13858A88DD15935800BF8C439 /* LGBluetooth */;
-			targetProxy = C90266C3F064F12E590E2EEFA2A47309 /* PBXContainerItemProxy */;
-		};
 		15B63476003DB9AFB00EE21067E2D151 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AttributedMarkdown;
 			target = 4910D8C5696549390F9F97968C04319C /* AttributedMarkdown */;
 			targetProxy = 4601A603C67F62B4A49E0B38094FF021 /* PBXContainerItemProxy */;
 		};
-		185A13412676EAF857D5CB80E90AF889 /* PBXTargetDependency */ = {
+		16B1E8868BC5FAD92F6F0AF6D2159812 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = AFNetworking;
-			target = E6616D11C80301E90D8CB81B7A87E769 /* AFNetworking */;
-			targetProxy = 65971A7291738AEB94D7DBA34B08F159 /* PBXContainerItemProxy */;
+			name = LGBluetooth;
+			target = 4538E5F13858A88DD15935800BF8C439 /* LGBluetooth */;
+			targetProxy = 60273E922DA0BE046AEBF3B434F8BEB8 /* PBXContainerItemProxy */;
 		};
 		1BD14520D5C2D3156CD24218054B654F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7562,35 +7654,17 @@
 			target = E54D09BB3E012243C460017BFBE97383 /* Analytics */;
 			targetProxy = 6C2A7BCC03E669C6B8161173AF7ED50D /* PBXContainerItemProxy */;
 		};
-		22F1A16FF4F18938A6B29F4CEB338163 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "NSJSONSerialization-NSNullRemoval";
-			target = 5DF5A0FC1F146F58BDC77A7F2EFE2C67 /* NSJSONSerialization-NSNullRemoval */;
-			targetProxy = 1736D30A538E3C63747F198D604DB0FE /* PBXContainerItemProxy */;
-		};
-		35B797AE4D7AED385049A47DC466342C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = iOSDFULibrary;
-			target = 5CA8A06ABA0A0EBD26EC903993226DC5 /* iOSDFULibrary */;
-			targetProxy = 9BF6F9A1DDB4BE5FF99E1AE29FEEB7BC /* PBXContainerItemProxy */;
-		};
-		387998E7CE54562519EE1B5E7396EBC3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FXKeychain;
-			target = DA4650554C93FE206C1831D218CC5313 /* FXKeychain */;
-			targetProxy = 1E2A675E029199B57DCA14E7DF09E8BC /* PBXContainerItemProxy */;
-		};
-		3A0030D0108EB6525C3193AEE024BF93 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Zip;
-			target = 8A669E19CDAA52BAFA7452B7A7ED0852 /* Zip */;
-			targetProxy = DB5B0A5A242B1008553509A26BFE3E26 /* PBXContainerItemProxy */;
-		};
 		3AA9324E6DDC29DCC0DCCC026C15BE6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = iOSDFULibrary;
 			target = 5CA8A06ABA0A0EBD26EC903993226DC5 /* iOSDFULibrary */;
 			targetProxy = 4E6466D445C3F235C232277B570F5A88 /* PBXContainerItemProxy */;
+		};
+		3BBCCE3D36D267137B7999E575AA23C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SORelativeDateTransformer;
+			target = B4B87BB631549FDE80725CDCC969026B /* SORelativeDateTransformer */;
+			targetProxy = 9A1DF823E22D25A897EAF3EC616DCE65 /* PBXContainerItemProxy */;
 		};
 		4D929AE96D296300681C0CDB831C43A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7640,29 +7714,11 @@
 			target = 038CED0159A58BE883EB204F870C3727 /* Charts */;
 			targetProxy = BDF5582D5B7332C17AC1F7AF569BF814 /* PBXContainerItemProxy */;
 		};
-		59B66C48313FE7D7770485E15A4751FF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SHSProtoBuf;
-			target = 81281507DD58B11E2FBF79621111470E /* SHSProtoBuf */;
-			targetProxy = 58B085C6C80A233577BC4AC9B5B657AA /* PBXContainerItemProxy */;
-		};
-		5B2C7812A635FF2E94862ED5749F7A92 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AttributedMarkdown;
-			target = 4910D8C5696549390F9F97968C04319C /* AttributedMarkdown */;
-			targetProxy = F36BFB0337721BDC110CDA57733280EA /* PBXContainerItemProxy */;
-		};
 		638961DA78C74D7BB9A399ADF3F3B6BA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FXKeychain;
 			target = DA4650554C93FE206C1831D218CC5313 /* FXKeychain */;
 			targetProxy = 42BE0E3A0F3D407ECA819A20D2D34395 /* PBXContainerItemProxy */;
-		};
-		686C242D1EF3A18172CFF9C00032B029 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Nocilla;
-			target = 35D3596D9F0B22911F2577A5A8A2D27B /* Nocilla */;
-			targetProxy = 9B7BBB2B2300AD82F2EA3DC832599D6F /* PBXContainerItemProxy */;
 		};
 		6884486B7520F822BEA0DCC4055421CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7670,17 +7726,17 @@
 			target = 0C4AA72D925A79B666BF66C721FD3969 /* FBSDKCoreKit */;
 			targetProxy = 2AC83E0B943B80908A08452B5DABE2BF /* PBXContainerItemProxy */;
 		};
-		6A137D7E3A9AA76C369173F175A1F811 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CocoaLumberjack;
-			target = AFE205A735C4330A00AF6A7514703066 /* CocoaLumberjack */;
-			targetProxy = DC3229C8B9FE22B25318616A3268ADE1 /* PBXContainerItemProxy */;
-		};
 		6EC02D7662EE8DA2547325B3BCF307AF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SORelativeDateTransformer;
 			target = B4B87BB631549FDE80725CDCC969026B /* SORelativeDateTransformer */;
 			targetProxy = D8E36C09F17FF1B3F6E8AF1859333DE5 /* PBXContainerItemProxy */;
+		};
+		6F41B0508B0534B9FA8A8B6A363E7638 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Zip;
+			target = 8A669E19CDAA52BAFA7452B7A7ED0852 /* Zip */;
+			targetProxy = AB02045939090C3551CA2BB90714BFD7 /* PBXContainerItemProxy */;
 		};
 		7051BBCDAC1E035EF5B2C1EFB1645ABA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7706,11 +7762,23 @@
 			target = 8A669E19CDAA52BAFA7452B7A7ED0852 /* Zip */;
 			targetProxy = C20B449B73FD43BCD24F6FE8000B2C9A /* PBXContainerItemProxy */;
 		};
-		93709055ADB73A01BA398B73717DC244 /* PBXTargetDependency */ = {
+		8DE69E245B170BC399CB05DA405ED447 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CGFloatType;
-			target = CC43F1F6808293DD4144E854D226F1D9 /* CGFloatType */;
-			targetProxy = A5DF9DDD9231A21BC96D215B7DBE45CD /* PBXContainerItemProxy */;
+			name = CocoaLumberjack;
+			target = AFE205A735C4330A00AF6A7514703066 /* CocoaLumberjack */;
+			targetProxy = EDCEAFB5538CA0F803834622F43B1E5D /* PBXContainerItemProxy */;
+		};
+		92E3A689D71EE9469F5E878E6AC0FF38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "NSJSONSerialization-NSNullRemoval";
+			target = 5DF5A0FC1F146F58BDC77A7F2EFE2C67 /* NSJSONSerialization-NSNullRemoval */;
+			targetProxy = 5DA8FFA465318422F74A8B3007307130 /* PBXContainerItemProxy */;
+		};
+		933653B7664DB12AC85BD5DA05B595BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			target = 038CED0159A58BE883EB204F870C3727 /* Charts */;
+			targetProxy = FEAAD213C7A152124AC3714F7ED72135 /* PBXContainerItemProxy */;
 		};
 		98B8BD8747DA709D0EA5CDF90EFB7A25 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7723,6 +7791,12 @@
 			name = LGBluetooth;
 			target = 4538E5F13858A88DD15935800BF8C439 /* LGBluetooth */;
 			targetProxy = 54723615CCFA8DA849B39C80785E85CD /* PBXContainerItemProxy */;
+		};
+		A0D818CEC2795EE2F1EE39A55268C9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CGFloatType;
+			target = CC43F1F6808293DD4144E854D226F1D9 /* CGFloatType */;
+			targetProxy = 2140FF830589DDFBB5FAF00A865E361A /* PBXContainerItemProxy */;
 		};
 		A5C745010CF777EC4DD5A52815173432 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7754,17 +7828,23 @@
 			target = 5CA8A06ABA0A0EBD26EC903993226DC5 /* iOSDFULibrary */;
 			targetProxy = F92D8267CA160A6B3A9B1AB7BCA1812D /* PBXContainerItemProxy */;
 		};
-		BE15AA5E85EED341CD112621B3238F85 /* PBXTargetDependency */ = {
+		BE05DA2ED9A58D063A09CA1FA042DC36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SenseKit;
-			target = 8CE83AF783BFDD2B5CDEF75C5337891C /* SenseKit */;
-			targetProxy = A8867DCF9F8A238D4D359F75E658D2C9 /* PBXContainerItemProxy */;
+			name = AttributedMarkdown;
+			target = 4910D8C5696549390F9F97968C04319C /* AttributedMarkdown */;
+			targetProxy = 19C95A82C9D446E327E6E64C6E43459F /* PBXContainerItemProxy */;
 		};
 		BE8F0ACFA417DBD811A06CDF8E288CFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Bolts;
 			target = D33A971E36C7D614827B65C7112CAB71 /* Bolts */;
 			targetProxy = DBF27C429D4D09A40114C3DA450B12F4 /* PBXContainerItemProxy */;
+		};
+		BECCCD258CEDA87B7FF508623345E1CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SHSProtoBuf;
+			target = 81281507DD58B11E2FBF79621111470E /* SHSProtoBuf */;
+			targetProxy = 21B2E52E80F88F00E8DE10965BA8FBE1 /* PBXContainerItemProxy */;
 		};
 		BED9EF05981DD1C058F6B61ACD8E1361 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7784,23 +7864,17 @@
 			target = 5DF5A0FC1F146F58BDC77A7F2EFE2C67 /* NSJSONSerialization-NSNullRemoval */;
 			targetProxy = E475D297C0EFB9385631386F2CAAA57E /* PBXContainerItemProxy */;
 		};
-		C2ACE3BA310BA83844FEA7E77FA9D411 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Kiwi;
-			target = 7083AAAAC66B316826B571E5AE68285A /* Kiwi */;
-			targetProxy = 3A2F53B57FE452ED826F951E40DC2892 /* PBXContainerItemProxy */;
-		};
-		C4F84524A4B2DAA1DEF67A5555725AB3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SORelativeDateTransformer;
-			target = B4B87BB631549FDE80725CDCC969026B /* SORelativeDateTransformer */;
-			targetProxy = 9220803F24FA94E0E04DCC02F1B2AD84 /* PBXContainerItemProxy */;
-		};
 		C5CDA05F458C0121C0C551D815943EC5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FXKeychain;
 			target = DA4650554C93FE206C1831D218CC5313 /* FXKeychain */;
 			targetProxy = A7FECA49AC51F8C7347DFE572D271198 /* PBXContainerItemProxy */;
+		};
+		C81931DC866BEA214B58EE6D20EBB0E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Nocilla;
+			target = 35D3596D9F0B22911F2577A5A8A2D27B /* Nocilla */;
+			targetProxy = E40AFAB9D846B735145EA32EBD5469D3 /* PBXContainerItemProxy */;
 		};
 		D51BD301DDD7A3060A1A7BE4D818F5D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7820,11 +7894,23 @@
 			target = B4B87BB631549FDE80725CDCC969026B /* SORelativeDateTransformer */;
 			targetProxy = 78FB2C447B772FEAA896D7E6286B9E5B /* PBXContainerItemProxy */;
 		};
+		E525FEA9434DC219B4D66D87CA933367 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iOSDFULibrary;
+			target = 5CA8A06ABA0A0EBD26EC903993226DC5 /* iOSDFULibrary */;
+			targetProxy = 6F0017BF459CB578806F5C7576512850 /* PBXContainerItemProxy */;
+		};
 		EABDDB45219F6A45F58F1A23EC010B58 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UIImageEffects;
 			target = 84B6AB27744AC0A821205330A4BAABE0 /* UIImageEffects */;
 			targetProxy = 0BB5EBCAAA34E38B5E564AD7FD82D525 /* PBXContainerItemProxy */;
+		};
+		EF66CD597EB8D7E4AE3E8298EAFCBDED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = E6616D11C80301E90D8CB81B7A87E769 /* AFNetworking */;
+			targetProxy = A91A97F4EF3FAB0F5186F19AAC63A1E7 /* PBXContainerItemProxy */;
 		};
 		F1DC724E8204284A0408411E2A07519A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7850,6 +7936,12 @@
 			target = DA4650554C93FE206C1831D218CC5313 /* FXKeychain */;
 			targetProxy = E0DC13C56079620344F42CAFF1730FF6 /* PBXContainerItemProxy */;
 		};
+		F8BB3BD4B0EF8EC5746F174C82ECCC55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FXKeychain;
+			target = DA4650554C93FE206C1831D218CC5313 /* FXKeychain */;
+			targetProxy = B54CBC5E4ADD8C836A5F22B8AD274463 /* PBXContainerItemProxy */;
+		};
 		FC4D2AA6B20FCD5C2FDC9ACE7113EBA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FBSDKLoginKit;
@@ -7871,50 +7963,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
 		026B0D22409597096D3A798D642FE518 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6511F9BD0E0991B56A2AD6F449375AAC /* FBSDKCoreKit.xcconfig */;
@@ -7946,6 +7994,42 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		02A91A6CC29F1D8CB7016051B2F3B18E /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82CAF99DB27727C994DA1E11E12C1A6A /* Pods-SenseApp-RoomConditionsExtension.dev.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Dev;
 		};
 		043482CDB69874B1EB6528103634957F /* Dev */ = {
 			isa = XCBuildConfiguration;
@@ -8109,6 +8193,42 @@
 			};
 			name = Release;
 		};
+		0BF3A6AC4D6E5FE85A1FB0AD015C34B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CC9243836B540C8A7B91B4D92EE1711 /* Pods-SenseApp-Sense.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Sense;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		0C3EA3116A1072378F2A17AA06F57D85 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C33A098E384FE7985C207277E4A3564 /* SenseKit.xcconfig */;
@@ -8239,45 +8359,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Dev;
-		};
-		136D6AD9B5E6B1F4774336BC30721E9F /* Beta */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_BETA=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Beta;
 		};
 		15BFB0DF02F938747B094811063AF558 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -8571,42 +8652,6 @@
 			};
 			name = Debug;
 		};
-		251785DBDFDACEDA1CA2DB6CAEBACCC2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2CF7E67031E73E330D8790ABBD292DC2 /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		267F49DF08C19530B41C370AE81AC5BB /* Dev */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6511F9BD0E0991B56A2AD6F449375AAC /* FBSDKCoreKit.xcconfig */;
@@ -8638,6 +8683,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Dev;
+		};
+		2AF69ECD3192742F1BB44134614D01F3 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B01E33785243D5990BC139EAAE87F9B2 /* Pods-SenseApp-Tests.beta.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Beta;
 		};
 		2C024DB64B68903CB339577F1005BFA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -8802,42 +8882,6 @@
 			};
 			name = Dev;
 		};
-		3858F3F0B7D06404BFA65FF0993F7EDF /* Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F7DF3EDB1FAE3C863BD023920961C0A /* Pods-SenseApp-RoomConditionsExtension.beta.xcconfig */;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Beta;
-		};
 		387FD0BC9F4BB35B18C8A300611E8DAE /* Beta */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 322ED7D1B584D6599E28040B8F7E91A0 /* Kiwi.xcconfig */;
@@ -8897,6 +8941,42 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Beta;
+		};
+		3B32EB0E9FCCA49E0F7295D182FE48A8 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F7DF3EDB1FAE3C863BD023920961C0A /* Pods-SenseApp-RoomConditionsExtension.beta.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -8998,85 +9078,6 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Dev;
-		};
-		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		47D5922F21D6CAB65A2D7D2A22FBD36A /* Dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEV=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Dev;
 		};
@@ -9211,40 +9212,41 @@
 			};
 			name = Beta;
 		};
-		501BBE83A99CDD58ADD3E36E61A854A2 /* Dev */ = {
+		4FAD6E52282CA1CCB82E3864CDFD277C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F5035785F1E62EF9035AC8588B6805A /* Pods-SenseApp-Sense.dev.xcconfig */;
+			baseConfigurationReference = 5305F1073DAE241AB2019CAA47E913B5 /* Pods-SenseApp-Tests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Sense;
+				PRODUCT_NAME = Pods_SenseApp_Tests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Dev;
+			name = Debug;
 		};
 		57E95133879ED4B4508010574C3C36DB /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -9343,6 +9345,50 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
 		};
 		5C36E0372DF1ED0E5FB1A407B5F5CDB9 /* Beta */ = {
 			isa = XCBuildConfiguration;
@@ -9443,42 +9489,6 @@
 			};
 			name = Dev;
 		};
-		642F57C9B5BD390FE4826548654C557B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5305F1073DAE241AB2019CAA47E913B5 /* Pods-SenseApp-Tests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		654B6CC0E4C4676895915082497CA00C /* Beta */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23C95C7F3642AC3DBB9337C6DF29F07A /* AFNetworking.xcconfig */;
@@ -9506,41 +9516,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Beta;
-		};
-		6BB1DBC3864EC5A14BB7241512C277A2 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94470BE1BEF20983244D652E5BBFB2CE /* Pods-SenseApp-Sense.beta.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Sense;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -9579,6 +9554,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		725F25E30AAA4F97FCFFF40600DBCE7F /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 981CC505A7E05983C115726BC0BAEB71 /* Pods-SenseApp-Tests.dev.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Dev;
 		};
 		736A16C2F14EE01661201DC1E055F0C1 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -9678,9 +9688,44 @@
 			};
 			name = Debug;
 		};
-		7E7C3C7C91F09B3A0C89B3752AB311AC /* Dev */ = {
+		7DDFF9C83884A93CB5E28F21DB4AC442 /* Dev */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C33A098E384FE7985C207277E4A3564 /* SenseKit.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Sense;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Dev;
+		};
+		7E7C3C7C91F09B3A0C89B3752AB311AC /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F24BE0FE059E8ABA183F8CBF94466B7 /* SenseKit.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -9777,6 +9822,43 @@
 			};
 			name = Beta;
 		};
+		8653A4591F83E3C24009810486415253 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4AD7D717A04229D10CC726958558866 /* Pods-SenseApp-RoomConditionsExtension.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		86590FCCC85E6F572682631A56BC9831 /* Dev */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 640467890B38A480A827E80591F05304 /* NAPickerView.xcconfig */;
@@ -9868,76 +9950,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Beta;
-		};
-		925525F4E78668BA2BC73F39BC013B3C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7679CD57D6E846B26C78CC795A4CE07B /* Pods-SenseApp-Tests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		951D64116684A51159DBCE1C6A8C6718 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B01E33785243D5990BC139EAAE87F9B2 /* Pods-SenseApp-Tests.beta.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -10267,10 +10279,11 @@
 			};
 			name = Release;
 		};
-		A96B29A99BEDD7DFD778E0DF89F37DE7 /* Release */ = {
+		A7CFA5DCEBE48B2A66577CB3908762DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F6125388D3765811B1F127E1565A880 /* Pods-SenseApp-Sense.release.xcconfig */;
+			baseConfigurationReference = 2CF7E67031E73E330D8790ABBD292DC2 /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -10282,18 +10295,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Sense;
+				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -10399,42 +10412,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Dev;
-		};
-		AC6F06124AA6FF5DB4309D61DB9F9AB7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CC9243836B540C8A7B91B4D92EE1711 /* Pods-SenseApp-Sense.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Sense;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		AE03BEE07249994E4275E0657690EC20 /* Dev */ = {
 			isa = XCBuildConfiguration;
@@ -10598,42 +10575,80 @@
 			};
 			name = Dev;
 		};
-		B6935463AD1D9F17EC13C6CE838FF71A /* Debug */ = {
+		B7324857C38B065FEB1EEE3105C2367A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D4AD7D717A04229D10CC726958558866 /* Pods-SenseApp-RoomConditionsExtension.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B9AB9C57ABBA03CD51D0A1AFD05F171E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7679CD57D6E846B26C78CC795A4CE07B /* Pods-SenseApp-Tests.release.xcconfig */;
+			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
+				PRODUCT_NAME = Pods_SenseApp_Tests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		BA78BD2C206F99DF813FBD9ACDAFBB62 /* Beta */ = {
 			isa = XCBuildConfiguration;
@@ -10699,41 +10714,44 @@
 			};
 			name = Release;
 		};
-		BD9A9334814115D2F183207F69F68C5D /* Dev */ = {
+		C2DE97522E537A65D8DAFDEBBE2C7672 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 82CAF99DB27727C994DA1E11E12C1A6A /* Pods-SenseApp-RoomConditionsExtension.dev.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_RoomConditionsExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_BETA=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
 			};
-			name = Dev;
+			name = Beta;
 		};
 		C3C7636F0DF03A856E06E67E091B6BA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -10893,6 +10911,41 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D41FCFAE026B1F16C9BC49FF3E3F89C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F6125388D3765811B1F127E1565A880 /* Pods-SenseApp-Sense.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Sense;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -11125,6 +11178,45 @@
 			};
 			name = Dev;
 		};
+		E6E16E5DA242EF8F0DE206ECAE65C751 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEV=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Dev;
+		};
 		E7146542A5A5C85A1FE96C80D7854BB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C25D6B18344F6747AFDD1E8766552A5 /* SORelativeDateTransformer.xcconfig */;
@@ -11221,6 +11313,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Dev;
+		};
+		EC113BD1F4A0ADF1C828F7E9874663D5 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94470BE1BEF20983244D652E5BBFB2CE /* Pods-SenseApp-Sense.beta.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Sense/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SenseApp_Sense;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Beta;
 		};
 		ECC4DDFC4E284118CE65A70FE92B6FA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -11385,41 +11512,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		F1D1F534AB3A4502BB59E434DD8E2F3D /* Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 981CC505A7E05983C115726BC0BAEB71 /* Pods-SenseApp-Tests.dev.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SenseApp-Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SenseApp_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Dev;
 		};
 		F1EE7D336E18F4E49E5B3AAD02CACB8F /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -11600,10 +11692,10 @@
 		0ABE1607A4E6BFC366FE0C70000258C6 /* Build configuration list for PBXNativeTarget "Pods-SenseApp-Sense" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6BB1DBC3864EC5A14BB7241512C277A2 /* Beta */,
-				AC6F06124AA6FF5DB4309D61DB9F9AB7 /* Debug */,
-				501BBE83A99CDD58ADD3E36E61A854A2 /* Dev */,
-				A96B29A99BEDD7DFD778E0DF89F37DE7 /* Release */,
+				EC113BD1F4A0ADF1C828F7E9874663D5 /* Beta */,
+				0BF3A6AC4D6E5FE85A1FB0AD015C34B1 /* Debug */,
+				7DDFF9C83884A93CB5E28F21DB4AC442 /* Dev */,
+				D41FCFAE026B1F16C9BC49FF3E3F89C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -11615,17 +11707,6 @@
 				5D6F430D21FAA1A1E65ACC575685927F /* Debug */,
 				7E7C3C7C91F09B3A0C89B3752AB311AC /* Dev */,
 				0C3EA3116A1072378F2A17AA06F57D85 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		28E0D79F5F2B7B711F0312EC41A7F07E /* Build configuration list for PBXNativeTarget "Pods-SenseApp-Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				951D64116684A51159DBCE1C6A8C6718 /* Beta */,
-				642F57C9B5BD390FE4826548654C557B /* Debug */,
-				F1D1F534AB3A4502BB59E434DD8E2F3D /* Dev */,
-				925525F4E78668BA2BC73F39BC013B3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -11644,10 +11725,10 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				136D6AD9B5E6B1F4774336BC30721E9F /* Beta */,
-				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
-				47D5922F21D6CAB65A2D7D2A22FBD36A /* Dev */,
-				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+				C2DE97522E537A65D8DAFDEBBE2C7672 /* Beta */,
+				59B042A655B7C20CBAB90E385BF4E4C7 /* Debug */,
+				E6E16E5DA242EF8F0DE206ECAE65C751 /* Dev */,
+				B7324857C38B065FEB1EEE3105C2367A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -11677,10 +11758,10 @@
 		3CD1AC0D2600B7D0A0BA33F9ABAFD6F5 /* Build configuration list for PBXNativeTarget "Pods-SenseApp-RoomConditionsExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3858F3F0B7D06404BFA65FF0993F7EDF /* Beta */,
-				B6935463AD1D9F17EC13C6CE838FF71A /* Debug */,
-				BD9A9334814115D2F183207F69F68C5D /* Dev */,
-				251785DBDFDACEDA1CA2DB6CAEBACCC2 /* Release */,
+				3B32EB0E9FCCA49E0F7295D182FE48A8 /* Beta */,
+				8653A4591F83E3C24009810486415253 /* Debug */,
+				02A91A6CC29F1D8CB7016051B2F3B18E /* Dev */,
+				A7CFA5DCEBE48B2A66577CB3908762DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -11824,6 +11905,17 @@
 				CE3811F14407980394BD3353AA2329B7 /* Debug */,
 				1FEAE4C1DE2A995E84153634FF700D71 /* Dev */,
 				A5BD784FBE324327BF7AAEC6D8F841FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8E179AC46EC693418043789198B2542 /* Build configuration list for PBXNativeTarget "Pods-SenseApp-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2AF69ECD3192742F1BB44134614D01F3 /* Beta */,
+				4FAD6E52282CA1CCB82E3864CDFD277C /* Debug */,
+				725F25E30AAA4F97FCFFF40600DBCE7F /* Dev */,
+				B9AB9C57ABBA03CD51D0A1AFD05F171E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

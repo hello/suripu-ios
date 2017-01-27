@@ -15,6 +15,12 @@ describe(@"Theme", ^{
     
     describe(@"-valueWithStyle:name:", ^{
         
+        beforeAll(^{
+            // to load some dependent resources
+            [Color namedWithName:@"grey.1"];
+            [Font namedWithName:@"h1"];
+        });
+        
         context(@"default theme", ^{
             
             __block Theme* theme = nil;

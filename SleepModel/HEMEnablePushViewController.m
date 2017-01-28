@@ -8,15 +8,17 @@
 #import <SenseKit/SENAPIPreferences.h>
 #import <SenseKit/SENPreference.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMEnablePushViewController.h"
 #import "HEMActionButton.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMNotificationHandler.h"
 
 @interface HEMEnablePushViewController()
 
+@property (strong, nonatomic) PushNotificationService* pushService;
 @property (weak, nonatomic) IBOutlet HEMActionButton *enableButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
@@ -27,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setPushService:[PushNotificationService new]];
     [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventNotification];
 }
@@ -39,7 +42,9 @@
 #pragma mark - Actions
 
 - (IBAction)enableNotifications:(id)sender {
-    [HEMNotificationHandler registerForRemoteNotifications];
+    if ([[self pushService] canRegisterForPushNotifications]) {
+        [[UIApplication sharedApplication] askForPermissionToSendPushNotifications];
+    }
     [self enableNotificationsInPreferences];
     [self next];
 }

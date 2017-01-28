@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.3.1
+
+Fixes:
+
+* Properly renew the push notification token upon launch of the app, or after signing in, if permission has been granted
+* Properly request permission to send push notifications when enabling them during onboarding
+
 ## 2.0.2.6
 
 Fixes:

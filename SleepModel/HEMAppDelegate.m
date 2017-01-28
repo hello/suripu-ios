@@ -2,9 +2,10 @@
 
 #import <SenseKit/SenseKit.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMAppDelegate.h"
 #import "HEMStyle.h"
-#import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"
@@ -24,6 +25,12 @@
 
 #import "Sense-Swift.h"
 
+@interface HEMAppDelegate()
+
+@property (nonatomic, strong) PushNotificationService* pushService;
+
+@end
+
 @implementation HEMAppDelegate
 
 static NSString* const kHEMAppExtRoom = @"room";
@@ -37,6 +44,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     // order matters
+    [self configureProperties];
     [self configureAPI];
     [self configureCrashReport];
     
@@ -46,7 +54,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
     [self deauthorizeIfNeeded];
     [self configureAppearance];
-    [self registerForNotifications];
+    [self renewPushNotificationToken];
+    [self listenForAuthorizationChanges];
     [self createAndShowWindow];
     
     return YES;
@@ -98,10 +107,78 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
-    [HEMNotificationHandler clearNotifications];
+    [application clearBadgeFromNotification];
     [self deauthorizeIfNeeded];
     [self syncData];
 }
+
+- (void)configureProperties {
+    [self setPushService:[PushNotificationService new]];
+}
+
+- (void)configureAPI {
+    // User-Agent should be in the format: Sense/<App version> Platform/<iOS> OS/<Version>
+    UIDevice* device = [UIDevice currentDevice];
+    NSBundle* bundle = [NSBundle mainBundle];
+    NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString* version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* osVersion = [device systemVersion];
+    NSString* userAgent = [NSString stringWithFormat:HEMApiUserAgentFormat, appName, version, osVersion];
+    NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
+    NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
+    
+    [SENAPIClient setBaseURLFromPath:path];
+    [SENAPIClient setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+    [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
+    [SENAuthorizationService setClientAppID:clientID];
+    [SENAuthorizationService authorizeRequestsFromKeychain];
+}
+
+- (void)configureCrashReport {
+    NSString* token = [HEMConfig stringForConfig:HEMConfCrashReportToken];
+    if (token) {
+        [Bugsnag startBugsnagWithApiKey:token];
+
+        BugsnagConfiguration* bugsnagConfig = [Bugsnag configuration];
+        
+        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        if (accountId) {
+            [bugsnagConfig setUser:accountId withName:nil andEmail:nil];
+        }
+        
+        NSString* env = [HEMConfig stringForConfig:HEMConfEnvironmentName];
+        if (env) {
+            [bugsnagConfig setReleaseStage:env];
+        }
+        
+    }
+}
+
+- (BOOL)deauthorizeIfNeeded {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
+        [SENAuthorizationService deauthorize];
+        [preferences setPersistentPreference:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)configureAppearance {
+    ApplyHelloStyles();
+}
+
+- (void)createAndShowWindow {
+    UIWindow* window = [UIWindow new];
+    if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
+        window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = window;
+    [self.window makeKeyWindow];
+    self.window.rootViewController = [HEMMainStoryboard instantiateRootViewController];
+    [self.window makeKeyAndVisible];
+}
+
+#pragma mark - Data sync
 
 - (void)syncData {
     BOOL finishedOnboarding = [[HEMOnboardingService sharedService] hasFinishedOnboarding];
@@ -157,80 +234,40 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     }];
 }
 
-- (void)configureAPI {
-    // User-Agent should be in the format: Sense/<App version> Platform/<iOS> OS/<Version>
-    UIDevice* device = [UIDevice currentDevice];
-    NSBundle* bundle = [NSBundle mainBundle];
-    NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    NSString* version = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-    NSString* osVersion = [device systemVersion];
-    NSString* userAgent = [NSString stringWithFormat:HEMApiUserAgentFormat, appName, version, osVersion];
-    NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
-    NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
-    
-    [SENAPIClient setBaseURLFromPath:path];
-    [SENAPIClient setValue:userAgent forHTTPHeaderField:@"User-Agent"];
-    [SENAPIClient setValue:version forHTTPHeaderField:HEMApiXVersionHeader];
-    [SENAuthorizationService setClientAppID:clientID];
-    [SENAuthorizationService authorizeRequestsFromKeychain];
-}
-
-- (void)configureCrashReport {
-    NSString* token = [HEMConfig stringForConfig:HEMConfCrashReportToken];
-    if (token) {
-        [Bugsnag startBugsnagWithApiKey:token];
-
-        BugsnagConfiguration* bugsnagConfig = [Bugsnag configuration];
-        
-        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-        if (accountId) {
-            [bugsnagConfig setUser:accountId withName:nil andEmail:nil];
-        }
-        
-        NSString* env = [HEMConfig stringForConfig:HEMConfEnvironmentName];
-        if (env) {
-            [bugsnagConfig setReleaseStage:env];
-        }
-        
-    }
-}
-
-- (BOOL)deauthorizeIfNeeded {
-    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
-        [SENAuthorizationService deauthorize];
-        [preferences setPersistentPreference:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
-        return YES;
-    }
-    return NO;
-}
+#pragma mark - Remote / Push Notifications
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
-    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken
-                                                         completion:NULL];
+    DDLogVerbose(@"received push notification token");
+    [[self pushService] uploadPushTokenWithData:deviceToken];
 }
 
-- (void)configureAppearance {
-    ApplyHelloStyles();
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    [SENAnalytics trackError:error];
 }
 
-- (void)createAndShowWindow {
-    UIWindow* window = [UIWindow new];
-    if (CGSizeEqualToSize(window.bounds.size, CGSizeZero))
-        window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window = window;
-    [self.window makeKeyWindow];
-    self.window.rootViewController = [HEMMainStoryboard instantiateRootViewController];
-    [self.window makeKeyAndVisible];
+- (void)renewPushNotificationToken {
+    if ([[self pushService] canRegisterForPushNotifications]) {
+        DDLogVerbose(@"renewing push notification token");
+        [[UIApplication sharedApplication] renewPushNotificationToken];
+    }
 }
 
-- (void)registerForNotifications {
-    [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
+#pragma mark - Account changes
+
+- (void)listenForAuthorizationChanges {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(reset)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(didSignIn)
+                   name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
+}
+
+- (void)didSignIn {
+    [self renewPushNotificationToken];
 }
 
 - (void)reset {

@@ -15,6 +15,7 @@
 #import "NSDate+HEMRelative.h"
 
 static CGFloat const HEMTimelineNextDayHour = 3; // hour of day (3am)
+static CGFloat const HEMTimelineNextDayMinute = 1;
 static NSString* const HEMTimelineSettingsAccountCreationDate = @"account.creation.date";
 static NSString* const kHEMTimelineRangeDateFormat = @"MMMM d";
 static NSString* const kHEMTimelineWeekDateFormat = @"EEEE";
@@ -133,10 +134,10 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
 
 - (NSString*)stringValueForTimelineDate:(NSDate*)date {
     NSString* title = nil;
-    NSDate* previousDay = [[NSDate date] previousDay];
+    NSDate* lastNight = [NSDate timelineInitialDate];
     NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
                                                 fromDate:date
-                                                  toDate:previousDay
+                                                  toDate:lastNight
                                                  options:0];
     NSInteger daysAgo = [diff day];
     
@@ -152,11 +153,19 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
 }
 
 - (BOOL)isDateLastNight:(NSDate*)date {
+    NSDate* lastNight = [NSDate timelineInitialDate];
     NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
                                                 fromDate:date
-                                                  toDate:[[NSDate date] previousDay]
+                                                  toDate:lastNight
                                                  options:0];
     return diff.day == 0;
+}
+
+- (NSDate*)addNextDayOffset:(NSDate*)date {
+    NSDateComponents* components = [NSDateComponents new];
+    components.hour = HEMTimelineNextDayHour;
+    components.minute = HEMTimelineNextDayMinute;
+    return [[self calendar] dateByAddingComponents:components toDate:date options:0];
 }
 
 @end

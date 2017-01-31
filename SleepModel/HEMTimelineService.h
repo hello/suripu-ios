@@ -86,6 +86,16 @@ typedef void(^HEMTimelineServiceUpdateHandler)(SENTimeline* _Nullable updatedTim
  */
 - (BOOL)isDateLastNight:(NSDate*)date;
 
+/**
+ * @discussion
+ * Add the offset needed to ensure the date does not fall in to the "should count
+ * as previous day" bucket.
+ *
+ * @param date: date to add offset to
+ * @return the resulting date from adding the offset
+ */
+- (NSDate*)addNextDayOffset:(NSDate*)date;
+
 @end
 
 NS_ASSUME_NONNULL_END

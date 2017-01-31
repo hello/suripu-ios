@@ -30,6 +30,7 @@
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, assign) NSInteger lastNightSleepScore;
+@property (nonatomic, strong) HEMTimelineService* timelineService;
 
 @end
 
@@ -58,13 +59,14 @@
 {
     _lastNightSleepScore = -1; // initialize to -1 to make update take affect for 0
     
-    NSInteger lastNightSleepScore = 0;
     HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
-    if ([timelineVC isLastNight]) {
-        SENTimeline* timeline = [SENTimeline timelineForDate:date];
-        lastNightSleepScore = [[timeline score] integerValue];
-    }
-    [self updateLastNightSleepScore:lastNightSleepScore];
+    [timelineVC setEventLoadAnimation:YES];
+    
+    [self setTimelineService:[HEMTimelineService new]];
+    
+    SENTimeline* timeline = [SENTimeline timelineForDate:[NSDate timelineInitialDate]];
+    [self updateLastNightSleepScore:[[timeline score] integerValue]];
+    
     [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
@@ -216,7 +218,8 @@
 
 - (void)takeActionWithAction:(HEMShortcutAction)action data:(id)data {
     if ([data isKindOfClass:[PushNotification class]]
-        && [[data detail] isKindOfClass:[NSDate class]]) {
+        && [[data detail] isKindOfClass:[NSDate class]]
+        && [[data detail] compare:[NSDate timelineInitialDate]] == NSOrderedAscending) {
         [self reloadWithDate:[data detail]];
     } else {
         [self reloadWithDate:[NSDate timelineInitialDate]];

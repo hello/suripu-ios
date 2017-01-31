@@ -101,8 +101,6 @@ static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
 static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
-static BOOL hasLoadedBefore = NO;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -121,7 +119,7 @@ static BOOL hasLoadedBefore = NO;
              properties:@{
                  kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
              }];
-    if (!hasLoadedBefore) {
+    if (![self showEventLoadAnimation]) {
         [self prepareForInitialAnimation];
     }
     
@@ -282,14 +280,20 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
+    [self setEventLoadAnimation:NO];
     if ([self.dataSource hasTimelineData])
         self.collectionView.scrollEnabled = YES;
 }
 
 - (void)performInitialAnimation {
+    if (![self showEventLoadAnimation]) {
+        return;
+    }
+    
+    [self setEventLoadAnimation:NO];
+    
     CGFloat const eventAnimationDuration = 0.25f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
-    hasLoadedBefore = YES;
     NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
         sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
           return [@(obj1.item) compare:@(obj2.item)];
@@ -317,7 +321,7 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark HEMSleepGraphActionDelegate
 
 - (BOOL)shouldHideSegmentCellContents {
-    return !hasLoadedBefore;
+    return [self showEventLoadAnimation];
 }
 
 - (void)toggleAudio:(UIButton *)button {
@@ -961,7 +965,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)checkIfInitialAnimationNeeded {
-    if (!hasLoadedBefore) {
+    if ([self showEventLoadAnimation]) {
         if (self.dataSource.sleepResult.score > 0) {
             static dispatch_once_t onceToken;
             dispatch_once(&onceToken, ^{

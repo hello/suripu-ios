@@ -19,7 +19,6 @@ extension Date {
         }
         
         let formatter = DateFormatter()
-        formatter.timeZone = TimeZone(abbreviation: Date.timeZoneUTC)
         formatter.dateFormat = Date.isoDateFormat
         return formatter.date(from: isoDate)
     }

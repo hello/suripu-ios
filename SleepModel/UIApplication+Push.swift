@@ -19,17 +19,13 @@ extension UIApplication {
     }
     
     /**
-        Prompt the user for permission to send push notifications.  If user is
-        already registered for remote notifications, it will simply renew the token.
+        Prompt the user for permission to send push notifications.
      
         Callers should override the application delegate method to know that the
         user notification settings were registered to then call renew push notification
         to retrieve the token.
     */
     @objc func askForPermissionToSendPushNotifications() {
-        guard self.isRegisteredForRemoteNotifications == false else {
-            return self.renewPushNotificationToken()
-        }
         let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound],
                                                   categories: nil)
         self.registerUserNotificationSettings(settings)

@@ -21,7 +21,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMHandHoldingService.h"
-#import "HEMTimelineService.h"
 #import "HEMStyle.h"
 
 @interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable, ShortcutHandler>
@@ -30,7 +29,6 @@
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
 @property (nonatomic, strong) HEMHandHoldingService* handHoldingService;
 @property (nonatomic, assign) NSInteger lastNightSleepScore;
-@property (nonatomic, strong) HEMTimelineService* timelineService;
 
 @end
 
@@ -61,8 +59,6 @@
     
     HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
     [timelineVC setEventLoadAnimation:YES];
-    
-    [self setTimelineService:[HEMTimelineService new]];
     
     SENTimeline* timeline = [SENTimeline timelineForDate:[NSDate timelineInitialDate]];
     [self updateLastNightSleepScore:[[timeline score] integerValue]];

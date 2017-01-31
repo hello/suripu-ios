@@ -31,10 +31,10 @@ static NSString* const HEMShortcutExtensionRoomExtPath = @"ext/room";
 }
 
 + (HEMShortcutAction)actionForNotification:(PushNotification*)notification {
-    switch ([notification target]) {
-        case TargetSleepScore:
+    switch ([notification type]) {
+        case InfoTypeSleepScore:
             return  HEMShortcutActionPushTimeline;
-        case TargetUnknown:
+        case InfoTypeUnknown:
         default:
             return  HEMShortcutActionUnknown;
     }

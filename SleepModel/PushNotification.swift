@@ -10,12 +10,17 @@ import Foundation
 
 @objc class PushNotification: NSObject {
     
-    @objc enum Target: Int {
+    fileprivate static let keyType = "hlo-type"
+    fileprivate static let keyDetail = "hlo-detail"
+    fileprivate static let typeSleepScore = "sleep_score"
+    
+    @objc enum InfoType: Int {
         case unknown = 0
         case sleepScore
         
-        static func fromKey(targetKey: String!) -> Target {
-            if targetKey == "timeline" {
+        static func fromType(type: String!) -> InfoType {
+            let lower = type?.lowercased()
+            if lower == PushNotification.typeSleepScore {
                 return .sleepScore
             } else {
                 return .unknown
@@ -23,13 +28,10 @@ import Foundation
         }
     }
     
-    fileprivate static let keyTarget = "hlo-target"
-    fileprivate static let keyDetail = "hlo-detail"
-    
     /// convenience constant for objective-c code to use namespacing
-    @objc public static let sleepScore: Target = .sleepScore
+    @objc public static let sleepScore: InfoType = .sleepScore
     
-    @objc fileprivate(set) var target = Target.unknown
+    @objc fileprivate(set) var type = InfoType.unknown
     @objc fileprivate(set) var detail: Any?
     
     /**
@@ -45,17 +47,17 @@ import Foundation
     }
     
     fileprivate func process(info: NSDictionary!) {
-        let target = info[PushNotification.keyTarget] as? String
+        let type = info[PushNotification.keyType] as? String
         let detail = info[PushNotification.keyDetail]
         
-        self.target = Target.fromKey(targetKey: target ?? "")
+        self.type = InfoType.fromType(type: type ?? "")
         
-        switch self.target {
-            case Target.sleepScore:
+        switch self.type {
+            case InfoType.sleepScore:
                 let isoDate = detail as? String
                 self.detail = Date.from(isoDateOnly: isoDate)
                 break
-            case Target.unknown:
+            case InfoType.unknown:
                 fallthrough
             default:
                 break;

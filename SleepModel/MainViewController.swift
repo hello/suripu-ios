@@ -280,6 +280,15 @@ extension MainViewController: ShortcutHandler {
             if let handler = contentController as? ShortcutHandler {
                 if handler.canHandleAction(action: action) == true {
                     let _ = navigationController?.popToRootViewController(animated: false)
+                    
+                    // attempt to dismiss what we can from selected tab before switching
+                    if self.selectedViewController?.presentedViewController != nil {
+                        self.selectedViewController?.dismiss(animated: false, completion: nil)
+                    } else {
+                        let selectedNav = self.selectedViewController as? UINavigationController
+                        let _ = selectedNav?.popViewController(animated: false)
+                    }
+                    
                     self.switchTab(tab: MainTab(rawValue: index)!)
                     self.shortcutHandler = handler
                     handled = true
@@ -291,8 +300,8 @@ extension MainViewController: ShortcutHandler {
         return handled
     }
     
-    func takeAction(action: HEMShortcutAction) {
-        self.shortcutHandler?.takeAction(action: action)
+    func takeAction(action: HEMShortcutAction, data: Any?) {
+        self.shortcutHandler?.takeAction(action: action, data: data)
         self.shortcutHandler = nil
     }
     

@@ -133,10 +133,10 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
 
 - (NSString*)stringValueForTimelineDate:(NSDate*)date {
     NSString* title = nil;
-    NSDate* previousDay = [[NSDate date] previousDay];
+    NSDate* lastNight = [NSDate timelineInitialDate];
     NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
                                                 fromDate:date
-                                                  toDate:previousDay
+                                                  toDate:lastNight
                                                  options:0];
     NSInteger daysAgo = [diff day];
     
@@ -152,9 +152,10 @@ NSString* const HEMTimelineNotificationTimelineAmended = @"notification.timeline
 }
 
 - (BOOL)isDateLastNight:(NSDate*)date {
+    NSDate* lastNight = [NSDate timelineInitialDate];
     NSDateComponents *diff = [[self calendar] components:NSCalendarUnitDay
                                                 fromDate:date
-                                                  toDate:[[NSDate date] previousDay]
+                                                  toDate:lastNight
                                                  options:0];
     return diff.day == 0;
 }

@@ -16,8 +16,8 @@ import Foundation
      * action, the controller should relay the call to other controllers conforming
      * to the protocol that it contains.
      *
-     * @param action: action triggered on launch of the app through force touch
-     * @return true if handled, no otherwise
+     * - Parameter action: action triggered on launch of the app through force touch
+     * - Return true if handled, no otherwise
      */
     @objc func canHandleAction(action: HEMShortcutAction) -> Bool
     
@@ -26,8 +26,9 @@ import Foundation
      * additionally call the controller to take the action and discontinue the
      * relay
      *
-     * @param action: action to take
+     * - Parameter action: action to take
+     * - Parameter data: optional associated data for the action
      */
-    @objc func takeAction(action: HEMShortcutAction)
+    @objc func takeAction(action: HEMShortcutAction, data: Any?)
     
 }

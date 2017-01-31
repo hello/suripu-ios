@@ -17,5 +17,6 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, assign, getter=isLastNight, readonly) BOOL lastNight;
+@property (nonatomic, assign, getter=showEventLoadAnimation) BOOL eventLoadAnimation;
 
 @end

@@ -21,10 +21,9 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMHandHoldingService.h"
-#import "HEMTimelineService.h"
 #import "HEMStyle.h"
 
-@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable>
+@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable, ShortcutHandler>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
@@ -58,13 +57,12 @@
 {
     _lastNightSleepScore = -1; // initialize to -1 to make update take affect for 0
     
-    NSInteger lastNightSleepScore = 0;
     HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
-    if ([timelineVC isLastNight]) {
-        SENTimeline* timeline = [SENTimeline timelineForDate:date];
-        lastNightSleepScore = [[timeline score] integerValue];
-    }
-    [self updateLastNightSleepScore:lastNightSleepScore];
+    [timelineVC setEventLoadAnimation:YES];
+    
+    SENTimeline* timeline = [SENTimeline timelineForDate:[NSDate timelineInitialDate]];
+    [self updateLastNightSleepScore:[[timeline score] integerValue]];
+    
     [self reloadDataWithController:timelineVC];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
@@ -205,6 +203,22 @@
             id<Scrollable> scrollable = (id) controller;
             [scrollable scrollToTop];
         }
+    }
+}
+
+#pragma mark - Shortcut Handler
+
+- (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
+    return action == HEMShortcutActionPushTimeline;
+}
+
+- (void)takeActionWithAction:(HEMShortcutAction)action data:(id)data {
+    if ([data isKindOfClass:[PushNotification class]]
+        && [[data detail] isKindOfClass:[NSDate class]]
+        && [[data detail] compare:[NSDate timelineInitialDate]] == NSOrderedAscending) {
+        [self reloadWithDate:[data detail]];
+    } else {
+        [self reloadWithDate:[NSDate timelineInitialDate]];
     }
 }
 

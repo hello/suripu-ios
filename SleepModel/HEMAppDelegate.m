@@ -70,19 +70,19 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         NSString* fullPath = [NSString stringWithFormat:@"%@%@", [url host], [url path]];
         HEMShortcutAction action = [HEMShortcutService actionForType:fullPath];
         if (action != HEMShortcutActionUnknown) {
-            [self performShortcutAction:action];
+            [self performShortcutAction:action data:nil];
         }
     }
     return YES;
 }
 
-- (BOOL)performShortcutAction:(HEMShortcutAction)action {
+- (BOOL)performShortcutAction:(HEMShortcutAction)action data:(id)data {
     BOOL performed = NO;
     RootViewController* rootVC = [RootViewController currentRootViewController];
     if ([rootVC conformsToProtocol:@protocol(ShortcutHandler)]) {
         id<ShortcutHandler> handler = (id) rootVC;
         if ([handler canHandleActionWithAction:action]) {
-            [handler takeActionWithAction:action];
+            [handler takeActionWithAction:action data:data];
             performed = YES;
         }
     }
@@ -95,7 +95,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     BOOL handled = NO;
     HEMShortcutAction action = [HEMShortcutService actionForType:shortcutType];
     if (action != HEMShortcutActionUnknown) {
-        handled = [self performShortcutAction:action];
+        handled = [self performShortcutAction:action data:nil];
     }
     completionHandler(handled);
 }
@@ -236,6 +236,26 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
 #pragma mark - Remote / Push Notifications
 
+- (void)application:(UIApplication*)application
+didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo
+fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+    DDLogVerbose(@"received remote notification %@ in background or foreground", userInfo);
+    UIBackgroundFetchResult result = UIBackgroundFetchResultNoData;
+    if ([application applicationState] == UIApplicationStateInactive) { // opened notification
+        PushNotification* notification = [[PushNotification alloc] initWithInfo:userInfo];
+        HEMShortcutAction action = [HEMShortcutService actionForNotification:notification];
+        if (action != HEMShortcutActionUnknown) {
+            [self performShortcutAction:action data:notification];
+            result = UIBackgroundFetchResultNewData;
+        }
+    }
+    completionHandler(result);
+}
+
+- (void)application:(UIApplication*)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings {
+    [application renewPushNotificationToken];
+}
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
     DDLogVerbose(@"received push notification token");
     [[self pushService] uploadPushTokenWithData:deviceToken];
@@ -267,7 +287,9 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)didSignIn {
-    [self renewPushNotificationToken];
+    if ([[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
+        [self renewPushNotificationToken];
+    }
 }
 
 - (void)reset {

@@ -348,11 +348,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 }
 
 - (BOOL)dateIsLastNight {
-    NSDateComponents *diff = [self.calendar components:NSCalendarUnitDay
-                                              fromDate:self.dateForNightOfSleep
-                                                toDate:[[NSDate date] previousDay]
-                                               options:0];
-    return diff.day == 0;
+    return [[self timelineService] isDateLastNight:self.dateForNightOfSleep];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

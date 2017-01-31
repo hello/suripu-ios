@@ -8,6 +8,8 @@
 
 #import <SenseKit/SENPreference.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMNotificationSettingsViewController.h"
 #import "HEMSettingsStoryboard.h"
 #import "HEMSettingsHeaderFooterView.h"
@@ -63,6 +65,10 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 - (IBAction)didFlipSwitch:(UISwitch*)sender {
     BOOL isOn = [sender isOn];
     DDLogVerbose(@"notification turned on %@", @(isOn));
+    if (isOn) {
+        [[UIApplication sharedApplication] askForPermissionToSendPushNotifications];
+    }
+    
     NSUInteger row = sender.tag - HEMNotificationTagOffset;
     SENPreference* preference = [self preferenceAtIndex:row];
     HEMAccountService* service = [HEMAccountService sharedService];

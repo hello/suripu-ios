@@ -271,8 +271,8 @@ extension RootViewController: ShortcutHandler {
         return handled
     }
     
-    func takeAction(action: HEMShortcutAction) {
-        self.shortcutHandler?.takeAction(action: action)
+    func takeAction(action: HEMShortcutAction, data: Any?) {
+        self.shortcutHandler?.takeAction(action: action, data: data)
         self.shortcutHandler = nil
     }
     

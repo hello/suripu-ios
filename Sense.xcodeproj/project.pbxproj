@@ -125,6 +125,8 @@
 		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
 		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
+		BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9BF1E40141200956E73 /* PushNotification.swift */; };
+		BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9C11E401A0100956E73 /* Date+Format.swift */; };
 		BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */; };
 		BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */; };
 		BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */; };
@@ -744,6 +746,8 @@
 		BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEnablePushViewController.m; sourceTree = "<group>"; };
 		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
 		BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardAlarmViewController.m; sourceTree = "<group>"; };
+		BF11C9BF1E40141200956E73 /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
+		BF11C9C11E401A0100956E73 /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF14E3C019EF3C020006EFEA /* HEMBluetoothUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothUtils.h; sourceTree = "<group>"; };
 		BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothUtils.m; sourceTree = "<group>"; };
 		BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiUtils.h; sourceTree = "<group>"; };
@@ -1569,6 +1573,7 @@
 			children = (
 				BF745FC31E3C034E0006D046 /* PushNotificationService.swift */,
 				BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */,
+				BF11C9BF1E40141200956E73 /* PushNotification.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -3184,6 +3189,7 @@
 				BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */,
 				BFE375EE1CEFE1520029EE66 /* UIImage+HEMCompression.h */,
 				BFE375EF1CEFE1520029EE66 /* UIImage+HEMCompression.m */,
+				BF11C9C11E401A0100956E73 /* Date+Format.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -4251,6 +4257,7 @@
 				BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
+				BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */,
@@ -4363,6 +4370,7 @@
 				BF21F0391DB02C650057F24E /* HEMVoiceExamplesPresenter.m in Sources */,
 				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
+				BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */,
 				BFA884B71C1A30F500613069 /* HEMTimeZoneAlertService.m in Sources */,
 				BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,

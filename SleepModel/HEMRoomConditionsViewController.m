@@ -96,7 +96,7 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
     return action == HEMShortcutActionRoomConditionsShow;
 }
 
-- (void)takeActionWithAction:(HEMShortcutAction)action {
+- (void)takeActionWithAction:(HEMShortcutAction)action data:(id _Nullable)data {
     if ([[self navigationController] topViewController] != self) {
         [[self navigationController] popToRootViewControllerAnimated:NO];
     }

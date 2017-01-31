@@ -113,7 +113,7 @@
     }
 }
 
-- (void)takeActionWithAction:(HEMShortcutAction)action {
+- (void)takeActionWithAction:(HEMShortcutAction)action data:(id _Nullable)data {
     switch (action) {
         case HEMShortcutActionAlarmEdit:
             if ([self presentedViewController]) {

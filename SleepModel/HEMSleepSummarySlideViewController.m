@@ -24,7 +24,7 @@
 #import "HEMTimelineService.h"
 #import "HEMStyle.h"
 
-@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable>
+@interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable, ShortcutHandler>
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
@@ -205,6 +205,21 @@
             id<Scrollable> scrollable = (id) controller;
             [scrollable scrollToTop];
         }
+    }
+}
+
+#pragma mark - Shortcut Handler
+
+- (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
+    return action == HEMShortcutActionPushTimeline;
+}
+
+- (void)takeActionWithAction:(HEMShortcutAction)action data:(id)data {
+    if ([data isKindOfClass:[PushNotification class]]
+        && [[data detail] isKindOfClass:[NSDate class]]) {
+        [self reloadWithDate:[data detail]];
+    } else {
+        [self reloadWithDate:[NSDate timelineInitialDate]];
     }
 }
 

@@ -399,6 +399,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save {
+    if (![sound identifier]) {
+        NSString* format = @"selected sound %@ does not have an identifier";
+        NSString* message = [NSString stringWithFormat:format, [sound localizedName]];
+        [SENAnalytics trackErrorWithMessage:message];
+        return;
+    }
+    
     BOOL shouldReload = _selectedSound != nil;
     if (![[_selectedSound identifier] isEqualToNumber:[sound identifier]]) {
         _selectedSound = sound;

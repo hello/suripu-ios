@@ -28,9 +28,6 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self configureTitleAccessibility];
-
     [self preLoadAccount]; // if does not yet exist, in case user returns to here
     [self configureButtons];
 
@@ -47,11 +44,6 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)preLoadAccount {
     [[HEMOnboardingService sharedService] loadCurrentAccount:nil];
-}
-
-- (void)configureTitleAccessibility {
-    NSString* msg = NSLocalizedString(@"user.info.accessibility.birthdate-title", nil);
-    [[self titleLabel] setAccessibilityLabel:msg];
 }
 
 - (void)configureButtons {

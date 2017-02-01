@@ -392,9 +392,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
-    cell.accessibilityValue = [self accessibleSummaryForSegmentAtIndexPath:indexPath];
-    cell.accessibilityLabel = NSLocalizedString(@"sleep-segment.accessibility-label", nil);
-    cell.isAccessibilityElement = YES;
     return cell;
 }
 

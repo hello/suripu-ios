@@ -332,8 +332,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
             BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
             size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
         } else { // is sense
-            BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
-            size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:hasUpgrade];
+            size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:NO];
         }
     } else {
         size.height = HEMNoDeviceHeight;
@@ -379,7 +378,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* wiFiColor = nil;
     [self wiFiColor:&wiFiColor icon:&wiFiIcon];
     
-    BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     NSString* name = [self senseTitleForMetadata:senseMetadata];
@@ -388,7 +386,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* property1ValueColor = wiFiColor;
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
-    NSString* actionButtonText = hasUpgrade ? [NSLocalizedString(@"upgrade.button.title", nil) uppercaseString] : nil;
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
@@ -400,11 +397,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
-    [[cell actionButton] setHidden:!hasUpgrade];
-    [[cell actionButton] setTitle:actionButtonText forState:UIControlStateNormal];
-    [[cell actionButton] addTarget:self
-                            action:@selector(upgradeSense)
-                  forControlEvents:UIControlEventTouchUpInside];
+    [[cell actionButton] setHidden:YES];
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {

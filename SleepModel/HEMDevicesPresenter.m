@@ -40,6 +40,12 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     HEMDevicesRowCount
 };
 
+typedef NS_ENUM(NSInteger, HEMDevicesSection) {
+    HEMDevicesSectionSenseAndPill = 0,
+    HEMDevicesSectionUpgrade,
+    HEMDevicesSectionCount
+};
+
 @interface HEMDevicesPresenter() <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
@@ -135,7 +141,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [UIColor textColor];
+        UIColor* color = [UIColor grey4];
         UIFont* font = [UIFont settingsHelpFont];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
@@ -146,7 +152,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
                                                     baseColor:color
                                                      baseFont:font];
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
-        [style setAlignment:NSTextAlignmentCenter];
+        [style setAlignment:NSTextAlignmentLeft];
         [attributedText addAttribute:NSParagraphStyleAttributeName
                                value:style
                                range:NSMakeRange(0, [attributedText length])];
@@ -258,13 +264,19 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 #pragma mark - UICollectionView
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return HEMDevicesSectionCount;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    // always show an option for Sense
-    return [[self deviceService] shouldShowPillInfo] ? HEMDevicesRowCount : 1;
+    switch (section) {
+        case HEMDevicesSectionSenseAndPill:
+            // always show an option for Sense
+            return [[self deviceService] shouldShowPillInfo] ? HEMDevicesRowCount : 1;
+        case HEMDevicesSectionUpgrade:
+        default:
+            return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -290,16 +302,23 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
                                 atIndexPath:(NSIndexPath*)indexPath {
     
     HEMTextFooterCollectionReusableView* footer
-    = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:HEMDevicesFooterReuseIdentifier
-                                                forIndexPath:indexPath];
+        = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                             withReuseIdentifier:HEMDevicesFooterReuseIdentifier
+                                                    forIndexPath:indexPath];
     
-    if ([[[self deviceService] devices] hasPairedSense]) {
-        [footer setText:[self attributedFooterText]];
-    } else {
-        [footer setText:nil];
+    NSAttributedString* attributedFootnote = nil;
+    switch ([indexPath section]) {
+        default:
+        case HEMDevicesSectionSenseAndPill:
+            if ([[[self deviceService] devices] hasPairedSense]) {
+                attributedFootnote = [self attributedFooterText];
+            }
+            break;
+        case HEMDevicesSectionUpgrade:
+            break;
     }
     
+    [footer setText:attributedFootnote];
     [footer setDelegate:self];
     
     return footer;
@@ -309,12 +328,20 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
                   layout:(UICollectionViewLayout *)collectionViewLayout
 referenceSizeForFooterInSection:(NSInteger)section {
     
-    CGFloat maxWidth = CGRectGetWidth([collectionView bounds]) - (HEMDeviceSectionMargin * 2);
-    CGFloat textHeight = [[self attributedFooterText] sizeWithWidth:maxWidth].height;
-    
     CGSize size = CGSizeZero;
-    size.width = maxWidth;
-    size.height = textHeight + (HEMDeviceSectionMargin * 2);
+    
+    switch (section) {
+        case HEMDevicesSectionSenseAndPill: {
+            CGFloat viewWidth = CGRectGetWidth([collectionView bounds]);
+            CGFloat maxWidth = viewWidth - (HEMDeviceSectionMargin * 2);
+            CGFloat textHeight = [[self attributedFooterText] sizeWithWidth:maxWidth].height;
+            size.width = maxWidth;
+            size.height = textHeight + (HEMDeviceSectionMargin * 2);
+            break;
+        }
+        default:
+            break;
+    }
     
     return size;
 }
@@ -521,8 +548,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
 
 #pragma mark - Pairing Notifications
 
-// TODO: try and remove this completely and use presenter events + service
-// to handle updates as needed
 - (void)listenForPairingChanges {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self

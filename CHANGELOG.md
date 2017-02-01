@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.3.2
+
+New:
+
+* Added support for low battery push notification
+* Added support for sleep score push notification
+* Prompt user for permission to send push notifications when toggling settings on, in settings
+
+Fixes:
+
+* Fixed an issue that would prevent the push notification token to not be retrieved after getting permission
+* Fixed an issue that prevented push notification token from being uploaded to the server
+* Fixed an issue that can cause the application to crash when playing sleep sounds while device is in an invalid state
+* Removed accessibility to avoid crashing the application when setting elements.  Acessibility was half-baked and not useful
+
 ## 2.0.3.1
 
 Fixes:

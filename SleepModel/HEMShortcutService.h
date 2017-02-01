@@ -13,7 +13,8 @@ typedef NS_ENUM(NSUInteger, HEMShortcutAction) {
     HEMShortcutActionAlarmNew,
     HEMShortcutActionAlarmEdit,
     HEMShortcutActionRoomConditionsShow,
-    HEMShortcutActionPushTimeline
+    HEMShortcutActionShowTimeline,
+    HEMShortcutActionShowDeviceSettings
 };
 
 @class PushNotification;

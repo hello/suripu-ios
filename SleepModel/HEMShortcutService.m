@@ -33,7 +33,9 @@ static NSString* const HEMShortcutExtensionRoomExtPath = @"ext/room";
 + (HEMShortcutAction)actionForNotification:(PushNotification*)notification {
     switch ([notification type]) {
         case InfoTypeSleepScore:
-            return  HEMShortcutActionPushTimeline;
+            return HEMShortcutActionShowTimeline;
+        case InfoTypeLowBattery:
+            return HEMShortcutActionShowDeviceSettings;
         case InfoTypeUnknown:
         default:
             return  HEMShortcutActionUnknown;

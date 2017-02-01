@@ -209,7 +209,7 @@
 #pragma mark - Shortcut Handler
 
 - (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
-    return action == HEMShortcutActionPushTimeline;
+    return action == HEMShortcutActionShowTimeline;
 }
 
 - (void)takeActionWithAction:(HEMShortcutAction)action data:(id)data {

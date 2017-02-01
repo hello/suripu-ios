@@ -55,6 +55,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if ([self categoryToShow] != HEMSettingsCategoryMain) {
+        [self showCategory:[self categoryToShow]];
+        [self setCategoryToShow:HEMSettingsCategoryMain]; // clear it after
+    }
     [SENAnalytics track:kHEMAnalyticsEventSettings];
 }
 
@@ -86,14 +90,20 @@
     }
 }
 
-#pragma mark - Settings Delegate
+#pragma mark - Shortcuts
 
-- (void)didSelectSettingsCategory:(HEMSettingsCategory)category
-                    fromPresenter:(HEMSettingsPresenter*)presenter {
+- (void)showCategory:(HEMSettingsCategory)category {
     NSString* segueId = [self segueIdentifierForCategory:category];
     if (segueId) {
         [self performSegueWithIdentifier:segueId sender:self];
     }
+}
+
+#pragma mark - Settings Delegate
+
+- (void)didSelectSettingsCategory:(HEMSettingsCategory)category
+                    fromPresenter:(HEMSettingsPresenter*)presenter {
+    [self showCategory:category];
 }
 
 - (void)showController:(UIViewController*)controller

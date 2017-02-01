@@ -15,7 +15,8 @@
 @class HEMSettingsPresenter;
 
 typedef NS_ENUM(NSUInteger, HEMSettingsCategory) {
-    HEMSettingsCategoryProfile = 0,
+    HEMSettingsCategoryMain = 0,
+    HEMSettingsCategoryProfile,
     HEMSettingsCategoryDevices,
     HEMSettingsCategoryNotifications,
     HEMSettingsCategoryExpansions,

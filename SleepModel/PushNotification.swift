@@ -13,15 +13,19 @@ import Foundation
     fileprivate static let keyType = "hlo-type"
     fileprivate static let keyDetail = "hlo-detail"
     fileprivate static let typeSleepScore = "sleep_score"
+    fileprivate static let typeLowBattery = "low_battery"
     
     @objc enum InfoType: Int {
         case unknown = 0
         case sleepScore
+        case lowBattery
         
         static func fromType(type: String!) -> InfoType {
             let lower = type?.lowercased()
             if lower == PushNotification.typeSleepScore {
                 return .sleepScore
+            } else if lower == PushNotification.typeLowBattery {
+                return .lowBattery
             } else {
                 return .unknown
             }
@@ -30,6 +34,7 @@ import Foundation
     
     /// convenience constant for objective-c code to use namespacing
     @objc public static let sleepScore: InfoType = .sleepScore
+    @objc public static let lowBattery: InfoType = .lowBattery
     
     @objc fileprivate(set) var type = InfoType.unknown
     @objc fileprivate(set) var detail: Any?
@@ -48,15 +53,15 @@ import Foundation
     
     fileprivate func process(info: NSDictionary!) {
         let type = info[PushNotification.keyType] as? String
-        let detail = info[PushNotification.keyDetail]
-        
         self.type = InfoType.fromType(type: type ?? "")
         
         switch self.type {
             case InfoType.sleepScore:
-                let isoDate = detail as? String
+                let isoDate = info[PushNotification.keyDetail] as? String
                 self.detail = Date.from(isoDateOnly: isoDate)
                 break
+            case InfoType.lowBattery:
+                fallthrough // detail is not used
             case InfoType.unknown:
                 fallthrough
             default:

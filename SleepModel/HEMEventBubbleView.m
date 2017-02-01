@@ -68,10 +68,6 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
     self.backgroundColor = [UIColor clearColor];
     self.cornerView.backgroundColor = [UIColor whiteColor];
     self.showingWaveforms = NO;
-
-    self.accessibilityLabel = NSLocalizedString(@"sleep-event.accessibility-label", nil);
-    self.accessibilityTraits = UIAccessibilityTraitButton;
-    self.isAccessibilityElement = YES;
 }
 
 - (void)layoutSubviews {

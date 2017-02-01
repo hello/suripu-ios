@@ -103,9 +103,6 @@
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
 "video.url.intro" = "https://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
 
-// user information
-"user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
-
 // pairing
 "pairing.activity.checking-wifi" = "Checking for Wi-Fi";
 "pairing.activity.pairing-sense" = "Pairing with Sense";
@@ -553,7 +550,6 @@
 "sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
-"sleep-event.accessibility-label" = "Event";
 "sleep-event.accessibility-value.format" = "%@, %@";
 "sleep-event.accessibility-hint" = "Double tap to open event options";
 

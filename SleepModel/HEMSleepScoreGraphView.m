@@ -29,8 +29,6 @@ CGFloat const arcOffsetY = 80.f;
     [super awakeFromNib];
     [self configureLayers];
     [self configureScoreValueLabel];
-    self.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.summary-score", nil);
-    self.isAccessibilityElement = YES;
 }
 
 - (void)configureLayers {

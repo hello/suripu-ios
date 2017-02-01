@@ -96,7 +96,7 @@
 - (void)presentErrorWithTitle:(NSString*)title message:(NSString*)message {
     [HEMAlertViewController showInfoDialogWithTitle:title
                                             message:message
-                                         controller:[self navigationController]];
+                                         controller:[self rootViewController]];
 }
 
 - (void)showAvailableSounds:(NSArray *)sounds

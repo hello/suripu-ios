@@ -911,9 +911,9 @@
 // upgrade path
 "upgrade.button.title" = "Set up Sense with Voice";
 "upgrade.new-sense.title" = "Sense with Voice";
-"upgrade.new-sense.desc" = "The new Sense introduces improved sensors, and Voice — which lets you control Sense just by speaking to it. Buy a Sense with Voice to upgrade.";
+"upgrade.new-sense.desc" = "This will walk you through migrating your account to a new Sense with Voice. You’ll need a Sense with Voice to continue.";
 "upgrade.new-sense.learn-more" = "Buy Sense with Voice";
-"upgrade.new-sense.setup" = "Set up";
+"upgrade.new-sense.setup" = "Continue";
 "upgrade.pair-sense.title" = "Pairing your new Sense";
 "upgrade.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
 "upgrade.actions.pair-pill" = "Pair new Sleep Pill";

@@ -48,6 +48,7 @@ static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitPreference = @"unitPreference";
 static NSString *const _HEMunits = @"units";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
+static NSString *const _HEMupgrade = @"upgrade";
 static NSString *const _HEMvoice = @"voice";
 static NSString *const _HEMvoiceSettingCell = @"voiceSettingCell";
 static NSString *const _HEMvolume = @"volume";
@@ -80,6 +81,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)toggleReuseIdentifier { return _HEMtoggle; }
 +(NSString *)topicCellReuseIdentifier { return _HEMtopicCell; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
++(NSString *)upgradeReuseIdentifier { return _HEMupgrade; }
 +(NSString *)voiceSettingCellReuseIdentifier { return _HEMvoiceSettingCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
 

@@ -12,6 +12,7 @@
 
 - (NSAttributedString *)trim;
 - (NSAttributedString *)hyperlink:(NSString*)url;
+- (NSAttributedString*)hyperlink:(NSString *)url font:(UIFont*)font;
 - (CGSize)sizeWithWidth:(CGFloat)width;
 - (CGSize)sizeWithHeight:(CGFloat)height;
 

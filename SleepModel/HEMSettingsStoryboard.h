@@ -27,6 +27,7 @@
 +(NSString *)senseReuseIdentifier;
 +(NSString *)pillReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
++(NSString *)upgradeReuseIdentifier;
 +(NSString *)supportCellReuseIdentifier;
 +(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;

@@ -22,14 +22,18 @@
 }
 
 - (NSAttributedString *)hyperlink:(NSString *)url {
-    NSMutableAttributedString *hyperlink = [self mutableCopy];
+    return [self hyperlink:url font:[UIFont settingsHelpFont]];
+}
 
+- (NSAttributedString*)hyperlink:(NSString *)url font:(UIFont*)font {
+    NSMutableAttributedString *hyperlink = [self mutableCopy];
+    
     [hyperlink addAttributes:@{
         NSLinkAttributeName : url,
-        NSFontAttributeName : [UIFont settingsHelpFont],
+        NSFontAttributeName : font,
         NSForegroundColorAttributeName : [UIColor tintColor]
     } range:NSMakeRange(0, [hyperlink length])];
-
+    
     return hyperlink;
 }
 

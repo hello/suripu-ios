@@ -352,6 +352,9 @@
 "settings.factory-restore.error.general-ble-failure" = "Unable to factory reset your Sense due to an unexpected communication problem with Sense. Please Try again.";
 "settings.sense.operation-failed.title" = "Sense operation failed";
 "settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected. Make sure you are near Sense and try again.";
+"settings.sense.upgrade.message.format" = "Your account is currently linked to an original Sense. If you have a new Sense with Voice, you can set it up here.\n%@";
+"settings.sense.upgrade.learn-more.link.text" = "Learn more about the new Sense";
+"settings.sense.upgrade.link.url" = "https://hello.is/features";
 
 // Insights / Questions
 "insights.title" = "Insights";

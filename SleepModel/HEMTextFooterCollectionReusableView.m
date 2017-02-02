@@ -8,7 +8,9 @@
 
 #import "HEMTextFooterCollectionReusableView.h"
 
-static CGFloat const HEMTextFooterMargins = 16.0f;
+static CGFloat const HEMTextFooterMargins = 24.0f;
+static CGFloat const HEMTextFooterTextTopInset = -8.0f;
+static CGFloat const HEMTextFooterTextLeftInset = -4.0f;
 
 @interface HEMTextFooterCollectionReusableView() <UITextViewDelegate>
 
@@ -56,7 +58,7 @@ static CGFloat const HEMTextFooterMargins = 16.0f;
     [[self textView] setBackgroundColor:[UIColor clearColor]];
     [[self textView] setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
     [[self textView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-    
+    [[self textView] setTextContainerInset:UIEdgeInsetsMake(HEMTextFooterTextTopInset, HEMTextFooterTextLeftInset, 0.0f, 0.0f)];
     [self addSubview:[self textView]];
 }
 

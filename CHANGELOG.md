@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3.3
+
+New:
+
+* Upgrade button now sits inside it's own card that explains what is for better
+
 ## 2.0.3.2
 
 New:

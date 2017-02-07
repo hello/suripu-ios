@@ -25,11 +25,11 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
     /**
      *  Receive push notifications for score in the morning
      */
-    SENPreferenceTypePushScore = 4,
+    SENPreferenceTypePushScore NS_ENUM_DEPRECATED_IOS(7_0, 10_0, "refer to SENNotificationSetting") = 4,
     /**
      *  Receive push notifications for poor sleep environment in the evening
      */
-    SENPreferenceTypePushConditions = 5,
+    SENPreferenceTypePushConditions NS_ENUM_DEPRECATED_IOS(7_0, 10_0, "refer to SENNotificationSetting") = 5,
     /**
      *  Represent height in centimeters
      */

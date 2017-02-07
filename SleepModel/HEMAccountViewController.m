@@ -46,6 +46,7 @@
     [presenter setDelegate:self];
     [presenter bindWithTableView:[self infoTableView]];
     [presenter bindWithNavigationItem:[self navigationItem]];
+    [presenter bindWithActivityContainerView:[[self rootViewController] view]];
     
     [self setAccountPresenter:presenter];
     [self addPresenter:presenter];

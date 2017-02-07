@@ -8,6 +8,7 @@
 
 #import <SenseKit/SenseKit.h>
 #import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENNotificationSetting.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
@@ -59,3 +60,6 @@
 #import "HEMSupportUtil.h"
 #import "HEMActionButton.h"
 #import "HEMMathUtil.h"
+#import "HEMSettingsHeaderFooterView.h"
+#import "HEMSettingsStoryboard.h"
+

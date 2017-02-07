@@ -24,8 +24,11 @@ typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
 };
 
 @interface HEMNotificationSettingsViewController ()<UITableViewDelegate, UITableViewDataSource>
+
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
-@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+@property (nonatomic, weak) IBOutlet HEMActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) PushNotificationService* pushService;
+
 @end
 
 @implementation HEMNotificationSettingsViewController
@@ -34,32 +37,17 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureTable];
-    [self reload];
+    [self configurePresenter];
 }
 
-- (void)configureTable {
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
-    [[self tableView] setTableHeaderView:header];
-    [[self tableView] setTableFooterView:footer];
-    [[self tableView] setHidden:YES];
-    [[self activityIndicator] setHidden:NO];
-    [[self activityIndicator] start];
-    [[self activityIndicator] setUserInteractionEnabled:NO];
-}
-
-- (void)reload {
-    __weak typeof(self) weakSelf = self;
-    HEMAccountService* service = [HEMAccountService sharedService];
-    [service refresh:^(SENAccount * _Nullable account, NSDictionary<NSNumber *,SENPreference *> * _Nullable preferences) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        DDLogVerbose(@"refresh complete, reloading data");
-        [[strongSelf activityIndicator] stop];
-        [[strongSelf activityIndicator] setHidden:YES];
-        [[strongSelf tableView] setHidden:NO];
-        [[strongSelf tableView] reloadData];
-    }];
+- (void)configurePresenter {
+    PushNotificationService* pushService = [PushNotificationService new];
+    NotificationSettingsPresenter* presenter
+        = [[NotificationSettingsPresenter alloc] initWithService:pushService];
+    [presenter bindWithTableView:[self tableView]];
+    [presenter bindWithActivityIndicator:[self activityIndicator]];
+    [self addPresenter:presenter];
+    [self setPushService:pushService];
 }
 
 - (IBAction)didFlipSwitch:(UISwitch*)sender {

@@ -41,4 +41,33 @@ extension UIApplication {
         self.applicationIconBadgeNumber = 0
     }
     
+    /**
+        Determine if user denied notification permission
+        
+        - Return true if denied, false otherwise
+    */
+    @objc func hasDeniedNotificationPermission() -> Bool {
+        guard self.isRegisteredForRemoteNotifications == false else {
+            return self.canSendNotifications() == false
+        }
+        
+        guard let settings = self.currentUserNotificationSettings else {
+            return false
+        }
+        
+        return settings.types.contains(UIUserNotificationType.alert) == false
+    }
+    
+    /**
+        Determine if application can be sent notifications
+     
+        - Return true if app can be sent notifications, false otherwise
+     */
+    @objc func canSendNotifications() -> Bool {
+        guard let settings = self.currentUserNotificationSettings else {
+            return false
+        }
+        return settings.types.contains(UIUserNotificationType.alert) == true
+    }
+    
 }

@@ -13,7 +13,7 @@ import Foundation
     fileprivate static let keyType = "hlo-type"
     fileprivate static let keyDetail = "hlo-detail"
     fileprivate static let typeSleepScore = "sleep_score"
-    fileprivate static let typeLowBattery = "low_battery"
+    fileprivate static let typeLowBattery = "pill_battery"
     
     @objc enum InfoType: Int {
         case unknown = 0

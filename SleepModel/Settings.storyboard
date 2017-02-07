@@ -26,11 +26,11 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="3nN-bA-0dV" customClass="WarningView" customModule="Sense" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="166"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HM9-3q-9gL">
-                                            <rect key="frame" x="0.0" y="8" width="414" height="161"/>
+                                            <rect key="frame" x="0.0" y="8" width="414" height="158"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="Vjx-H5-1Zh">
                                                     <rect key="frame" x="24" y="16" width="24" height="21"/>
@@ -57,8 +57,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOf-uY-SBo" customClass="HEMActionButton">
-                                                    <rect key="frame" x="24" y="89" width="366" height="56"/>
+                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eOf-uY-SBo" customClass="HEMActionButton">
+                                                    <rect key="frame" x="24" y="86" width="366" height="56"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="56" id="0OW-Hb-Pzs"/>
                                                     </constraints>
@@ -81,6 +81,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="YvN-u8-IRI" secondAttribute="trailing" id="nUr-6J-rjo"/>
                                                 <constraint firstAttribute="bottom" secondItem="eOf-uY-SBo" secondAttribute="bottom" constant="16" id="pgA-4l-jb6"/>
                                                 <constraint firstItem="Vjx-H5-1Zh" firstAttribute="leading" secondItem="HM9-3q-9gL" secondAttribute="leading" constant="24" id="wBC-DK-xJa"/>
+                                                <constraint firstItem="eOf-uY-SBo" firstAttribute="top" secondItem="aKu-68-1b7" secondAttribute="bottom" constant="13" id="zpc-eN-vuy"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -102,7 +103,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="24" reuseIdentifier="preference" textLabel="W0f-Ry-DLe" rowHeight="56" style="IBUITableViewCellStyleDefault" id="H2w-uU-KcE">
-                                        <rect key="frame" x="0.0" y="225" width="414" height="56"/>
+                                        <rect key="frame" x="0.0" y="222" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H2w-uU-KcE" id="L9Y-II-jS9">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>

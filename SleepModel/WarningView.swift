@@ -10,12 +10,21 @@ import Foundation
 
 @objc class WarningView: UIView {
     
+    static let baseHeight = CGFloat(166.0)
+    static let contentTopMargin = CGFloat(8.0)
+    static let titleSize = CGFloat(56.0)
+    static let messageTopPadding = CGFloat(16.0)
+    static let messageBotPadding = CGFloat(13.0)
+    static let messageHorzPadding = CGFloat(24.0)
+    static let buttonSize = CGFloat(56.0)
+    static let buttonBotPadding = CGFloat(16.0)
+    
     @IBOutlet fileprivate weak var contentView: UIView?
     @IBOutlet fileprivate weak var iconView: UIImageView?
     @IBOutlet fileprivate(set) weak var titleLabel: UILabel?
     @IBOutlet fileprivate weak var separator: UIView?
     @IBOutlet fileprivate(set) weak var messageLabel: UILabel?
-    @IBOutlet fileprivate weak var actionButton: HEMActionButton?
+    @IBOutlet fileprivate(set) weak var actionButton: HEMActionButton?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +32,7 @@ import Foundation
         self.iconView?.image = UIImage(named: "warning")
         self.titleLabel?.textColor = UIColor.grey6()
         self.titleLabel?.font = UIFont.body()
-        self.messageLabel?.textColor = UIColor.grey5()
-        self.messageLabel?.font = UIFont.body()
+        self.messageLabel?.numberOfLines = 0
         self.separator?.backgroundColor = UIColor.separator()
     }
     

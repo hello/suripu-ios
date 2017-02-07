@@ -9,22 +9,39 @@
 import Foundation
 import SenseKit
 
-/**
-    Typically, services should not have any dependencies to UIKit, but because
-    this particular service should have knowledge of what type of notifications
-    we should want, which is part of the UIKit, we will make an exception.
- */
 @objc class PushNotificationService: SENService {
     
     @objc func canRegisterForPushNotifications() -> Bool {
         return SENAuthorizationService.isAuthorized()
     }
-    
+
+    /**
+        Upload the push token
+     */
     @objc func uploadPushToken(data: Data!) {
         SENAPINotification.registerForRemoteNotifications(withTokenData: data) { (error: Error?) in
             if error != nil {
                 SENAnalytics.trackError(error!, withEventName: kHEMAnalyticsEventWarning)
             }
+        }
+    }
+    
+    @objc func getSettings(completion: @escaping ([SENNotificationSetting]?, Error?) -> Void) {
+        SENAPINotification.getSettings { (data, error: Error?) in
+            if error != nil {
+                SENAnalytics.trackError(error!)
+            }
+            completion (data as? [SENNotificationSetting], error)
+        }
+    }
+    
+    @objc func updateSettings(settings: [SENNotificationSetting]!,
+                              completion: @escaping ([SENNotificationSetting]?, Error?) -> Void) {
+        SENAPINotification.update(settings) { (data, error: Error?) in
+            if error != nil {
+                SENAnalytics.trackError(error!)
+            }
+            completion(data as? [SENNotificationSetting], error)
         }
     }
     

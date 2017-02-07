@@ -85,15 +85,34 @@ static NSString* const SENAuthorizationServiceContentType = @"application/x-www-
     return manager;
 }
 
++ (void)deauthorize:(void(^)(NSError* error))completion {
+    if ([self isAuthorized]) {
+        [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:^(id data, NSError *error) {
+            if (!error) {
+                [self finishDeauthorization];
+            }
+            if (completion) {
+                completion (error);
+            }
+        }];
+    } else {
+        completion (nil);
+    }
+}
+
 + (void)deauthorize
 {
     if ([self isAuthorized]) {
         [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
-        [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
-        [self authorizeRequestsWithToken:nil];
-        [self setAccountIdOfAuthorizedUser:nil];
-        [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
+        [self finishDeauthorization];
     }
+}
+
++ (void)finishDeauthorization {
+    [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
+    [self authorizeRequestsWithToken:nil];
+    [self setAccountIdOfAuthorizedUser:nil];
+    [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
 }
 
 + (BOOL)isAuthorized

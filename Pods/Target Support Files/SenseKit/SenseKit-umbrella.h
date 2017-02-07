@@ -53,6 +53,7 @@
 #import "SENInsight.h"
 #import "SENKeyedArchiver.h"
 #import "SENLocalPreferences.h"
+#import "SENNotificationSetting.h"
 #import "SENPairedDevices.h"
 #import "SENPillMetadata.h"
 #import "SENPreference.h"

@@ -736,6 +736,9 @@
 "account.photo.enable-camera-roll.message" = "To select a new profile photo, you need to grant Sense access to your photos. Enable access to photos for Sense in your device settings.";
 "account.error.photo-selection.title" = "Error processing photo";
 "account.error.photo-selection.message" = "Your photo may not have finished loading prior to selecting it. Please try again.";
+"account.error.sign-out.title" = "Sign out";
+"account.error.sign-out.message" = "Unable to sign out of your account. Please ensure your device is connected to the internet and try again.";
+"account.signing-out" = "Signing out";
 
 // notifications
 "notifications.actions.ok" = "Okay";

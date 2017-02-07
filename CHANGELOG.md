@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.3.4
+
+New:
+
+* Signing out of the app will display an activity indicator while waiting for server to confirm it has deauthorized the user
+* Updated copy to make it more explicit that shaking the pill needs to stop for it to pair with Sense
+* Updated C02 about copy
+* Updated primary user footnote copy, now that Nest expansion is live
+* Updated pill pairing error copy to provide suggestion
+
+Fixes:
+
+* Fixed issue where noise disturbances would show with a larger gap then it should in the Timeline
+
 ## 2.0.3.3
 
 New:

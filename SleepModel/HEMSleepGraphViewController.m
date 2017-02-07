@@ -1007,7 +1007,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMMinimumEventSpacing = 6.f;
-    CGFloat const HEMSoundHeightOffset = 26.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -1026,14 +1025,10 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
                 NSAttributedString *message =
                     [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
                 NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
-                BOOL hasSound = [self.dataSource segmentForSoundExistsAtIndexPath:indexPath];
                 CGSize minSize =
-                    [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:hasSound];
+                    [HEMEventBubbleView sizeWithAttributedText:message timeText:time showWaveform:NO];
                 CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
                                      minSize.height + HEMMinimumEventSpacing);
-                if (hasSound) {
-                    height += HEMSoundHeightOffset;
-                }
                 return CGSizeMake(width, height);
             } else {
                 return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));

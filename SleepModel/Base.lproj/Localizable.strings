@@ -117,7 +117,7 @@
 "pairing.failed.title" = "Pairing failed";
 "pairing.activity.waiting-for-sense" = "Waiting for Sense";
 "pairing.error.sense-not-found" = "Could not detect a Sense nearby. Sense should be plugged into a power outlet, nearby, and glowing blue or purple. Check to make sure no other devices are paired with Sense over Bluetooth.";
-"pairing.error.could-not-pair" = "Could not connect to Sense to pair. Sense should be plugged into a power outlet, nearby, and glowing blue or purple. Check to make sure no other devices are paired with Sense over Bluetooth.";
+"pairing.error.could-not-pair" = "Make sure Sense is plugged in, nearby, in Pairing Mode, and that no other devices are connected with Sense over Bluetooth.\n\nIf Sense is spinning yellow or green, make sure you are using the provided power cable and adapter, and that the cable is fully inserted and flush with both Sense and the adapter.";
 "pairing.error.unexpected-disconnect" = "The connection with Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Your account could not be linked with Sense.";
 "pairing.error.link-account-failed-edit-wifi" = "Your account could not be linked with Sense. You can try changing the Wi-Fi Sense is configured to.";

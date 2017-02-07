@@ -67,7 +67,7 @@
 "onboarding.pill.title" = "Sleep Pill";
 "onboarding.pill.description" = "Your Sleep Pill clips to your pillow and tracks your sleep through your movement during the night. Each person using Sense will need their own Sleep Pill. If you’re using Sense with a partner, they’ll set up their Sleep Pill separately.";
 "onboarding.pill.pair.title" = "Pairing your Sleep Pill";
-"onboarding.pill.pair.description" = "Hold your Sleep Pill nearby Sense, and shake it quickly. It may take a few seconds to pair your Sleep Pill with Sense.";
+"onboarding.pill.pair.description" = "To pair your Sleep Pill, shake it for three seconds and then stop.\n\nYou may need to shake it quickly to register. Be sure to stop after three seconds.";
 
 // help links
 "help.email.address" = "support@hello.is";

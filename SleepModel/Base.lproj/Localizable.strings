@@ -21,6 +21,8 @@
 "onboarding.pair-sense.title" = "Pair your Sense";
 "onboarding.pair-sense.not-glowing" = "Sense isn’t glowing blue or purple";
 "onboarding.pair-sense.desc" = "Sense should be plugged in, nearby, and glowing either blue or purple.";
+"onboarding.sense.not-glowing.title" = "Not glowing blue or purple";
+"onboarding.sense.not-glowing.message" = "If Sense is spinning yellow or green, make sure you are using the provided power cable and adapter, and that the cable is fully inserted and flush with both Sense and the adapter.\n\nYou may need to manually put Sense in Pairing Mode by holding your hand over Sense for seven seconds until it starts to glow blue or purple.";
 "onboarding.account.sign-in.title" = "Welcome back";
 "sign-up.activity.message" = "Creating your account";
 "sign-up.failed.title" = "Sign up failed";

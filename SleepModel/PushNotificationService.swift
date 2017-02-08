@@ -11,6 +11,9 @@ import SenseKit
 
 @objc class PushNotificationService: SENService {
     
+    // this is a work around for the fact
+    static var receivedToken: Bool = false
+    
     @objc func canRegisterForPushNotifications() -> Bool {
         return SENAuthorizationService.isAuthorized()
     }

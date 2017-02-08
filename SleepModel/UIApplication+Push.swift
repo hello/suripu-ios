@@ -48,7 +48,19 @@ extension UIApplication {
     */
     @objc func hasDeniedNotificationPermission() -> Bool {
         guard self.isRegisteredForRemoteNotifications == false else {
-            return self.canSendNotifications() == false
+            let canSend = self.canSendNotifications()
+            if canSend == false {
+                // because in iOS 9, if user deleted the app at one point after
+                // giving permission, isRegisteredForRemoteNotifications will
+                // be true, but actually we have no permissions yet
+                if #available(iOS 10, *) {
+                    return true
+                } else {
+                    return self.notificationTypesCompletelyOff() == false
+                }
+            } else {
+                return false
+            }
         }
         
         guard let settings = self.currentUserNotificationSettings else {
@@ -56,6 +68,13 @@ extension UIApplication {
         }
         
         return settings.types.contains(UIUserNotificationType.alert) == false
+    }
+    
+    @objc func notificationTypesCompletelyOff() -> Bool {
+        guard let settings = self.currentUserNotificationSettings else {
+            return true
+        }
+        return settings.types.isEmpty
     }
     
     /**
@@ -67,7 +86,8 @@ extension UIApplication {
         guard let settings = self.currentUserNotificationSettings else {
             return false
         }
-        return settings.types.contains(UIUserNotificationType.alert) == true
+        
+        return settings.types.contains(.alert) == true
     }
     
 }

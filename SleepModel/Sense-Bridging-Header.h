@@ -15,6 +15,7 @@
 #import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
+#import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMAppDelegate.h"
 
@@ -62,4 +63,3 @@
 #import "HEMMathUtil.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMSettingsStoryboard.h"
-

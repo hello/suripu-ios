@@ -13,16 +13,16 @@ import SenseKit
     
     fileprivate enum Section: Int {
         case setting
-        case sleepReminder
         
         static func count() -> Int {
-            return 3
+            return 1
         }
     }
     
     fileprivate weak var service: PushNotificationService!
     fileprivate weak var activityIndicator: HEMActivityIndicatorView!
     fileprivate weak var tableView: UITableView!
+    fileprivate weak var navigationItem: UINavigationItem?
     fileprivate var settings: [SENNotificationSetting]?
     fileprivate var sleepReminderSetting: SENNotificationSetting?
     fileprivate var error: Error?
@@ -46,6 +46,14 @@ import SenseKit
         tableView.dataSource = self
         self.tableView = tableView
         self.load()
+    }
+    
+    func bind(navigationItem: UINavigationItem?) {
+        let action = #selector(NotificationSettingsPresenter.save)
+        let saveButton = UIBarButtonItem.saveButton(withTarget: self, action: action)
+        saveButton?.isEnabled = false
+        navigationItem?.rightBarButtonItem = saveButton
+        self.navigationItem = navigationItem
     }
     
     // MARK: Presenter overrides
@@ -127,10 +135,10 @@ import SenseKit
         switch section {
             case .setting:
                 return self.settings?[indexPath.row].localizedName
-            case .sleepReminder:
-                return self.sleepReminderSetting?.localizedName
         }
     }
+    
+    // MARK: - Actions
     
     func setPermission() {
         guard UIApplication.shared.hasDeniedNotificationPermission() == false else {
@@ -139,6 +147,53 @@ import SenseKit
             return
         }
         UIApplication.shared.askForPermissionToSendPushNotifications()
+    }
+    
+    @objc fileprivate func toggle(enableSwitch: UISwitch) {
+        guard let setting = self.settings?[enableSwitch.tag] else {
+            return
+        }
+        self.navigationItem?.rightBarButtonItem?.isEnabled = true
+        setting.isEnabled = enableSwitch.isOn
+    }
+    
+    @objc fileprivate func save() {
+        // do something
+        print("save")
+        let container = self.activityDelegate?.activityContainer(from: self)
+        let activityView = HEMActivityCoverView()
+        let statusMessage = NSLocalizedString("activity.saving.changes", comment: "message to show with activity")
+        
+        activityView.show(in: container, withText: statusMessage, activity: true, completion: { [weak self] () in
+            self?.service.updateSettings(settings: self?.settings, completion: { [weak self] (error: Error?) in
+                var message: String?
+                let success = error == nil
+                
+                if success == true {
+                    message = NSLocalizedString("status.saved", comment: "message shown when saved")
+                    self?.navigationItem?.rightBarButtonItem?.isEnabled = false
+                }
+                
+                activityView.dismiss(withResultText: message, showSuccessMark: success, remove: true, completion: { [weak self] () in
+                    if error != nil {
+                        self?.showSaveError()
+                    }
+                })
+            })
+        })
+    }
+    
+    fileprivate func showSaveError() {
+        let title = NSLocalizedString("settings.notification.error.title", comment: "title in error dialog")
+        let message = NSLocalizedString("settings.notification.error.update-failed-message", comment: "error message")
+        self.errorDelegate?.showError(withTitle: title, andMessage: message, withHelpPage: nil, from: self)
+    }
+    
+    // MARK: - Clean up
+    
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
     }
 }
 
@@ -160,22 +215,40 @@ extension NotificationSettingsPresenter: UITableViewDelegate, UITableViewDataSou
         switch type {
             case .setting:
                 return self.settings?.count ?? 0
-            case .sleepReminder:
-                return self.sleepReminderSetting != nil ? 1 : 0
         }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return HEMSettingsHeaderFooterHeightWithTitle
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let identifier = HEMSettingsStoryboard.preferenceReuseIdentifier()
         return tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let section = Section.init(rawValue: indexPath.section) else {
+            return
+        }
+        
+        guard section == Section.setting else {
+            return
+        }
+        
+        guard let setting = self.settings?[indexPath.row] else {
+            return
+        }
+        
+        let enableSwitch = UISwitch()
+        enableSwitch.isOn = setting.isEnabled
+        enableSwitch.tag = indexPath.row
+        enableSwitch.onTintColor = UIColor.tint()
+        enableSwitch.addTarget(self,
+                               action: #selector(NotificationSettingsPresenter.toggle(enableSwitch:)),
+                               for: UIControlEvents.valueChanged)
+        
+        cell.backgroundColor = UIColor.white
+        cell.accessoryView = enableSwitch
+        cell.textLabel?.text = setting.localizedName
+        cell.textLabel?.textColor = UIColor.grey6()
+        cell.textLabel?.font = UIFont.body()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

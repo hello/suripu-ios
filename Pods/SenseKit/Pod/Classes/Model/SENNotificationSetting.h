@@ -20,10 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SENNotificationSchedule: NSObject <SENSerializable>
 
-@property (nonatomic, assign, readonly) NSInteger hour;
-@property (nonatomic, assign, readonly) NSInteger minute;
+@property (nonatomic, assign) NSInteger hour;
+@property (nonatomic, assign) NSInteger minute;
 
 - (nullable instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithHour:(NSInteger)hour minute:(NSInteger)minute;
 - (NSDictionary*)dictionaryValue;
 
 @end
@@ -33,8 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, readonly) NSString* localizedName;
 @property (nonatomic, assign, readonly) SENNotificationType type;
-@property (nonatomic, assign, readonly, getter=isEnabled) BOOL enabled;
-@property (nonatomic, strong, readonly, nullable) SENNotificationSchedule* schedule;
+@property (nonatomic, strong, nullable) SENNotificationSchedule* schedule;
+@property (nonatomic, assign, getter=isEnabled) BOOL enabled;
 
 - (nullable instancetype)initWithDictionary:(NSDictionary *)data;
 - (NSDictionary*)dictionaryValue;

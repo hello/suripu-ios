@@ -248,6 +248,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
             [self performShortcutAction:action data:notification];
             result = UIBackgroundFetchResultNewData;
         }
+        [SENAnalytics trackPushNotification:notification];
     }
     completionHandler(result);
 }

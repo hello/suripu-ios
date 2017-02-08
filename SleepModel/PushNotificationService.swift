@@ -35,13 +35,37 @@ import SenseKit
         }
     }
     
-    @objc func updateSettings(settings: [SENNotificationSetting]!,
-                              completion: @escaping ([SENNotificationSetting]?, Error?) -> Void) {
+    @objc func updateSettings(settings: [SENNotificationSetting]!, completion: @escaping (Error?) -> Void) {
         SENAPINotification.update(settings) { (data, error: Error?) in
             if error != nil {
                 SENAnalytics.trackError(error!)
             }
-            completion(data as? [SENNotificationSetting], error)
+            completion(error)
+        }
+    }
+    
+    @objc func enableAllSettings(completion: ((Error?) -> Void)?) {
+        func done(error: Error?) {
+            if completion != nil {
+                completion!(error)
+            }
+        }
+        
+        self.getSettings { [weak self] (data: [SENNotificationSetting]?, error: Error?) in
+            guard error == nil else {
+                return done(error: error)
+            }
+            
+            guard let settings = data else {
+                return done(error: nil)
+            }
+            
+            let enabledSettings = settings.map { (setting) -> SENNotificationSetting in
+                setting.isEnabled = true
+                return setting
+            }
+
+            self?.updateSettings(settings: enabledSettings, completion:done)
         }
     }
     

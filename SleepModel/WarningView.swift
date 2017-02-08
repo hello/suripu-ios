@@ -10,15 +10,6 @@ import Foundation
 
 @objc class WarningView: UIView {
     
-    static let baseHeight = CGFloat(166.0)
-    static let contentTopMargin = CGFloat(8.0)
-    static let titleSize = CGFloat(56.0)
-    static let messageTopPadding = CGFloat(16.0)
-    static let messageBotPadding = CGFloat(13.0)
-    static let messageHorzPadding = CGFloat(24.0)
-    static let buttonSize = CGFloat(56.0)
-    static let buttonBotPadding = CGFloat(16.0)
-    
     @IBOutlet fileprivate weak var contentView: UIView?
     @IBOutlet fileprivate weak var iconView: UIImageView?
     @IBOutlet fileprivate(set) weak var titleLabel: UILabel?

@@ -254,7 +254,9 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 }
 
 - (void)application:(UIApplication*)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings {
-    [application renewPushNotificationToken];
+    if (![application renewPushNotificationToken] && [application shouldShowPushSettings]) {
+        [application showPushSettings];
+    }
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
@@ -268,7 +270,6 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 
 - (void)renewPushNotificationToken {
     if ([[self pushService] canRegisterForPushNotifications]) {
-        DDLogVerbose(@"renewing push notification token");
         [[UIApplication sharedApplication] renewPushNotificationToken];
     }
 }

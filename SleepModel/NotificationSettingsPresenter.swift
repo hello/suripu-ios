@@ -141,12 +141,8 @@ import SenseKit
     // MARK: - Actions
     
     func setPermission() {
-        guard UIApplication.shared.hasDeniedNotificationPermission() == false else {
-            let settingsURL = URL(string: UIApplicationOpenSettingsURLString)!
-            let _ = UIApplication.shared.openURL(settingsURL)
-            return
-        }
-        UIApplication.shared.askForPermissionToSendPushNotifications()
+        let app = UIApplication.shared
+        app.askForPermissionToSendPushNotifications(goToSettingsIfDenied: true)
     }
     
     @objc fileprivate func toggle(enableSwitch: UISwitch) {
@@ -159,7 +155,6 @@ import SenseKit
     
     @objc fileprivate func save() {
         // do something
-        print("save")
         let container = self.activityDelegate?.activityContainer(from: self)
         let activityView = HEMActivityCoverView()
         let statusMessage = NSLocalizedString("activity.saving.changes", comment: "message to show with activity")
@@ -170,7 +165,7 @@ import SenseKit
                 let success = error == nil
                 
                 if success == true {
-                    message = NSLocalizedString("status.saved", comment: "message shown when saved")
+                    message = NSLocalizedString("actions.saved", comment: "message shown when saved")
                     self?.navigationItem?.rightBarButtonItem?.isEnabled = false
                 }
                 

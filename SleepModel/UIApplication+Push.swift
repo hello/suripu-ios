@@ -10,12 +10,28 @@ import Foundation
 
 extension UIApplication {
     
+    static fileprivate var goToSettingsIfDenied: Bool = false
+    
     /**
         Convenience method that simply puts a different name to the native
         registerForRemoteNotifications method, which can lead to confusion
     */
-    @objc func renewPushNotificationToken() {
-        self.registerForRemoteNotifications()
+    @objc func renewPushNotificationToken() -> Bool {
+        if self.canSendNotifications() {
+            self.registerForRemoteNotifications()
+            return true
+        }
+        return false
+    }
+    
+    @objc func showPushSettings() {
+        let settingsURL = URL(string: UIApplicationOpenSettingsURLString)!
+        let _ = self.openURL(settingsURL)
+        UIApplication.goToSettingsIfDenied = false
+    }
+    
+    @objc func shouldShowPushSettings() -> Bool {
+        return UIApplication.goToSettingsIfDenied
     }
     
     /**
@@ -31,6 +47,11 @@ extension UIApplication {
         self.registerUserNotificationSettings(settings)
     }
     
+    @objc func askForPermissionToSendPushNotifications(goToSettingsIfDenied: Bool) {
+        UIApplication.goToSettingsIfDenied = goToSettingsIfDenied
+        self.askForPermissionToSendPushNotifications()
+    }
+    
     /**
         Convenience method to clear the badge, if one was created from a push
         notification by first setting it to 1, then setting it to 0.  Without
@@ -39,42 +60,6 @@ extension UIApplication {
     @objc func clearBadgeFromNotification() {
         self.applicationIconBadgeNumber = 1
         self.applicationIconBadgeNumber = 0
-    }
-    
-    /**
-        Determine if user denied notification permission
-        
-        - Return true if denied, false otherwise
-    */
-    @objc func hasDeniedNotificationPermission() -> Bool {
-        guard self.isRegisteredForRemoteNotifications == false else {
-            let canSend = self.canSendNotifications()
-            if canSend == false {
-                // because in iOS 9, if user deleted the app at one point after
-                // giving permission, isRegisteredForRemoteNotifications will
-                // be true, but actually we have no permissions yet
-                if #available(iOS 10, *) {
-                    return true
-                } else {
-                    return self.notificationTypesCompletelyOff() == false
-                }
-            } else {
-                return false
-            }
-        }
-        
-        guard let settings = self.currentUserNotificationSettings else {
-            return false
-        }
-        
-        return settings.types.contains(UIUserNotificationType.alert) == false
-    }
-    
-    @objc func notificationTypesCompletelyOff() -> Bool {
-        guard let settings = self.currentUserNotificationSettings else {
-            return true
-        }
-        return settings.types.isEmpty
     }
     
     /**

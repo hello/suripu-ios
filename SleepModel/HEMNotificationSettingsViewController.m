@@ -47,11 +47,6 @@ typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
     [self setPushService:pushService];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-
 #pragma mark - Error Delegate
 
 - (void)showErrorWithTitle:(NSString *)title

@@ -42,6 +42,7 @@
 #import "HEMHandholdingView.h"
 #import "HEMAlertViewController.h"
 #import "HEMUnitPreferenceViewController.h"
+#import "HEMActivityCoverView.h"
 
 typedef NS_ENUM(NSInteger, HEMAccountSection) {
     HEMAccountSectionAccount = 0,
@@ -103,6 +104,7 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 @property (nonatomic, strong) NSAttributedString* enhancedAudioNote;
 @property (nonatomic, weak) UISwitch* activatedSwitch;
 @property (nonatomic, strong) UIAlertController* photoOptionController;
+@property (nonatomic, weak) UIView* activityContainer;
 
 @end
 
@@ -120,6 +122,10 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
         _handHoldingService = hhService;
     }
     return self;
+}
+
+- (void)bindWithActivityContainerView:(UIView*)activityContainer {
+    [self setActivityContainer:activityContainer];
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -716,9 +722,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = NSLocalizedString(@"actions.sign-out", nil);
     NSString* message = NSLocalizedString(@"settings.sign-out.confirmation", nil);
 
+    __weak typeof(self) weakSelf = self;
     [[self delegate] showSignOutConfirmation:title messasge:message action:^{
-        [SENAuthorizationService deauthorize];
-        [SENAnalytics track:kHEMAnalyticsEventSignOut];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSString* signOutText = NSLocalizedString(@"account.signing-out", nil);
+        HEMActivityCoverView* activityView = [HEMActivityCoverView new];
+        [activityView showInView:[strongSelf activityContainer] withText:signOutText activity:YES completion:^{
+            [SENAuthorizationService deauthorize:^(NSError* error) {
+                if (error) {
+                    [SENAnalytics trackError:error];
+                    [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                        NSString* title = NSLocalizedString(@"account.error.sign-out.title", nil);
+                        NSString* message = NSLocalizedString(@"account.error.sign-out.message", nil);
+                        [[strongSelf delegate] showErrorTitle:title message:message from:strongSelf];
+                    }];
+                } else {
+                    [SENAnalytics track:kHEMAnalyticsEventSignOut];
+                }
+            }];
+        }];
     } from:self];
 }
 

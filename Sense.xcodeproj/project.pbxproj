@@ -112,6 +112,8 @@
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
 		BF0871BD1E427CCC00E57C8C /* CollapsableActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */; };
+		BF0871BF1E43D88200E57C8C /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BE1E43D88200E57C8C /* WarningView.swift */; };
+		BF0871C11E44123400E57C8C /* NotificationSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */; };
 		BF0B15E41DF0A93100DF2373 /* UIImage+SleepScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */; };
 		BF0B15E71DF1072400DF2373 /* Main.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E61DF1072400DF2373 /* Main.xcassets */; };
 		BF0B15E91DF2256300DF2373 /* PillDFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */; };
@@ -733,6 +735,8 @@
 		BF05C8FB1A3FC6E3002A1307 /* HEMQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMQuestionCell.h; sourceTree = "<group>"; };
 		BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMQuestionCell.m; sourceTree = "<group>"; };
 		BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsableActionCell.swift; sourceTree = "<group>"; };
+		BF0871BE1E43D88200E57C8C /* WarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
+		BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsPresenter.swift; sourceTree = "<group>"; };
 		BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SleepScore.swift"; sourceTree = "<group>"; };
 		BF0B15E61DF1072400DF2373 /* Main.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Main.xcassets; sourceTree = "<group>"; };
 		BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PillDFU.storyboard; sourceTree = "<group>"; };
@@ -3046,8 +3050,10 @@
 		BF8C09411C330B17005AB5A7 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				BF0871BE1E43D88200E57C8C /* WarningView.swift */,
 				8AA1E6151A895EF200590EB6 /* HEMNotificationSettingsViewController.h */,
 				8AA1E6161A895EF200590EB6 /* HEMNotificationSettingsViewController.m */,
+				BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -4169,6 +4175,7 @@
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				BF885F281CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m in Sources */,
 				BFD9A97A1D5AB798003EC82A /* HEMPairSensePresenter.m in Sources */,
+				BF0871BF1E43D88200E57C8C /* WarningView.swift in Sources */,
 				BF4304791E301BF8008669B0 /* TabBarPresenter.swift in Sources */,
 				BF5BACFC1C5C24AA00347185 /* HEMTrendsCalendarViewCell.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
@@ -4397,6 +4404,7 @@
 				BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */,
 				BF6A61F21E01FF8200D59022 /* UIViewController+Delay.swift in Sources */,
 				BF4BE3D31D823D73003B96ED /* HEMSensorChartContainer.m in Sources */,
+				BF0871C11E44123400E57C8C /* NotificationSettingsPresenter.swift in Sources */,
 				BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */,
 				BF0871BD1E427CCC00E57C8C /* CollapsableActionCell.swift in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,

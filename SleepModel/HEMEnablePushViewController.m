@@ -45,22 +45,12 @@
     if ([[self pushService] canRegisterForPushNotifications]) {
         [[UIApplication sharedApplication] askForPermissionToSendPushNotifications];
     }
-    [self enableNotificationsInPreferences];
+    [[self pushService] enableAllSettingsWithCompletion:nil];
     [self next];
 }
 
 - (IBAction)skip:(id)sender {
     [self next];
-}
-
-- (void)enableNotificationsInPreferences {
-    SENPreference* conditionsPref = [[SENPreference alloc] initWithName:SENPreferenceNamePushConditions
-                                                                  value:@(YES)];
-    [conditionsPref saveLocally];
-    SENPreference* scorePref = [[SENPreference alloc] initWithName:SENPreferenceNamePushScore
-                                                             value:@(YES)];
-    [scorePref saveLocally];
-    [SENAPIPreferences updatePreferencesWithCompletion:NULL];
 }
 
 #pragma mark -

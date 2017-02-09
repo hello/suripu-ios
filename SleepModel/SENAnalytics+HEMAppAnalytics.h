@@ -13,6 +13,7 @@
 @class SENAlarm;
 @class SENDFUStatus;
 @class SENSense;
+@class PushNotification;
 
 NS_ASSUME_NONNULL_BEGIN
 // general
@@ -292,6 +293,7 @@ extern NSString* const HEMAnalyticsEventUpgradeReset;
 + (void)trackSenseUpdate:(SENDFUStatus*)status;
 + (void)trackSense:(SENSense*)sense;
 + (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event;
++ (void)trackPushNotification:(PushNotification*)notification;
 
 @end
 

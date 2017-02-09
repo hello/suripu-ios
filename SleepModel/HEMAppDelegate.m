@@ -248,12 +248,15 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
             [self performShortcutAction:action data:notification];
             result = UIBackgroundFetchResultNewData;
         }
+        [SENAnalytics trackPushNotification:notification];
     }
     completionHandler(result);
 }
 
 - (void)application:(UIApplication*)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings {
-    [application renewPushNotificationToken];
+    if (![application renewPushNotificationToken] && [application shouldShowPushSettings]) {
+        [application showPushSettings];
+    }
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken {
@@ -267,7 +270,6 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 
 - (void)renewPushNotificationToken {
     if ([[self pushService] canRegisterForPushNotifications]) {
-        DDLogVerbose(@"renewing push notification token");
         [[UIApplication sharedApplication] renewPushNotificationToken];
     }
 }

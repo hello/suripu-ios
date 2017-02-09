@@ -13,14 +13,15 @@ import Foundation
     fileprivate static let keyType = "hlo-type"
     fileprivate static let keyDetail = "hlo-detail"
     fileprivate static let typeSleepScore = "sleep_score"
-    fileprivate static let typeLowBattery = "low_battery"
+    fileprivate static let typeLowBattery = "pill_battery"
+    fileprivate static let typeNotRecognized = "not recognized"
     
-    @objc enum InfoType: Int {
+    @objc enum PushType: Int {
         case unknown = 0
         case sleepScore
         case lowBattery
         
-        static func fromType(type: String!) -> InfoType {
+        static func fromType(type: String!) -> PushType {
             let lower = type?.lowercased()
             if lower == PushNotification.typeSleepScore {
                 return .sleepScore
@@ -30,13 +31,26 @@ import Foundation
                 return .unknown
             }
         }
+        
+        func stringValue() -> String! {
+            switch self {
+                case .sleepScore:
+                    return PushNotification.typeSleepScore
+                case .lowBattery:
+                    return PushNotification.typeLowBattery
+                case .unknown:
+                    fallthrough
+                default:
+                    return PushNotification.typeNotRecognized
+            }
+        }
     }
     
     /// convenience constant for objective-c code to use namespacing
-    @objc public static let sleepScore: InfoType = .sleepScore
-    @objc public static let lowBattery: InfoType = .lowBattery
+    @objc public static let sleepScore: PushType = .sleepScore
+    @objc public static let lowBattery: PushType = .lowBattery
     
-    @objc fileprivate(set) var type = InfoType.unknown
+    @objc fileprivate(set) var type = PushType.unknown
     @objc fileprivate(set) var detail: Any?
     
     /**
@@ -50,19 +64,29 @@ import Foundation
         super.init()
         self.process(info: info)
     }
+
+    /**
+        Convenience method for objective c to retrieve the string value for
+        the type of this instance
+        
+        - Return the string value for the type enum
+    */
+    @objc func typeStringValue() -> String! {
+        return self.type.stringValue()
+    }
     
     fileprivate func process(info: NSDictionary!) {
         let type = info[PushNotification.keyType] as? String
-        self.type = InfoType.fromType(type: type ?? "")
+        self.type = PushType.fromType(type: type ?? "")
         
         switch self.type {
-            case InfoType.sleepScore:
+            case PushType.sleepScore:
                 let isoDate = info[PushNotification.keyDetail] as? String
                 self.detail = Date.from(isoDateOnly: isoDate)
                 break
-            case InfoType.lowBattery:
+            case PushType.lowBattery:
                 fallthrough // detail is not used
-            case InfoType.unknown:
+            case PushType.unknown:
                 fallthrough
             default:
                 break;

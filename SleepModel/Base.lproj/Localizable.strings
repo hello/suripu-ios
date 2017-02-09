@@ -173,6 +173,9 @@
 "settings.expansions" = "Expansions";
 "settings.voice" = "Voice";
 "settings.notifications" = "Notifications";
+"settings.notification.warning.title.not-enabled" = "Notifications not enabled";
+"settings.notification.warning.message.not-enabled" = "Check your device settings to make sure notifications are enabled.";
+"settings.notification.warning.button.enable" = "Enable notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My Account";
 "settings.units" = "Units and time";

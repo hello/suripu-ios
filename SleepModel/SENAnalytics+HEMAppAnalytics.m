@@ -10,6 +10,8 @@
 #import <SenseKit/SENSense.h>
 #import <SenseKit/SENAnalyticsLogger.h>
 
+#import "Sense-Swift.h"
+
 #import "SENAnalytics+HEMAppAnalytics.h"
 
 #import "HEMConfig.h"
@@ -289,6 +291,11 @@ NSString* const HEMAnalyticsEventUpgradeSwapRequest = @"Upgrade Swap Accounts Re
 NSString* const HEMAnalyticsEventUpgradeSwapped = @"Upgrade Account Swapped";
 NSString* const HEMAnalyticsEventUpgradeReset = @"Upgrade Factory Reset";
 
+// push notifications
+static NSString* const kHEMAnalyticsEventOpenFromPushNotification = @"Open Notification";
+static NSString* const kHEMAnalyticsEventNotificationType = @"type";
+static NSString* const kHEMAnalyticsEventNotificationDetail = @"detail";
+
 // internal use only
 static NSString* const kHEMAnalyticsEventError = @"Error";
 static NSString* const HEMAnalyticsEventAccountCreated = @"Onboarding Account Created";
@@ -511,6 +518,20 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
              properties:@{kHEMAnalyticsEventPropSenseId : deviceId,
                           kHEMAnalyticsEventPropHwVersion : hardwareVersion}];
     }
+}
+
+#pragma mark - Track Push Notification
+
++ (void)trackPushNotification:(PushNotification*)notification {
+    NSString* detail = @"n/a";
+    if ([[notification detail] isKindOfClass:[NSString class]]) {
+        detail = [notification detail];
+    } else if ([[notification detail] isKindOfClass:[NSNumber class]]) {
+        detail = [[notification detail] stringValue];
+    }
+    NSDictionary* props = @{kHEMAnalyticsEventNotificationType : [notification typeStringValue],
+                            kHEMAnalyticsEventNotificationDetail : detail};
+    [self track:kHEMAnalyticsEventOpenFromPushNotification properties:props];
 }
 
 #pragma mark - Convenience methods

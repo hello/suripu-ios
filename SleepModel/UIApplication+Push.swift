@@ -10,12 +10,28 @@ import Foundation
 
 extension UIApplication {
     
+    static fileprivate var goToSettingsIfDenied: Bool = false
+    
     /**
         Convenience method that simply puts a different name to the native
         registerForRemoteNotifications method, which can lead to confusion
     */
-    @objc func renewPushNotificationToken() {
-        self.registerForRemoteNotifications()
+    @objc func renewPushNotificationToken() -> Bool {
+        if self.canSendNotifications() {
+            self.registerForRemoteNotifications()
+            return true
+        }
+        return false
+    }
+    
+    @objc func showPushSettings() {
+        let settingsURL = URL(string: UIApplicationOpenSettingsURLString)!
+        let _ = self.openURL(settingsURL)
+        UIApplication.goToSettingsIfDenied = false
+    }
+    
+    @objc func shouldShowPushSettings() -> Bool {
+        return UIApplication.goToSettingsIfDenied
     }
     
     /**
@@ -31,6 +47,11 @@ extension UIApplication {
         self.registerUserNotificationSettings(settings)
     }
     
+    @objc func askForPermissionToSendPushNotifications(goToSettingsIfDenied: Bool) {
+        UIApplication.goToSettingsIfDenied = goToSettingsIfDenied
+        self.askForPermissionToSendPushNotifications()
+    }
+    
     /**
         Convenience method to clear the badge, if one was created from a push
         notification by first setting it to 1, then setting it to 0.  Without
@@ -39,6 +60,19 @@ extension UIApplication {
     @objc func clearBadgeFromNotification() {
         self.applicationIconBadgeNumber = 1
         self.applicationIconBadgeNumber = 0
+    }
+    
+    /**
+        Determine if application can be sent notifications
+     
+        - Return true if app can be sent notifications, false otherwise
+     */
+    @objc func canSendNotifications() -> Bool {
+        guard let settings = self.currentUserNotificationSettings else {
+            return false
+        }
+        
+        return settings.types.contains(.alert) == true
     }
     
 }

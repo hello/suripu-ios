@@ -51,12 +51,7 @@ static NSString* const SENAPINotificationOS = @"ios";
     for (SENNotificationSetting* setting in settings) {
         [parameters addObject:[setting dictionaryValue]];
     }
-    
-    [SENAPIClient PUT:SENAPINotificationEndpoint parameters:parameters completion:^(id data, NSError *error) {
-        if (completion) {
-            completion ([self settingsFromResponse:data], error);
-        }
-    }];
+    [SENAPIClient PUT:SENAPINotificationEndpoint parameters:parameters completion:completion];
 }
 
 #pragma mark - Convenience methods

@@ -9,22 +9,66 @@
 import Foundation
 import SenseKit
 
-/**
-    Typically, services should not have any dependencies to UIKit, but because
-    this particular service should have knowledge of what type of notifications
-    we should want, which is part of the UIKit, we will make an exception.
- */
 @objc class PushNotificationService: SENService {
+    
+    // this is a work around for the fact
+    static var receivedToken: Bool = false
     
     @objc func canRegisterForPushNotifications() -> Bool {
         return SENAuthorizationService.isAuthorized()
     }
-    
+
+    /**
+        Upload the push token
+     */
     @objc func uploadPushToken(data: Data!) {
         SENAPINotification.registerForRemoteNotifications(withTokenData: data) { (error: Error?) in
             if error != nil {
                 SENAnalytics.trackError(error!, withEventName: kHEMAnalyticsEventWarning)
             }
+        }
+    }
+    
+    @objc func getSettings(completion: @escaping ([SENNotificationSetting]?, Error?) -> Void) {
+        SENAPINotification.getSettings { (data, error: Error?) in
+            if error != nil {
+                SENAnalytics.trackError(error!)
+            }
+            completion (data as? [SENNotificationSetting], error)
+        }
+    }
+    
+    @objc func updateSettings(settings: [SENNotificationSetting]!, completion: @escaping (Error?) -> Void) {
+        SENAPINotification.update(settings) { (data, error: Error?) in
+            if error != nil {
+                SENAnalytics.trackError(error!)
+            }
+            completion(error)
+        }
+    }
+    
+    @objc func enableAllSettings(completion: ((Error?) -> Void)?) {
+        func done(error: Error?) {
+            if completion != nil {
+                completion!(error)
+            }
+        }
+        
+        self.getSettings { [weak self] (data: [SENNotificationSetting]?, error: Error?) in
+            guard error == nil else {
+                return done(error: error)
+            }
+            
+            guard let settings = data else {
+                return done(error: nil)
+            }
+            
+            let enabledSettings = settings.map { (setting) -> SENNotificationSetting in
+                setting.isEnabled = true
+                return setting
+            }
+
+            self?.updateSettings(settings: enabledSettings, completion:done)
         }
     }
     

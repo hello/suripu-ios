@@ -11,9 +11,6 @@
 
 @interface SENNotificationSchedule()
 
-@property (nonatomic, assign) NSInteger hour;
-@property (nonatomic, assign) NSInteger minute;
-
 @end
 
 @implementation SENNotificationSchedule
@@ -28,11 +25,14 @@ static NSString* kSENScheduleParamMinute = @"minute";
         return nil;
     }
     
+    return [self initWithHour:[hourObject integerValue] minute:[minuteObject integerValue]];
+}
+
+- (instancetype)initWithHour:(NSInteger)hour minute:(NSInteger)minute {
     if (self = [super init]) {
-        _hour = [hourObject integerValue];
-        _minute = [minuteObject integerValue];
+        _hour = hour;
+        _minute = minute;
     }
-    
     return self;
 }
 
@@ -48,8 +48,6 @@ static NSString* kSENScheduleParamMinute = @"minute";
 @property (nonatomic, copy) NSString* typeString;
 @property (nonatomic, copy) NSString* localizedName;
 @property (nonatomic, assign) SENNotificationType type;
-@property (nonatomic, assign, getter=isEnabled) BOOL enabled;
-@property (nonatomic, strong) SENNotificationSchedule* schedule;
 
 @end
 

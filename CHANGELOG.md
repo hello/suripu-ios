@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.3.5
+
+New:
+
+* Updated notification settings to support new API + warning users if notifications are disabled
+* Updated onboarding notification screen to use new API
+* Added analytics event when app is opened from push notification
+* Updated various onboarding screen copy and error messages to address issues when user leaves the happy path
+
 ## 2.0.3.4
 
 New:

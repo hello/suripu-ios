@@ -523,14 +523,16 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 #pragma mark - Track Push Notification
 
 + (void)trackPushNotification:(PushNotification*)notification {
-    NSString* detail = @"n/a";
-    if ([[notification detail] isKindOfClass:[NSString class]]) {
-        detail = [notification detail];
-    } else if ([[notification detail] isKindOfClass:[NSNumber class]]) {
-        detail = [[notification detail] stringValue];
+    id detailObj = [notification detail];
+    NSString* detail = nil;
+    if ([detailObj isKindOfClass:[NSDate class]]) {
+        detail = [detailObj isoDate];
+    } else if ([detailObj respondsToSelector:@selector(stringValue)]) {
+        detail = [detailObj stringValue];
     }
+    
     NSDictionary* props = @{kHEMAnalyticsEventNotificationType : [notification typeStringValue],
-                            kHEMAnalyticsEventNotificationDetail : detail};
+                            kHEMAnalyticsEventNotificationDetail : detail ?: @"n/a"};
     [self track:kHEMAnalyticsEventOpenFromPushNotification properties:props];
 }
 

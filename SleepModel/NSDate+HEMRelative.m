@@ -10,6 +10,8 @@
 
 @implementation NSDate (HEMRelative)
 
+static NSString* const kISODateFormat = @"yyyy-MM-dd";
+
 + (NSDate *)timelineInitialDate {
     NSDate* startDate = [[NSDate date] previousDay];
     if ([startDate shouldCountAsPreviousDay])
@@ -164,6 +166,12 @@
         return hour < HEMSleepDateStartHour;
     }
     return NO;
+}
+
+- (NSString*)isoDate {
+    NSDateFormatter* formatter = [NSDateFormatter new];
+    [formatter setDateFormat:kISODateFormat];
+    return [formatter stringFromDate:self];
 }
 
 @end

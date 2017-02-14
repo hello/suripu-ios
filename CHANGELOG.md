@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3.6
+
+Fixes:
+
+* Fixed issue with analytics property, detail, always showing n/a for Open Notification
+
 ## 2.0.3.5
 
 New:

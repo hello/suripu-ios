@@ -26,6 +26,7 @@ import SenseKit
     fileprivate var settings: [SENNotificationSetting]?
     fileprivate var sleepReminderSetting: SENNotificationSetting?
     fileprivate var error: Error?
+    fileprivate var warningHeader: WarningView?
     
     init(service: PushNotificationService!) {
         super.init()
@@ -45,6 +46,7 @@ import SenseKit
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView = tableView
+        self.warningHeader = tableView.tableHeaderView as? WarningView
         self.load()
     }
     
@@ -110,7 +112,7 @@ import SenseKit
     fileprivate func reloadTableHeader() {
         if UIApplication.shared.canSendNotifications() {
             self.tableView.tableHeaderView = HEMSettingsHeaderFooterView(topBorder: false, bottomBorder: false)
-        } else if let warningView = self.tableView.tableHeaderView as? WarningView {
+        } else if let warningView = self.warningHeader {
             // update the custom table warning header view
             warningView.titleLabel?.text = NSLocalizedString("settings.notification.warning.title.not-enabled",
                                                              comment: "title for warning")

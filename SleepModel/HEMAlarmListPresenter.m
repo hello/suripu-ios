@@ -644,7 +644,6 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 
 - (void)toggleEnableSwitch:(UISwitch *)sender {
     NSArray* alarms = [[self alarmService] alarms];
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
     __block SENAlarm *alarm = [alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
     
@@ -677,7 +676,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
                                               message:[error localizedDescription]
                                         fromPresenter:strongSelf];
         } else {
-            [[strongSelf collectionView] reloadItemsAtIndexPaths:@[indexPath]];
+            [[strongSelf collectionView] reloadData];
             [SENAnalytics trackAlarmToggle:alarm];
         }
     }];

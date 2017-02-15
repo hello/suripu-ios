@@ -31,7 +31,6 @@
 		8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */; };
 		8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
 		8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
-		8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */; };
 		8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */; };
 		8A4637361B20C02300080863 /* HEMFadingParallaxLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4637351B20C02300080863 /* HEMFadingParallaxLayout.m */; };
 		8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */; };
@@ -112,6 +111,9 @@
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
+		BF0871BD1E427CCC00E57C8C /* CollapsableActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */; };
+		BF0871BF1E43D88200E57C8C /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BE1E43D88200E57C8C /* WarningView.swift */; };
+		BF0871C11E44123400E57C8C /* NotificationSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */; };
 		BF0B15E41DF0A93100DF2373 /* UIImage+SleepScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */; };
 		BF0B15E71DF1072400DF2373 /* Main.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E61DF1072400DF2373 /* Main.xcassets */; };
 		BF0B15E91DF2256300DF2373 /* PillDFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */; };
@@ -126,6 +128,8 @@
 		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
 		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
+		BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9BF1E40141200956E73 /* PushNotification.swift */; };
+		BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11C9C11E401A0100956E73 /* Date+Format.swift */; };
 		BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */; };
 		BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */; };
 		BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */; };
@@ -276,6 +280,8 @@
 		BF7454AF1B5887BF00E6AE85 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
 		BF7454B11B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */; };
 		BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */; };
+		BF745FC41E3C034E0006D046 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC31E3C034E0006D046 /* PushNotificationService.swift */; };
+		BF745FC81E3C0B130006D046 /* UIApplication+Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */; };
 		BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */; };
 		BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF781E3D19DF0F7400B68EBC /* Settings.bundle */; };
 		BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF78E98F1B20D1C60015949F /* NSDateHEMRelativeSpec.m */; };
@@ -577,8 +583,6 @@
 		8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HEMBreakdownViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8A1C94B61A08178A006E3A31 /* UIFont+HEMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+HEMStyle.h"; sourceTree = "<group>"; };
 		8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+HEMStyle.m"; sourceTree = "<group>"; };
-		8A28CAFD19CB95E40044A27D /* HEMNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNotificationHandler.h; sourceTree = "<group>"; };
-		8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNotificationHandler.m; sourceTree = "<group>"; };
 		8A391FC81A39352F0090992A /* HEMZoomAnimationTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMZoomAnimationTransitionDelegate.h; sourceTree = "<group>"; };
 		8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMZoomAnimationTransitionDelegate.m; sourceTree = "<group>"; };
 		8A4637341B20C02300080863 /* HEMFadingParallaxLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFadingParallaxLayout.h; sourceTree = "<group>"; };
@@ -730,6 +734,9 @@
 		BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMResponseCell.m; sourceTree = "<group>"; };
 		BF05C8FB1A3FC6E3002A1307 /* HEMQuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMQuestionCell.h; sourceTree = "<group>"; };
 		BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMQuestionCell.m; sourceTree = "<group>"; };
+		BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsableActionCell.swift; sourceTree = "<group>"; };
+		BF0871BE1E43D88200E57C8C /* WarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
+		BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsPresenter.swift; sourceTree = "<group>"; };
 		BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SleepScore.swift"; sourceTree = "<group>"; };
 		BF0B15E61DF1072400DF2373 /* Main.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Main.xcassets; sourceTree = "<group>"; };
 		BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PillDFU.storyboard; sourceTree = "<group>"; };
@@ -745,6 +752,8 @@
 		BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEnablePushViewController.m; sourceTree = "<group>"; };
 		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
 		BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardAlarmViewController.m; sourceTree = "<group>"; };
+		BF11C9BF1E40141200956E73 /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
+		BF11C9C11E401A0100956E73 /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF14E3C019EF3C020006EFEA /* HEMBluetoothUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothUtils.h; sourceTree = "<group>"; };
 		BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothUtils.m; sourceTree = "<group>"; };
 		BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiUtils.h; sourceTree = "<group>"; };
@@ -1010,6 +1019,8 @@
 		BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingService.m; sourceTree = "<group>"; };
 		BF7454B01B59CF5B00E6AE85 /* HEMOnboardingServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingServiceSpec.m; sourceTree = "<group>"; };
 		BF7454B21B5D764200E6AE85 /* HEMOnboardingControllerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HEMOnboardingControllerSpec.m; path = SleepModel/HEMOnboardingControllerSpec.m; sourceTree = SOURCE_ROOT; };
+		BF745FC31E3C034E0006D046 /* PushNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Push.swift"; sourceTree = "<group>"; };
 		BF781E2F19DC716F00B68EBC /* HEMUnitPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnitPreferenceViewController.h; sourceTree = "<group>"; };
 		BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnitPreferenceViewController.m; sourceTree = "<group>"; };
 		BF781E3D19DF0F7400B68EBC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -1566,8 +1577,9 @@
 		8A28CAF919CB85030044A27D /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				8A28CAFD19CB95E40044A27D /* HEMNotificationHandler.h */,
-				8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */,
+				BF745FC31E3C034E0006D046 /* PushNotificationService.swift */,
+				BF745FC71E3C0B130006D046 /* UIApplication+Push.swift */,
+				BF11C9BF1E40141200956E73 /* PushNotification.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -3010,6 +3022,7 @@
 				BFF3B45B1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m */,
 				BFD9F1A61D36C43300BB4E3A /* HEMPillCollectionViewCell.h */,
 				BFD9F1A71D36C43300BB4E3A /* HEMPillCollectionViewCell.m */,
+				BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3037,8 +3050,10 @@
 		BF8C09411C330B17005AB5A7 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				BF0871BE1E43D88200E57C8C /* WarningView.swift */,
 				8AA1E6151A895EF200590EB6 /* HEMNotificationSettingsViewController.h */,
 				8AA1E6161A895EF200590EB6 /* HEMNotificationSettingsViewController.m */,
+				BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -3183,6 +3198,7 @@
 				BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */,
 				BFE375EE1CEFE1520029EE66 /* UIImage+HEMCompression.h */,
 				BFE375EF1CEFE1520029EE66 /* UIImage+HEMCompression.m */,
+				BF11C9C11E401A0100956E73 /* Date+Format.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -4159,6 +4175,7 @@
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				BF885F281CE6592C00A92F90 /* HEMTextFieldCollectionViewCell.m in Sources */,
 				BFD9A97A1D5AB798003EC82A /* HEMPairSensePresenter.m in Sources */,
+				BF0871BF1E43D88200E57C8C /* WarningView.swift in Sources */,
 				BF4304791E301BF8008669B0 /* TabBarPresenter.swift in Sources */,
 				BF5BACFC1C5C24AA00347185 /* HEMTrendsCalendarViewCell.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
@@ -4250,9 +4267,11 @@
 				BFFCEFD21D00F98B00CA0E54 /* HEMWhatsNewService.m in Sources */,
 				BFD3CCF11B9F7F8D00643987 /* NSShadow+HEMStyle.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
+				BF11C9C01E40141200956E73 /* PushNotification.swift in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */,
+				BF745FC41E3C034E0006D046 /* PushNotificationService.swift in Sources */,
 				BF8339891C10F70500BFD0F4 /* SENRemoteImage+HEMDeviceSpecific.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				BFF3648D1D665C3E008D4DF8 /* HEMResetSenseViewController.m in Sources */,
@@ -4326,6 +4345,7 @@
 				BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */,
 				BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */,
 				8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */,
+				BF745FC81E3C0B130006D046 /* UIApplication+Push.swift in Sources */,
 				8A7D80491A421B7300B0BFD7 /* HEMAlarmListCell.m in Sources */,
 				BFD9F1A81D36C43300BB4E3A /* HEMPillCollectionViewCell.m in Sources */,
 				BF6D9B721C6966BD00774322 /* HEMTrendsCalendarMonthView.m in Sources */,
@@ -4360,6 +4380,7 @@
 				BF21F0391DB02C650057F24E /* HEMVoiceExamplesPresenter.m in Sources */,
 				8A8397A41B683A200079AC24 /* HEMWaveform.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
+				BF11C9C21E401A0100956E73 /* Date+Format.swift in Sources */,
 				BFA884B71C1A30F500613069 /* HEMTimeZoneAlertService.m in Sources */,
 				BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
@@ -4383,7 +4404,9 @@
 				BF8339961C1659D300BFD0F4 /* HEMInsightTransitionView.m in Sources */,
 				BF6A61F21E01FF8200D59022 /* UIViewController+Delay.swift in Sources */,
 				BF4BE3D31D823D73003B96ED /* HEMSensorChartContainer.m in Sources */,
+				BF0871C11E44123400E57C8C /* NotificationSettingsPresenter.swift in Sources */,
 				BF8339901C1604BA00BFD0F4 /* HEMInsightTransition.m in Sources */,
+				BF0871BD1E427CCC00E57C8C /* CollapsableActionCell.swift in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,
 				BFC3FE761AE863B80061D6A1 /* HEMActionSheetOptionCell.m in Sources */,
 				BFCB99101CA9D259000D7619 /* HEMSleepSoundVolume.m in Sources */,
@@ -4402,7 +4425,6 @@
 				BF21F0361DB02B920057F24E /* HEMVoiceGroupHeaderCell.m in Sources */,
 				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF238DEA1D1B254100F6E62C /* HEMConfirmationView.m in Sources */,
-				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
 				BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */,
 				BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */,
 				BFA884B01C1A01A200613069 /* HEMDeviceAlertService.m in Sources */,

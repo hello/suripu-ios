@@ -42,7 +42,6 @@
     UIImage* defaultBackImage = [UIImage imageNamed:@"backIcon"];
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     [item setTintColor:[UIColor tintColor]];
-    [item setAccessibilityLabel:self.topViewController.title];
     viewController.navigationItem.leftBarButtonItem = item;
 }
 

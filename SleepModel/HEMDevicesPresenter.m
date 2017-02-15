@@ -10,6 +10,8 @@
 #import <SenseKit/SENSenseMetadata.h>
 #import <SenseKit/SENPillMetadata.h>
 
+#import "Sense-Swift.h"
+
 #import "NSAttributedString+HEMUtils.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
@@ -31,7 +33,10 @@
 #import "HEMOnboardingStoryboard.h"
 
 static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
-static CGFloat const HEMDeviceSectionMargin = 15.0f;
+static CGFloat const HEMDeviceSectionMargin = 8.0f;
+static CGFloat const HEMDeviceItemSpacing = 8.0f;
+static CGFloat const HEMDeviceFooterTextMargin = 24.0f;
+static CGFloat const HEMDeviceFooterBottomMargin = 32.0f;
 static CGFloat const HEMNoDeviceHeight = 203.0f;
 
 typedef NS_ENUM(NSInteger, HEMDevicesRow) {
@@ -40,11 +45,18 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     HEMDevicesRowCount
 };
 
+typedef NS_ENUM(NSInteger, HEMDevicesSection) {
+    HEMDevicesSectionSenseAndPill = 0,
+    HEMDevicesSectionUpgrade,
+    HEMDevicesSectionCount
+};
+
 @interface HEMDevicesPresenter() <
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout,
-    HEMTextFooterDelegate
+    HEMTextFooterDelegate,
+    CollapsableActionLinkDelegate
 >
 
 @property (nonatomic, weak) HEMDeviceService* deviceService;
@@ -52,6 +64,8 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 @property (nonatomic, assign, getter=isRefreshing) BOOL refreshing;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
 @property (nonatomic, strong) NSAttributedString* attributedFooterText;
+@property (nonatomic, strong) NSAttributedString* attributedUpgradeMessage;
+@property (nonatomic, assign, getter=isUpgradeCollpased) BOOL upgradeCollapsed;
 
 @end
 
@@ -60,6 +74,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
 - (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService {
     self = [super init];
     if (self) {
+        _upgradeCollapsed = YES;
         _deviceService = deviceService;
         [self listenForPairingChanges];
     }
@@ -74,6 +89,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     UIEdgeInsets insets = UIEdgeInsetsMake(HEMDeviceSectionMargin, 0.0f, HEMDeviceSectionMargin, 0.0f);
     UICollectionViewFlowLayout* layout = (id)[collectionView collectionViewLayout];
     [layout setSectionInset:insets];
+    [layout setMinimumLineSpacing:HEMDeviceItemSpacing];
     
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
@@ -135,29 +151,32 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [UIColor textColor];
-        UIFont* font = [UIFont settingsHelpFont];
+        UIColor* color = [UIColor grey4];
+        UIFont* font = [UIFont body];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
-        NSArray* args = @[[attrPill hyperlink:url]];
+        NSArray* args = @[[attrPill hyperlink:url font:font]];
         NSMutableAttributedString* attributedText =
             [[NSMutableAttributedString alloc] initWithFormat:textFormat
                                                          args:args
                                                     baseColor:color
                                                      baseFont:font];
-        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
-        [style setAlignment:NSTextAlignmentCenter];
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         [attributedText addAttribute:NSParagraphStyleAttributeName
                                value:style
                                range:NSMakeRange(0, [attributedText length])];
         
-        _attributedFooterText = [attributedText copy];
+        _attributedFooterText = attributedText;
     }
     
     return _attributedFooterText;
 }
 
 - (BOOL)hasDeviceAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath section] != HEMDevicesSectionSenseAndPill) {
+        return NO;
+    }
+    
     SENPairedDevices* devices = [[self deviceService] devices];
     switch ([indexPath row]) {
         default:
@@ -255,30 +274,74 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
     }
 }
 
+- (NSAttributedString*)attributedUpgradeMessage {
+    if (!_attributedUpgradeMessage) {
+        NSString* format = NSLocalizedString(@"settings.sense.upgrade.message.format", nil);
+        NSString* linkText = NSLocalizedString(@"settings.sense.upgrade.learn-more.link.text", nil);
+        NSString* linkUrl = NSLocalizedString(@"settings.sense.upgrade.link.url", nil);
+        
+        NSAttributedString* attrLink = [[NSAttributedString alloc] initWithString:linkText];
+        NSArray* args = @[[attrLink hyperlink:linkUrl font:[UIFont body]]];
+        NSMutableAttributedString* attributedText =
+        [[NSMutableAttributedString alloc] initWithFormat:format
+                                                     args:args
+                                                baseColor:[UIColor grey5]
+                                                 baseFont:[UIFont body]];
+        
+        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+        style.paragraphSpacing = 10.0f;
+        [attributedText addAttribute:NSParagraphStyleAttributeName
+                               value:style
+                               range:NSMakeRange(0, [attributedText length])];
+        
+        _attributedUpgradeMessage = attributedText;
+    }
+    return _attributedUpgradeMessage;
+}
+
 #pragma mark - UICollectionView
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return HEMDevicesSectionCount;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    // always show an option for Sense
-    return [[self deviceService] shouldShowPillInfo] ? HEMDevicesRowCount : 1;
+    switch (section) {
+        case HEMDevicesSectionSenseAndPill:
+            // always show an option for Sense
+            return [[self deviceService] shouldShowPillInfo] ? HEMDevicesRowCount : 1;
+        case HEMDevicesSectionUpgrade:
+            return [[self deviceService] hasHardwareUpgradeForSense] ? 1 : 0;
+        default:
+            return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    BOOL hasDevice = [self hasDeviceAtIndexPath:indexPath];
     NSString* reuseId = nil;
     
-    if (!hasDevice && [self attemptedDataLoad]) {
-        reuseId = [HEMSettingsStoryboard pairReuseIdentifier];
-    } else if ([indexPath row] == HEMDevicesRowPill) {
-        reuseId = [HEMSettingsStoryboard pillReuseIdentifier];
-    } else {
-        reuseId = [HEMSettingsStoryboard senseReuseIdentifier];
+    switch ([indexPath section]) {
+        case HEMDevicesSectionSenseAndPill: {
+            BOOL hasDevice = [self hasDeviceAtIndexPath:indexPath];
+            
+            if (!hasDevice && [self attemptedDataLoad]) {
+                reuseId = [HEMSettingsStoryboard pairReuseIdentifier];
+            } else if ([indexPath row] == HEMDevicesRowPill) {
+                reuseId = [HEMSettingsStoryboard pillReuseIdentifier];
+            } else {
+                reuseId = [HEMSettingsStoryboard senseReuseIdentifier];
+            }
+            
+            break;
+        }
+        case HEMDevicesSectionUpgrade:
+            reuseId = [HEMSettingsStoryboard upgradeReuseIdentifier];
+            break;
+        default:
+            break;
     }
     
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
@@ -290,16 +353,23 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
                                 atIndexPath:(NSIndexPath*)indexPath {
     
     HEMTextFooterCollectionReusableView* footer
-    = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                         withReuseIdentifier:HEMDevicesFooterReuseIdentifier
-                                                forIndexPath:indexPath];
+        = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                             withReuseIdentifier:HEMDevicesFooterReuseIdentifier
+                                                    forIndexPath:indexPath];
     
-    if ([[[self deviceService] devices] hasPairedSense]) {
-        [footer setText:[self attributedFooterText]];
-    } else {
-        [footer setText:nil];
+    NSAttributedString* attributedFootnote = nil;
+    switch ([indexPath section]) {
+        default:
+        case HEMDevicesSectionSenseAndPill:
+            if ([[[self deviceService] devices] hasPairedSense]) {
+                attributedFootnote = [self attributedFooterText];
+            }
+            break;
+        case HEMDevicesSectionUpgrade:
+            break;
     }
     
+    [footer setText:attributedFootnote];
     [footer setDelegate:self];
     
     return footer;
@@ -309,12 +379,20 @@ typedef NS_ENUM(NSInteger, HEMDevicesRow) {
                   layout:(UICollectionViewLayout *)collectionViewLayout
 referenceSizeForFooterInSection:(NSInteger)section {
     
-    CGFloat maxWidth = CGRectGetWidth([collectionView bounds]) - (HEMDeviceSectionMargin * 2);
-    CGFloat textHeight = [[self attributedFooterText] sizeWithWidth:maxWidth].height;
-    
     CGSize size = CGSizeZero;
-    size.width = maxWidth;
-    size.height = textHeight + (HEMDeviceSectionMargin * 2);
+    
+    switch (section) {
+        case HEMDevicesSectionSenseAndPill: {
+            CGFloat viewWidth = CGRectGetWidth([collectionView bounds]);
+            CGFloat maxWidth = viewWidth - (HEMDeviceFooterTextMargin * 2);
+            CGFloat textHeight = [[self attributedFooterText] sizeWithWidth:maxWidth].height;
+            size.width = maxWidth;
+            size.height = textHeight + HEMDeviceFooterBottomMargin;
+            break;
+        }
+        default:
+            break;
+    }
     
     return size;
 }
@@ -322,21 +400,32 @@ referenceSizeForFooterInSection:(NSInteger)section {
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewFlowLayout *)layout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL hasDevice = [self hasDeviceAtIndexPath:indexPath];
-    
     CGSize size = [layout itemSize];
     size.width = CGRectGetWidth([[collectionView superview] bounds]);
     
-    if (hasDevice) {
-        if ([indexPath row] == HEMDevicesRowPill) {
-            BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
-            size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
-        } else { // is sense
-            BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
-            size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:hasUpgrade];
+    switch ([indexPath section]) {
+        case HEMDevicesSectionSenseAndPill: {
+            if ([self hasDeviceAtIndexPath:indexPath]) {
+                if ([indexPath row] == HEMDevicesRowPill) {
+                    BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
+                    size.height = [HEMPillCollectionViewCell heightWithFirmwareUpdate:hasUpdate];
+                } else { // is sense
+                    size.height = [HEMDeviceCollectionViewCell heightOfCellActionButton:NO];
+                }
+            } else {
+                size.height = HEMNoDeviceHeight;
+            }
+            break;
         }
-    } else {
-        size.height = HEMNoDeviceHeight;
+        case HEMDevicesSectionUpgrade: {
+            NSAttributedString* body = [self attributedUpgradeMessage];
+            size.height = [CollapsableActionCell heightWithBody:body
+                                                      collapsed:[self isUpgradeCollpased]
+                                                      cellWidth:size.width];
+            break;
+        }
+        default:
+            break;
     }
     
     return size;
@@ -369,7 +458,20 @@ referenceSizeForFooterInSection:(NSInteger)section {
                 break;
             }
         }
+    } else if ([cell isKindOfClass:[CollapsableActionCell class]]) {
+        [self updateUpgradeCell:(id) cell];
     }
+}
+
+- (void)updateUpgradeCell:(CollapsableActionCell*)cell {
+    [cell setWithBody:[self attributedUpgradeMessage]];
+    [cell setLinkDelegate:self];
+    [[cell titleLabel] setText:NSLocalizedString(@"settings.device.sense.voice", nil)];
+    [[cell actionButton] setTitle:NSLocalizedString(@"upgrade.button.title", nil)
+                         forState:UIControlStateNormal];
+    [[cell actionButton] addTarget:self
+                            action:@selector(upgradeSense)
+                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)updateCellForSense:(HEMDeviceCollectionViewCell*)cell {
@@ -379,7 +481,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* wiFiColor = nil;
     [self wiFiColor:&wiFiColor icon:&wiFiIcon];
     
-    BOOL hasUpgrade = [[self deviceService] hasHardwareUpgradeForSense];
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
     UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     NSString* name = [self senseTitleForMetadata:senseMetadata];
@@ -388,7 +489,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
     UIColor* property1ValueColor = wiFiColor;
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
-    NSString* actionButtonText = hasUpgrade ? [NSLocalizedString(@"upgrade.button.title", nil) uppercaseString] : nil;
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
@@ -400,11 +500,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
-    [[cell actionButton] setHidden:!hasUpgrade];
-    [[cell actionButton] setTitle:actionButtonText forState:UIControlStateNormal];
-    [[cell actionButton] addTarget:self
-                            action:@selector(upgradeSense)
-                  forControlEvents:UIControlEventTouchUpInside];
+    [[cell actionButton] setHidden:YES];
 }
 
 - (void)updateCellForPill:(HEMDeviceCollectionViewCell*)cell {
@@ -471,8 +567,40 @@ referenceSizeForFooterInSection:(NSInteger)section {
         return;
     }
     
-    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-    switch ([indexPath row]) {
+    switch ([indexPath section]) {
+        default:
+        case HEMDevicesSectionSenseAndPill: {
+            return [self handleSenseOrPillSelectionAtPath:indexPath];
+        }
+        case HEMDevicesSectionUpgrade:
+            return [self handleUpgradeCellSelectionAtIndexPath:indexPath];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self didScrollContentIn:scrollView];
+}
+
+- (void)handleUpgradeCellSelectionAtIndexPath:(NSIndexPath*)path {
+    [[[self collectionView] collectionViewLayout] invalidateLayout];
+    [[self collectionView] performBatchUpdates:^{
+        [self setUpgradeCollapsed:![self isUpgradeCollpased]];
+        
+        CollapsableActionCell* cell = (id) [[self collectionView] cellForItemAtIndexPath:path];
+        ViewState state = [self isUpgradeCollpased] ? ViewStateCollapse : ViewStateExpand;
+        [UIView animateWithDuration:0.33f animations:^{
+            [cell setWithState:state];
+        }];
+    } completion:nil];
+    
+    [[self collectionView] scrollToItemAtIndexPath:path
+                                  atScrollPosition:UICollectionViewScrollPositionTop
+                                          animated:YES];
+}
+
+- (void)handleSenseOrPillSelectionAtPath:(NSIndexPath*)path {
+    UICollectionViewCell* cell = [[self collectionView] cellForItemAtIndexPath:path];
+    switch ([path row]) {
         default:
         case HEMDevicesRowSense: {
             if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
@@ -491,10 +619,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
             break;
         }
     }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self didScrollContentIn:scrollView];
 }
 
 #pragma mark - Actions
@@ -517,19 +641,29 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [[self delegate] showFirmwareUpdateFrom:self];
 }
 
-#pragma mark - HEMTextFooterDelegate
+#pragma mark - Links
 
-- (void)didTapOnLink:(NSURL *)url from:(HEMTextFooterCollectionReusableView *)view {
+- (void)openInAppBrowserIfPossibleTo:(NSURL*)url {
     NSString* lowerScheme = [url scheme];
     if ([lowerScheme hasPrefix:@"http"]) {
         [[self delegate] openSupportURL:[url absoluteString] from:self];
     }
 }
 
+#pragma mark CollapsableLinkDelegate
+
+- (void)showLinkWithUrl:(NSURL *)url from:(CollapsableActionCell *)cell {
+    [self openInAppBrowserIfPossibleTo:url];
+}
+
+#pragma mark HEMTextFooterDelegate
+
+- (void)didTapOnLink:(NSURL *)url from:(HEMTextFooterCollectionReusableView *)view {
+    [self openInAppBrowserIfPossibleTo:url];
+}
+
 #pragma mark - Pairing Notifications
 
-// TODO: try and remove this completely and use presenter events + service
-// to handle updates as needed
 - (void)listenForPairingChanges {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self

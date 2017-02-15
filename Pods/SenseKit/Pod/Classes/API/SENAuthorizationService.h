@@ -45,9 +45,18 @@ extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
 + (void)authorizeRequestsFromKeychain;
 
 /**
- *  Deauthorize future requests and remove the active credentials from the keychain.
+ *  Optimistically deauthorize future requests and remove the active credentials
+ *  from the keychain.
  */
 + (void)deauthorize;
+
+/**
+ *  Deauthorize requests and sign out from the account.  If an error is encountered,
+ *  The operation will be cancelled
+ *
+ *  @param completion: the callback to call when operation completes
+ */
++ (void)deauthorize:(void(^)(NSError* error))completion;
 
 /**
  *  Check whether there are cached credentials in the keychain

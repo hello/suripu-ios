@@ -54,12 +54,6 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
     self.summaryLabel.textColor = [UIColor grey4];
     self.summaryLabel.text = NSLocalizedString(@"timeline.summary", nil);
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
-    self.sleepScoreTextLabel.isAccessibilityElement = NO;
-    self.messageLabel.isAccessibilityElement = NO;
-    self.messageContainerView.isAccessibilityElement = YES;
-    self.messageContainerView.accessibilityLabel = NSLocalizedString(@"timeline.accessibility-label.breakdown", nil);
-    self.messageContainerView.accessibilityHint = NSLocalizedString(@"timeline.accessibility-hint.breakdown", nil);
-    self.messageContainerView.accessibilityTraits = UIAccessibilityTraitButton;
 }
 
 - (void)prepareForReuse {

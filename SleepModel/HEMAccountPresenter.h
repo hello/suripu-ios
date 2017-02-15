@@ -46,6 +46,7 @@ typedef void(^HEMAccountSignOutHandler)(void);
 - (instancetype)init NS_UNAVAILABLE;
 - (void)bindWithTableView:(UITableView*)tableView;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
+- (void)bindWithActivityContainerView:(UIView*)activityContainer;
 
 @end
 

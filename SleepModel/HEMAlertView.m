@@ -32,6 +32,7 @@
 CGFloat const HEMDialogContentSpacing = 8.0f;
 CGFloat const HEMDialogContentTopPadding = 24.0f;
 CGFloat const HEMDialogContentBotPadding = 8.0f;
+CGFloat const HEMDialogContentBotPaddingFor1Button = 24.0f;
 CGFloat const HEMDialogVerticalSpaceBetweenMessageAndButtons = 24.0f;
 CGFloat const HEMDialogBooleanSpaceBetweenMessageAndButtons = 24.0f;
 CGFloat const HEMDialogButtonHeight = 48.0f;
@@ -56,7 +57,12 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     CGFloat width = CGRectGetWidth(HEMKeyWindowBounds()) - (2 * HEMDialogHorzMargins);
     CGFloat height = CGRectGetMaxY(self.messageTextView.frame);
     if (self.type == HEMAlertViewTypeVertical) {
-        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons + HEMDialogContentBotPadding;
+        height += (self.buttons.count * HEMDialogButtonHeight) + HEMDialogVerticalSpaceBetweenMessageAndButtons;
+        if (self.buttons.count == 1) {
+            height += HEMDialogContentBotPaddingFor1Button;
+        } else {
+            height += HEMDialogContentBotPadding;
+        }
     } else {
         height += HEMDialogButtonHeight + HEMDialogBooleanSpaceBetweenMessageAndButtons + HEMDialogContentBotPadding;
     }

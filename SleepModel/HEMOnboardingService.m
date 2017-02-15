@@ -20,7 +20,6 @@
 #import "NSString+HEMUtils.h"
 
 #import "HEMOnboardingService.h"
-#import "HEMNotificationHandler.h"
 #import "HEMDeviceService.h"
 
 // notifications
@@ -763,7 +762,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 
 - (void)finishSignIn {
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
-    [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
 }
 
 - (void)pushDefaultPreferences {

@@ -12,14 +12,19 @@ typedef NS_ENUM(NSUInteger, HEMShortcutAction) {
     HEMShortcutActionUnknown = 1,
     HEMShortcutActionAlarmNew,
     HEMShortcutActionAlarmEdit,
-    HEMShortcutActionRoomConditionsShow
+    HEMShortcutActionRoomConditionsShow,
+    HEMShortcutActionShowTimeline,
+    HEMShortcutActionShowDeviceSettings
 };
+
+@class PushNotification;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMShortcutService : SENService
 
 + (HEMShortcutAction)actionForType:(NSString*)type;
++ (HEMShortcutAction)actionForNotification:(PushNotification*)notification;
 
 @end
 

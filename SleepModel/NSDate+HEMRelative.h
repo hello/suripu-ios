@@ -81,4 +81,7 @@
  *  @return YES if it is early in the morning of 'today'
  */
 - (BOOL)shouldCountAsPreviousDay;
+
+- (NSString*)isoDate;
+
 @end

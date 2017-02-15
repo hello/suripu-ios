@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENService+Protected.h>
+#import "Sense-Swift.h"
 #import "HEMShortcutService.h"
 
 static NSString* const HEMShortcut3DTouchTypeAlarmNew = @"is.hello.sense.shortcut.addalarm";
@@ -27,6 +28,18 @@ static NSString* const HEMShortcutExtensionRoomExtPath = @"ext/room";
         }
     }
     return action;
+}
+
++ (HEMShortcutAction)actionForNotification:(PushNotification*)notification {
+    switch ([notification type]) {
+        case PushTypeSleepScore:
+            return HEMShortcutActionShowTimeline;
+        case PushTypeLowBattery:
+            return HEMShortcutActionShowDeviceSettings;
+        case PushTypeUnknown:
+        default:
+            return  HEMShortcutActionUnknown;
+    }
 }
 
 @end

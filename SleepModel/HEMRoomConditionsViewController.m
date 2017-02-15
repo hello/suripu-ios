@@ -20,6 +20,7 @@
 #import "HEMSensorDetailViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSettingsStoryboard.h"
+#import "HEMSettingsPresenter.h"
 
 static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
 
@@ -93,21 +94,37 @@ static NSString* const kHEMRoomConditionsTabIconName = @"senseTabBarIcon";
 #pragma mark - Shortcut from extension
 
 - (BOOL)canHandleActionWithAction:(HEMShortcutAction)action {
-    return action == HEMShortcutActionRoomConditionsShow;
+    return action == HEMShortcutActionRoomConditionsShow
+        || action == HEMShortcutActionShowDeviceSettings;
 }
 
-- (void)takeActionWithAction:(HEMShortcutAction)action {
+- (void)takeActionWithAction:(HEMShortcutAction)action data:(id _Nullable)data {
     if ([[self navigationController] topViewController] != self) {
         [[self navigationController] popToRootViewControllerAnimated:NO];
     }
-    [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt];
+    switch (action) {
+        case HEMShortcutActionRoomConditionsShow:
+            [SENAnalytics track:kHEMAnalyticsEventLaunchedFromExt];
+            break;
+        case HEMShortcutActionShowDeviceSettings:
+            [self showSettingsAnimated:NO category:HEMSettingsCategoryDevices];
+            break;
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - RoomConditionsNavDelegate
 
-- (void)showSettingsFromPresenter:(RoomConditionsNavPresenter *)presenter {
+- (void)showSettingsAnimated:(BOOL)animated category:(HEMSettingsCategory)category {
     HEMSettingsTableViewController* settingsVC = [HEMSettingsStoryboard instantiateSettingsController];
-    [[self navigationController] pushViewController:settingsVC animated:YES];
+    [settingsVC setCategoryToShow:category];
+    [[self navigationController] pushViewController:settingsVC animated:animated];
+}
+
+- (void)showSettingsFromPresenter:(__unused RoomConditionsNavPresenter *)presenter {
+    [self showSettingsAnimated:YES category:HEMSettingsCategoryMain];
 }
 
 #pragma mark - HEMRoomConditionsDelegate

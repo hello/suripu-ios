@@ -182,9 +182,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     cell.titleLabel.textColor = [UIColor grey6];
     cell.titleLabel.font = [UIFont h5];
     cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
-    cell.isAccessibilityElement = YES;
-    cell.accessibilityLabel = cell.titleLabel.text;
-    cell.accessibilityValue = cell.detailLabel.text;
     return cell;
 }
 
@@ -208,18 +205,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     UILabel* valueLabel = position == 0 ? cell.itemValue1 : cell.itemValue2;
     titleLabel.attributedText = [self titleForItemAtIndexPath:indexPath position:position];
     valueLabel.attributedText = [self valueForItemAtIndexPath:indexPath position:position];
-    if (![self metricForIndexPath:indexPath position:position])
-        return;
-    UIAccessibilityElement* element = [[UIAccessibilityElement alloc] initWithAccessibilityContainer:self];
-    element.accessibilityValue = valueLabel.text;
-    element.accessibilityLabel = [titleLabel.text capitalizedString];
-    UICollectionViewLayoutAttributes *attrs = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-    CGRect frame = [collectionView convertRect:attrs.frame toView:collectionView.window];
-    CGFloat width = CGRectGetWidth(frame)/2;
-    frame.origin.x = position * width;
-    frame.size.width = width;
-    element.accessibilityFrame = frame;
-    cell.accessibilityElements = [cell.accessibilityElements arrayByAddingObject:element];
 }
 
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {

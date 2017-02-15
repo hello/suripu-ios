@@ -474,8 +474,12 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 }
 
 - (void)showWhyNotGlowing {
+    // not really an error, but leveraging the error dialog to show info about
+    // why sense is not glowing
+    NSString* title = NSLocalizedString(@"onboarding.sense.not-glowing.title", nil);
+    NSString* message = NSLocalizedString(@"onboarding.sense.not-glowing.message", nil);
     NSString* page = NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil);
-    [[self actionDelegate] showHelpWithPage:page fromPresenter:self];
+    [[self errorDelegate] showErrorWithTitle:title andMessage:message withHelpPage:page fromPresenter:self];
 }
 
 - (void)startPairing {

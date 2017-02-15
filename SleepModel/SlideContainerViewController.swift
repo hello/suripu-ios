@@ -16,6 +16,7 @@ import SenseKit
     
     fileprivate weak var shortcutHandler: ShortcutHandler?
     fileprivate var shortcutAction: HEMShortcutAction?
+    fileprivate var shortcutActionData: Any?
     fileprivate weak var tabItemPresenter: TabPresenter!
     fileprivate var shortcutHandlerIndex: Int?
     
@@ -123,9 +124,10 @@ extension SlideContainerViewController: ShortcutHandler {
         
         self.contentPresenter?.show(controllerIndex: self.shortcutHandlerIndex!)
         
-        handler.takeAction(action: action)
+        handler.takeAction(action: action, data: self.shortcutActionData)
         
         self.shortcutHandler = nil
+        self.shortcutActionData = nil
         self.shortcutHandlerIndex = 0
         self.shortcutAction = HEMShortcutAction.unknown
     }
@@ -161,7 +163,9 @@ extension SlideContainerViewController: ShortcutHandler {
         return handlerIndex >= 0
     }
     
-    func takeAction(action: HEMShortcutAction) {
+    func takeAction(action: HEMShortcutAction, data: Any?) {
+        self.shortcutActionData = data
+        
         guard let _ = self.scrollView else {
             // delay action until visible
             return

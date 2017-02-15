@@ -1,5 +1,62 @@
 # Changelog
 
+## 2.0.3.6
+
+Fixes:
+
+* Fixed issue with analytics property, detail, always showing n/a for Open Notification
+
+## 2.0.3.5
+
+New:
+
+* Updated notification settings to support new API + warning users if notifications are disabled
+* Updated onboarding notification screen to use new API
+* Added analytics event when app is opened from push notification
+* Updated various onboarding screen copy and error messages to address issues when user leaves the happy path
+
+## 2.0.3.4
+
+New:
+
+* Signing out of the app will display an activity indicator while waiting for server to confirm it has deauthorized the user
+* Updated copy to make it more explicit that shaking the pill needs to stop for it to pair with Sense
+* Updated C02 about copy
+* Updated primary user footnote copy, now that Nest expansion is live
+* Updated pill pairing error copy to provide suggestion
+
+Fixes:
+
+* Fixed issue where noise disturbances would show with a larger gap then it should in the Timeline
+
+## 2.0.3.3
+
+New:
+
+* Upgrade button now sits inside it's own card that explains what is for better
+
+## 2.0.3.2
+
+New:
+
+* Added support for low battery push notification
+* Added support for sleep score push notification
+* Prompt user for permission to send push notifications when toggling settings on, in settings
+
+Fixes:
+
+* Fixed an issue that would prevent the push notification token to not be retrieved after getting permission
+* Fixed an issue that prevented push notification token from being uploaded to the server
+* Fixed an issue that can cause the application to crash when playing sleep sounds while device is in an invalid state
+* Removed accessibility to avoid crashing the application when setting elements.  Acessibility was half-baked and not useful
+
+## 2.0.3.1
+
+Fixes:
+
+* Properly renew the push notification token upon launch of the app, or after signing in, if permission has been granted
+* Properly request permission to send push notifications when enabling them during onboarding
+
 ## 2.0.2.6
 
 Fixes:

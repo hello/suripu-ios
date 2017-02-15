@@ -50,7 +50,8 @@ static CGFloat kHEMDeviceCellActionHeight = 269.0f;
     
     [[self property2ValueLabel] setFont:[UIFont body]];
     [[self property2ValueLabel] setTextColor:[UIColor grey6]];
-    [[self accessoryImageView] setImage:[UIImage imageNamed:@"accessory"]];
+    
+    [[self accessoryImageView] setImage:[UIImage imageNamed:@"settingsAccessory"]];
 }
 
 - (void)prepareForReuse {

@@ -63,6 +63,10 @@
 "onboarding.account.email" = "Email address";
 "onboarding.account.password" = "Password";
 
+// onboarding gender
+"onboarding.gender.title" = "Confirm your gender";
+"onboarding.gender.description" = "This is used to provide you with more personalized recommendation about your sleep.";
+
 // onboarding pill
 "onboarding.pill-setup.title" = "Attach your Sleep Pill";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the side of your pillowcase closest to the edge of your bed.";

@@ -9,6 +9,7 @@
 #import <SenseKit/SenseKit.h>
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENNotificationSetting.h>
+#import <SenseKit/SENAccount.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorTopConstraint;
+@property (weak, nonatomic) IBOutlet UITableView *optionsTableView;
 
 @property (strong, nonatomic) UIColor* selectedColor;
 @property (strong, nonatomic) UIColor* selectedBorderColor;

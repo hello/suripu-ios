@@ -13,20 +13,21 @@ import Foundation
     fileprivate static let keyType = "hlo-type"
     fileprivate static let keyDetail = "hlo-detail"
     fileprivate static let typeSleepScore = "sleep_score"
-    fileprivate static let typeLowBattery = "pill_battery"
+    fileprivate static let typeSystem = "system"
     fileprivate static let typeNotRecognized = "not recognized"
+    fileprivate static let detailPillBattery = "pill_battery"
     
     @objc enum PushType: Int {
         case unknown = 0
         case sleepScore
-        case lowBattery
+        case system
         
         static func fromType(type: String!) -> PushType {
             let lower = type?.lowercased()
             if lower == PushNotification.typeSleepScore {
                 return .sleepScore
-            } else if lower == PushNotification.typeLowBattery {
-                return .lowBattery
+            } else if lower == PushNotification.typeSystem {
+                return .system
             } else {
                 return .unknown
             }
@@ -36,8 +37,8 @@ import Foundation
             switch self {
                 case .sleepScore:
                     return PushNotification.typeSleepScore
-                case .lowBattery:
-                    return PushNotification.typeLowBattery
+                case .system:
+                    return PushNotification.typeSystem
                 case .unknown:
                     fallthrough
                 default:
@@ -46,9 +47,24 @@ import Foundation
         }
     }
     
+    @objc enum SystemType: Int {
+        case unknown = 0
+        case pillBattery
+        
+        static func from(detail: String?) -> SystemType {
+            let lower = detail?.lowercased()
+            if lower == PushNotification.detailPillBattery {
+                return .pillBattery
+            } else {
+                return .unknown
+            }
+        }
+    }
+    
     /// convenience constant for objective-c code to use namespacing
     @objc public static let sleepScore: PushType = .sleepScore
-    @objc public static let lowBattery: PushType = .lowBattery
+    @objc public static let system: PushType = .system
+    @objc public static let systemPillBattery: SystemType = .pillBattery
     
     @objc fileprivate(set) var type = PushType.unknown
     @objc fileprivate(set) var detail: Any?
@@ -75,6 +91,11 @@ import Foundation
         return self.type.stringValue()
     }
     
+    @objc func isPillBattery() -> Bool {
+        let systemType = self.detail as? SystemType
+        return self.type == .system && systemType == SystemType.pillBattery
+    }
+    
     fileprivate func process(info: NSDictionary!) {
         let type = info[PushNotification.keyType] as? String
         self.type = PushType.fromType(type: type ?? "")
@@ -83,15 +104,14 @@ import Foundation
             case PushType.sleepScore:
                 let isoDate = info[PushNotification.keyDetail] as? String
                 self.detail = Date.from(isoDateOnly: isoDate)
-                break
-            case PushType.lowBattery:
-                fallthrough // detail is not used
+            case PushType.system:
+                let systemDetail = info[PushNotification.keyDetail] as? String
+                self.detail = SystemType.from(detail: systemDetail)
             case PushType.unknown:
                 fallthrough
             default:
                 break;
         }
-        
     }
     
 }

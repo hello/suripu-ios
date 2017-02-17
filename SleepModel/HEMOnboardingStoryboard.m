@@ -78,6 +78,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 /** Cell Reuse Identifiers */
 +(NSString *)emailReuseIdentifier { return _HEMemail; }
 +(NSString *)firstNameReuseIdentifier { return _HEMfirstName; }
++(NSString *)genderReuseIdentifier { return _HEMgender; }
 +(NSString *)lastNameReuseIdentifier { return _HEMlastName; }
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
 +(NSString *)passwordReuseIdentifier { return _HEMpassword; }

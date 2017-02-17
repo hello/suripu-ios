@@ -211,7 +211,7 @@
                     <navigationItem key="navigationItem" id="5yB-oo-XsC">
                         <barButtonItem key="rightBarButtonItem" id="hAV-Y9-8LN">
                             <view key="customView" contentMode="scaleToFill" id="nRe-BU-1Xf">
-                                <rect key="frame" x="239" y="2" width="120" height="39"/>
+                                <rect key="frame" x="274" y="2" width="120" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBf-Bp-BiO">
@@ -411,14 +411,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0B-PY-KLe">
-                                <rect key="frame" x="20" y="68" width="374" height="81.333333333333343"/>
+                                <rect key="frame" x="20" y="68" width="374" height="82"/>
                                 <string key="text">The Sense app works with Sense, a smarter sleep tracker that helps you improve your sleep. Before continuing, make sure your Sense and Sleep PIll are nearby.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sense" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
-                                <rect key="frame" x="0.0" y="186.33333333333331" width="414" height="441.66666666666669"/>
+                                <rect key="frame" x="0.0" y="187" width="414" height="441"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="666" width="366" height="50"/>
@@ -1197,11 +1197,11 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JM6-ua-NLc">
-                                            <rect key="frame" x="344" y="0.0" width="36" height="61"/>
+                                            <rect key="frame" x="530" y="0.0" width="36" height="61"/>
                                             <state key="normal" title="Copy"/>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YaD-JS-8eP">
-                                            <rect key="frame" x="15" y="60" width="360" height="1"/>
+                                            <rect key="frame" x="15" y="60" width="546" height="1"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="qyD-mx-0xP"/>
@@ -1579,13 +1579,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhx-eT-uQJ" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="374" height="64.666666666666657"/>
+                                <rect key="frame" x="20" y="68" width="374" height="65"/>
                                 <string key="text">Your new Sense with Voice is set up and any paired, original Sleep Pills have been moved over. Next, you'll pair your new Sleep Pill.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseUpgraded" translatesAutoresizingMaskIntoConstraints="NO" id="IKV-ei-EsM">
-                                <rect key="frame" x="0.0" y="132.66666666666669" width="414" height="533.33333333333326"/>
+                                <rect key="frame" x="0.0" y="133" width="414" height="533"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="g8c-GK-mMf"/>
                                 </constraints>
@@ -1668,15 +1668,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Hold your Sleep Pill nearby Sense, and shake it quickly. It may take a few seconds to pair your Sleep Pill with Sense." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
-                                <rect key="frame" x="24" y="68" width="366" height="64.666666666666657"/>
+                                <rect key="frame" x="24" y="68" width="366" height="65"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAA-qc-JNR" customClass="HEMEmbeddedVideoView">
-                                <rect key="frame" x="0.0" y="132.66666666666669" width="414" height="488.33333333333331"/>
+                                <rect key="frame" x="0.0" y="133" width="414" height="488"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ykd-DD-LE6">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="488.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="488"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1935,14 +1935,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hw2-eQ-BhX">
-                                <rect key="frame" x="20" y="68" width="374" height="81.333333333333343"/>
+                                <rect key="frame" x="20" y="68" width="374" height="82"/>
                                 <string key="text">Sense's Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. To dismiss the alarm, just wave your hand over Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVL-7j-gjt" customClass="HEMEmbeddedVideoView">
-                                <rect key="frame" x="0.0" y="149.33333333333331" width="414" height="461.66666666666669"/>
+                                <rect key="frame" x="0.0" y="150" width="414" height="461"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
@@ -2028,13 +2028,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7Nk-2a-NbQ">
-                                <rect key="frame" x="0.0" y="130.66666666666663" width="414" height="435"/>
+                                <rect key="frame" x="0.0" y="131" width="414" height="435"/>
                                 <subviews>
                                     <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbD-Ko-if1">
                                         <rect key="frame" x="20" y="0.0" width="374" height="72"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wy-CI-sng">
-                                                <rect key="frame" x="0.0" y="80" width="374" height="58.000000000000028"/>
+                                                <rect key="frame" x="0.0" y="80" width="374" height="58"/>
                                                 <string key="text">"Okay Sense...
 what's the temperature?"</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -2042,7 +2042,7 @@ what's the temperature?"</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Sorry, I didn't quite get that, please try again&quot;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64p-At-YID">
-                                                <rect key="frame" x="0.0" y="45.666666666666686" width="374" height="57.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="45" width="374" height="58"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2059,10 +2059,10 @@ what's the temperature?"</string>
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" image="senseTable" translatesAutoresizingMaskIntoConstraints="NO" id="OHD-cz-GEY">
-                                        <rect key="frame" x="0.0" y="261" width="414" height="153.99999999999994"/>
+                                        <rect key="frame" x="0.0" y="261" width="414" height="154"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseVoiceGray" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-Bg-xLx">
-                                        <rect key="frame" x="164" y="183.00000000000003" width="86" height="80.999999999999972"/>
+                                        <rect key="frame" x="164" y="183" width="86" height="81"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="81" id="f6b-Lm-jtP"/>
                                             <constraint firstAttribute="width" constant="86" id="hvV-zP-l94"/>
@@ -2285,13 +2285,13 @@ what's the temperature?"</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resetting your original Sense will return it to factory settings." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRD-Cf-aqm">
-                                <rect key="frame" x="20" y="68" width="374" height="21"/>
+                                <rect key="frame" x="20" y="68" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="originalSense" translatesAutoresizingMaskIntoConstraints="NO" id="hdu-0v-JDJ">
-                                <rect key="frame" x="0.0" y="89" width="414" height="522"/>
+                                <rect key="frame" x="0.0" y="109" width="414" height="502"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avG-7e-FI4" customClass="HEMActionButton">
                                 <rect key="frame" x="24" y="666" width="366" height="50"/>
@@ -2379,7 +2379,7 @@ what's the temperature?"</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseUpdate" translatesAutoresizingMaskIntoConstraints="NO" id="G1S-ig-3QH">
-                                <rect key="frame" x="112" y="275.66666666666669" width="190" height="185"/>
+                                <rect key="frame" x="112" y="276" width="190" height="185"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-Gw-aSY" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="662" width="374" height="50"/>
@@ -2404,7 +2404,7 @@ what's the temperature?"</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting update..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziC-3H-Rps">
-                                <rect key="frame" x="129.66666666666669" y="677" width="155.00000000000006" height="24"/>
+                                <rect key="frame" x="130" y="677" width="155" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2494,13 +2494,13 @@ what's the temperature?"</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sit back while Sense checks the conditions in your room." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGc-8P-g1M">
-                                        <rect key="frame" x="20" y="43" width="374" height="21"/>
+                                        <rect key="frame" x="20" y="43" width="374" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
-                                        <rect key="frame" x="0.0" y="64" width="414" height="553"/>
+                                        <rect key="frame" x="0.0" y="84" width="414" height="533"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
                                         </constraints>
@@ -2678,9 +2678,6 @@ what's the temperature?"</string>
                                     <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="skip:" destination="gpF-55-MmK" eventType="touchUpInside" id="Imv-3H-Yv8"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="666" width="374" height="50"/>
@@ -2691,13 +2688,56 @@ what's the temperature?"</string>
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="done:" destination="gpF-55-MmK" eventType="touchUpInside" id="nya-P0-u1M"/>
-                                </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="osu-2M-ixZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="osu-2M-ixZ">
                                 <rect key="frame" x="0.0" y="161" width="414" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="24" reuseIdentifier="gender" rowHeight="56" id="M2D-6d-Myd" customClass="HEMBasicTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="56"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M2D-6d-Myd" id="UMP-Br-DLT">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NyY-R5-7gz" customClass="HEMURLImageView">
+                                                    <rect key="frame" x="20" y="16" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="Zcm-Gz-YQI"/>
+                                                        <constraint firstAttribute="width" constant="24" id="uIb-os-Atn"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Male" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mik-Q1-AhE">
+                                                    <rect key="frame" x="64" y="18" width="37" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconRadio" highlightedImage="iconRadioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="akI-fZ-LJG">
+                                                    <rect key="frame" x="370" y="16" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="Pd3-v3-wBy"/>
+                                                        <constraint firstAttribute="height" constant="24" id="VkV-rO-Xy2"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="akI-fZ-LJG" secondAttribute="trailing" constant="20" id="34E-eS-Fr9"/>
+                                                <constraint firstItem="akI-fZ-LJG" firstAttribute="centerY" secondItem="NyY-R5-7gz" secondAttribute="centerY" id="bgP-H4-mdB"/>
+                                                <constraint firstItem="NyY-R5-7gz" firstAttribute="leading" secondItem="UMP-Br-DLT" secondAttribute="leading" constant="20" id="eWa-BG-heN"/>
+                                                <constraint firstItem="Mik-Q1-AhE" firstAttribute="leading" secondItem="NyY-R5-7gz" secondAttribute="trailing" constant="20" id="sE7-Sg-n3U"/>
+                                                <constraint firstItem="Mik-Q1-AhE" firstAttribute="centerY" secondItem="NyY-R5-7gz" secondAttribute="centerY" id="wFc-xE-UmP"/>
+                                                <constraint firstItem="NyY-R5-7gz" firstAttribute="centerY" secondItem="UMP-Br-DLT" secondAttribute="centerY" id="xgs-hr-SJI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="customAccessoryView" destination="akI-fZ-LJG" id="VXz-1p-sZP"/>
+                                            <outlet property="customTitleLabel" destination="Mik-Q1-AhE" id="h4p-ph-8oQ"/>
+                                            <outlet property="remoteImageView" destination="NyY-R5-7gz" id="Acu-Pn-rn7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2882,13 +2922,13 @@ what's the temperature?"</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense uses your location to know sunrise and sunset times, local weather, and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sy-ck-jAh">
-                                <rect key="frame" x="20" y="68" width="374" height="40.666666666666671"/>
+                                <rect key="frame" x="20" y="68" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
-                                <rect key="frame" x="0.0" y="108.66666666666666" width="414" height="502.33333333333337"/>
+                                <rect key="frame" x="0.0" y="109" width="414" height="502"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
                                 <rect key="frame" x="20" y="611" width="374" height="28"/>
@@ -2970,13 +3010,13 @@ what's the temperature?"</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense can sync your sleep data to the Health app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZv-GO-TM0">
-                                <rect key="frame" x="20" y="68" width="374" height="21"/>
+                                <rect key="frame" x="20" y="68" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" image="healthApp" translatesAutoresizingMaskIntoConstraints="NO" id="ecN-29-cDA">
-                                <rect key="frame" x="0.0" y="89" width="414" height="522"/>
+                                <rect key="frame" x="0.0" y="109" width="414" height="502"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxw-dz-vOU">
                                 <rect key="frame" x="147" y="611" width="119" height="28"/>
@@ -3412,13 +3452,13 @@ Turn Bluetooth on</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make sure Sense is plugged into a power outlet, and is next to your bed." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xd-u7-RCe">
-                                <rect key="frame" x="20" y="68" width="374" height="21"/>
+                                <rect key="frame" x="20" y="68" width="374" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
-                                <rect key="frame" x="0.0" y="89" width="414" height="577"/>
+                                <rect key="frame" x="0.0" y="109" width="414" height="557"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="235" id="TpR-T0-aTD"/>
                                 </constraints>
@@ -3481,6 +3521,8 @@ Turn Bluetooth on</string>
         <image name="fbIcon" width="20" height="20"/>
         <image name="fbIconGrey" width="20" height="20"/>
         <image name="healthApp" width="320" height="186"/>
+        <image name="iconRadio" width="24" height="24"/>
+        <image name="iconRadioSelected" width="24" height="24"/>
         <image name="infoIconSmallGrey" width="24" height="24"/>
         <image name="listShadow" width="320" height="4"/>
         <image name="map" width="320" height="218"/>

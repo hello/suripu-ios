@@ -50,6 +50,8 @@
 #import "HEMTimeZoneViewController.h"
 
 #import "HEMAppUsage.h"
+#import "HEMBasicTableViewCell.h"
+#import "HEMURLImageView.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMStyle.h"
 #import "HEMPresenter.h"

@@ -19,6 +19,7 @@
 +(NSString *)networkReuseIdentifier;
 +(NSString *)pillSetupTextCellReuseIdentifier;
 +(NSString *)pillSetupVideoCellReuseIdentifier;
++(NSString *)genderReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)beforeSleepToSmartAlarmSegueIdentifier;

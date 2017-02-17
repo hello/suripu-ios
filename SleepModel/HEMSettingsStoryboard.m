@@ -112,5 +112,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateTimeZoneNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneNavViewController]; }
 +(id)instantiateTimeZoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneViewController]; }
 +(id)instantiateUnitPreferenceViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMunitPreference]; }
++(id)instantiateWarningViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwarning]; }
 
 @end

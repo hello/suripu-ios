@@ -94,7 +94,7 @@ import SenseKit
         let stillOnboarding = self.onboardingService.hasFinishedOnboarding() == false
         let title = stillOnboarding ? nextTitle : doneTitle
         
-        nextButton?.setTitle(title, for: UIControlState.normal)
+        nextButton?.setTitle(title.uppercased(), for: UIControlState.normal)
         nextButton?.isEnabled = false
         nextButton?.addTarget(self,
                               action: #selector(GenderSelectorPresenter.done),

@@ -31,16 +31,22 @@ import SenseKit
 @objc class GenderSelectorPresenter: HEMPresenter {
     
     fileprivate let account: SENAccount!
-    fileprivate var titleLabel: UILabel?
-    fileprivate var descriptionLabel: UILabel?
-    fileprivate var optionsTable: UITableView?
-    fileprivate var skipButton: UIButton?
-    fileprivate var nextButton: UIButton?
+    fileprivate weak var titleLabel: UILabel?
+    fileprivate weak var descriptionLabel: UILabel?
+    fileprivate weak var optionsTable: UITableView?
+    fileprivate weak var skipButton: UIButton?
+    fileprivate weak var nextButton: UIButton?
+    fileprivate weak var onboardingService: HEMOnboardingService!
     
+    fileprivate var selectedGender: SENAccountGender?
     var updateDelegate: GenderUpdateDelegate?
     
-    init(account: SENAccount!) {
+    init(account: SENAccount!, onboardingService: HEMOnboardingService!) {
         self.account = account
+        self.onboardingService = onboardingService
+        if account.gender != SENAccountGender.other {
+            self.selectedGender = account.gender
+        }
         super.init()
     }
     
@@ -62,21 +68,43 @@ import SenseKit
         optionsTable?.delegate = self
         optionsTable?.dataSource = self
         optionsTable?.tableFooterView = UIView()
+        optionsTable?.separatorColor = UIColor.separator()
         self.optionsTable = optionsTable
     }
     
     @objc func bind(skipButton: UIButton?) {
+        let stillOnboarding = self.onboardingService.hasFinishedOnboarding() == false
+        let skipTitle = NSLocalizedString("actions.skip-for-now", comment: "skip")
+        let cancelTitle = NSLocalizedString("actions.cancel", comment: "skip")
+        let title = stillOnboarding ? skipTitle : cancelTitle
+        
+        skipButton?.titleLabel?.font = UIFont.button()
+        skipButton?.setTitle(title, for: UIControlState.normal)
         skipButton?.addTarget(self,
                               action: #selector(GenderSelectorPresenter.skip),
                               for: UIControlEvents.touchUpInside)
+        
         self.skipButton = skipButton
     }
     
     @objc func bind(nextButton: UIButton?) {
+        nextButton?.isEnabled = false
         nextButton?.addTarget(self,
                               action: #selector(GenderSelectorPresenter.done),
                               for: UIControlEvents.touchUpInside)
         self.nextButton = nextButton
+    }
+    
+    @objc func isSelected(indexPath: IndexPath) -> Bool {
+        let row = Row(rawValue: indexPath.row)!
+        switch row {
+            case .female :
+                return self.selectedGender == SENAccountGender.female
+            case .male:
+                return self.selectedGender == SENAccountGender.male
+            case .other:
+                return self.selectedGender == SENAccountGender.other
+        }
     }
     
     //MARK: - Actions
@@ -86,6 +114,9 @@ import SenseKit
     }
     
     @objc fileprivate func done() {
+        if self.selectedGender != nil {
+            self.account.gender = self.selectedGender!
+        }
         self.updateDelegate?.didUpdate(account: self.account, from: self)
     }
     
@@ -123,10 +154,15 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
+        let customCell = cell as? HEMBasicTableViewCell
+        let accessoryImageView = customCell?.customAccessoryView as? UIImageView
+        let selected = self.isSelected(indexPath: indexPath)
+        var radio = selected ? UIImage(named: "radioSelected") : UIImage(named: "radio")
+        let selectionTint = selected ? UIColor.tint() : UIColor.grey2()
         var title: String? = nil
         var icon: UIImage? = nil
-        let customCell = cell as? HEMBasicTableViewCell
         let row = Row(rawValue: indexPath.row)!
+        
         switch row {
             case .male:
                 icon = UIImage(named: "male")
@@ -138,12 +174,31 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
                 icon = UIImage(named: "addIcon")
                 title = NSLocalizedString("account.gender.other", comment: "other")
         }
+        
+        radio = radio?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         icon = icon?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         customCell?.customTitleLabel.font = UIFont.body()
         customCell?.customTitleLabel.textColor = UIColor.grey6()
         customCell?.customTitleLabel.text = title
         customCell?.remoteImageView.image = icon
         customCell?.remoteImageView.tintColor = UIColor.tint()
+        customCell?.selectionStyle = UITableViewCellSelectionStyle.none
+        accessoryImageView?.image = radio
+        accessoryImageView?.tintColor = selectionTint
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = Row(rawValue: indexPath.row)!
+        switch row {
+            case .female:
+                self.selectedGender = SENAccountGender.female
+            case .male:
+                self.selectedGender = SENAccountGender.male
+            case .other:
+                self.selectedGender = SENAccountGender.other
+        }
+        self.nextButton?.isEnabled = true
+        tableView.reloadData()
     }
     
 }

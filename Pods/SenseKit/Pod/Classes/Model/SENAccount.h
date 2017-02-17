@@ -66,6 +66,13 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
 @property (nonatomic, assign, readwrite) SENAccountGender gender;
 
 /**
+ * @property customGender
+ *
+ * The custom gender value, when gender is OTHER
+ */
+@property (nonatomic, copy, readwrite) NSString* customGender;
+
+/**
  * @property weight
  *
  * The weight in grams of the user.

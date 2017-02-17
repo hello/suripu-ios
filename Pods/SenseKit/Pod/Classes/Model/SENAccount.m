@@ -42,6 +42,7 @@ NSString* const SENAccountPropertyId = @"id";
 NSString* const SENAccountPropertyLastModified = @"last_modified";
 NSString* const SENAccountPropertyBirthdate = @"dob";
 NSString* const SENAccountPropertyGender = @"gender";
+NSString* const SENAccountPropertyGenderCustom = @"gender_other";
 NSString* const SENAccountPropertyValueLatitude = @"lat";
 NSString* const SENAccountPropertyValueLongitude = @"long";
 NSString* const SENAccountPropertyCreated = @"created";
@@ -63,6 +64,7 @@ NSString* const SENAccountPropertyProfilePhoto = @"profile_photo";
         _latitude = SENObjectOfClass(data[SENAccountPropertyValueLatitude], [NSNumber class]);
         _longitude = SENObjectOfClass(data[SENAccountPropertyValueLongitude], [NSNumber class]);
         _timeZone = SENObjectOfClass(data[SENAccountPropertyTimeZone], [NSString class]);
+        _customGender = SENObjectOfClass(data[SENAccountPropertyGenderCustom], [NSString class]);
 
         NSNumber *createdAt = SENObjectOfClass(data[SENAccountPropertyCreated], [NSNumber class]);
         if (createdAt) {
@@ -123,6 +125,8 @@ NSString* const SENAccountPropertyProfilePhoto = @"profile_photo";
     [params setValue:self.latitude forKey:SENAccountPropertyValueLatitude];
     [params setValue:self.longitude forKey:SENAccountPropertyValueLongitude];
     [params setValue:self.timeZone forKey:SENAccountPropertyTimeZone];
+    [params setValue:self.customGender forKey:SENAccountPropertyGenderCustom];
+    
     if (self.createdAt) {
         [params setValue:SENDateMillisecondsSince1970(self.createdAt) forKey:SENAccountPropertyCreated];
     }

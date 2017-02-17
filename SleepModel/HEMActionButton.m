@@ -5,6 +5,7 @@
 #import "UIColor+HEMStyle.h"
 
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
+static CGFloat const kHEMActionCornerRadius = 3.0f;
 
 @interface HEMActionButton()
 
@@ -42,7 +43,9 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 }
 
 - (void)setDefaults {
-    self.layer.cornerRadius = 3;
+    [[self layer] setCornerRadius:kHEMActionCornerRadius];
+    [self setClipsToBounds:YES];
+    
     [self.titleLabel setFont:[UIFont button]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
     

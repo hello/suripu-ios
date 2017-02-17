@@ -14,32 +14,31 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UITableView *optionsTableView;
-@property (strong, nonatomic) SENAccount* account;
 
 @end
 
 @implementation HEMGenderPickerViewController
 
 - (void)viewDidLoad {
+    [self configurePresenter]; // need to go before viewDidLoad
+    
     [super viewDidLoad];
-    [self configurePresenter];
+    [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
 }
 
 - (void)configurePresenter {
-    if ([self delegate]) {
-        [self setAccount:[SENAccount new]];
-    } else {
-        [self setAccount:[[HEMOnboardingService sharedService] currentAccount]];
-    }
+    GenderSelectorPresenter* presenter =
+        [[GenderSelectorPresenter alloc] initWithAccount:[self account]
+                                       onboardingService:[HEMOnboardingService sharedService]];
     
-    GenderSelectorPresenter* presenter = [[GenderSelectorPresenter alloc] initWithAccount:[self account]];
     [presenter bindWithNextButton:[self doneButton]];
     [presenter bindWithSkipButton:[self skipButton]];
     [presenter bindWithOptionsTable:[self optionsTableView]];
     [presenter bindWithTitleLabel:[self titleLabel]];
     [presenter bindWithDescriptionLabel:[self descriptionLabel]];
     [presenter setUpdateDelegate:self];
+    
     [self addPresenter:presenter];
 }
 

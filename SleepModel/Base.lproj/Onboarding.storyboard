@@ -2692,7 +2692,7 @@ what's the temperature?"</string>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="osu-2M-ixZ">
                                 <rect key="frame" x="0.0" y="161" width="414" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="24" reuseIdentifier="gender" rowHeight="56" id="M2D-6d-Myd" customClass="HEMBasicTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="414" height="56"/>

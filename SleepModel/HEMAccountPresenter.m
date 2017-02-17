@@ -395,7 +395,9 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
                 case SENAccountGenderMale:
                     *value = NSLocalizedString(@"account.gender.male", nil);
                     break;
+                case SENAccountGenderOther:
                 default:
+                    *value = [account customGender];
                     break;
             }
             *title = NSLocalizedString(@"settings.personal.info.gender", nil);
@@ -414,7 +416,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
             break;
     }
     
-    if (!*value) {
+    if ([*value length] == 0) {
         *value = NSLocalizedString(@"empty-data", nil);
     }
 }

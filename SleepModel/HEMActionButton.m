@@ -54,6 +54,7 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
     
     [self setBackgroundColor:[UIColor tintColor] forState:UIControlStateNormal];
     [self setBackgroundColor:[UIColor blue7] forState:UIControlStateHighlighted];
+    [self setBackgroundColor:[UIColor grey3] forState:UIControlStateDisabled];
 }
 
 - (void)addActivityView {

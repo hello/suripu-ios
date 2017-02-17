@@ -28,6 +28,14 @@
 }
 
 - (void)configurePresenter {
+    if (![self account]) {
+        SENAccount* onboardingAccount = [[HEMOnboardingService sharedService] currentAccount];
+        if (!onboardingAccount) {
+            onboardingAccount = [SENAccount new];
+        }
+        [self setAccount:onboardingAccount];
+    }
+    
     GenderSelectorPresenter* presenter =
         [[GenderSelectorPresenter alloc] initWithAccount:[self account]
                                        onboardingService:[HEMOnboardingService sharedService]];

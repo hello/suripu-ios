@@ -2714,7 +2714,7 @@ what's the temperature?"</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconRadio" highlightedImage="iconRadioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="akI-fZ-LJG">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="akI-fZ-LJG">
                                                     <rect key="frame" x="370" y="16" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="24" id="Pd3-v3-wBy"/>
@@ -3521,12 +3521,12 @@ Turn Bluetooth on</string>
         <image name="fbIcon" width="20" height="20"/>
         <image name="fbIconGrey" width="20" height="20"/>
         <image name="healthApp" width="320" height="186"/>
-        <image name="iconRadio" width="24" height="24"/>
-        <image name="iconRadioSelected" width="24" height="24"/>
         <image name="infoIconSmallGrey" width="24" height="24"/>
         <image name="listShadow" width="320" height="4"/>
         <image name="map" width="320" height="218"/>
         <image name="originalSense" width="375" height="250"/>
+        <image name="radio" width="24" height="24"/>
+        <image name="radioSelected" width="24" height="24"/>
         <image name="sampleNotification" width="320" height="186"/>
         <image name="sense" width="186" height="183"/>
         <image name="senseAllSet" width="375" height="233"/>

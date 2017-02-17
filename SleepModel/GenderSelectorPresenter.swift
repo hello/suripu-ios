@@ -75,9 +75,10 @@ import SenseKit
     @objc func bind(skipButton: UIButton?) {
         let stillOnboarding = self.onboardingService.hasFinishedOnboarding() == false
         let skipTitle = NSLocalizedString("actions.skip-for-now", comment: "skip")
-        let cancelTitle = NSLocalizedString("actions.cancel", comment: "skip")
+        let cancelTitle = NSLocalizedString("actions.cancel", comment: "cancel")
         let title = stillOnboarding ? skipTitle : cancelTitle
         
+        skipButton?.setTitleColor(UIColor.grey3(), for: UIControlState.disabled)
         skipButton?.titleLabel?.font = UIFont.button()
         skipButton?.setTitle(title, for: UIControlState.normal)
         skipButton?.addTarget(self,
@@ -88,6 +89,12 @@ import SenseKit
     }
     
     @objc func bind(nextButton: UIButton?) {
+        let nextTitle = NSLocalizedString("actions.next", comment: "next")
+        let doneTitle = NSLocalizedString("actions.done", comment: "done")
+        let stillOnboarding = self.onboardingService.hasFinishedOnboarding() == false
+        let title = stillOnboarding ? nextTitle : doneTitle
+        
+        nextButton?.setTitle(title, for: UIControlState.normal)
         nextButton?.isEnabled = false
         nextButton?.addTarget(self,
                               action: #selector(GenderSelectorPresenter.done),
@@ -117,6 +124,8 @@ import SenseKit
         if self.selectedGender != nil {
             self.account.gender = self.selectedGender!
         }
+        self.nextButton?.isEnabled = false
+        self.skipButton?.isEnabled = false
         self.updateDelegate?.didUpdate(account: self.account, from: self)
     }
     

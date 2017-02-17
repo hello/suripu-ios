@@ -95,7 +95,6 @@ import SenseKit
         let title = stillOnboarding ? nextTitle : doneTitle
         
         nextButton?.setTitle(title.uppercased(), for: UIControlState.normal)
-        nextButton?.isEnabled = false
         nextButton?.addTarget(self,
                               action: #selector(GenderSelectorPresenter.done),
                               for: UIControlEvents.touchUpInside)
@@ -206,7 +205,6 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
             case .other:
                 self.selectedGender = SENAccountGender.other
         }
-        self.nextButton?.isEnabled = true
         tableView.reloadData()
     }
     

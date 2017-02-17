@@ -1,150 +1,74 @@
-#import <SenseKit/SENAPIAccount.h>
+
 #import <SenseKit/SENAccount.h>
 
-#import "UIFont+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMGenderPickerViewController.h"
 #import "HEMOnboardingService.h"
-#import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMAccountUpdateDelegate.h"
+#import "HEMBasicTableViewCell.h"
 
-@interface HEMGenderPickerViewController ()
+@interface HEMGenderPickerViewController () <GenderUpdateDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *selectorContainer;
-@property (weak, nonatomic) IBOutlet UIView *selectorDivider;
-@property (weak, nonatomic) IBOutlet UIButton *femaleSelectorButton;
-@property (weak, nonatomic) IBOutlet UIButton *maleSelectorButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorTopConstraint;
-
-@property (strong, nonatomic) UIColor* selectedColor;
-@property (strong, nonatomic) UIColor* selectedBorderColor;
-@property (assign, nonatomic) SENAccountGender selectedGender;
+@property (weak, nonatomic) IBOutlet UITableView *optionsTableView;
 
 @end
 
 @implementation HEMGenderPickerViewController
 
 - (void)viewDidLoad {
+    [self configurePresenter]; // need to go before viewDidLoad
+    
     [super viewDidLoad];
-
-    [self setSelectedColor:[[UIColor tintColor] colorWithAlphaComponent:0.05f]];
-    [self setSelectedBorderColor:[UIColor tintColor]];
-    [self configureButtons];
-    [self configureGenderSelectors];
+    [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
 }
 
-- (void)configureButtons {
-    [self stylePrimaryButton:[self doneButton]
-             secondaryButton:[self skipButton]
-                withDelegate:[self delegate] != nil];
-    
-    [self enableBackButton:NO];
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    [super adjustConstraintsForIPhone4];
-    [self updateConstraint:[self selectorTopConstraint] withDiff:40];
-}
-
-- (void)configureGenderSelectors {
-    UIColor* separatorColor = [[UIColor separatorColor] colorWithAlphaComponent:0.5f];
-    
-    [[self selectorDivider] setBackgroundColor:separatorColor];
-    [[[self selectorContainer] layer] setBorderWidth:1.0f];
-    [[[self selectorContainer] layer] setBorderColor:[separatorColor CGColor]];
-    
-    [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
-    [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
-    [[[self femaleSelectorButton] titleLabel] setFont:[UIFont h5]];
-    [[[self maleSelectorButton] layer] setBorderWidth:0.0f];
-    [[[self maleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
-    [[[self maleSelectorButton] titleLabel] setFont:[UIFont h5]];
-    
-    switch ([self defaultGender]) {
-        case SENAccountGenderMale:
-            [self setGenderAsMale:nil];
-            break;
-        case SENAccountGenderFemale:
-            [self setGenderAsFemale:nil];
-            break;
-        default:
-            [self setGenderAsOther];
-            break;
-    }
-}
-
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    [self centerButtonContent:[self femaleSelectorButton]];
-    [self centerButtonContent:[self maleSelectorButton]];
-}
-
-- (void)centerButtonContent:(UIButton*)button {
-    CGSize imageSize = [[button imageView] frame].size;
-    CGSize titleSize = [[button titleLabel] frame].size;
-    
-    CGFloat spacing = 20.0f;
-    CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
-    
-    [button setImageEdgeInsets:UIEdgeInsetsMake(-(totalHeight-imageSize.height), 0.0, 0.0, -titleSize.width)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(0.0, -imageSize.width, -(totalHeight-titleSize.height),0.0)];
-}
-
-- (void)button:(UIButton*)button isSelected:(BOOL)selected {
-    [button setSelected:selected];
-    
-    if (selected) {
-        [button setBackgroundColor:[self selectedColor]];
-        [[button layer] setBorderWidth:1.0f];
-    } else {
-        [button setBackgroundColor:[UIColor clearColor]];
-        [[button layer] setBorderWidth:0.0f];
+- (void)configurePresenter {
+    if (![self account]) {
+        SENAccount* onboardingAccount = [[HEMOnboardingService sharedService] currentAccount];
+        if (!onboardingAccount) {
+            onboardingAccount = [SENAccount new];
+        }
+        [self setAccount:onboardingAccount];
     }
     
+    GenderSelectorPresenter* presenter =
+        [[GenderSelectorPresenter alloc] initWithAccount:[self account]
+                                       onboardingService:[HEMOnboardingService sharedService]];
+    
+    [presenter bindWithNextButton:[self doneButton]];
+    [presenter bindWithSkipButton:[self skipButton]];
+    [presenter bindWithOptionsTable:[self optionsTableView]];
+    [presenter bindWithTitleLabel:[self titleLabel]];
+    [presenter bindWithDescriptionLabel:[self descriptionLabel]];
+    [presenter setUpdateDelegate:self];
+    
+    [self addPresenter:presenter];
 }
 
-- (IBAction)setGenderAsFemale:(id)sender {
-    [self button:[self femaleSelectorButton] isSelected:YES];
-    [self button:[self maleSelectorButton] isSelected:NO];
-    [self setSelectedGender:SENAccountGenderFemale];
-}
+#pragma mark - GenderUpdateDelegate
 
-- (IBAction)setGenderAsMale:(id)sender {
-    [self button:[self femaleSelectorButton] isSelected:NO];
-    [self button:[self maleSelectorButton] isSelected:YES];
-    [self setSelectedGender:SENAccountGenderMale];
-}
-
-- (void)setGenderAsOther {
-    [self button:[self femaleSelectorButton] isSelected:NO];
-    [self button:[self maleSelectorButton] isSelected:NO];
-    [self setSelectedGender:SENAccountGenderOther];
-}
-
-- (IBAction)done:(id)sender {
+- (void)didUpdateWithAccount:(SENAccount *)account from:(GenderSelectorPresenter *)presenter {
     if ([self delegate]) {
-        SENAccount* tempAccount = [SENAccount new];
-        [tempAccount setGender:[self selectedGender]];
-        [[self delegate] update:tempAccount];
+        [[self delegate] update:account];
     } else {
-        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
-        [account setGender:[self selectedGender]];
         [self next];
     }
 }
 
-- (IBAction)skip:(id)sender {
+- (void)didSkipFrom:(GenderSelectorPresenter *)presenter {
     if ([self delegate]) {
         [[self delegate] cancel];
     } else {
         [self next];
     }
 }
+
+#pragma mark - Continuation
 
 - (void)next {
     // update analytics property for gender

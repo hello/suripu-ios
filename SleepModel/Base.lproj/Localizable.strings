@@ -63,6 +63,10 @@
 "onboarding.account.email" = "Email address";
 "onboarding.account.password" = "Password";
 
+// onboarding gender
+"onboarding.gender.title" = "Confirm your gender";
+"onboarding.gender.description" = "This is used to provide you with more personalized recommendations about your sleep.";
+
 // onboarding pill
 "onboarding.pill-setup.title" = "Attach your Sleep Pill";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the side of your pillowcase closest to the edge of your bed.";
@@ -718,6 +722,7 @@
 // account info
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
+"account.gender.other" = "Other";
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";

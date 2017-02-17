@@ -9,6 +9,7 @@
 #import <SenseKit/SenseKit.h>
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENNotificationSetting.h>
+#import <SenseKit/SENAccount.h>
 
 #import "SENAnalytics+HEMAppAnalytics.h"
 
@@ -49,6 +50,8 @@
 #import "HEMTimeZoneViewController.h"
 
 #import "HEMAppUsage.h"
+#import "HEMBasicTableViewCell.h"
+#import "HEMURLImageView.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMStyle.h"
 #import "HEMPresenter.h"

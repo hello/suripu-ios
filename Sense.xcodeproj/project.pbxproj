@@ -114,6 +114,7 @@
 		BF0871BD1E427CCC00E57C8C /* CollapsableActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */; };
 		BF0871BF1E43D88200E57C8C /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871BE1E43D88200E57C8C /* WarningView.swift */; };
 		BF0871C11E44123400E57C8C /* NotificationSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */; };
+		BF0871C91E552C3B00E57C8C /* GenderSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0871C81E552C3B00E57C8C /* GenderSelectorPresenter.swift */; };
 		BF0B15E41DF0A93100DF2373 /* UIImage+SleepScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */; };
 		BF0B15E71DF1072400DF2373 /* Main.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E61DF1072400DF2373 /* Main.xcassets */; };
 		BF0B15E91DF2256300DF2373 /* PillDFU.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */; };
@@ -737,6 +738,7 @@
 		BF0871BC1E427CCC00E57C8C /* CollapsableActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsableActionCell.swift; sourceTree = "<group>"; };
 		BF0871BE1E43D88200E57C8C /* WarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		BF0871C01E44123400E57C8C /* NotificationSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsPresenter.swift; sourceTree = "<group>"; };
+		BF0871C81E552C3B00E57C8C /* GenderSelectorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderSelectorPresenter.swift; sourceTree = "<group>"; };
 		BF0B15E31DF0A93100DF2373 /* UIImage+SleepScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SleepScore.swift"; sourceTree = "<group>"; };
 		BF0B15E61DF1072400DF2373 /* Main.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Main.xcassets; sourceTree = "<group>"; };
 		BF0B15E81DF2256300DF2373 /* PillDFU.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PillDFU.storyboard; sourceTree = "<group>"; };
@@ -2862,6 +2864,7 @@
 				BFF364781D628BF2008D4DF8 /* HEMPillDescriptionPresenter.m */,
 				BFF364851D638AC5008D4DF8 /* HEMPairPiillPresenter.h */,
 				BFF364861D638AC5008D4DF8 /* HEMPairPiillPresenter.m */,
+				BF0871C81E552C3B00E57C8C /* GenderSelectorPresenter.swift */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -4331,6 +4334,7 @@
 				BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
+				BF0871C91E552C3B00E57C8C /* GenderSelectorPresenter.swift in Sources */,
 				BF7B2F7D1DB9AE5900A8E602 /* HEMAlarmExpansionSetupViewController.m in Sources */,
 				BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,

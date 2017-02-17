@@ -2689,8 +2689,8 @@ what's the temperature?"</string>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="osu-2M-ixZ">
-                                <rect key="frame" x="0.0" y="161" width="414" height="450"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="osu-2M-ixZ">
+                                <rect key="frame" x="0.0" y="161" width="414" height="434"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                 <prototypes>
@@ -2742,7 +2742,7 @@ what's the temperature?"</string>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="osu-2M-ixZ" firstAttribute="bottom" secondItem="wdU-1v-eC1" secondAttribute="top" id="0ct-px-sry"/>
+                            <constraint firstItem="wdU-1v-eC1" firstAttribute="top" secondItem="osu-2M-ixZ" secondAttribute="bottom" constant="16" id="0ct-px-sry"/>
                             <constraint firstAttribute="trailing" secondItem="gMf-fl-V5h" secondAttribute="trailing" constant="20" id="9hM-Rn-MBo"/>
                             <constraint firstItem="f5o-GP-Ma1" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="20" id="IfZ-ah-ESD"/>
                             <constraint firstItem="osu-2M-ixZ" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" id="IwM-v6-hoh"/>
@@ -2756,7 +2756,7 @@ what's the temperature?"</string>
                             <constraint firstItem="wdU-1v-eC1" firstAttribute="bottom" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="-77" id="mXe-B1-lVi"/>
                             <constraint firstItem="gMf-fl-V5h" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="20" id="n3R-03-ro6"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="20" id="uEq-Gw-AeG"/>
-                            <constraint firstItem="osu-2M-ixZ" firstAttribute="top" secondItem="f5o-GP-Ma1" secondAttribute="bottom" constant="32" id="xc7-qd-WPM"/>
+                            <constraint firstItem="osu-2M-ixZ" firstAttribute="top" secondItem="f5o-GP-Ma1" secondAttribute="bottom" priority="750" constant="32" id="xc7-qd-WPM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Cax-Ie-yFe"/>

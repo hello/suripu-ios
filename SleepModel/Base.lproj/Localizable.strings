@@ -65,7 +65,7 @@
 
 // onboarding gender
 "onboarding.gender.title" = "Confirm your gender";
-"onboarding.gender.description" = "This is used to provide you with more personalized recommendation about your sleep.";
+"onboarding.gender.description" = "This is used to provide you with more personalized recommendations about your sleep.";
 
 // onboarding pill
 "onboarding.pill-setup.title" = "Attach your Sleep Pill";

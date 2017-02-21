@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.4.1
+
+New:
+
+* Updated gender selection screen to support Other (options for other will come in next build)
+* Updated copy for pill pairing screen during upgrade path
+
+Fixes:
+
+* Fixed an issue that may cause the application to crash when toggling alarm on/off right as the app is refreshing the content
+* Fixed an issue that was preventing the notification screen to refresh after disabling notification in OS settings, while viewing the in app notification settings 
+
 ## 2.0.3.7
 
 New:

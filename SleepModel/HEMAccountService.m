@@ -21,6 +21,8 @@ NSString* const HEMAccountServiceNotificationDidRefresh = @"HEMAccountServiceNot
 NSString* const HEMAccountServiceDomain = @"is.hello.app.account";
 CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
 
+static NSString* const kHEMAccountServiceGenderResourceName = @"GenderOptions";
+
 @interface HEMAccountService()
 
 @property (nonatomic, strong) SENAccount* account;
@@ -496,6 +498,18 @@ CGFloat const HEMAccountPhotoDefaultCompression = 0.8f;
             completion (error);
         }
     }];
+}
+
+#pragma mark - Gender
+
+- (void)otherGenderOptions:(HEMAccountGenderOptionsHandler)completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:kHEMAccountServiceGenderResourceName
+                                                         ofType:@"strings"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion ([NSArray arrayWithContentsOfFile:path], nil);
+        });
+    });
 }
 
 @end

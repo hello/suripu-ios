@@ -43,6 +43,7 @@ typedef void(^HEMAccountHandler)(SENAccount* _Nullable account, NSDictionary<NSN
 typedef void(^HEMAccountUpdateHandler)(NSError* _Nullable error);
 typedef void(^HEMAccountProgressHandler)(NSProgress* _Nullable progress);
 typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSError* _Nullable error);
+typedef void(^HEMAccountGenderOptionsHandler)(NSArray<NSString*>* _Nullable options, NSError* _Nullable error);
 
 @interface HEMAccountService : SENService
 
@@ -75,6 +76,7 @@ typedef void(^HEMAccountPhotoHandler)(SENRemoteImage* _Nullable remoteImage, NSE
                       progress:(nullable HEMAccountProgressHandler)progress
                     completion:(nullable HEMAccountPhotoHandler)completion;
 - (void)removeProfilePhoto:(nullable HEMAccountUpdateHandler)completion;
+- (void)otherGenderOptions:(HEMAccountGenderOptionsHandler)completion;
 
 @end
 

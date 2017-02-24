@@ -15,6 +15,8 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
     fileprivate weak var account: SENAccount?
     fileprivate var cancelItem: UIBarButtonItem?
     fileprivate var searchItem: UIBarButtonItem?
+    fileprivate var searchBarItem: UIBarButtonItem?
+    fileprivate var cancelSearchItem: UIBarButtonItem?
     
     init(onboardingService: HEMOnboardingService!, account: SENAccount?) {
         self.onboardingService = onboardingService
@@ -42,8 +44,8 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         navigationBar.shadowImage = nil
     }
     
-    override func bind(with tableView: UITableView) {
-        super.bind(with: tableView)
+    override func bind(with tableView: UITableView, bottomConstraint: NSLayoutConstraint) {
+        super.bind(with: tableView, bottomConstraint: bottomConstraint)
         self.load()
     }
     
@@ -96,6 +98,62 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
     }
     
     @objc fileprivate func search() {
+        if self.cancelSearchItem == nil {
+            let cancel = NSLocalizedString("actions.cancel", comment: "cancel search text")
+            let cancelSearch = #selector(OtherGenderOptionsPresenter.cancelSearch)
+            self.cancelSearchItem = UIBarButtonItem.cancel(withTitle: cancel,
+                                                           image: nil,
+                                                           target: self,
+                                                           action: cancelSearch)
+        }
+
+        let searchBar = UISearchBar()
+        self.mainNavItem?.titleView = searchBar
+        self.mainNavItem?.setLeftBarButton(nil, animated: true)
+        self.mainNavItem?.setRightBarButton(self.cancelSearchItem, animated: true)
+        searchBar.becomeFirstResponder()
+    }
+    
+    @objc fileprivate func cancelSearch() {
+        self.mainNavItem?.titleView = nil
+        self.mainNavItem?.setLeftBarButton(self.cancelItem, animated: true)
+        self.mainNavItem?.setRightBarButton(self.searchItem, animated: true)
+    }
+    
+    //MARK: - Clean up
+    deinit {
+        self.stopListeningForKeyboardEvents()
+    }
+}
+
+// Extension to handle keyboard events
+extension OtherGenderOptionsPresenter {
+    
+    fileprivate func listenForKeyboardEvents() {
+        let center = NotificationCenter.default
+        let showAction = #selector(OtherGenderOptionsPresenter.keyboard(willShow:))
+        let showName = NSNotification.Name.UIKeyboardWillShow
+        let hideName = NSNotification.Name.UIKeyboardWillHide
+        center.addObserver(self, selector: showAction, name: showName, object: nil)
+        center.addObserver(self, selector: showAction, name: hideName, object: nil)
+    }
+    
+    fileprivate func stopListeningForKeyboardEvents() {
+        let center = NotificationCenter.default
+        let showName = NSNotification.Name.UIKeyboardWillShow
+        let hideName = NSNotification.Name.UIKeyboardWillHide
+        center.removeObserver(self, name: showName, object: nil)
+        center.removeObserver(self, name: hideName, object: nil)
+    }
+    
+    @objc fileprivate func keyboard(willShow notification: NSNotification) {
+        let info = notification.userInfo!
+        let duration = info[UIKeyboardAnimationDurationUserInfoKey]
+        let rawCurve = info[UIKeyboardAnimationCurveUserInfoKey]
+        let frame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let height = frame.size.height
         
     }
+    
+    
 }

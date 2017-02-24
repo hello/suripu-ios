@@ -27,6 +27,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 @property (nonatomic, weak) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy) NSString* title;
 @property (nonatomic, assign, getter=isPreSelected) BOOL preSelected;
+@property (nonatomic, weak) NSLayoutConstraint* tableViewBottomConstraint;
 
 @end
 
@@ -81,7 +82,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     [self setActivityContainerView:activityContainerView];
 }
 
-- (void)bindWithTableView:(UITableView*)tableView {
+- (void)bindWithTableView:(UITableView*)tableView bottomConstraint:(NSLayoutConstraint *)bottomConstraint {
     UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
                                                                bottomBorder:NO];
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
@@ -94,6 +95,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     [tableView setSeparatorColor:[UIColor separatorColor]];
     
     [self setTableView:tableView];
+    [self setTableViewBottomConstraint:bottomConstraint];
 }
 
 - (void)setDefaultSelectionImages {

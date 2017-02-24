@@ -53,8 +53,9 @@
     [navItem setTitle:[self navTitle]];
 }
 
-- (void)bindWithTableView:(UITableView*)tableView {
-    [super bindWithTableView:tableView];
+- (void)bindWithTableView:(UITableView*)tableView
+         bottomConstraint:(NSLayoutConstraint *)bottomConstraint{
+    [super bindWithTableView:tableView bottomConstraint:bottomConstraint];
     [tableView setAllowsMultipleSelection:YES];
 }
 

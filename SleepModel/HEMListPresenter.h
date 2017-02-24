@@ -46,12 +46,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSArray* items;
 @property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 @property (nonatomic, weak, readonly) UINavigationItem* mainNavItem;
+@property (nonatomic, weak, readonly) NSLayoutConstraint* tableViewBottomConstraint;
 
 - (instancetype)initWithTitle:(NSString*)title
                         items:(nullable NSArray*)items
             selectedItemNames:(nullable NSArray*)selectedItemNames;
 
-- (void)bindWithTableView:(UITableView*)tableView;
+- (void)bindWithTableView:(UITableView*)tableView bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
 
 - (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar;
 

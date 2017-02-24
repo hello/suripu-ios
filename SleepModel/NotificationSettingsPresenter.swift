@@ -53,7 +53,7 @@ import SenseKit
     func bind(navigationItem: UINavigationItem?) {
         let action = #selector(NotificationSettingsPresenter.save)
         let saveButton = UIBarButtonItem.saveButton(withTarget: self, action: action)
-        saveButton?.isEnabled = false
+        saveButton.isEnabled = false
         navigationItem?.rightBarButtonItem = saveButton
         self.navigationItem = navigationItem
     }

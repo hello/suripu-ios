@@ -18,6 +18,9 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 @interface HEMListPresenter()
 
+@property (nonatomic, strong) NSMutableArray* mutableSelectedNames;
+@property (nonatomic, strong) UIImage* highlightedSelectionImage;
+@property (nonatomic, strong) UIImage* selectedImage;
 @property (nonatomic, weak) UIView* activityContainerView;
 @property (nonatomic, weak) UITableView* tableView;
 @property (nonatomic, weak) UINavigationItem* mainNavItem;
@@ -37,10 +40,12 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
         _hideExtraNavigationBar = YES;
         _title = [title copy];
         _items = [items copy];
-        _selectedItemNames = [selectedItemNames copy];
+        _mutableSelectedNames = [selectedItemNames mutableCopy];
     }
     return self;
 }
+
+- (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar { }
 
 - (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
             withTopConstraint:(NSLayoutConstraint*)topConstraint {
@@ -86,13 +91,54 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView setSeparatorColor:[UIColor separatorColor]];
     
     [self setTableView:tableView];
+}
+
+- (void)setDefaultSelectionImages {
+    if (![self selectedImage]) {
+        UIImage* image = [UIImage imageNamed:@"radio"];
+        image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self setSelectedImage:image];
+    }
+    
+    if (![self highlightedSelectionImage]) {
+        UIImage* image = nil;
+        if ([[self tableView] allowsMultipleSelection]) {
+            image = [UIImage imageNamed:@"settingsToggleIconActive"];
+        } else {
+            image = [UIImage imageNamed:@"radioSelected"];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        }
+        [self setHighlightedSelectionImage:image];
+    }
+}
+
+- (void)setSelectedItemNames:(NSArray *)selectedItemNames {
+    _mutableSelectedNames = [selectedItemNames mutableCopy];
+}
+
+- (NSArray*)selectedItemNames {
+    return _mutableSelectedNames;
 }
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
     [[cell itemLabel] setFont:[UIFont body]];
     [[cell itemLabel] setTextColor:[UIColor textColor]];
+}
+
+- (void)configureSelectionImageViewInCell:(UITableViewCell*)cell {
+    if (![cell isKindOfClass:[HEMListItemCell class]]) {
+        return;
+    }
+    HEMListItemCell* itemCell = (id) cell;
+    NSString* name = [[itemCell itemLabel] text];
+    BOOL selected = [[self selectedItemNames] containsObject:name];
+    UIColor* tint = selected ? [UIColor tintColor] : [UIColor grey2];
+    [[itemCell selectionImageView] setImage:[self selectedImage]];
+    [[itemCell selectionImageView] setHighlightedImage:[self highlightedSelectionImage]];
+    [[itemCell selectionImageView] setTintColor:tint];
 }
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {
@@ -101,9 +147,32 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (void)updateCell:(HEMListItemCell*)cell withItem:(id)item selected:(BOOL)selected {
     [cell setSelected:selected];
+    
+    NSString* name = [[cell itemLabel] text];
+    
+    if (name) {
+        NSMutableArray* selectedItems = [self mutableSelectedNames];
+        if (!selectedItems) {
+            selectedItems = [NSMutableArray arrayWithCapacity:2];
+            [self setSelectedItemNames:selectedItems];
+        }
+        
+        if (!selected) {
+            [selectedItems removeObject:name];
+        } else {
+            [selectedItems addObject:name];
+        }
+    }
+    
+    [self configureSelectionImageViewInCell:(id)cell];
 }
 
 #pragma mark - Presenter Events
+
+- (void)willAppear {
+    [super willAppear];
+    [self setDefaultSelectionImages];
+}
 
 - (void)didAppear {
     [super didAppear];
@@ -146,6 +215,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     id item = [self items][[indexPath row]];
     [self configureCell:(id)cell forItem:item];
+    [self configureSelectionImageViewInCell:(id)cell];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -161,7 +231,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self updateCell:cell withItem:item selected:YES];
     
     if (![tableView allowsMultipleSelection]) {
-        
         // add a delay to let delegate now selection has been made so dismissal
         // of the controller can be done
         [tableView setUserInteractionEnabled:NO];

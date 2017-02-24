@@ -64,6 +64,7 @@
 "onboarding.account.password" = "Password";
 
 // onboarding gender
+"onboarding.other.gender.title" = "Gender";
 "onboarding.gender.title" = "Confirm your gender";
 "onboarding.gender.description" = "This is used to provide you with more personalized recommendations about your sleep.";
 

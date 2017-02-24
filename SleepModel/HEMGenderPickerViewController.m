@@ -7,9 +7,11 @@
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
 #import "HEMAccountUpdateDelegate.h"
-#import "HEMBasicTableViewCell.h"
+#import "HEMListItemSelectionViewController.h"
+#import "HEMSettingsNavigationController.h"
+#import "HEMMainStoryboard.h"
 
-@interface HEMGenderPickerViewController () <GenderUpdateDelegate>
+@interface HEMGenderPickerViewController () <GenderUpdateDelegate, HEMListDelegate>
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
@@ -66,6 +68,19 @@
     } else {
         [self next];
     }
+}
+
+- (void)showOtherOptionsWith:(OtherGenderOptionsPresenter *)optionsPresenter
+                        from:(GenderSelectorPresenter *)presenter {
+    HEMListItemSelectionViewController* listVC = (id)[HEMMainStoryboard instantiateListItemViewController];
+    [listVC setListPresenter:optionsPresenter];
+
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:listVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)dismissOtherOptionsFromFrom:(GenderSelectorPresenter *)presenter {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Continuation

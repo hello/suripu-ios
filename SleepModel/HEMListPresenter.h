@@ -53,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bindWithTableView:(UITableView*)tableView;
 
+- (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar;
+
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView;
 
 - (void)bindWithNavigationBar:(UINavigationBar*)navigationBar

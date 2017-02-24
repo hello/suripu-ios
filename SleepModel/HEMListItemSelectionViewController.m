@@ -30,6 +30,7 @@
 
 - (void)configurePresenter {
     [[self listPresenter] bindWithTableView:[self tableView]];
+    [[self listPresenter] bindWithDefaultNavigationBar:[[self navigationController] navigationBar]];
     [[self listPresenter] bindWithNavigationBar:[self extraNavigationBar]
                               withTopConstraint:[self navigationBarTopConstraint]];
     [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];

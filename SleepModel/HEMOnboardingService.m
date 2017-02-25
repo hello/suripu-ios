@@ -1247,8 +1247,6 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
     return [[self deviceService] savedHardwareVersion] == SENSenseHardwareVoice;
 }
 
-#pragma mark - Gender Options
-
 #pragma mark - Gender
 
 - (void)otherGenderOptions:(HEMOnboardingGenderOptionsHandler)completion {

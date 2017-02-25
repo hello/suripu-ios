@@ -15,7 +15,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
     fileprivate weak var account: SENAccount?
     fileprivate var cancelItem: UIBarButtonItem?
     fileprivate var searchItem: UIBarButtonItem?
-    fileprivate var searchBarItem: UIBarButtonItem?
+    fileprivate var searchBar: UISearchBar?
     fileprivate var cancelSearchItem: UIBarButtonItem?
     fileprivate var allOptions: [String]?
     
@@ -85,6 +85,13 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         cell.isSelected = currentSelection == text
     }
     
+    override func willNotifyDelegateOfSelection() {
+        super.willNotifyDelegateOfSelection()
+        if self.searchBar?.isFirstResponder == true {
+            self.searchBar?.resignFirstResponder()
+        }
+    }
+    
     //MARK: - Actions
     
     @objc fileprivate func cancel() {
@@ -110,12 +117,12 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         }
 
         self.listenForKeyboardEvents()
-        let searchBar = UISearchBar()
-        searchBar.delegate = self
-        self.mainNavItem?.titleView = searchBar
+        self.searchBar = UISearchBar()
+        self.searchBar!.delegate = self
+        self.mainNavItem?.titleView = self.searchBar
         self.mainNavItem?.setLeftBarButton(nil, animated: true)
         self.mainNavItem?.setRightBarButton(self.cancelSearchItem, animated: true)
-        searchBar.becomeFirstResponder()
+        self.searchBar!.becomeFirstResponder()
     }
     
     @objc fileprivate func cancelSearch() {
@@ -188,7 +195,7 @@ extension OtherGenderOptionsPresenter {
         self.tableViewBottomConstraint?.constant = frame.size.height
         self.tableView?.layoutIfNeeded()
         UIView.animate(withDuration: TimeInterval(duration), delay: 0.0, options: curve, animations: {
-            self.tableView?.layoutIfNeeded()
+            self.tableView?.superview?.layoutIfNeeded()
         }, completion:nil)
     }
     

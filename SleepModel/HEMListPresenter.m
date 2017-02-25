@@ -202,6 +202,8 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     }
 }
 
+- (void)willNotifyDelegateOfSelection {}
+
 #pragma mark - Nav Item
 
 - (void)back:(id)sender {
@@ -233,6 +235,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self updateCell:cell withItem:item selected:YES];
     
     if (![tableView allowsMultipleSelection]) {
+        [self willNotifyDelegateOfSelection];
         // add a delay to let delegate now selection has been made so dismissal
         // of the controller can be done
         [tableView setUserInteractionEnabled:NO];

@@ -126,6 +126,7 @@ import SenseKit
                 return self.selectedGender == SENAccountGender.male
             case .other:
                 return self.selectedGender == SENAccountGender.other
+                    && self.selectedOtherGender?.isEmpty == false
         }
     }
     

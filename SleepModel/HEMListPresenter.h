@@ -104,6 +104,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSInteger)indexOfItemWithName:(NSString*)name;
 
+/**
+ * @discussion
+ * Subclasses should override if interested in knowing that the delegate callback
+ * regarding a selection has been made.  Only for single selection support
+ */
+- (void)willNotifyDelegateOfSelection;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.4.2
+
+New:
+
+* Added support for other gender selections
+* Added search capability to quickly filter the other gender options (no animation yet)
+* Using radio button, instead of checkmark for lists that only supports 1 selection
+* List separators are now lighter in color
+
 ## 2.0.4.1
 
 New:

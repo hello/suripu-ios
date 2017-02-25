@@ -342,6 +342,8 @@
 		BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */; };
 		BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */; };
 		BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */; };
+		BF96A56D1E57BB60007C2CBA /* GenderOptions.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */; };
+		BF96A5711E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A5701E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift */; };
 		BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */; };
 		BF9826671D3ECF89009518CA /* HEMSenseDFUPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9826661D3ECF89009518CA /* HEMSenseDFUPresenter.m */; };
 		BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */; };
@@ -1122,6 +1124,8 @@
 		BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnreadAlertService.h; sourceTree = "<group>"; };
 		BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnreadAlertService.m; sourceTree = "<group>"; };
 		BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SystemAlerts.xcassets; sourceTree = "<group>"; };
+		BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = GenderOptions.strings; sourceTree = "<group>"; };
+		BF96A5701E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherGenderOptionsPresenter.swift; sourceTree = "<group>"; };
 		BF9826621D3ECDB7009518CA /* HEMSenseDFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseDFUViewController.h; sourceTree = "<group>"; };
 		BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseDFUViewController.m; sourceTree = "<group>"; };
 		BF9826651D3ECF89009518CA /* HEMSenseDFUPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseDFUPresenter.h; sourceTree = "<group>"; };
@@ -1990,6 +1994,7 @@
 		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */,
 				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
 				8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */,
 				BFD603CF1D5D3DB500F4E2D4 /* Flow */,
@@ -2865,6 +2870,7 @@
 				BFF364851D638AC5008D4DF8 /* HEMPairPiillPresenter.h */,
 				BFF364861D638AC5008D4DF8 /* HEMPairPiillPresenter.m */,
 				BF0871C81E552C3B00E57C8C /* GenderSelectorPresenter.swift */,
+				BF96A5701E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift */,
 			);
 			name = Presenters;
 			sourceTree = "<group>";
@@ -3788,6 +3794,7 @@
 				8ACD40451BACAF7400BB2815 /* Launch.xib in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
 				8AD3312C1BB08D9900DFF95A /* Settings.xcassets in Resources */,
+				BF96A56D1E57BB60007C2CBA /* GenderOptions.strings in Resources */,
 				BF4BE3D81D835A1B003B96ED /* HEMSensorGroupMemberView.xib in Resources */,
 				BFE7B6C01BEBE8FB0013740C /* Common.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
@@ -4346,6 +4353,7 @@
 				8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */,
 				BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */,
 				BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */,
+				BF96A5711E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift in Sources */,
 				BFD9A9771D5A9A14003EC82A /* HEMUpgradeSensePresenter.m in Sources */,
 				BFD9A9731D5A8C37003EC82A /* HEMNewSensePresenter.m in Sources */,
 				8B1DB6DE1C18B35D006C8AFF /* HEMSelectHostPresenter.m in Sources */,

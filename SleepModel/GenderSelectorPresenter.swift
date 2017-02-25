@@ -26,6 +26,22 @@ import SenseKit
     */
     func didSkip(from presenter: GenderSelectorPresenter)
     
+    /**
+        Show other options for gender
+     
+        - Parameter optionsPresenter: the options presenter to show
+        - Parameter presenter: instance of the presenter calling this method
+    */
+    func showOtherOptions(with optionsPresenter: OtherGenderOptionsPresenter,
+                          from presenter: GenderSelectorPresenter)
+    
+    /**
+        Dismiss the options
+        
+        - Parameter presenter: the presenter making the call
+    */
+    func dismissOtherOptionsFrom(from presenter: GenderSelectorPresenter)
+    
 }
 
 @objc class GenderSelectorPresenter: HEMPresenter {
@@ -38,15 +54,15 @@ import SenseKit
     fileprivate weak var nextButton: UIButton?
     fileprivate weak var onboardingService: HEMOnboardingService!
     
+    fileprivate var selectedOtherGender: String?
     fileprivate var selectedGender: SENAccountGender?
     var updateDelegate: GenderUpdateDelegate?
     
     init(account: SENAccount!, onboardingService: HEMOnboardingService!) {
         self.account = account
         self.onboardingService = onboardingService
-        if account.gender != SENAccountGender.other {
-            self.selectedGender = account.gender
-        }
+        self.selectedGender = account.gender
+        self.selectedOtherGender = account.customGender
         super.init()
     }
     
@@ -110,6 +126,7 @@ import SenseKit
                 return self.selectedGender == SENAccountGender.male
             case .other:
                 return self.selectedGender == SENAccountGender.other
+                    && self.selectedOtherGender?.isEmpty == false
         }
     }
     
@@ -122,10 +139,20 @@ import SenseKit
     @objc fileprivate func done() {
         if self.selectedGender != nil {
             self.account.gender = self.selectedGender!
+            if self.selectedGender! == SENAccountGender.other {
+                self.account.customGender = self.selectedOtherGender
+            }
         }
         self.nextButton?.isEnabled = false
         self.skipButton?.isEnabled = false
         self.updateDelegate?.didUpdate(account: self.account, from: self)
+    }
+    
+    @objc fileprivate func showOtherOptions() {
+        let optionsPresenter = OtherGenderOptionsPresenter(onboardingService: self.onboardingService,
+                                                           account: self.account)
+        optionsPresenter.delegate = self
+        self.updateDelegate?.showOtherOptions(with: optionsPresenter, from: self)
     }
     
     //MARK: Clean up
@@ -180,7 +207,11 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
                 title = NSLocalizedString("account.gender.female", comment: "male")
             case .other:
                 icon = UIImage(named: "addIcon")
-                title = NSLocalizedString("account.gender.other", comment: "other")
+                if self.selectedOtherGender?.isEmpty == true {
+                    title = NSLocalizedString("account.gender.other", comment: "other")
+                } else {
+                    title = self.selectedOtherGender
+                }
         }
         
         radio = radio?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
@@ -204,8 +235,24 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
                 self.selectedGender = SENAccountGender.male
             case .other:
                 self.selectedGender = SENAccountGender.other
+                self.showOtherOptions()
         }
         tableView.reloadData()
+    }
+    
+}
+
+extension GenderSelectorPresenter: HEMListDelegate {
+    
+    func goBack(from presenter: HEMListPresenter) {
+        self.updateDelegate?.dismissOtherOptionsFrom(from: self)
+    }
+    
+    func didSelectItem(_ item: Any, at index: Int, from presenter: HEMListPresenter) {
+        self.selectedOtherGender = item as? String
+        self.selectedGender = SENAccountGender.other
+        self.optionsTable?.reloadData()
+        self.updateDelegate?.dismissOtherOptionsFrom(from: self)
     }
     
 }

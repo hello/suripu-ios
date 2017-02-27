@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, readonly) UIView* activityContainerView;
 @property (nonatomic, weak, readonly) UITableView* tableView;
+@property (nonatomic, weak, readonly) UINavigationBar* mainNavBar;
 @property (nonatomic, weak, readonly, nullable) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, nullable) NSArray* selectedItemNames;

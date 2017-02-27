@@ -28,6 +28,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 @property (nonatomic, copy) NSString* title;
 @property (nonatomic, assign, getter=isPreSelected) BOOL preSelected;
 @property (nonatomic, weak) NSLayoutConstraint* tableViewBottomConstraint;
+@property (nonatomic, weak) UINavigationBar* mainNavBar;
 
 @end
 
@@ -46,7 +47,9 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     return self;
 }
 
-- (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar { }
+- (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar {
+    [self setMainNavBar:navigationBar];
+}
 
 - (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
             withTopConstraint:(NSLayoutConstraint*)topConstraint {
@@ -137,7 +140,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     HEMListItemCell* itemCell = (id) cell;
     NSString* name = [[itemCell itemLabel] text];
     BOOL selected = [[self selectedItemNames] containsObject:name];
-    UIColor* tint = selected ? [UIColor tintColor] : [UIColor grey2];
+    UIColor* tint = selected ? [UIColor tintColor] : [UIColor grey3];
     [[itemCell selectionImageView] setImage:[self selectedImage]];
     [[itemCell selectionImageView] setHighlightedImage:[self highlightedSelectionImage]];
     [[itemCell selectionImageView] setTintColor:tint];

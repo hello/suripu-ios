@@ -11,6 +11,7 @@ import SenseKit
 
 class OtherGenderOptionsPresenter: HEMListPresenter {
     
+    static fileprivate let animationDuration = 0.3
     fileprivate weak var onboardingService: HEMOnboardingService!
     fileprivate weak var account: SENAccount?
     fileprivate var cancelItem: UIBarButtonItem?
@@ -18,6 +19,8 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
     fileprivate var searchBar: UISearchBar?
     fileprivate var cancelSearchItem: UIBarButtonItem?
     fileprivate var allOptions: [String]?
+    fileprivate var searchTransitionView: UIView?
+    fileprivate var originSearchIconFrame: CGRect?
     
     init(onboardingService: HEMOnboardingService!, account: SENAccount?) {
         self.onboardingService = onboardingService
@@ -46,9 +49,12 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         
         let cancelAction = #selector(OtherGenderOptionsPresenter.cancel)
         let searchAction = #selector(OtherGenderOptionsPresenter.showSearch)
+        let searchButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: searchImage!.size))
+        searchButton.setImage(searchImage, for: UIControlState.normal)
+        searchButton.addTarget(self, action: searchAction, for: UIControlEvents.touchUpInside)
         
         self.cancelItem = UIBarButtonItem.cancel(withTitle: nil, image: backImage, target: self, action: cancelAction)
-        self.searchItem = UIBarButtonItem(image: searchImage, style: UIBarButtonItemStyle.plain, target: self, action: searchAction)
+        self.searchItem = UIBarButtonItem(customView: searchButton)
         
         navItem.title = NSLocalizedString("onboarding.other.gender.title", comment: "navigation title")
         navItem.leftBarButtonItem = self.cancelItem
@@ -116,21 +122,68 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
                                                            action: cancelSearch)
         }
 
+        let searchButton = self.searchItem?.customView as? UIButton
+        let searchIconView = searchButton!.imageView
+        let searchIconFrame = searchIconView!.convert(searchIconView!.bounds, to: self.mainNavBar)
+        let searchIcon = searchIconView?.image
+        let transitionView = UIImageView(image: searchIcon)
+        transitionView.frame = searchIconFrame
+        
         self.listenForKeyboardEvents()
         self.searchBar = UISearchBar()
+        self.searchBar!.setImage(searchIcon, for: UISearchBarIcon.search, state: UIControlState.normal)
+        self.searchBar?.isHidden = true
         self.searchBar!.delegate = self
+        
+        self.mainNavBar?.addSubview(transitionView)
+        self.mainNavItem?.setRightBarButton(nil, animated: false)
+        self.searchTransitionView = transitionView
+        self.originSearchIconFrame = searchIconFrame
+        
+        UIView.animate(withDuration: OtherGenderOptionsPresenter.animationDuration, animations: {
+            let rightMaxX = searchIconFrame.origin.x + searchIconFrame.size.width
+            let navBarWidth = self.mainNavBar?.frame.size.width ?? 0.0
+            var leftFrame = CGRect(origin: CGPoint.zero, size: searchIconFrame.size)
+            leftFrame.origin.y = searchIconFrame.origin.y
+            leftFrame.origin.x = navBarWidth - rightMaxX
+            transitionView.frame = leftFrame
+        }) { (finished: Bool) in
+            self.searchBar!.isHidden = false
+            self.searchTransitionView?.removeFromSuperview()
+        }
+        
         self.mainNavItem?.titleView = self.searchBar
-        self.mainNavItem?.setLeftBarButton(nil, animated: true)
+        self.mainNavItem?.setLeftBarButton(nil, animated: false)
         self.mainNavItem?.setRightBarButton(self.cancelSearchItem, animated: true)
         self.searchBar!.becomeFirstResponder()
     }
     
     @objc fileprivate func cancelSearch() {
-        self.items = self.allOptions
-        self.tableView?.reloadData()
-        self.mainNavItem?.titleView = nil
-        self.mainNavItem?.setLeftBarButton(self.cancelItem, animated: true)
-        self.mainNavItem?.setRightBarButton(self.searchItem, animated: true)
+        func done() {
+            self.items = self.allOptions
+            self.tableView?.reloadData()
+            self.mainNavItem?.titleView = nil
+            self.mainNavItem?.setLeftBarButton(self.cancelItem, animated: false)
+            self.mainNavItem?.setRightBarButton(self.searchItem, animated: false)
+        }
+        
+        if self.searchTransitionView != nil && self.originSearchIconFrame != nil {
+            self.mainNavBar?.addSubview(self.searchTransitionView!)
+            self.searchBar?.resignFirstResponder()
+            self.mainNavItem?.titleView?.isHidden = true
+            self.mainNavItem?.setRightBarButton(nil, animated: false)
+            
+            UIView.animate(withDuration: OtherGenderOptionsPresenter.animationDuration, animations: {
+                self.searchTransitionView!.frame = self.originSearchIconFrame!
+            }, completion: { (finished: Bool) in
+                done()
+                self.searchTransitionView?.removeFromSuperview()
+                self.searchTransitionView = nil
+            })
+        } else {
+             done()
+        }
+        
         self.stopListeningForKeyboardEvents()
     }
     

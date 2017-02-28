@@ -501,8 +501,7 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
 #pragma mark - Sense Forced OTA DFU
 
 + (void)trackSenseUpdate:(SENDFUStatus*)status {
-    [self track:@"Sense DFU status"
-     properties:@{@"status" : @([status currentState])}];
+    [self track:@"Sense DFU status" properties:@{@"status" : @([status currentState])}];
 }
 
 #pragma mark - Track Sense
@@ -529,6 +528,8 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
         detail = [detailObj isoDate];
     } else if ([detailObj respondsToSelector:@selector(stringValue)]) {
         detail = [detailObj stringValue];
+    } else if ([notification type] == PushTypeSystem) {
+        detail = [notification systemTypeStringValue];
     }
     
     NSDictionary* props = @{kHEMAnalyticsEventNotificationType : [notification typeStringValue],

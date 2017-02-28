@@ -43,7 +43,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
     
     override func bind(with navItem: UINavigationItem) {
         super.bind(with: navItem)
-        let backImage = UIImage(named: "backIcon")
+        let backImage = BackIndicator()
         var searchImage = UIImage(named: "iconSearch")
         searchImage = searchImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         

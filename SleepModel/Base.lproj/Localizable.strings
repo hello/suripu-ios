@@ -67,6 +67,7 @@
 "onboarding.other.gender.title" = "Gender";
 "onboarding.gender.title" = "Confirm your gender";
 "onboarding.gender.description" = "This is used to provide you with more personalized recommendations about your sleep.";
+"onboarding.gender.select" = "Select";
 
 // onboarding pill
 "onboarding.pill-setup.title" = "Attach your Sleep Pill";
@@ -723,7 +724,7 @@
 // account info
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
-"account.gender.other" = "Other";
+"account.gender.other" = "Custom";
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KoM-KU-kaf">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,7 +29,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oZ-Nx-H4H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="173"/>
+            <point key="canvasLocation" x="780" y="774"/>
         </scene>
         <!--Authentication View Controller-->
         <scene sceneID="LfI-5i-PBv">
@@ -388,7 +388,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HBq-s5-17a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-211" y="922"/>
+            <point key="canvasLocation" x="116" y="1554"/>
         </scene>
         <!--Have Sense View Controller-->
         <scene sceneID="IYi-mC-ciF">
@@ -479,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="1336"/>
+            <point key="canvasLocation" x="780" y="1554"/>
         </scene>
         <!--Create Account View Controller-->
         <scene sceneID="y8L-RP-Stu">
@@ -2701,7 +2701,7 @@ what's the temperature?"</string>
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NyY-R5-7gz" customClass="HEMURLImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="NyY-R5-7gz" customClass="HEMURLImageView">
                                                     <rect key="frame" x="20" y="16" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="Zcm-Gz-YQI"/>
@@ -2714,18 +2714,27 @@ what's the temperature?"</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="akI-fZ-LJG">
-                                                    <rect key="frame" x="370" y="16" width="24" height="24"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54a-dh-6iK">
+                                                    <rect key="frame" x="334" y="18" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory" translatesAutoresizingMaskIntoConstraints="NO" id="akI-fZ-LJG">
+                                                    <rect key="frame" x="386" y="16" width="8" height="24"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="Pd3-v3-wBy"/>
+                                                        <constraint firstAttribute="width" constant="8" id="Pd3-v3-wBy"/>
                                                         <constraint firstAttribute="height" constant="24" id="VkV-rO-Xy2"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="akI-fZ-LJG" secondAttribute="trailing" constant="20" id="34E-eS-Fr9"/>
+                                                <constraint firstItem="54a-dh-6iK" firstAttribute="top" secondItem="Mik-Q1-AhE" secondAttribute="top" id="KYe-nZ-BIK"/>
+                                                <constraint firstItem="54a-dh-6iK" firstAttribute="trailing" secondItem="akI-fZ-LJG" secondAttribute="leading" constant="-10" id="aKK-3v-c6a"/>
                                                 <constraint firstItem="akI-fZ-LJG" firstAttribute="centerY" secondItem="NyY-R5-7gz" secondAttribute="centerY" id="bgP-H4-mdB"/>
                                                 <constraint firstItem="NyY-R5-7gz" firstAttribute="leading" secondItem="UMP-Br-DLT" secondAttribute="leading" constant="20" id="eWa-BG-heN"/>
+                                                <constraint firstItem="54a-dh-6iK" firstAttribute="height" secondItem="Mik-Q1-AhE" secondAttribute="height" id="hcQ-dr-lHC"/>
                                                 <constraint firstItem="Mik-Q1-AhE" firstAttribute="leading" secondItem="NyY-R5-7gz" secondAttribute="trailing" constant="20" id="sE7-Sg-n3U"/>
                                                 <constraint firstItem="Mik-Q1-AhE" firstAttribute="centerY" secondItem="NyY-R5-7gz" secondAttribute="centerY" id="wFc-xE-UmP"/>
                                                 <constraint firstItem="NyY-R5-7gz" firstAttribute="centerY" secondItem="UMP-Br-DLT" secondAttribute="centerY" id="xgs-hr-SJI"/>
@@ -2733,6 +2742,7 @@ what's the temperature?"</string>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="customAccessoryView" destination="akI-fZ-LJG" id="VXz-1p-sZP"/>
+                                            <outlet property="customDetailLabel" destination="54a-dh-6iK" id="s9l-Gl-7us"/>
                                             <outlet property="customTitleLabel" destination="Mik-Q1-AhE" id="h4p-ph-8oQ"/>
                                             <outlet property="remoteImageView" destination="NyY-R5-7gz" id="Acu-Pn-rn7"/>
                                         </connections>
@@ -3571,6 +3581,7 @@ Turn Bluetooth on</string>
         </scene>
     </scenes>
     <resources>
+        <image name="accessory" width="8" height="14"/>
         <image name="addIconSmall" width="24" height="24"/>
         <image name="bluetooth" width="32" height="32"/>
         <image name="defaultAvatar" width="104" height="104"/>
@@ -3601,16 +3612,16 @@ Turn Bluetooth on</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3DQ-Vg-FaT"/>
-        <segue reference="0DP-Ib-Jz4"/>
-        <segue reference="Gpb-8d-Xjm"/>
-        <segue reference="Dzn-yM-CjI"/>
-        <segue reference="ABK-Gx-jne"/>
-        <segue reference="l0v-WX-q0S"/>
-        <segue reference="2bN-N8-HGp"/>
         <segue reference="7LA-fg-2Jb"/>
-        <segue reference="tkT-Pb-lgk"/>
+        <segue reference="l0v-WX-q0S"/>
+        <segue reference="ABK-Gx-jne"/>
+        <segue reference="Sda-jg-aqk"/>
+        <segue reference="6ED-su-wCY"/>
+        <segue reference="0DP-Ib-Jz4"/>
+        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="2bN-N8-HGp"/>
         <segue reference="wdw-bO-x3J"/>
+        <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -60,3 +60,9 @@ NSMutableParagraphStyle* DefaultBodyParagraphStyle() {
     [style setMaximumLineHeight:HEMStyleDefaultLineHeight];
     return style;
 }
+
+UIImage* BackIndicator(void) {
+    UIImage* defaultBackImage = [UIImage imageNamed:@"backIcon"];
+    defaultBackImage = [defaultBackImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    return defaultBackImage;
+}

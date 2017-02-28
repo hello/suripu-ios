@@ -39,9 +39,8 @@
 }
 
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {
-    UIImage* defaultBackImage = [UIImage imageNamed:@"backIcon"];
+    UIImage* defaultBackImage = BackIndicator();
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    [item setTintColor:[UIColor tintColor]];
     viewController.navigationItem.leftBarButtonItem = item;
 }
 

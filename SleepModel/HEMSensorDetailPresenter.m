@@ -12,6 +12,8 @@
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensorStatus.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "Sense-Swift.h"
 
 #import "HEMSensorDetailPresenter.h"
@@ -114,17 +116,6 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)determineContent {
-    NSString* sensorType = [[[self sensor] typeStringValue] lowercaseString];
-    if ([[self sensor] type] == SENSensorTypeTemp) {
-        if ([SENPreference useCentigrade]) {
-            sensorType = [sensorType stringByAppendingString:@".celsius"];
-        } else {
-            sensorType = [sensorType stringByAppendingString:@".fahrenheit"];
-        }
-    }
-    NSString* aboutKey = [NSString stringWithFormat:@"sensor.section.about.%@", sensorType];
-    NSString* about = NSLocalizedString(aboutKey, nil);
-    
     NSMutableArray* content = [NSMutableArray arrayWithCapacity:HEMSensorDetailContentAbout + 1];
     [content addObject:@(HEMSensorDetailContentValue)];
     [content addObject:@(HEMSensorDetailContentChart)];
@@ -135,15 +126,57 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     // if string for content exists
-    if (![about isEqualToString:aboutKey]) {
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
-                                     NSForegroundColorAttributeName : [UIColor grey5],
-                                     NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
-        [self setAboutDetail:[[NSAttributedString alloc] initWithString:about attributes:attributes]];
+    NSAttributedString* attributedAbout = nil;
+    if ([[self sensor] type] == SENSensorTypeCO2) {
+        attributedAbout = [self attributedC02About];
+    } else {
+        NSString* sensorType = [[[self sensor] typeStringValue] lowercaseString];
+        if ([[self sensor] type] == SENSensorTypeTemp) {
+            if ([SENPreference useCentigrade]) {
+                sensorType = [sensorType stringByAppendingString:@".celsius"];
+            } else {
+                sensorType = [sensorType stringByAppendingString:@".fahrenheit"];
+            }
+        }
+        attributedAbout = [self attributedAboutForSensorType:sensorType];
+    }
+    
+    if (attributedAbout) {
+        [self setAboutDetail:attributedAbout];
         [content addObject:@(HEMSensorDetailContentAbout)];
     }
     
     [self setContent:content];
+}
+
+- (NSAttributedString*)attributedAboutForSensorType:(NSString*)sensorType {
+    NSString* aboutKey = [NSString stringWithFormat:@"sensor.section.about.%@", sensorType];
+    NSString* about = NSLocalizedString(aboutKey, nil);
+    if ([about isEqualToString:aboutKey]) {
+        return nil;
+    }
+    return [[NSAttributedString alloc] initWithString:about attributes:[self aboutAttributes]];
+}
+
+- (NSDictionary*)aboutAttributes {
+    return @{NSFontAttributeName : [UIFont body],
+             NSForegroundColorAttributeName : [UIColor grey5],
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+}
+
+- (NSAttributedString*)attributedNote {
+    NSString* note = NSLocalizedString(@"sensor.about.note", nil);
+    NSDictionary* attributes = @{NSForegroundColorAttributeName: [UIColor grey7],
+                                 NSFontAttributeName: [UIFont body]};
+    return [[NSAttributedString alloc] initWithString:note attributes:attributes];
+}
+
+- (NSAttributedString*)attributedC02About {
+    NSString* format = NSLocalizedString(@"sensor.section.about.co2.format", nil);
+    NSArray* args = @[[self attributedNote]];
+    return [[NSMutableAttributedString alloc] initWithFormat:format
+                                                        args:args
+                                                  attributes:[self aboutAttributes]];
 }
 
 #pragma mark - Presenter events
@@ -655,8 +688,6 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
     [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setAttributedText:[self aboutDetail]];
-    [[aboutCell aboutLabel] setFont:[UIFont body]];
-    [[aboutCell aboutLabel] setTextColor:[UIColor grey5]];
 }
 
 #pragma mark - HEMSensorChartScrubberDelegate

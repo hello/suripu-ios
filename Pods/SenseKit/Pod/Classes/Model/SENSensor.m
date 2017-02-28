@@ -71,7 +71,7 @@ SENSensorType SensorTypeFromString (NSString* typeString) {
     } else if ([typeUpper isEqualToString:kSENSensorTypeValueHumidity]) {
         return SENSensorTypeHumidity;
     } else if ([typeUpper isEqualToString:kSENSensorTypeValueVOC]) {
-        return SENSensorTypeCO2;
+        return SENSensorTypeVOC;
     } else if ([typeUpper isEqualToString:kSENSensorTypeValueCO2]) {
         return SENSensorTypeCO2;
     } else if ([typeUpper isEqualToString:kSENSensorTypeValueUV]) {

@@ -3105,7 +3105,7 @@ what's the temperature?"</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go7-Z7-kmw">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go7-Z7-kmw">
                                 <rect key="frame" x="20" y="24" width="374" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="eFQ-oR-ERS"/>
@@ -3114,15 +3114,14 @@ what's the temperature?"</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxR-ry-GIM">
-                                <rect key="frame" x="20" y="68" width="374" height="61"/>
-                                <string key="text">Sense will occasionally provide important information about your sleep, the current conditions in your room, and your Sleep Score.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get your daily Sleep Score, as well as other important notifications." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxR-ry-GIM">
+                                <rect key="frame" x="20" y="68" width="374" height="40.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sampleNotification" translatesAutoresizingMaskIntoConstraints="NO" id="1ye-yc-yHg">
-                                <rect key="frame" x="0.0" y="129" width="414" height="482"/>
+                                <rect key="frame" x="0.0" y="108.66666666666666" width="414" height="502.33333333333337"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ia-GF-Swk">
                                 <rect key="frame" x="147" y="611" width="119" height="28"/>
@@ -3594,7 +3593,7 @@ Turn Bluetooth on</string>
         <image name="originalSense" width="375" height="250"/>
         <image name="radio" width="24" height="24"/>
         <image name="radioSelected" width="24" height="24"/>
-        <image name="sampleNotification" width="320" height="186"/>
+        <image name="sampleNotification" width="375" height="181"/>
         <image name="sense" width="186" height="183"/>
         <image name="senseAllSet" width="375" height="233"/>
         <image name="senseAppIcon" width="32" height="32"/>

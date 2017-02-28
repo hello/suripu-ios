@@ -31,7 +31,7 @@
     
     // cancel
     UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:[UIImage imageNamed:@"backIcon"]
+                                                                 image:BackIndicator()
                                                                 target:self
                                                                 action:@selector(dismiss)];
     

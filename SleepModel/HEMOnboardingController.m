@@ -299,7 +299,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (void)showBackButtonAsCancelWithSelector:(SEL)action {
     UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:[UIImage imageNamed:@"backIcon"]
+                                                                 image:BackIndicator()
                                                                 target:self
                                                                 action:action];
     [self useCancelBarButtonItem:cancelItem];

@@ -190,40 +190,43 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
                    willDisplay cell: UITableViewCell,
                    forRowAt indexPath: IndexPath) {
         let customCell = cell as? HEMBasicTableViewCell
-        let accessoryImageView = customCell?.customAccessoryView as? UIImageView
         let selected = self.isSelected(indexPath: indexPath)
         var radio = selected ? UIImage(named: "radioSelected") : UIImage(named: "radio")
         let selectionTint = selected ? UIColor.tint() : UIColor.grey2()
+        var accessoryImage: UIImage? = nil
+        let accessoryView = customCell?.customAccessoryView as? UIImageView
         var title: String? = nil
-        var icon: UIImage? = nil
+        var detail: String? = nil
+        var detailTextColor =  UIColor.grey3()
         let row = Row(rawValue: indexPath.row)!
         
         switch row {
             case .male:
-                icon = UIImage(named: "male")
                 title = NSLocalizedString("account.gender.male", comment: "male")
             case .female:
-                icon = UIImage(named: "female")
                 title = NSLocalizedString("account.gender.female", comment: "male")
             case .other:
-                icon = UIImage(named: "addIcon")
-                if self.selectedOtherGender?.isEmpty == true {
-                    title = NSLocalizedString("account.gender.other", comment: "other")
-                } else {
-                    title = self.selectedOtherGender
+                title = NSLocalizedString("account.gender.other", comment: "other")
+                detail = self.selectedOtherGender
+                accessoryImage = UIImage(named: "accessory")?.withRenderingMode(.alwaysTemplate)
+                if detail == nil || detail!.isEmpty == true {
+                    detailTextColor = UIColor.tint()
+                    detail = NSLocalizedString("onboarding.gender.select", comment: "default text")
                 }
         }
         
-        radio = radio?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        icon = icon?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        accessoryView?.image = accessoryImage
+        accessoryView?.tintColor = UIColor.grey3()
+        radio = radio?.withRenderingMode(.alwaysTemplate)
         customCell?.customTitleLabel.font = UIFont.body()
         customCell?.customTitleLabel.textColor = UIColor.grey6()
         customCell?.customTitleLabel.text = title
-        customCell?.remoteImageView.image = icon
-        customCell?.remoteImageView.tintColor = UIColor.tint()
-        customCell?.selectionStyle = UITableViewCellSelectionStyle.none
-        accessoryImageView?.image = radio
-        accessoryImageView?.tintColor = selectionTint
+        customCell?.customDetailLabel?.text = detail
+        customCell?.customDetailLabel?.textColor = detailTextColor
+        customCell?.customDetailLabel?.font = UIFont.body()
+        customCell?.remoteImageView.image = radio
+        customCell?.remoteImageView.tintColor = selectionTint
+        customCell?.selectionStyle = .none
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

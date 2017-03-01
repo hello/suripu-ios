@@ -268,14 +268,26 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             NSInteger indicesBetweenLabels = (valueCount - 1) / kHEMSensorDetailChartXLabelCount;
             NSUInteger index = 0;
             SENSensorTime* time = nil;
+            NSString* xLabel = nil;
             for (NSNumber* value in values) {
                 CGFloat entryValue = MAX(0.0f, [value doubleValue]);
                 [chartData addObject:[[ChartDataEntry alloc] initWithX:index y:entryValue]];
                 if (index == ([labelData count] + 1) * indicesBetweenLabels) {
                     NSInteger indexWithOffset = index - kHEMSensorDetailXAxisOffset;
                     time = [[strongSelf sensorData] timestamps][indexWithOffset];
-                    [labelData addObject:[[strongSelf xAxisLabelFormatter]
-                                          stringFromDate:[time date]]];
+                    xLabel = [[strongSelf xAxisLabelFormatter] stringFromDate:[time date]];
+                    if (xLabel) {
+                        [labelData addObject:xLabel];
+                    } else {
+                        // As of 2/28/2017, this was added to see when / why this occurs.
+                        // If we never see this in the field, we can remove it, but the
+                        // if / else statement is needed to prevent a crasher that is caused
+                        // by adding an object to the labelData without an object
+                        [SENAnalytics track:kHEMAnalyticsEventWarning
+                                 properties:@{@"message" : @"missing sensor x-axis label",
+                                              @"offset" : [time offset] ?: @"undefined",
+                                              @"date" : [time date] ?: @"undefined"}];
+                    }
                 }
                 
                 if ([value doubleValue] < [strongSelf chartMinValue]) {

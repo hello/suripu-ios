@@ -279,6 +279,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                     if (xLabel) {
                         [labelData addObject:xLabel];
                     } else {
+                        [labelData addObject:NSLocalizedString(@"empty-data", nil)];
                         // As of 2/28/2017, this was added to see when / why this occurs.
                         // If we never see this in the field, we can remove it, but the
                         // if / else statement is needed to prevent a crasher that is caused

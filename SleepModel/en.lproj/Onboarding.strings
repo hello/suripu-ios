@@ -62,8 +62,8 @@
 /* Class = "UIButton"; normalTitle = "Skip for now"; ObjectID = "GFw-g6-B5s"; */
 "GFw-g6-B5s.normalTitle" = "Skip for now";
 
-/* Class = "UILabel"; text = "Allow notifications"; ObjectID = "Go7-Z7-kmw"; */
-"Go7-Z7-kmw.text" = "Allow notifications";
+/* Class = "UILabel"; text = "Enable notifications"; ObjectID = "Go7-Z7-kmw"; */
+"Go7-Z7-kmw.text" = "Enable notifications";
 
 /* Class = "UIButton"; normalTitle = "SET A SMART ALARM"; ObjectID = "H5s-t3-orP"; */
 "H5s-t3-orP.normalTitle" = "SET A SMART ALARM";
@@ -164,8 +164,8 @@
 /* Class = "UILabel"; text = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels."; ObjectID = "cYf-D8-Nxr"; */
 "cYf-D8-Nxr.text" = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels.";
 
-/* Class = "UILabel"; text = "Sense will occasionally provide important information about your sleep, the current conditions in your room, and your Sleep Score."; ObjectID = "cxR-ry-GIM"; */
-"cxR-ry-GIM.text" = "Sense will occasionally provide important information about your sleep, the current conditions in your room, and your Sleep Score.";
+/* Class = "UILabel"; text = "Get your daily Sleep Score, as well as other important notifications."; ObjectID = "cxR-ry-GIM"; */
+"cxR-ry-GIM.text" = "Get your daily Sleep Score, as well as other important notifications.";
 
 /* Class = "UILabel"; text = "Set up another Sleep Pill?"; ObjectID = "eDs-8j-Vd9"; */
 "eDs-8j-Vd9.text" = "Set up another Sleep Pill?";

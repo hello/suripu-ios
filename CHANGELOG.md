@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.4.3
+
+New:
+
+* Added animation to the search functionality within the other gender options screen
+* Design review tweaks
+* Updated CO2 copy
+* Added detail of system type push notifications in Open Notification analytic event
+* Updated copy on notification onboarding screen
+* Changed the way gender selection appears in the picker
+
+Fixes:
+
+* Fixes an issue that would cause the application to crash when viewing sensor detail
+
 ## 2.0.4.2
 
 New:

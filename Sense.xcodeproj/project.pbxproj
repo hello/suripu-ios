@@ -1994,9 +1994,9 @@
 		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */,
 				BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */,
 				BFBECCE41A15706700335CC6 /* Onboarding.storyboard */,
-				8AD3313D1BB0920800DFF95A /* Onboarding.xcassets */,
 				BFD603CF1D5D3DB500F4E2D4 /* Flow */,
 				BF885F1F1CE54ED800A92F90 /* Presenters */,
 				BFFCEFD61D074EB000CA0E54 /* Services */,

@@ -3217,7 +3217,7 @@ what's the temperature?"</string>
                                 <rect key="frame" x="0.0" y="408" width="414" height="210"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="sensePurple" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="senseBlue" translatesAutoresizingMaskIntoConstraints="NO" id="ahI-Ri-OCe">
                                 <rect key="frame" x="0.0" y="397" width="414" height="184"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="184" id="KfE-AJ-gGk"/>
@@ -3598,9 +3598,9 @@ Turn Bluetooth on</string>
         <image name="senseAllSet" width="375" height="233"/>
         <image name="senseAppIcon" width="32" height="32"/>
         <image name="senseBackground" width="320" height="210"/>
+        <image name="senseBlue" width="187" height="184"/>
         <image name="senseGreen" width="186" height="183"/>
         <image name="sensePlacement" width="320" height="198"/>
-        <image name="sensePurple" width="187" height="184"/>
         <image name="senseRed" width="186" height="183"/>
         <image name="senseTable" width="274" height="154"/>
         <image name="senseUpdate" width="190" height="185"/>
@@ -3612,12 +3612,12 @@ Turn Bluetooth on</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7LA-fg-2Jb"/>
-        <segue reference="l0v-WX-q0S"/>
-        <segue reference="ABK-Gx-jne"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="Sda-jg-aqk"/>
         <segue reference="6ED-su-wCY"/>
         <segue reference="0DP-Ib-Jz4"/>
         <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="v6v-Rh-oSf"/>
         <segue reference="2bN-N8-HGp"/>
         <segue reference="wdw-bO-x3J"/>
         <segue reference="tkT-Pb-lgk"/>

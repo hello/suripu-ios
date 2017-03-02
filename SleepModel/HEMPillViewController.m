@@ -40,8 +40,7 @@ typedef NS_ENUM(NSInteger, HEMPillWarning) {
 typedef NS_ENUM(NSInteger, HEMPillAction) {
     HEMPillActionFirmwareUpdate = 0,
     HEMPillActionReplaceBattery,
-    HEMPillActionAdvanced,
-    HEMPillActionRows
+    HEMPillActionAdvanced
 };
 
 @interface HEMPillViewController() <
@@ -55,6 +54,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) NSMutableOrderedSet* warnings;
 @property (assign, nonatomic, getter=hasFirmwareUpdateAvailable) BOOL firmwareUpdateAvailable;
+@property (strong, nonatomic) NSArray* rows;
 
 @end
 
@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self determineWarnings];
+    [self determineRows];
     [self determinePillUpdateAvailability];
     [self configureCollectionView];
     [SENAnalytics track:kHEMAnalyticsEventPill];
@@ -71,6 +72,23 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self collectionView] reloadData];
+}
+
+- (void)determineRows {
+    NSMutableArray* rows = [NSMutableArray arrayWithCapacity:2];
+    
+    if ([self hasFirmwareUpdateAvailable]) {
+        [rows addObject:@(HEMPillActionFirmwareUpdate)];
+    }
+    
+    SENPillMetadata* pillMetdata = [[[self deviceService] devices] pillMetadata];
+    if ([pillMetdata batteryType] == SENPillBatteryTypeRemovable) {
+        [rows addObject:@(HEMPillActionReplaceBattery)];
+    }
+    
+    [rows addObject:@(HEMPillActionAdvanced)];
+    
+    [self setRows:rows];
 }
 
 - (void)determineWarnings {
@@ -157,10 +175,6 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
              NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
-- (NSInteger)adjustedRowFor:(NSInteger)row {
-    return [self hasFirmwareUpdateAvailable] ? row : row + 1;
-}
-
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -171,10 +185,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
      numberOfItemsInSection:(NSInteger)section {
     NSInteger rows = 1;
     if (section >= [[self warnings] count]) {
-        rows = HEMPillActionRows;
-        if (![self hasFirmwareUpdateAvailable]) {
-            rows--;
-        }
+        rows = [[self rows] count];
     }
     return rows;
 }
@@ -194,24 +205,29 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
                                                                            forIndexPath:indexPath];
     
     if ([cell isKindOfClass:[HEMDeviceActionCell class]]) {
-        NSInteger adjustedRow = [self adjustedRowFor:row];
+        NSNumber* rowNumber = [self rows][row];
+        HEMPillAction action = (HEMPillAction) [rowNumber integerValue];
         HEMDeviceActionCell* actionCell = (id) cell;
         NSString* text = nil;
         UIImage* icon = nil;
         BOOL showTopSeparator = NO;
         BOOL showSeparator = YES;
         
-        if (adjustedRow == HEMPillActionFirmwareUpdate) {
-            icon = [UIImage imageNamed:@"settingsPairingModeIcon"];
-            text = NSLocalizedString(@"settings.pill.update-firmware.title", nil) ;
-            showTopSeparator = YES;
-        } else if (adjustedRow == HEMPillActionReplaceBattery) {
-            icon = [UIImage imageNamed:@"settingsBatteryIcon"];
-            text = NSLocalizedString(@"settings.pill.replace-battery.title", nil) ;
-        } else if (adjustedRow == HEMPillActionAdvanced) {
-            icon = [UIImage imageNamed:@"settingsAdvanceIcon"];
-            text = NSLocalizedString(@"settings.pill.advanced.option.title", nil);
-            showSeparator = NO;
+        switch (action) {
+            default:
+            case HEMPillActionFirmwareUpdate:
+                icon = [UIImage imageNamed:@"settingsPairingModeIcon"];
+                text = NSLocalizedString(@"settings.pill.update-firmware.title", nil) ;
+                break;
+            case HEMPillActionReplaceBattery:
+                icon = [UIImage imageNamed:@"settingsBatteryIcon"];
+                text = NSLocalizedString(@"settings.pill.replace-battery.title", nil);
+                break;
+            case HEMPillActionAdvanced:
+                icon = [UIImage imageNamed:@"settingsAdvanceIcon"];
+                text = NSLocalizedString(@"settings.pill.advanced.option.title", nil);
+                showSeparator = NO;
+                break;
         }
         
         [[actionCell textLabel] setTextColor:[UIColor grey6]];
@@ -286,8 +302,9 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger sec = [indexPath section];
     if (sec == [[self warnings] count]) {
-        NSInteger adjustedRow = [self adjustedRowFor:[indexPath row]];
-        switch (adjustedRow) {
+        NSNumber* rowNumber = [self rows][[indexPath row]];
+        HEMPillAction action = [rowNumber integerValue];
+        switch (action) {
             case HEMPillActionFirmwareUpdate:
                 return [self showPillDfuController];
                 break;

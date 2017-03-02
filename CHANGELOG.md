@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.4.4
+
+New:
+
+* Updated Sense image in onboarding to glow blue instead of purple
+* Prevent notifications (and other shortcuts) from exiting modal flows
+* Add support for battery_type to drive the appearance of Replace battery option in settings
+
 ## 2.0.4.3
 
 New:

@@ -23,10 +23,17 @@ typedef NS_ENUM(NSUInteger, SENPillState) {
     SENPillStateLowBattery = 2
 };
 
+typedef NS_ENUM(NSUInteger, SENPillBatteryType) {
+    SENPillBatteryTypeUnknown = 0,
+    SENPillBatteryTypeRemovable,
+    SENPillBatteryTypeSealed
+};
+
 @interface SENPillMetadata : SENDeviceMetadata
 
 @property (nonatomic, assign, readonly) SENPillState state;
 @property (nonatomic, assign, readonly) SENPillColor color;
+@property (nonatomic, assign, readonly) SENPillBatteryType batteryType;
 @property (nonatomic, copy, readonly, nullable) NSString* firmwareUpdateUrl;
 @property (nonatomic, strong, readonly, nullable) NSNumber* batteryLevel;
 

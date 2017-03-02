@@ -269,6 +269,10 @@ extension MainViewController: ShortcutHandler {
             return false
         }
         
+        guard self.presentedViewController == nil else {
+            return false
+        }
+        
         var handled = false
         for (index, controller) in self.viewControllers!.enumerated() {
             var contentController = controller
@@ -277,6 +281,11 @@ extension MainViewController: ShortcutHandler {
                 navigationController = nav
                 contentController = nav.viewControllers.first!
             }
+            
+            guard contentController.presentedViewController == nil else {
+                return false
+            }
+            
             if let handler = contentController as? ShortcutHandler {
                 if handler.canHandleAction(action: action) == true {
                     let _ = navigationController?.popToRootViewController(animated: false)
@@ -286,7 +295,7 @@ extension MainViewController: ShortcutHandler {
                         self.selectedViewController?.dismiss(animated: false, completion: nil)
                     } else {
                         let selectedNav = self.selectedViewController as? UINavigationController
-                        let _ = selectedNav?.popViewController(animated: false)
+                        let _ = selectedNav?.popToRootViewController(animated: false)
                     }
                     
                     self.switchTab(tab: MainTab(rawValue: index)!)

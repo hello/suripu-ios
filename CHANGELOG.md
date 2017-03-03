@@ -48,9 +48,7 @@ Fixes:
 
 New:
 
-* Pill battery notification now expected system type and pill_battery detail
-
-## 2.0.3.6
+* Pill battery notification now expected system type and pill_battery detail## 2.0.3.6
 
 Fixes:
 

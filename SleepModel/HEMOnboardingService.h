@@ -60,6 +60,7 @@ typedef void(^HEMOnboardingDFUHandler)(NSError* _Nullable error);
 typedef void(^HEMOnboardingErrorHandler)(NSError* _Nullable error);
 typedef void(^HEMOnboardingWiFiHandler)(NSString* _Nullable ssid, BOOL connected, NSError* _Nullable error);
 typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
+typedef void(^HEMOnboardingGenderOptionsHandler)(NSArray<NSString*>* _Nullable options);
 
 @class SENSense;
 @class SENAccount;
@@ -422,6 +423,10 @@ typedef void(^HEMOnboardingDFUStatusHandler)(SENDFUStatus* _Nullable status);
 
 - (void)refreshDeviceMetadata;
 - (BOOL)isVoiceAvailable;
+
+#pragma mark - Gender
+
+- (void)otherGenderOptions:(HEMOnboardingGenderOptionsHandler)completion;
 
 @end
 

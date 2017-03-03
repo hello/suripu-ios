@@ -63,5 +63,6 @@
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
 +(id)instantiateUnitPreferenceViewController;
++(id)instantiateWarningViewController;
 
 @end

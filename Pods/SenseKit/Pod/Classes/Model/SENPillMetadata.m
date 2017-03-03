@@ -17,6 +17,9 @@ static NSString* const SENPillMetadataDictPropStateNormal = @"NORMAL";
 static NSString* const SENPillMetadataDictPropStateLowBattery = @"LOW_BATTERY";
 static NSString* const SENPillMetadataDictPropStateUnknown = @"UNKNOWN";
 static NSString* const SENPillMetadataDictPropBatteryLevel = @"battery_level";
+static NSString* const SENPillMetadataDictPropBatteryType = @"battery_type";
+static NSString* const SENPillMetadataDictPropBatteryTypeRemovable = @"REMOVABLE";
+static NSString* const SENPillMetadataDictPropBatteryTypeSealed = @"SEALED";
 static NSString* const SENPillMetadataDictPropFirmwareUpdateUrl = @"firmware_update_url";
 
 @interface SENPillMetadata()
@@ -41,6 +44,9 @@ static NSString* const SENPillMetadataDictPropFirmwareUpdateUrl = @"firmware_upd
         
         _firmwareUpdateUrl = SENObjectOfClass(dict[SENPillMetadataDictPropFirmwareUpdateUrl],
                                               [NSString class]);
+        
+        _batteryType = [self batteryTypeFromValue:SENObjectOfClass(dict[SENPillMetadataDictPropBatteryType],
+                                                                   [NSString class])];
     }
     return self;
 }
@@ -69,6 +75,19 @@ static NSString* const SENPillMetadataDictPropFirmwareUpdateUrl = @"firmware_upd
     }
     
     return color;
+}
+
+- (SENPillBatteryType)batteryTypeFromValue:(NSString*)typeValue {
+    SENPillBatteryType type = SENPillBatteryTypeUnknown;
+    NSString* upper = [typeValue uppercaseString];
+    
+    if ([upper isEqualToString:SENPillMetadataDictPropBatteryTypeRemovable]) {
+        type = SENPillBatteryTypeRemovable;
+    } else if ([upper isEqualToString:SENPillMetadataDictPropBatteryTypeSealed]) {
+        type = SENPillBatteryTypeSealed;
+    }
+    
+    return type;
 }
 
 @end

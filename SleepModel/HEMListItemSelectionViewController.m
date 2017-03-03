@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *extraNavigationBar;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *navigationBarTopConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottomConstraint;
 
 @end
 
@@ -29,7 +30,9 @@
 }
 
 - (void)configurePresenter {
-    [[self listPresenter] bindWithTableView:[self tableView]];
+    [[self listPresenter] bindWithTableView:[self tableView]
+                           bottomConstraint:[self tableViewBottomConstraint]];
+    [[self listPresenter] bindWithDefaultNavigationBar:[[self navigationController] navigationBar]];
     [[self listPresenter] bindWithNavigationBar:[self extraNavigationBar]
                               withTopConstraint:[self navigationBarTopConstraint]];
     [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];

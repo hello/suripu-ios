@@ -29,6 +29,9 @@ NSString* const HEMOnboardingNotificationDidChangePillPairing = @"HEMOnboardingN
 NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationComplete";
 NSString* const HEMOnboardingErrorDomain = @"is.hello.app.onboarding";
 
+// gender options
+static NSString* const kHEMOnboardingGenderResourceName = @"GenderOptions";
+
 // polling of data
 static NSUInteger const HEMOnboardingMaxDeviceRefreshAttempts = 5;
 static CGFloat const HEMOnboardingDeviceRefreshInterval = 5.0f;
@@ -1242,6 +1245,18 @@ static CGFloat const HEMOnboardingSenseScanTimeout = 30.0f;
 
 - (BOOL)isVoiceAvailable {
     return [[self deviceService] savedHardwareVersion] == SENSenseHardwareVoice;
+}
+
+#pragma mark - Gender
+
+- (void)otherGenderOptions:(HEMOnboardingGenderOptionsHandler)completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *path = [[NSBundle mainBundle] pathForResource:kHEMOnboardingGenderResourceName
+                                                         ofType:@"strings"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion ([NSArray arrayWithContentsOfFile:path]);
+        });
+    });
 }
 
 @end

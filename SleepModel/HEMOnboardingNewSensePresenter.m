@@ -9,6 +9,7 @@
 
 #import "HEMOnboardingNewSensePresenter.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMStyle.h"
 
 @implementation HEMOnboardingNewSensePresenter
 
@@ -25,7 +26,7 @@
     [super bindWithNavigationItem:navItem];
     
     UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:[UIImage imageNamed:@"backIcon"]
+                                                                 image:BackIndicator()
                                                                 target:self
                                                                 action:@selector(cancel)];
     [navItem setLeftBarButtonItem:cancelItem];

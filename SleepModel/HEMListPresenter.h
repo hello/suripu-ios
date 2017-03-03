@@ -40,18 +40,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, readonly) UIView* activityContainerView;
 @property (nonatomic, weak, readonly) UITableView* tableView;
+@property (nonatomic, weak, readonly) UINavigationBar* mainNavBar;
 @property (nonatomic, weak, readonly, nullable) HEMActivityIndicatorView* indicatorView;
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, nullable) NSArray* selectedItemNames;
 @property (nonatomic, copy, nullable) NSArray* items;
 @property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 @property (nonatomic, weak, readonly) UINavigationItem* mainNavItem;
+@property (nonatomic, weak, readonly) NSLayoutConstraint* tableViewBottomConstraint;
 
 - (instancetype)initWithTitle:(NSString*)title
                         items:(nullable NSArray*)items
             selectedItemNames:(nullable NSArray*)selectedItemNames;
 
-- (void)bindWithTableView:(UITableView*)tableView;
+- (void)bindWithTableView:(UITableView*)tableView bottomConstraint:(NSLayoutConstraint*)bottomConstraint;
+
+- (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar;
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView;
 
@@ -100,6 +104,13 @@ NS_ASSUME_NONNULL_BEGIN
  * @return the index of the item that matches the provided name
  */
 - (NSInteger)indexOfItemWithName:(NSString*)name;
+
+/**
+ * @discussion
+ * Subclasses should override if interested in knowing that the delegate callback
+ * regarding a selection has been made.  Only for single selection support
+ */
+- (void)willNotifyDelegateOfSelection;
 
 @end
 

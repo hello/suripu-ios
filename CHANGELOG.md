@@ -1,12 +1,54 @@
 # Changelog
 
+## 2.0.4.4
+
+New:
+
+* Updated Sense image in onboarding to glow blue instead of purple
+* Prevent notifications (and other shortcuts) from exiting modal flows
+* Add support for battery_type to drive the appearance of Replace battery option in settings
+
+## 2.0.4.3
+
+New:
+
+* Added animation to the search functionality within the other gender options screen
+* Design review tweaks
+* Updated CO2 copy
+* Added detail of system type push notifications in Open Notification analytic event
+* Updated copy on notification onboarding screen
+* Changed the way gender selection appears in the picker
+
+Fixes:
+
+* Fixes an issue that would cause the application to crash when viewing sensor detail
+
+## 2.0.4.2
+
+New:
+
+* Added support for other gender selections
+* Added search capability to quickly filter the other gender options (no animation yet)
+* Using radio button, instead of checkmark for lists that only supports 1 selection
+* List separators are now lighter in color
+
+## 2.0.4.1
+
+New:
+
+* Updated gender selection screen to support Other (options for other will come in next build)
+* Updated copy for pill pairing screen during upgrade path
+
+Fixes:
+
+* Fixed an issue that may cause the application to crash when toggling alarm on/off right as the app is refreshing the content
+* Fixed an issue that was preventing the notification screen to refresh after disabling notification in OS settings, while viewing the in app notification settings 
+
 ## 2.0.3.7
 
 New:
 
-* Pill battery notification now expected system type and pill_battery detail
-
-## 2.0.3.6
+* Pill battery notification now expected system type and pill_battery detail## 2.0.3.6
 
 Fixes:
 

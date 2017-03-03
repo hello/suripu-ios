@@ -59,8 +59,17 @@ import Foundation
                 return .unknown
             }
         }
+        
+        func stringValue() -> String! {
+            switch self {
+                case .pillBattery:
+                    return PushNotification.detailPillBattery
+                default:
+                    return PushNotification.typeNotRecognized
+            }
+        }
     }
-    
+
     /// convenience constant for objective-c code to use namespacing
     @objc public static let sleepScore: PushType = .sleepScore
     @objc public static let system: PushType = .system
@@ -89,6 +98,18 @@ import Foundation
     */
     @objc func typeStringValue() -> String! {
         return self.type.stringValue()
+    }
+    
+    @objc func systemTypeStringValue() -> String! {
+        guard self.type == .system else {
+            return PushNotification.typeNotRecognized
+        }
+        
+        guard let systemType = self.detail as? SystemType else {
+            return PushNotification.typeNotRecognized
+        }
+        
+        return systemType.stringValue()
     }
     
     @objc func isPillBattery() -> Bool {

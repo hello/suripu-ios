@@ -395,7 +395,9 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
                 case SENAccountGenderMale:
                     *value = NSLocalizedString(@"account.gender.male", nil);
                     break;
+                case SENAccountGenderOther:
                 default:
+                    *value = [account customGender];
                     break;
             }
             *title = NSLocalizedString(@"settings.personal.info.gender", nil);
@@ -414,7 +416,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
             break;
     }
     
-    if (!*value) {
+    if ([*value length] == 0) {
         *value = NSLocalizedString(@"empty-data", nil);
     }
 }
@@ -815,19 +817,25 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Gender
 
 - (void)handleGenderChangeRequest {
+    __block SENAccount* account = [[self accountService] account];
     __weak typeof(self) weakSelf = self;
+    
+    SENAccountGender currentGender = [account gender];
+    
     HEMAccountUpdateDelegate* delegate = [HEMAccountUpdateDelegate new];
     [delegate setUpdateBlock:^(SENAccount * _Nonnull tempAccount) {
-        [[weakSelf accountService] updateGender:[tempAccount gender]
-                                     completion:[weakSelf accountUpdateHandler]];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [[strongSelf accountService] updateGender:[tempAccount gender]
+                                       completion:[weakSelf accountUpdateHandler]];
     } cancel:^{
-        [[weakSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [account setGender:currentGender];
+        [[strongSelf delegate] dismissViewControllerFrom:weakSelf completion:nil];
     }];
     
-    SENAccount* account = [[self accountService] account];
     HEMGenderPickerViewController *genderPicker = (id)[HEMOnboardingStoryboard instantiateGenderPickerViewController];
-    [genderPicker setDefaultGender:[account gender]];
     [genderPicker setDelegate:delegate];
+    [genderPicker setAccount:account];
     
     [[self delegate] presentViewController:genderPicker from:self];
 }

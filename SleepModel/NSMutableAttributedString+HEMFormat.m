@@ -31,6 +31,15 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
     return self;
 }
 
+- (instancetype)initWithFormat:(NSString *)format
+                          args:(NSArray *)args
+                    attributes:(NSDictionary*)attributes {
+    if (self = [self initWithFormat:format args:args]) {
+        [self applyAttributes:attributes];
+    }
+    return self;
+}
+
 - (void)process:(NSString*)format args:(NSArray*)args {
     NSScanner* scanner = [NSScanner scannerWithString:format];
     [scanner setCharactersToBeSkipped:nil]; // otherwise, whitespace will be skipped
@@ -58,6 +67,22 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
         }
     }
     
+}
+
+- (void)applyAttributes:(NSDictionary*)attributes {
+    NSArray* allKeys = [attributes allKeys];
+    [self enumerateAttributesInRange:NSMakeRange(0, [self length])
+                             options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                          usingBlock:^(NSDictionary *currentAttributes, NSRange range, BOOL *stop) {
+                              for (NSString* key in allKeys) {
+                                  if ([currentAttributes valueForKey:key] == nil
+                                      && [attributes valueForKey:key] != nil) {
+                                      [self addAttribute:key
+                                                   value:[attributes valueForKey:key]
+                                                   range:range];
+                                  }
+                              }
+                          }];
 }
 
 - (void)applyColor:(UIColor*)color andFont:(UIFont*)font {

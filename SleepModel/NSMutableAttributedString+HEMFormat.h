@@ -39,4 +39,19 @@
                      baseColor:(UIColor*)color
                       baseFont:(UIFont*)font;
 
+/**
+ * Initializes an instance with the specified format, appending each arg in place
+ * of the placeholder.  The only supported format symbol is %@ since each arg
+ * in the array must be an instance of NSAttributedString.  If any arg is not
+ * of such instance, it will be ignored.  If the number of symbols in the format
+ * does not match the number of arguments, it will be ignored.
+ *
+ * @param format:       format with %@ as placeholders
+ * @param args:         an array of NSAttributedString
+ * @param attributes:   attributes to apply to the rest of the text
+ */
+- (instancetype)initWithFormat:(NSString *)format
+                          args:(NSArray *)args
+                    attributes:(NSDictionary*)attributes;
+
 @end

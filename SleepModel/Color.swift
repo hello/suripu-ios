@@ -29,7 +29,11 @@ import UIKit
     }
     
     static func named(name: String!) -> UIColor {
-        guard let info = resource[name] as? [String: Any] else {
+        guard let definitions = resource else {
+            return UIColor.black
+        }
+        
+        guard let info = definitions[name] as? [String: Any] else {
             return UIColor.black
         }
         

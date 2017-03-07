@@ -210,7 +210,6 @@
 		BF3713501E6E2CF200EF9BAB /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
 		BF3713521E6E2FAE00EF9BAB /* Bundle+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */; };
 		BF3713531E6E356F00EF9BAB /* Bundle+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */; };
-		BF3713571E6E383900EF9BAB /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3713561E6E383900EF9BAB /* Nocilla.framework */; };
 		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
@@ -1462,7 +1461,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF3713571E6E383900EF9BAB /* Nocilla.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
 			);
@@ -3725,12 +3723,12 @@
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
 				EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */,
+				0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */,
+				81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */,
-				0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */,
-				81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);

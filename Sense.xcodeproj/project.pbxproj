@@ -391,6 +391,8 @@
 		BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71919A4282A00FC77EE /* HEMWifiPasswordViewController.m */; };
 		BFADEFAA1E007C7C004F4B1F /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
 		BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */; };
+		BFAE7E281E6E4D4900F24E4B /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */; };
+		BFAE7E2A1E6E4D5300F24E4B /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */; };
 		BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */; };
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
 		BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */; };
@@ -1199,6 +1201,8 @@
 		BFACC71919A4282A00FC77EE /* HEMWifiPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiPasswordViewController.m; sourceTree = "<group>"; };
 		BFAE0B1219AE57FA0021EC0D /* HEMSleepSummarySlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummarySlideViewController.h; sourceTree = "<group>"; };
 		BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummarySlideViewController.m; sourceTree = "<group>"; };
+		BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/Kiwi/Kiwi.framework"; sourceTree = "<group>"; };
+		BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/Nocilla/Nocilla.framework"; sourceTree = "<group>"; };
 		BFB0FBD419D243A60056FFEC /* HEMDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDevicesViewController.h; sourceTree = "<group>"; };
 		BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDevicesViewController.m; sourceTree = "<group>"; };
 		BFB0FBDE19D3463E0056FFEC /* HEMPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillViewController.h; sourceTree = "<group>"; };
@@ -1453,6 +1457,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFAE7E2A1E6E4D5300F24E4B /* Nocilla.framework in Frameworks */,
+				BFAE7E281E6E4D4900F24E4B /* Kiwi.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
 			);
@@ -1499,6 +1505,8 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */,
+				BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */,
 				BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */,
 				BF238DFD1D1DC75F00F6E62C /* Social.framework */,
 				BF896D4A1C7422720095D37D /* CoreFoundation.framework */,
@@ -3690,6 +3698,7 @@
 				F0635C9E7EEDF85F86626E86 /* [CP] Embed Pods Frameworks */,
 				65C3A6661F4CE81011F7064F /* [CP] Copy Pods Resources */,
 				BFB220C61DF7A9A80025606E /* ShellScript */,
+				BFAE7E2B1E6E4D9000F24E4B /* Upload to Bugsnag */,
 			);
 			buildRules = (
 			);
@@ -3707,12 +3716,11 @@
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Tests" */;
 			buildPhases = (
 				EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */,
-				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
+				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AC195388D20070C39A /* Resources */,
 				0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */,
 				81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */,
-				E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */,
 			);
 			buildRules = (
 			);
@@ -4026,6 +4034,20 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\n    rm -fr Frameworks\nfi";
 		};
+		BFAE7E2B1E6E4D9000F24E4B /* Upload to Bugsnag */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload to Bugsnag";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "fork do\nProcess.setsid\nSTDIN.reopen(\"/dev/null\")\nSTDOUT.reopen(\"/dev/null\", \"a\")\nSTDERR.reopen(\"/dev/null\", \"a\")\n\nrequire 'shellwords'\n\nDir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\nsystem(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\nend\nend\n";
+		};
 		BFB220C61DF7A9A80025606E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -4052,21 +4074,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		E891611CF4DB75C5B6BA6747 /* Upload Bugsnag dSYM */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Bugsnag dSYM";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/usr/bin/env ruby";
-			shellScript = "fork do\n  Process.setsid\n  STDIN.reopen(\"/dev/null\")\n  STDOUT.reopen(\"/dev/null\", \"a\")\n  STDERR.reopen(\"/dev/null\", \"a\")\n\n  require 'shellwords'\n\n  Dir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\n    system(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\n  end\nend\n";
 			showEnvVarsInLog = 0;
 		};
 		EC3CA137F7BAA5A9E5FA14C8 /* [CP] Check Pods Manifest.lock */ = {

@@ -184,6 +184,7 @@
 "settings.notification.warning.button.enable" = "Enable notifications";
 "settings.notifications.section.push" = "Push notifications";
 "settings.account" = "My Account";
+"settings.night-mode" = "Night Mode";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
 "settings.tell-a-friend" = "Tell a friend about Sense";

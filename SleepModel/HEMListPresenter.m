@@ -103,8 +103,14 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (void)setDefaultSelectionImages {
     if (![self selectedImage]) {
-        UIImage* image = [UIImage imageNamed:@"radio"];
-        image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        UIImage* image = nil;
+        if ([[self tableView] allowsMultipleSelection]) {
+            image = [UIImage imageNamed:@"settingsToggleIconInactive"];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        } else {
+            image = [UIImage imageNamed:@"radio"];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        }
         [self setSelectedImage:image];
     }
     
@@ -112,6 +118,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
         UIImage* image = nil;
         if ([[self tableView] allowsMultipleSelection]) {
             image = [UIImage imageNamed:@"settingsToggleIconActive"];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         } else {
             image = [UIImage imageNamed:@"radioSelected"];
             image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

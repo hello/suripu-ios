@@ -19,13 +19,13 @@ describe(@"Font", ^{
         // in the resource file
         context(@"contains font in file", ^{
             
-            it(@"should contain h1", ^{
-                UIFont* font = [Font namedWithName:@"h1"];
+            it(@"should contain display 4", ^{
+                UIFont* font = [Font namedWithName:@"display.4"];
                 [[font should] beKindOfClass:[UIFont class]];
             });
             
             it(@"should not equal to default font", ^{
-                UIFont* font = [Font namedWithName:@"h1"];
+                UIFont* font = [Font namedWithName:@"display.4"];
                 UIFont* sysFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
                 [[font shouldNot] equal:sysFont];
             });

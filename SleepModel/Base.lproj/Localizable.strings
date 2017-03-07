@@ -187,7 +187,7 @@
 "settings.night-mode" = "Night Mode";
 "settings.night-mode.options.title" = "Configure Night Mode";
 "settings.night-mode.option.off" = "Off";
-"settings.night-mode.option.always-on" = "Always On";
+"settings.night-mode.option.always-on" = "Always on";
 "settings.night-mode.option.scheduled" = "Scheduled";
 "settings.units" = "Units and time";
 "settings.support" = "Support";

@@ -119,19 +119,23 @@ describe(@"HEMDeviceAlertService", ^{
                         cb (devices, nil);
                         return nil;
                     }];
-                    
-                    [service checkDeviceState:^(HEMDeviceAlertState state) {
-                        deviceState = state;
-                    }];
                 });
                 
                 afterEach(^{
                     [SENAPIDevice clearStubs];
-                    [senseMetadata clearStubs];
+                    senseMetadata = nil;
                     deviceState = HEMDeviceAlertStateUnknown;
+                    devices = nil;
                 });
                 
                 it(@"should return a sense not seen state", ^{
+                    SENLocalPreferences* localPrefs = [SENLocalPreferences sharedPreferences];
+                    [localPrefs stub:@selector(userPreferenceForKey:) andReturn:nil];
+                    
+                    [service checkDeviceState:^(HEMDeviceAlertState state) {
+                        deviceState = state;
+                    }];
+                    
                     [[@(deviceState) should] equal:@(HEMDeviceAlertStateSenseNotSeen)];
                 });
                 

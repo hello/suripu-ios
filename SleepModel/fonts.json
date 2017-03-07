@@ -1,0 +1,92 @@
+{
+    "display.4" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 64.0,
+        "style.font.weight" : "style.font.THIN"
+    },
+    
+    "display.3" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 56.0,
+        "style.font.weight" : "style.font.THIN"
+    },
+    
+    "display.2" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 40.0,
+        "style.font.weight" : "style.font.LIGHT"
+    },
+    
+    "display.1" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 32.0,
+        "style.font.weight" : "style.font.LIGHT"
+    },
+    
+    "headline" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 24.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "title.2" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 20.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "title.1" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 17.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "body.2" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 15.0,
+        "style.font.weight" : "style.font.MEDIUM"
+    },
+    
+    "body.1" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 15.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "body.small" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 13.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "caption.2" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 12.0,
+        "style.font.weight" : "style.font.MEDIUM"
+    },
+    
+    "caption.1" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 10.0,
+        "style.font.weight" : "style.font.REGULAR"
+    },
+    
+    "button" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 14.0,
+        "style.font.weight" : "style.font.MEDIUM"
+    },
+    
+    "button.small" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 13.0,
+        "style.font.weight" : "style.font.MEDIUM"
+    },
+    
+    "button.large" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 24.0,
+        "style.font.weight" : "style.font.REGULAR"
+    }
+    
+}

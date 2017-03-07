@@ -27,7 +27,6 @@ static CGFloat const kHEMRoomCheckViewSensorsTop = 8.0f;
 static CGFloat const kHEMRoomCheckViewSensorMessageTop = 46.0f;
 static CGFloat const kHEMRoomCheckViewSensorMessageHeight = 20.0f;
 static CGFloat const kHEMRoomCheckViewSensorValueTop = 82.0f;
-static CGFloat const kHEMRoomCheckViewSensorValueHeight = 77.0f;
 
 @interface HEMRoomCheckView()
 

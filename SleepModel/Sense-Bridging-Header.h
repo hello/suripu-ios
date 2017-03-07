@@ -8,6 +8,7 @@
 
 #import <SenseKit/SenseKit.h>
 #import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENNotificationSetting.h>
 #import <SenseKit/SENAccount.h>
 

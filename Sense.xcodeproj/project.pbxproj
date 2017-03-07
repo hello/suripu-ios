@@ -3698,7 +3698,6 @@
 				F0635C9E7EEDF85F86626E86 /* [CP] Embed Pods Frameworks */,
 				65C3A6661F4CE81011F7064F /* [CP] Copy Pods Resources */,
 				BFB220C61DF7A9A80025606E /* ShellScript */,
-				BFAE7E2B1E6E4D9000F24E4B /* Upload to Bugsnag */,
 			);
 			buildRules = (
 			);
@@ -4033,20 +4032,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Frameworks\" ]]; then\n    rm -fr Frameworks\nfi";
-		};
-		BFAE7E2B1E6E4D9000F24E4B /* Upload to Bugsnag */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload to Bugsnag";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "fork do\nProcess.setsid\nSTDIN.reopen(\"/dev/null\")\nSTDOUT.reopen(\"/dev/null\", \"a\")\nSTDERR.reopen(\"/dev/null\", \"a\")\n\nrequire 'shellwords'\n\nDir[\"#{ENV[\"DWARF_DSYM_FOLDER_PATH\"]}/*/Contents/Resources/DWARF/*\"].each do |dsym|\nsystem(\"curl -F dsym=@#{Shellwords.escape(dsym)} -F projectRoot=#{Shellwords.escape(ENV[\"PROJECT_DIR\"])} https://upload.bugsnag.com/\")\nend\nend\n";
 		};
 		BFB220C61DF7A9A80025606E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22FD6CB80B60761AE694D664 /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97C9247C541175207F6E1DA /* Pods_SenseApp_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -209,6 +208,9 @@
 		BF37134E1E6E2C8400EF9BAB /* fonts.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713321E6E28F800EF9BAB /* fonts.json */; };
 		BF37134F1E6E2C8400EF9BAB /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = BF37132E1E6E28EF00EF9BAB /* colors.json */; };
 		BF3713501E6E2CF200EF9BAB /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
+		BF3713521E6E2FAE00EF9BAB /* Bundle+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */; };
+		BF3713531E6E356F00EF9BAB /* Bundle+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */; };
+		BF3713571E6E383900EF9BAB /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3713561E6E383900EF9BAB /* Nocilla.framework */; };
 		BF3926C71E00AF63006BE166 /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3926C61E00AF63006BE166 /* Scrollable.swift */; };
 		BF398C281D9F24BE009EEF59 /* Expansions.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF398C271D9F24BE009EEF59 /* Expansions.xcassets */; };
 		BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3FC55D1C3DA17A00C5B248 /* UIDevice+HEMUtils.m */; };
@@ -892,6 +894,9 @@
 		BF3713451E6E2AC500EF9BAB /* PushNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotification.swift; sourceTree = "<group>"; };
 		BF3713471E6E2AD500EF9BAB /* Date+Format.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		BF37134A1E6E2AF000EF9BAB /* nightTheme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nightTheme.json; sourceTree = "<group>"; };
+		BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+JSON.swift"; sourceTree = "<group>"; };
+		BF3713541E6E377F00EF9BAB /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "Pods/../build/Debug-iphoneos/Kiwi/Kiwi.framework"; sourceTree = "<group>"; };
+		BF3713561E6E383900EF9BAB /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = "Pods/../build/Debug-iphoneos/Nocilla/Nocilla.framework"; sourceTree = "<group>"; };
 		BF3926C61E00AF63006BE166 /* Scrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
 		BF398C271D9F24BE009EEF59 /* Expansions.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Expansions.xcassets; sourceTree = "<group>"; };
 		BF3FC55C1C3DA17A00C5B248 /* UIDevice+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+HEMUtils.h"; sourceTree = "<group>"; };
@@ -1457,9 +1462,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF3713571E6E383900EF9BAB /* Nocilla.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				22FD6CB80B60761AE694D664 /* Pods_SenseApp_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1504,6 +1509,8 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF3713561E6E383900EF9BAB /* Nocilla.framework */,
+				BF3713541E6E377F00EF9BAB /* Kiwi.framework */,
 				BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */,
 				BF238DFD1D1DC75F00F6E62C /* Social.framework */,
 				BF896D4A1C7422720095D37D /* CoreFoundation.framework */,
@@ -2304,6 +2311,7 @@
 			isa = PBXGroup;
 			children = (
 				BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */,
+				BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */,
 				BF3713281E6E28D300EF9BAB /* Theme */,
 				BF3713271E6E28CE00EF9BAB /* Font */,
 				BF3713261E6E28C700EF9BAB /* Color */,
@@ -4132,6 +4140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF8C09131C2376C5005AB5A7 /* HEMGradient.m in Sources */,
+				BF3713521E6E2FAE00EF9BAB /* Bundle+JSON.swift in Sources */,
 				8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */,
 				BF6A55841B44B979009CA820 /* HEMActionSheetTitleView.m in Sources */,
 				8A7D800E1A3F952000B0BFD7 /* UIColor+HEMStyle.m in Sources */,
@@ -4545,6 +4554,7 @@
 				BF2D64341C585C01009AD365 /* HEMHandHoldingServiceSpec.m in Sources */,
 				BF3713401E6E297D00EF9BAB /* ColorSpec.m in Sources */,
 				BF3713411E6E297D00EF9BAB /* FontSpec.m in Sources */,
+				BF3713531E6E356F00EF9BAB /* Bundle+JSON.swift in Sources */,
 				BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */,
 				BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */,
 				BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */,
@@ -4938,6 +4948,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Kiwi",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Nocilla",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
@@ -4972,9 +4984,10 @@
 					"\"${PODS_ROOT}/Headers/Public/UICountingLabel\"",
 					"\"${PODS_ROOT}/Headers/Public/UIImageEffects\"",
 					"\"${PODS_ROOT}/Headers/Public/ZendeskSDK\"",
+					"$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/${PROJECT_NAME}.build/DerivedSources/",
 				);
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -4994,6 +5007,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Kiwi",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Nocilla",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
@@ -5024,9 +5039,10 @@
 					"\"${PODS_ROOT}/Headers/Public/UICountingLabel\"",
 					"\"${PODS_ROOT}/Headers/Public/UIImageEffects\"",
 					"\"${PODS_ROOT}/Headers/Public/ZendeskSDK\"",
+					"$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/${PROJECT_NAME}.build/DerivedSources/",
 				);
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -5324,6 +5340,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Kiwi",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Nocilla",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
@@ -5354,9 +5372,10 @@
 					"\"${PODS_ROOT}/Headers/Public/UICountingLabel\"",
 					"\"${PODS_ROOT}/Headers/Public/UIImageEffects\"",
 					"\"${PODS_ROOT}/Headers/Public/ZendeskSDK\"",
+					"$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/${PROJECT_NAME}.build/DerivedSources/",
 				);
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -5568,6 +5587,8 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Kiwi",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/Nocilla",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
@@ -5598,9 +5619,10 @@
 					"\"${PODS_ROOT}/Headers/Public/UICountingLabel\"",
 					"\"${PODS_ROOT}/Headers/Public/UIImageEffects\"",
 					"\"${PODS_ROOT}/Headers/Public/ZendeskSDK\"",
+					"$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/${PROJECT_NAME}.build/DerivedSources/",
 				);
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

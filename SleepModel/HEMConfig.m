@@ -78,11 +78,5 @@ static NSString* const HEMConfigJsonType = @"json";
     return [[self stringForConfig:config] boolValue];
 }
 
-+ (NSDictionary*)jsonConfigWithName:(NSString*)name error:(NSError**)error {
-    NSString* path = [[NSBundle bundleForClass:self] pathForResource:name ofType:HEMConfigJsonType];
-    NSData* data = [NSData dataWithContentsOfFile:path];
-    return [NSJSONSerialization JSONObjectWithData:data options:0 error:error];
-}
-
 @end
 

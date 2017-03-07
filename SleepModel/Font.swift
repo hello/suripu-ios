@@ -26,7 +26,7 @@ import UIKit
     fileprivate static let keyWeight = "style.font.weight"
     
     fileprivate static var resource: [String: Any]! {
-        return try! HEMConfig.jsonConfig(withName: resourceName) as! [String: Any]
+        return Bundle.read(jsonFileName: resourceName) as? [String: Any]
     }
     
     fileprivate static func weight(string: String?) -> CGFloat {

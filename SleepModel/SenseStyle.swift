@@ -20,6 +20,7 @@ import SenseKit
     }
 }
 
+@available(iOS 8.2, *)
 @objc class SenseStyle: NSObject {
     
     static let themeKey = "is.hello.app.theme"

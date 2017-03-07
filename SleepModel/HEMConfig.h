@@ -26,7 +26,6 @@ typedef NS_ENUM(NSUInteger, HEMConf) {
 
 @interface HEMConfig : NSObject
 
-+ (NSDictionary*)jsonConfigWithName:(NSString*)name error:(NSError**)error;
 + (NSString*)stringForConfig:(HEMConf)config;
 + (BOOL)booleanForConfig:(HEMConf)config;
 

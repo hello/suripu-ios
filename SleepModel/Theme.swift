@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@available(iOS 8.2, *)
 @objc class Theme: NSObject {
     
     @objc enum ThemeProperty: Int {
@@ -50,7 +51,7 @@ import UIKit
     // MARK: - Load
     
     fileprivate func loadProperties(name: String!) -> [String: Any]? {
-        return try! HEMConfig.jsonConfig(withName: name) as? [String: Any]
+        return Bundle.read(jsonFileName: name) as? [String: Any]
     }
     
     fileprivate func loadDefault() {

@@ -7,6 +7,7 @@
 //
 
 #import <Kiwi/Kiwi.h>
+
 #import "Sense-Swift.h"
 
 SPEC_BEGIN(ThemeSpec)

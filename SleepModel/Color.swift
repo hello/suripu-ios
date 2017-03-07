@@ -18,13 +18,13 @@ import UIKit
     fileprivate static let keyAlpha = "style.color.alpha"
     
     fileprivate static var resource: [String: Any]! {
-        return try! HEMConfig.jsonConfig(withName: resourceName) as! [String: Any]
+        return Bundle.read(jsonFileName: resourceName) as? [String: Any]
     }
     
     static func color(hex: UInt!, alpha: CGFloat?) -> UIColor {
-        return UIColor.init(red: CGFloat(hex & 0xFF0000 >> 16),
-                            green: CGFloat(hex & 0xFF00 >> 8),
-                            blue: CGFloat(hex & 0xFF),
+        return UIColor.init(red: CGFloat(hex & 0xFF0000 >> 16) / 255.0,
+                            green: CGFloat(hex & 0xFF00 >> 8) / 255.0,
+                            blue: CGFloat(hex & 0xFF) / 255.0,
                             alpha: alpha ?? 1.0)
     }
     

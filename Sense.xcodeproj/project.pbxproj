@@ -393,6 +393,8 @@
 		BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */; };
 		BFAE7E281E6E4D4900F24E4B /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */; };
 		BFAE7E2A1E6E4D5300F24E4B /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */; };
+		BFAE7E2E1E6F459800F24E4B /* NightModeSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E2D1E6F459800F24E4B /* NightModeSettingsPresenter.swift */; };
+		BFAE7E301E6F624200F24E4B /* NightModeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E2F1E6F624200F24E4B /* NightModeService.swift */; };
 		BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */; };
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
 		BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */; };
@@ -1203,6 +1205,8 @@
 		BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummarySlideViewController.m; sourceTree = "<group>"; };
 		BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/Kiwi/Kiwi.framework"; sourceTree = "<group>"; };
 		BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/Nocilla/Nocilla.framework"; sourceTree = "<group>"; };
+		BFAE7E2D1E6F459800F24E4B /* NightModeSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeSettingsPresenter.swift; sourceTree = "<group>"; };
+		BFAE7E2F1E6F624200F24E4B /* NightModeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeService.swift; sourceTree = "<group>"; };
 		BFB0FBD419D243A60056FFEC /* HEMDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDevicesViewController.h; sourceTree = "<group>"; };
 		BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDevicesViewController.m; sourceTree = "<group>"; };
 		BFB0FBDE19D3463E0056FFEC /* HEMPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillViewController.h; sourceTree = "<group>"; };
@@ -2065,6 +2069,7 @@
 				BF8C09341C33085A005AB5A7 /* Devices */,
 				BF8C09421C330C1D005AB5A7 /* Home */,
 				BF8C09401C330B0A005AB5A7 /* Preferences */,
+				BFAE7E2C1E6F455A00F24E4B /* Night Mode */,
 				BF8C09411C330B17005AB5A7 /* Notifications */,
 				BF78E9951B2128F70015949F /* Support */,
 			);
@@ -3308,6 +3313,15 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		BFAE7E2C1E6F455A00F24E4B /* Night Mode */ = {
+			isa = PBXGroup;
+			children = (
+				BFAE7E2D1E6F459800F24E4B /* NightModeSettingsPresenter.swift */,
+				BFAE7E2F1E6F624200F24E4B /* NightModeService.swift */,
+			);
+			name = "Night Mode";
+			sourceTree = "<group>";
+		};
 		BFB3A5B21E14406A00AB47D2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -4151,6 +4165,7 @@
 				BFD7E7A21D9B31A4007DB6E4 /* HEMExpansionService.m in Sources */,
 				BFE375FD1CF4FF370029EE66 /* UIImagePickerController+HEMProfilePhoto.m in Sources */,
 				8A7D80231A40EADE00B0BFD7 /* NSString+HEMUtils.m in Sources */,
+				BFAE7E301E6F624200F24E4B /* NightModeService.swift in Sources */,
 				BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */,
 				BFD9A97D1D5BA5B8003EC82A /* HEMOnboardingPairSensePresenter.m in Sources */,
 				8AC276AD1A3CE73E00B082D9 /* HEMInsightFeedViewController.m in Sources */,
@@ -4415,6 +4430,7 @@
 				BFC99BBA1B69A4C4008F7F0D /* HEMAppReviewQuestion.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				BFD89A7F1DECD7C5005DC2FF /* RootViewController.swift in Sources */,
+				BFAE7E2E1E6F459800F24E4B /* NightModeSettingsPresenter.swift in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
 				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
 				BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */,

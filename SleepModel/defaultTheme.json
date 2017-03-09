@@ -4,7 +4,8 @@
         "style.navigation.tint.color" : "@color/black",
         "style.navigation.title.color" : "@color/black",
         "style.navigation.title.font" : "@font/title.1",
-        "style.status.bar.style" : "style.status.bar.LIGHT"
+        "style.status.bar.style" : "style.status.bar.LIGHT",
+        "style.navigation.include.shadow" : false
     },
     
     "hello.tableview" : {

@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // TODO: remove this once done with night mode
 //    [[self navigationBar] setTintColor:[UIColor tintColor]];
 //    UIFont* titleFont = HEMIsIPhone4Family()
 //        ? [UIFont h6]

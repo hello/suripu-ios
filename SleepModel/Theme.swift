@@ -28,6 +28,7 @@ import UIKit
         case navigationTitleFont
         case statusBarStyle
         case detailColor
+        case navigationIncludeShadow
         
         var key: String {
             switch self {
@@ -53,6 +54,8 @@ import UIKit
                     return "style.text.detail.font"
                 case .detailColor:
                     return "style.text.detail.color"
+                case .navigationIncludeShadow:
+                    return "style.navigation.include.shadow"
             }
         }
     }
@@ -158,10 +161,17 @@ import UIKit
         let navTintColor = self.appearanceValue(property: .navigationTintColor) as? UIColor
         let navTitleColor = self.appearanceValue(property: .navigationTitleColor) as? UIColor
         let navTitleFont = self.appearanceValue(property: .navigationTitleFont) as? UIFont
+        let navIncludeShadow = self.appearanceValue(property: .navigationIncludeShadow) as? NSNumber
         
         let navigationBar = UINavigationBar.appearance()
         navigationBar.barTintColor = navBarTintColor
         navigationBar.tintColor = navTintColor
+        navigationBar.isTranslucent = false
+        
+        if navIncludeShadow?.boolValue == false {
+            navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            navigationBar.shadowImage = UIImage()
+        }
         
         var navTitleAttributes: [String: Any] = [:]
         if navTitleColor != nil {
@@ -220,6 +230,15 @@ import UIKit
      */
     @objc func load(name: String?) {
         self.themeProperties = self.loadProperties(name: name)
+        self.apply()
+    }
+    
+    /**
+        Unloads the custom theme that is applied, if applied.  This is useful
+        if the user signs out or changes context that should not support theme
+    */
+    @objc func unload() {
+        self.themeProperties = nil
         self.apply()
     }
     

@@ -45,7 +45,7 @@ import SenseKit
     
     @objc static func loadSavedTheme() {
         guard HEMOnboardingService.shared().hasFinishedOnboarding() == true else {
-            return // skipping.  themes only apply to in-app
+            return theme.apply() // apply default
         }
         
         let preferences = SENLocalPreferences.shared()

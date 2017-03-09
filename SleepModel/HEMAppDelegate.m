@@ -303,6 +303,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
+    [[SenseStyle theme] unload];
 }
 
 @end

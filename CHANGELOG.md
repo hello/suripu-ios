@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.0.1
+
+New:
+
+* Created custom theme framework, configured through json files
+* Added night mode settings (minus Scheduled functionality)
+* Themed night mode settings
+* Themed main settings
+* Themed notifications detail settings
+* Themed voice settings (minus voice control)
+
 ## 2.0.4.4
 
 New:

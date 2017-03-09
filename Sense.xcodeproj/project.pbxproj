@@ -141,6 +141,9 @@
 		BF1FDFB31DDD115600782CEF /* HEMAlarmValueRangePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1FDFB21DDD115600782CEF /* HEMAlarmValueRangePickerView.xib */; };
 		BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */; };
 		BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2123F51B66E8B50017D67A /* HEMAppUsage.m */; };
+		BF21DFA21E70F66600FF6D72 /* Themed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E351E6F8E5600F24E4B /* Themed.swift */; };
+		BF21DFA31E70F67000FF6D72 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
+		BF21DFA41E70F67700FF6D72 /* HEMListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F01CA6086E00C7AA55 /* HEMListItemCell.m */; };
 		BF21F01C1DAEE6400057F24E /* HEMVoiceExampleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF21F01B1DAEE6400057F24E /* HEMVoiceExampleView.xib */; };
 		BF21F0221DAEEB560057F24E /* HEMVoiceExampleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF21F0211DAEEB560057F24E /* HEMVoiceExampleView.m */; };
 		BF21F0241DAEF0430057F24E /* Voice.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF21F0231DAEF0430057F24E /* Voice.xcassets */; };
@@ -4542,6 +4545,7 @@
 				BF3713491E6E2ADE00EF9BAB /* Date+Format.swift in Sources */,
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
+				BF21DFA41E70F67700FF6D72 /* HEMListItemCell.m in Sources */,
 				BFA884B91C1A40C200613069 /* HEMDeviceAlertServiceSpec.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF71BDA51C485B2800919D0F /* HEMTimelineServiceSpec.m in Sources */,
@@ -4553,6 +4557,7 @@
 				BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */,
 				BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */,
 				BFF93EA31D19AD080038419A /* HEMAlarmServiceSpec.m in Sources */,
+				BF21DFA31E70F67000FF6D72 /* HEMOnboardingService.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,
@@ -4563,6 +4568,7 @@
 				BF3713391E6E290B00EF9BAB /* Font.swift in Sources */,
 				BF6D9B781C6C194900774322 /* HEMTrendsServiceSpec.m in Sources */,
 				8B1DB6E11C18BEFA006C8AFF /* HEMNonsenseScanServiceSpec.m in Sources */,
+				BF21DFA21E70F66600FF6D72 /* Themed.swift in Sources */,
 				BF4827501C4F082E005EDEB5 /* HEMHealthKitServiceSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

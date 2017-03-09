@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08C1D0FC2B305C7865B15B77 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182BB7036B8B8CC09440B9AF /* Pods_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -522,7 +521,6 @@
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 		BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */; };
 		BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFFDC1061DD171BE008F001B /* Sensors.xcassets */; };
-		D9F3642A4B990E472CE2C202 /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C256158FE7DA2EE7EDDB80A /* Pods_SenseApp_Tests.framework */; };
 		EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */; };
 		EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */; };
 /* End PBXBuildFile section */
@@ -1476,8 +1474,6 @@
 				BFAE7E281E6E4D4900F24E4B /* Kiwi.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				08C1D0FC2B305C7865B15B77 /* Pods_Tests.framework in Frameworks */,
-				D9F3642A4B990E472CE2C202 /* Pods_SenseApp_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

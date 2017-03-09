@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMStyledNavigationViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMStyle.h"
@@ -32,6 +34,7 @@
     __weak typeof(self) weakSelf = self;
     self.interactivePopGestureRecognizer.delegate = weakSelf;
     self.delegate = weakSelf;
+    [self applyStyle];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

@@ -26,5 +26,14 @@
     
     "hello.navigation.controller.view" : {
         "style.background.color" : "@color/white"
+    },
+    
+    "hello.warning.view" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body",
+        "style.separator.color" : "@color/light.separator",
+        "style.text.detail.font" : "@font/body"
     }
 }

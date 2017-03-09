@@ -33,6 +33,7 @@ import UIKit
     @objc enum Group: Int {
         case tableView = 1
         case listItem
+        case navigationController
         
         var key: String {
             switch self {
@@ -40,6 +41,8 @@ import UIKit
                 return "hello.tableview"
             case .listItem:
                 return "hello.list.item"
+            case .navigationController:
+                return "hello.navigation.controller"
             }
         }
     }
@@ -71,37 +74,6 @@ import UIKit
     
     @objc static func value(group: Group, property: Theme.ThemeProperty) -> Any? {
         return self.theme.value(group: group.key, property: property)
-    }
-    
-    @objc static func apply(tableView: UITableView?) {
-        guard let view = tableView else {
-            return
-        }
-        
-        let separatorColor = Theme.ThemeProperty.separatorColor.key
-        let backgroundColor = Theme.ThemeProperty.backgroundColor.key
-        let tableViewSeparatorColor = theme.value(group: Group.tableView.key, key: separatorColor) as? UIColor
-        let tableViewBgColor = theme.value(group: Group.tableView.key, key: backgroundColor) as? UIColor
-        view.backgroundColor = tableViewBgColor
-        view.separatorColor = tableViewSeparatorColor
-    }
-    
-    @objc static func apply(listItemCell: HEMListItemCell?) {
-        guard let cell = listItemCell else {
-            return
-        }
-        
-        let itemBgColor = self.value(group: .listItem, property: .backgroundColor) as? UIColor
-        let itemTextColor = self.value(group: .listItem, property: .textColor) as? UIColor
-        let itemTextFont = self.value(group: .listItem, property: .textFont) as? UIFont
-        let itemDetailFont = self.value(group: .listItem, property: .detailFont) as? UIFont
-        let itemDetailColor = self.value(group: .listItem, property: .detailColor) as? UIColor
-        cell.backgroundColor = itemBgColor
-        cell.contentView.backgroundColor = itemBgColor
-        cell.itemLabel?.textColor = itemTextColor
-        cell.itemLabel?.font = itemTextFont
-        cell.descriptionLabel?.font = itemDetailFont
-        cell.descriptionLabel?.textColor = itemDetailColor
     }
     
 }

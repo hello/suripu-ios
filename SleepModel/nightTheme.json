@@ -8,12 +8,18 @@
     
     "hello.tableview" : {
         "style.background.color" : "@color/black",
-        "style.separator.color" : "@color/dark.separator"
+        "style.separator.color" : "@color/dark.separator",
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.tint.color" : "@color/dark.disabled.text"
     },
     
     "hello.list.item" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "hello.navigation.controller" : {
+        "style.background.color" : "@color/black"
     }
 }

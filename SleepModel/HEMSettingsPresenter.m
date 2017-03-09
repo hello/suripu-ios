@@ -73,11 +73,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 
 - (void)bindWithTableView:(UITableView*)tableView {
     // header
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [tableView setTableHeaderView:header];
     [tableView setTableFooterView:[self versionView]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView applyStyle];
     [self setTableView:tableView];
 }
 
@@ -96,6 +97,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 - (void)didAppear {
     [super didAppear];
     [self refreshSections];
+}
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self tableView] applyStyle];
+    [[self tableView] reloadData];
 }
 
 #pragma mark - Presentation logic
@@ -274,7 +281,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];;
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -293,10 +300,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         return;
     }
 
-    [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell applyStyle];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
     [cell showStyledAccessoryViewIfNone];
 }
 

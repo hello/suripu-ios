@@ -3,7 +3,6 @@
     "light.secondary.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54},
     "light.disabled.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.38},
     "light.separator" : { "style.color.hex" : "000000", "style.color.alpha" : 0.12},
-    "light.list.item" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.87},
     
     "dark.primary.text" : { "style.color.hex" : "FFFFFF"},
     "dark.secondary.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.70},

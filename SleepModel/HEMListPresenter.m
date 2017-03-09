@@ -103,9 +103,7 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setSeparatorColor:[UIColor separatorColor]];
-    
-    [SenseStyle applyWithTableView:tableView];
-    
+    [tableView applyStyle];
     [self setTableView:tableView];
     [self setTableViewBottomConstraint:bottomConstraint];
 }
@@ -149,7 +147,7 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 }
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
-    [SenseStyle applyWithListItemCell:cell];
+    [cell applyStyle];
 }
 
 - (void)configureSelectionImageViewInCell:(UITableViewCell*)cell {
@@ -195,7 +193,7 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 - (void)didChangeTheme:(Theme *)theme {
     [super didChangeTheme:theme];
-    [SenseStyle applyWithTableView:[self tableView]];
+    [[self tableView] applyStyle];
     [[self tableView] reloadData];
 }
 

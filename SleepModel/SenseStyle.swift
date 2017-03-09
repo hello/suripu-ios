@@ -34,6 +34,7 @@ import UIKit
         case tableView = 1
         case listItem
         case navigationController
+        case warningView
         
         var key: String {
             switch self {
@@ -43,6 +44,8 @@ import UIKit
                 return "hello.list.item"
             case .navigationController:
                 return "hello.navigation.controller"
+            case .warningView:
+                return "hello.warning.view"
             }
         }
     }
@@ -71,6 +74,14 @@ import UIKit
     }
     
     //MARK: - Convenience methods
+    
+    @objc static func color(group: Group, property: Theme.ThemeProperty) -> UIColor? {
+        return self.value(group: group, property: property) as? UIColor
+    }
+    
+    @objc static func font(group: Group, property: Theme.ThemeProperty) -> UIFont? {
+        return self.value(group: group, property: property) as? UIFont
+    }
     
     @objc static func value(group: Group, property: Theme.ThemeProperty) -> Any? {
         return self.theme.value(group: group.key, property: property)

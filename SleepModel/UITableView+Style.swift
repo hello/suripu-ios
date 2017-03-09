@@ -11,10 +11,11 @@ import Foundation
 extension UITableView {
     
     @objc func applyStyle() {
-        self.backgroundColor = SenseStyle.value(group: .tableView, property: .backgroundColor) as? UIColor
-        self.separatorColor = SenseStyle.value(group: .tableView, property: .separatorColor) as? UIColor
-        self.tintColor = SenseStyle.value(group: .tableView, property: .tintColor) as? UIColor
+        self.backgroundColor = SenseStyle.color(group: .tableView, property: .backgroundColor)
+        self.separatorColor = SenseStyle.color(group: .tableView, property: .separatorColor)
+        self.tintColor = SenseStyle.color(group: .tableView, property: .tintColor)
         self.superview?.backgroundColor = self.backgroundColor
+        self.clipsToBounds = true
         
         let footer = self.tableFooterView
         var footerLabel = footer as? UILabel
@@ -23,8 +24,8 @@ extension UITableView {
         }
         
         if footerLabel != nil {
-            footerLabel?.textColor = SenseStyle.value(group: .tableView, property: .hintColor) as? UIColor
-            footerLabel?.font = SenseStyle.value(group: .tableView, property: .hintFont) as? UIFont
+            footerLabel?.textColor = SenseStyle.color(group: .tableView, property: .hintColor)
+            footerLabel?.font = SenseStyle.font(group: .tableView, property: .hintFont)
         }
     }
     

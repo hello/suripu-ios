@@ -1,8 +1,23 @@
 {
+    "style.appearance" : {
+        "style.navigation.bar.tint.color" : "@color/white",
+        "style.navigation.tint.color" : "@color/black",
+        "style.navigation.title.color" : "@color/black",
+        "style.navigation.title.font" : "@font/title.1",
+        "style.status.bar.style" : "style.status.bar.LIGHT",
+        "style.navigation.include.shadow" : false
+    },
     
-    "style.theme" : {
-        "style.appearance.navigation.title.color" : "@color/grey.6",
-        "style.appearance.navigation.title.font" : "@font/body.2"
+    "hello.tableview" : {
+        "style.background.color" : "@color/grey.3",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "hello.list.item" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body",
+        "style.text.detail.font" : "@font/body.small",
+        "style.text.detail.color" : "@color/light.secondary.text"
     }
-
 }

@@ -18,14 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationBar] setTintColor:[UIColor tintColor]];
-    UIFont* titleFont = HEMIsIPhone4Family()
-        ? [UIFont h6]
-        : [UIFont h5];
-    [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor grey6],
-        NSFontAttributeName : titleFont
-    }];
+    // TODO: remove this once done with night mode
+//    [[self navigationBar] setTintColor:[UIColor tintColor]];
+//    UIFont* titleFont = HEMIsIPhone4Family()
+//        ? [UIFont h6]
+//        : [UIFont h5];
+//    [[self navigationBar] setTitleTextAttributes:@{
+//        NSForegroundColorAttributeName : [UIColor grey6],
+//        NSFontAttributeName : titleFont
+//    }];
     
     // required since we are adding custom back button
     __weak typeof(self) weakSelf = self;

@@ -112,6 +112,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)willNotifyDelegateOfSelection;
 
+/**
+ * @discussion
+ * Subclasses should implement this to return detail for the list item, if any.
+ * By default, this returns nil
+ *
+ * @param item: the item to check if there is any detail for
+ * @return the detail string to display, if any
+ */
+- (nullable NSString*)detailForItem:(id)item;
+
 @end
 
 NS_ASSUME_NONNULL_END

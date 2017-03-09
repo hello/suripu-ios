@@ -15,6 +15,7 @@
 #import <SenseKit/API.h>
 #import <SenseKit/Model.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENAnalytics.h>
 
 #import "NSBundle+HEMUtils.h"
 #import "NSString+HEMUtils.h"

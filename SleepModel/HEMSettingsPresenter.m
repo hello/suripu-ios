@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowNotifications,
     HEMSettingsAccountRowExpansions,
     HEMSettingsAccountRowVoice,
+    HEMSettingsAccountRowNightMode,
     HEMSettingsAccountRowCount
 };
 
@@ -188,6 +189,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
             [rows addObject:@(HEMSettingsAccountRowVoice)];
         }
         
+        [rows addObject:@(HEMSettingsAccountRowNightMode)];
+        
         [sections addObject:rows];
         
         // misc
@@ -235,6 +238,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
                 return NSLocalizedString(@"settings.expansions", nil);
             case HEMSettingsAccountRowVoice:
                 return NSLocalizedString(@"settings.voice", nil);
+            case HEMSettingsAccountRowNightMode:
+            return NSLocalizedString(@"settings.night-mode", nil);
         }
     } else {
         switch ([rowType unsignedIntegerValue]) {
@@ -330,6 +335,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 return HEMSettingsCategoryExpansions;
             case HEMSettingsAccountRowVoice:
                 return HEMSettingsCategoryVoice;
+            case HEMSettingsAccountRowNightMode:
+                return HEMSettingsCategoryNightMode;
         }
     } else {
         switch ([rowType unsignedIntegerValue]) {

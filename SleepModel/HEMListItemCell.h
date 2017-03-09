@@ -10,8 +10,9 @@
 
 @interface HEMListItemCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView* selectionImageView;
-@property (weak, nonatomic) IBOutlet UILabel* itemLabel;
+@property (weak, nonatomic, nullable) IBOutlet UIImageView* selectionImageView;
+@property (weak, nonatomic, nullable) IBOutlet UILabel* itemLabel;
+@property (weak, nonatomic, nullable) IBOutlet UILabel *descriptionLabel;
 
 - (void)flashTouchIndicator;
 

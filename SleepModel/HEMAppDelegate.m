@@ -48,6 +48,8 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [self configureAPI];
     [self configureCrashReport];
     
+    [SenseStyle loadSavedTheme];
+    
     [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
@@ -165,7 +167,7 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 }
 
 - (void)configureAppearance {
-    ApplyHelloStyles();
+    ApplyHelloStyles(); //TODO: REMOVE THIS!
 }
 
 - (void)createAndShowWindow {
@@ -301,6 +303,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
+    [[SenseStyle theme] unload];
 }
 
 @end

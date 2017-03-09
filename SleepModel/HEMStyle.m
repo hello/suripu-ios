@@ -42,11 +42,11 @@ void ApplyHelloStyles (void) {
 }
 
 void ApplyDefaultStyleForNavBarAppearance(UINavigationBar* navBar) {
-    [navBar setBackgroundImage:[[UIImage alloc] init]
-                forBarPosition:UIBarPositionAny
-                    barMetrics:UIBarMetricsDefault];
-    [navBar setShadowImage:[[UIImage alloc] init]];
-    [navBar setTitleTextAttributes:NavTitleAttributes()];
+//    [navBar setBackgroundImage:[[UIImage alloc] init]
+//                forBarPosition:UIBarPositionAny
+//                    barMetrics:UIBarMetricsDefault];
+//    [navBar setShadowImage:[[UIImage alloc] init]];
+//    [navBar setTitleTextAttributes:NavTitleAttributes()];
 }
 
 NSDictionary* NavTitleAttributes(void) {
@@ -63,6 +63,6 @@ NSMutableParagraphStyle* DefaultBodyParagraphStyle() {
 
 UIImage* BackIndicator(void) {
     UIImage* defaultBackImage = [UIImage imageNamed:@"backIcon"];
-    defaultBackImage = [defaultBackImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    defaultBackImage = [defaultBackImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     return defaultBackImage;
 }

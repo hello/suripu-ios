@@ -86,6 +86,7 @@
 - (void)didMoveToParent {}
 - (void)wasRemovedFromParent {}
 - (void)didGainConnectivity {}
+- (void)didChangeTheme:(Theme*)theme {}
 
 - (void)userDidSignOut {}
 

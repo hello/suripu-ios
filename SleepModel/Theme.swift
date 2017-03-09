@@ -21,11 +21,13 @@ import UIKit
         case separatorColor
         case textColor
         case textFont
+        case detailFont
         case navigationBarTintColor
         case navigationTintColor
         case navigationTitleColor
         case navigationTitleFont
         case statusBarStyle
+        case detailColor
         
         var key: String {
             switch self {
@@ -47,6 +49,10 @@ import UIKit
                     return "style.navigation.title.font"
                 case .statusBarStyle:
                     return "style.status.bar.style"
+                case .detailFont:
+                    return "style.text.detail.font"
+                case .detailColor:
+                    return "style.text.detail.color"
             }
         }
     }

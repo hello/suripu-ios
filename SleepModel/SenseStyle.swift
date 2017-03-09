@@ -9,25 +9,25 @@
 import Foundation
 import SenseKit
 
-@objc enum SupportedTheme: Int {
-    case day = 0
-    case night
-    
-    var name: String? {
-        switch self {
-            case .day:
-                return nil // default
-            case .night:
-                return "nightTheme"
-        }
-    }
-}
-
 @available(iOS 8.2, *)
 @objc class SenseStyle: NSObject {
     
     static let themeKey = "is.hello.app.theme"
     static let theme = Theme()
+    
+    @objc enum SupportedTheme: Int {
+        case day = 0
+        case night
+        
+        var name: String? {
+            switch self {
+            case .day:
+                return nil // default
+            case .night:
+                return "nightTheme"
+            }
+        }
+    }
     
     @objc enum Group: Int {
         case tableView = 1
@@ -68,6 +68,10 @@ import SenseKit
     
     //MARK: - Convenience methods
     
+    @objc static func value(group: Group, property: Theme.ThemeProperty) -> Any? {
+        return self.theme.value(group: group.key, property: property)
+    }
+    
     @objc static func apply(tableView: UITableView?) {
         guard let view = tableView else {
             return
@@ -86,16 +90,17 @@ import SenseKit
             return
         }
         
-        let textFont = Theme.ThemeProperty.textFont.key
-        let textColor = Theme.ThemeProperty.textColor.key
-        let backgroundColor = Theme.ThemeProperty.backgroundColor.key
-        let itemBgColor = theme.value(group: Group.listItem.key, key: backgroundColor) as? UIColor
-        let itemTextColor = theme.value(group: Group.listItem.key, key: textColor) as? UIColor
-        let itemTextFont = theme.value(group: Group.listItem.key, key: textFont) as? UIFont
+        let itemBgColor = self.value(group: .listItem, property: .backgroundColor) as? UIColor
+        let itemTextColor = self.value(group: .listItem, property: .textColor) as? UIColor
+        let itemTextFont = self.value(group: .listItem, property: .textFont) as? UIFont
+        let itemDetailFont = self.value(group: .listItem, property: .detailFont) as? UIFont
+        let itemDetailColor = self.value(group: .listItem, property: .detailColor) as? UIColor
         cell.backgroundColor = itemBgColor
         cell.contentView.backgroundColor = itemBgColor
         cell.itemLabel.textColor = itemTextColor
         cell.itemLabel.font = itemTextFont
+        cell.descriptionLabel?.font = itemDetailFont
+        cell.descriptionLabel?.textColor = itemDetailColor
     }
     
 }

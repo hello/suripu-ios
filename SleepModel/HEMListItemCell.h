@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView* selectionImageView;
 @property (weak, nonatomic) IBOutlet UILabel* itemLabel;
+@property (weak, nonatomic, nullable) IBOutlet UILabel *descriptionLabel;
 
 - (void)flashTouchIndicator;
 

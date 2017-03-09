@@ -49,6 +49,7 @@
 +(NSString *)calendarReuseIdentifier;
 +(NSString *)barReuseIdentifier;
 +(NSString *)bubblesReuseIdentifier;
++(NSString *)listItemDetailReuseIdentifier;
 +(NSString *)listItemReuseIdentifier;
 +(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)breakdownLineCellReuseIdentifier;
@@ -80,7 +81,6 @@
 +(id)instantiateSleepSoundViewController;
 +(id)instantiateSleepTrendsViewController;
 +(id)instantiateSlideContainerViewController;
-+(id)instantiateSoundsNavigationViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsNavViewController;
 +(id)instantiateTutorialViewController;

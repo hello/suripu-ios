@@ -13,6 +13,7 @@
     
     "hello.list.item" : {
         "style.background.color" : "@color/grey.9",
-        "style.text.color" : "@color/dark.primary.text"
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
     }
 }

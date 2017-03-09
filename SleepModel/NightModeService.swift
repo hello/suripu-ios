@@ -64,9 +64,9 @@ class NightModeService: SENService {
         
         switch (option) {
             case .off:
-                SenseStyle.saveTheme(theme: SupportedTheme.day)
+                SenseStyle.saveTheme(theme: SenseStyle.SupportedTheme.day)
             case .alwaysOn:
-                SenseStyle.saveTheme(theme: SupportedTheme.night)
+                SenseStyle.saveTheme(theme: SenseStyle.SupportedTheme.night)
             case .sunsetToSunrise:
                 // calculate times and turn on conditionally
                 break

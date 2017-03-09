@@ -7,6 +7,8 @@
 //
 #import "Sense-Swift.h"
 
+#import "NSString+HEMUtils.h"
+
 #import "HEMListPresenter.h"
 #import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
@@ -16,6 +18,10 @@
 #import "HEMActivityIndicatorView.h"
 
 static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
+static CGFloat const HEMListItemBaseHeight = 56.0f;
+static CGFloat const HEMListItemDetailLeftMargin = 66.0f;
+static CGFloat const HEMListItemDetailRightMargin = 20.0f;
+static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 @interface HEMListPresenter()
 
@@ -136,6 +142,10 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (NSArray*)selectedItemNames {
     return _mutableSelectedNames;
+}
+    
+- (NSString*)detailForItem:(id)item {
+    return nil;
 }
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
@@ -291,6 +301,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - UITableViewDataSource
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = HEMListItemBaseHeight;
+    
+    id item = [self items][[indexPath row]];
+    NSString* detail = [self detailForItem:item];
+    
+    if ([detail length] > 0) {
+        CGFloat maxWidth = CGRectGetWidth([tableView bounds]) - HEMListItemDetailLeftMargin - HEMListItemDetailRightMargin;
+        UIFont* detailFont = [SenseStyle valueWithGroup:GroupListItem property:ThemePropertyDetailFont];
+        height += [detail heightBoundedByWidth:maxWidth usingFont:detailFont] + HEMListItemDetailTextSpacing;
+    }
+    
+    return height;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -315,7 +340,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard listItemReuseIdentifier]];
+    id item = [self items][[indexPath row]];
+    NSString* detail = [self detailForItem:item];
+    NSString* identifier = [HEMMainStoryboard listItemReuseIdentifier];
+    if (detail != nil) {
+        identifier = [HEMMainStoryboard listItemDetailReuseIdentifier];
+    }
+    return [tableView dequeueReusableCellWithIdentifier:identifier];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -28,6 +28,21 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     //MARK: List Presenter configuration
     
+    override func detail(forItem item: Any) -> String? {
+        guard let description = item as? String else {
+            return nil
+        }
+        
+        let option = NightModeService.Option.fromDescription(description: description)!
+        switch option {
+            case .sunsetToSunrise:
+                return NSLocalizedString("settings.night-mode.option.scheduled.description",
+                                         comment: "sunset to sunrise description")
+            default:
+                return nil
+        }
+    }
+    
     override func indexOfItem(withName name: String) -> Int {
         guard let options = self.items as? [String] else {
             return NSNotFound
@@ -43,6 +58,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
         let selectedOption = self.nightModeService.savedOption()
         cell.itemLabel.text = option?.localizedDescription()
         cell.isSelected = selectedOption == option
+        cell.descriptionLabel?.text = self.detail(forItem: item)
     }
     
     override func willNotifyDelegateOfSelection() {

@@ -15,6 +15,8 @@
     "hello.list.item" : {
         "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
-        "style.text.font" : "@font/body"
+        "style.text.font" : "@font/body",
+        "style.text.detail.font" : "@font/body.small",
+        "style.text.detail.color" : "@color/light.secondary.text"
     }
 }

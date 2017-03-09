@@ -12,24 +12,50 @@ import UIKit
 @available(iOS 8.2, *)
 @objc class Theme: NSObject {
     
+    fileprivate enum ThemeGroup: String {
+        case appearance = "style.appearance"
+    }
+    
     @objc enum ThemeProperty: Int {
-        case navTitleColor = 1
-        case navTitleFont
+        case backgroundColor
+        case separatorColor
+        case textColor
+        case textFont
+        case navigationBarTintColor
+        case navigationTintColor
+        case navigationTitleColor
+        case navigationTitleFont
+        case statusBarStyle
         
         var key: String {
             switch self {
-            case .navTitleColor:
-                return "style.appearance.navigation.title.color"
-            case .navTitleFont:
-                return "style.appearance.navigation.title.font"
+                case .backgroundColor:
+                    return "style.background.color"
+                case .separatorColor:
+                    return "style.separator.color"
+                case .textColor:
+                    return "style.text.color"
+                case .textFont:
+                    return "style.text.font"
+                case .navigationTintColor:
+                    return "style.navigation.tint.color"
+                case .navigationBarTintColor:
+                    return "style.navigation.bar.tint.color"
+                case .navigationTitleColor:
+                    return "style.navigation.title.color"
+                case .navigationTitleFont:
+                    return "style.navigation.title.font"
+                case .statusBarStyle:
+                    return "style.status.bar.style"
             }
         }
     }
  
     fileprivate static let defaultThemeFile = "defaultTheme"
-    
-    fileprivate static let keyRoot = "style.theme" // required
+
     fileprivate static let keyParent = "style.parent"
+    fileprivate static let statusBarLight = "style.status.bar.LIGHT"
+    fileprivate static let statusBarDark = "style.status.bar.DARK"
     
     fileprivate static let refColor = "@color"
     fileprivate static let refFont = "@font"
@@ -45,48 +71,26 @@ import UIKit
     
     convenience init(name: String!) {
         self.init()
+        self.loadDefault()
         self.load(name: name)
     }
     
     // MARK: - Load
     
-    fileprivate func loadProperties(name: String!) -> [String: Any]? {
-        return Bundle.read(jsonFileName: name) as? [String: Any]
+    fileprivate func loadProperties(name: String?) -> [String: Any]? {
+        guard let file = name else {
+            return nil
+        }
+        return Bundle.read(jsonFileName: file) as? [String: Any]
     }
     
     fileprivate func loadDefault() {
         self.defaultProperties = self.loadProperties(name: Theme.defaultThemeFile)
     }
     
-    /**
-        Load a theme by name, which should match the theme configuration file.
-        Only one custom theme can be loaded at one time, but the default theme
-        properties will be used when a style is not defined / overriden in the
-        custom theme
-     
-        - Parameter name: the name of the theme that matches the configuration file name
-    */
-    @objc func load(name: String!) {
-        self.themeProperties = self.loadProperties(name: name)
-    }
-    
-    // MARK: - Values
-    
-    /**
-        Convenience method for objective-c code to retrieve the key to extract
-        values for since Swift enum variables and functions cannot be accessed
-        by objective-c
-     
-        - Parameter property: the theme property supported
-    */
-    @objc func key(property: ThemeProperty) -> String {
-        return property.key
-    }
-    
-    fileprivate func styleProperties(style: String?) -> [String: Any]? {
-        let styleName = style ?? Theme.keyRoot
-        guard let properties = self.themeProperties?[styleName] as? [String : Any] else {
-            return self.defaultProperties[styleName] as? [String: Any]
+    fileprivate func groupProperties(group: String!) -> [String: Any]? {
+        guard let properties = self.themeProperties?[group] as? [String : Any] else {
+            return self.defaultProperties[group] as? [String: Any]
         }
         return properties
     }
@@ -103,38 +107,6 @@ import UIKit
         } else {
             return valueString
         }
-    }
-    
-    /**
-        Retrieves the themed property value, if loaded, before looking for default
-        theme property value.  Themed property determined by style, if not from
-        the root theme, then looking at the value from that style map.  If the
-        style inherits from the root, it will fallback to the root style if exits
-        
-        - Parameter name: the name of the property to retrieve value for
-     
-        - Returns: the value that matches the property specified
-    */
-    @objc func value(style: String?, name: String!) -> Any? {
-        let styleProperties = self.styleProperties(style: style)
-        let parentStyleName = styleProperties?[Theme.keyParent] as? String
-        let defaultRootProps = self.defaultProperties[Theme.keyRoot] as? [String: Any]
-        let value = styleProperties?[name] ?? defaultRootProps?[name]
-        
-        if value == nil && parentStyleName != nil {
-            // recursively look for parent value, if value not found
-            return self.value(style: parentStyleName, name: name)
-        }
-        
-        return self.transform(value: value)
-    }
-    
-    fileprivate func rootProperties() -> [String: Any]? {
-        var rootProperties = self.themeProperties?[Theme.keyRoot] as? [String: Any]
-        if rootProperties == nil {
-            rootProperties = self.defaultProperties[Theme.keyRoot] as? [String: Any]
-        }
-        return rootProperties
     }
     
     fileprivate func color(value: String?) -> UIColor? {
@@ -155,28 +127,157 @@ import UIKit
         return font
     }
     
-    // MARK: - Apply
-    
-    fileprivate func apply() {
-        let properties = self.rootProperties()
-
-        var navTitleAttributes: [String: Any] = [:]
-        
-        let navBarTitleColorValue = properties?[ThemeProperty.navTitleColor.key] as? String
-        if let navBarTitleColor = self.color(value: navBarTitleColorValue) {
-            navTitleAttributes[NSForegroundColorAttributeName] = navBarTitleColor
-        }
-        
-        let navBarTitleFontValue = properties?[ThemeProperty.navTitleFont.key] as? String
-        if let navBarTitleFont = self.font(value: navBarTitleFontValue) {
-            navTitleAttributes[NSFontAttributeName] = navBarTitleFont
-        }
-        
-        if navTitleAttributes.count > 0 {
-            let navBarAppearance = UINavigationBar.appearance()
-            navBarAppearance.titleTextAttributes = navTitleAttributes
-        }
-
+    /**
+     Convenience method to retrieve an appearance value defined by the supported
+     "style.appearance" group.  This will be used when apply a theme instance
+     
+     - Parameter property: the themed property to retrieve
+     */
+    fileprivate func appearanceValue(property: ThemeProperty) -> Any? {
+        return self.value(group: ThemeGroup.appearance.rawValue, key: property.key)
     }
     
+    // MARK: - Apply
+    
+    func apply() {
+        let app = UIApplication.shared
+        let keyWindow = app.delegate?.window
+        let rootVC = keyWindow??.rootViewController
+        self.apply(viewController: rootVC)
+        self.applyApearances()
+    }
+    
+    fileprivate func applyApearances() {
+        let navBarTintColor = self.appearanceValue(property: .navigationBarTintColor) as? UIColor
+        let navTintColor = self.appearanceValue(property: .navigationTintColor) as? UIColor
+        let navTitleColor = self.appearanceValue(property: .navigationTitleColor) as? UIColor
+        let navTitleFont = self.appearanceValue(property: .navigationTitleFont) as? UIFont
+        
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.barTintColor = navBarTintColor
+        navigationBar.tintColor = navTintColor
+        
+        var navTitleAttributes: [String: Any] = [:]
+        if navTitleColor != nil {
+            navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
+        }
+        if navTitleFont != nil {
+            navTitleAttributes[NSFontAttributeName] = navTitleFont
+        }
+        navigationBar.titleTextAttributes = navTitleAttributes
+        
+        let windows = UIApplication.shared.windows
+        windows.forEach { (window: UIWindow) in
+            window.subviews.forEach({ (view: UIView) in
+                view.removeFromSuperview()
+                window.addSubview(view)
+            })
+        }
+    }
+    
+    fileprivate func apply(viewController: UIViewController?) {
+        guard let controller = viewController else {
+            return
+        }
+        
+        if let navVC = controller as? UINavigationController {
+            navVC.viewControllers.forEach({ (controllerInStack: UIViewController) in
+                self.apply(viewController: controllerInStack)
+            })
+        }
+        
+        if let tabVC = controller as? UITabBarController {
+            tabVC.viewControllers?.forEach({ (tabController: UIViewController) in
+                self.apply(viewController: tabController)
+            })
+        }
+        
+        guard let themedVC = controller as? Themed else {
+            return
+        }
+        
+        themedVC.didChange(theme: self)
+        controller.childViewControllers.forEach { (child: UIViewController) in
+            self.apply(viewController: child)
+        }
+    }
+    
+    // MARK: - Retrieving themed values
+    
+    /**
+        Load a theme by name, which should match the theme configuration file.
+        Only one custom theme can be loaded at one time, but the default theme
+        properties will be used when a style is not defined / overriden in the
+        custom theme
+     
+        - Parameter name: the name of the theme that matches the configuration file name
+     */
+    @objc func load(name: String?) {
+        self.themeProperties = self.loadProperties(name: name)
+        self.apply()
+    }
+    
+    /**
+        Returned the themed status bar style
+     
+        - Returns: status bar style specified in theme, or default
+    */
+    @objc func statusBarStyle() -> UIStatusBarStyle {
+        let styleValue = self.appearanceValue(property: .statusBarStyle) as? String
+        if styleValue == Theme.statusBarLight {
+            return UIStatusBarStyle.default
+        } else {
+            return UIStatusBarStyle.lightContent
+        }
+    }
+    
+    /**
+     Convenience method for objective-c code to retrieve the key to extract
+     values for since Swift enum variables and functions cannot be accessed
+     by objective-c
+     
+     - Parameter property: the theme property supported
+     */
+    @objc func key(property: ThemeProperty) -> String {
+        return property.key
+    }
+    
+    /**
+        Retrieves the themed property value, if loaded, before looking for default
+        theme property value.  Themed property determined by style, if not from
+        the root theme, then looking at the value from that style map.  If the
+        style inherits from the root, it will fallback to the root style if exits
+        
+        - Parameter name: the name of the property to retrieve value for
+     
+        - Returns: the value that matches the property specified
+    */
+    @objc func value(group: String!, key: String!) -> Any? {
+        let themedGroupProps = self.themeProperties?[group] as? [String : Any]
+        let defaultGroupProps = self.defaultProperties?[group] as? [String: Any]
+        let value = themedGroupProps?[key] ?? defaultGroupProps?[key]
+        
+        if value == nil {
+            let themedParentGroup = themedGroupProps?[Theme.keyParent] as? String
+            let parentGroup = defaultProperties?[Theme.keyParent] as? String
+            if let parentGroupName = themedParentGroup ?? parentGroup {
+                // recursively look for parent value, if value not found
+                return self.value(group: parentGroupName, key: key)
+            }
+        }
+        
+        return self.transform(value: value)
+    }
+    
+    /**
+        Convenience method for Swift to retrieve the value for the specified
+        style and theme property that is supported
+     
+        - Parameter group: the group to retrieve value from
+        - Returns: the value that matches the property in the group, if any
+    */
+    func value(group: String!, property: ThemeProperty) -> Any? {
+        return self.value(group: group, key: property.key)
+    }
+
 }

@@ -395,6 +395,7 @@
 		BFAE7E2A1E6E4D5300F24E4B /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */; };
 		BFAE7E2E1E6F459800F24E4B /* NightModeSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E2D1E6F459800F24E4B /* NightModeSettingsPresenter.swift */; };
 		BFAE7E301E6F624200F24E4B /* NightModeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E2F1E6F624200F24E4B /* NightModeService.swift */; };
+		BFAE7E361E6F8E5600F24E4B /* Themed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E351E6F8E5600F24E4B /* Themed.swift */; };
 		BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */; };
 		BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */; };
 		BFB0FBE719D38D790056FFEC /* HEMSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */; };
@@ -1207,6 +1208,7 @@
 		BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/Nocilla/Nocilla.framework"; sourceTree = "<group>"; };
 		BFAE7E2D1E6F459800F24E4B /* NightModeSettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeSettingsPresenter.swift; sourceTree = "<group>"; };
 		BFAE7E2F1E6F624200F24E4B /* NightModeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightModeService.swift; sourceTree = "<group>"; };
+		BFAE7E351E6F8E5600F24E4B /* Themed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Themed.swift; sourceTree = "<group>"; };
 		BFB0FBD419D243A60056FFEC /* HEMDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDevicesViewController.h; sourceTree = "<group>"; };
 		BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDevicesViewController.m; sourceTree = "<group>"; };
 		BFB0FBDE19D3463E0056FFEC /* HEMPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillViewController.h; sourceTree = "<group>"; };
@@ -2307,6 +2309,7 @@
 			children = (
 				BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */,
 				BF3713511E6E2FAE00EF9BAB /* Bundle+JSON.swift */,
+				BFAE7E351E6F8E5600F24E4B /* Themed.swift */,
 				BF3713281E6E28D300EF9BAB /* Theme */,
 				BF3713271E6E28CE00EF9BAB /* Font */,
 				BF3713261E6E28C700EF9BAB /* Color */,
@@ -4221,6 +4224,7 @@
 				8A7D80271A40ECDB00B0BFD7 /* NSAttributedString+HEMUtils.m in Sources */,
 				BF21F02D1DB0253D0057F24E /* HEMVoiceExamplesViewController.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
+				BFAE7E361E6F8E5600F24E4B /* Themed.swift in Sources */,
 				BFCB99091CA61A4E000D7619 /* HEMSleepSoundDurationsPresenter.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */,
 				BFC0D66D1D9D8F7A00239B89 /* HEMExpansionHeaderView.m in Sources */,

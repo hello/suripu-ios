@@ -55,8 +55,22 @@ class NightModeService: SENService {
     }
     
     func save(option: Option) {
+        guard option != self.savedOption() else {
+            return
+        }
+        
         let key = NightModeService.settingsKey
         SENLocalPreferences.shared().setUserPreference(option.rawValue, forKey: key)
+        
+        switch (option) {
+            case .off:
+                SenseStyle.saveTheme(theme: SupportedTheme.day)
+            case .alwaysOn:
+                SenseStyle.saveTheme(theme: SupportedTheme.night)
+            case .sunsetToSunrise:
+                // calculate times and turn on conditionally
+                break
+        }
     }
     
 }

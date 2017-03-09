@@ -1,7 +1,18 @@
 {
+    "style.appearance" : {
+        "style.navigation.bar.tint.color" : "@color/grey.9",
+        "style.navigation.title.color" : "@color/white",
+        "style.navigation.tint.color" : "@color/white",
+        "style.status.bar.style" : "style.status.bar.DARK"
+    },
     
-    "style.theme" : {
-        "style.appearance.navigation.title.color" : "@color/grey.2"
+    "hello.tableview" : {
+        "style.background.color" : "@color/black",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "hello.list.item" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text"
     }
-    
 }

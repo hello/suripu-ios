@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+@class Theme;
 @class HEMNavigationShadowView;
 @class HEMPresenter;
 @class HEMAlertViewController;
@@ -175,6 +176,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @return YES if view is fully visible in the viewport of the window.  No otherwise
  */
 - (BOOL)isViewFullyVisible:(UIView*)view;
+
+/**
+ * @discussion
+ * Called when the theme has changed.  Subclasses should call super on this method
+ *
+ * @param theme: the current Theme to display / update with
+ */
+- (void)didChangeTheme:(Theme*)theme;
 
 @end
 

@@ -20,7 +20,7 @@ extension Bundle {
         guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
             return nil
         }
-        return try? JSONSerialization.jsonObject(with: data, options: [])
+        return try! JSONSerialization.jsonObject(with: data, options: [])
     }
     
 }

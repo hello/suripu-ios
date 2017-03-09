@@ -3,11 +3,15 @@
     "light.secondary.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54},
     "light.disabled.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.38},
     "light.separator" : { "style.color.hex" : "000000", "style.color.alpha" : 0.12},
+    "light.list.item" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.87},
     
     "dark.primary.text" : { "style.color.hex" : "FFFFFF"},
     "dark.secondary.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.70},
     "dark.disabled.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.50},
     "dark.separator" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.12},
+    
+    "black" : { "style.color.hex" : "000000" },
+    "white" : { "style.color.hex" : "FFFFFF" },
     
     "grey.1" : { "style.color.hex" : "FAFAFA" },
     "grey.2" : { "style.color.hex" : "EEEEEE" },

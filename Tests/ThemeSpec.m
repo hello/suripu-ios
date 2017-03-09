@@ -35,14 +35,15 @@ describe(@"Theme", ^{
             });
             
             it(@"should have navigation title color", ^{
+                
                 NSString* key = [theme keyWithProperty:ThemePropertyNavTitleColor];
-                id color = [theme valueWithStyle:nil name:key];
+                id color = [theme valueWithStyle:nil key:key];
                 [[color should] beKindOfClass:[UIColor class]];
             });
             
             it(@"should have navigation title font", ^{
                 NSString* key = [theme keyWithProperty:ThemePropertyNavTitleFont];
-                id font = [theme valueWithStyle:nil name:key];
+                id font = [theme valueWithStyle:nil key:key];
                 [[font should] beKindOfClass:[UIFont class]];
             });
             
@@ -65,16 +66,16 @@ describe(@"Theme", ^{
             
             it(@"should not match default navigation title color", ^{
                 NSString* key = [theme keyWithProperty:ThemePropertyNavTitleColor];
-                id defaultColor = [theme valueWithStyle:nil name:key];
-                id nightColor = [night valueWithStyle:nil name:key];
+                id defaultColor = [theme valueWithStyle:nil key:key];
+                id nightColor = [night valueWithStyle:nil key:key];
                 [[nightColor should] beKindOfClass:[UIColor class]];
                 [[nightColor shouldNot] equal:defaultColor];
             });
             
             it(@"should match default navigation title font", ^{
                 NSString* key = [theme keyWithProperty:ThemePropertyNavTitleFont];
-                id defaultFont = [theme valueWithStyle:nil name:key];
-                id nightFont = [night valueWithStyle:nil name:key];
+                id defaultFont = [theme valueWithStyle:nil key:key];
+                id nightFont = [night valueWithStyle:nil key:key];
                 [[nightFont should] beKindOfClass:[UIFont class]];
                 [[nightFont should] equal:defaultFont];
             });

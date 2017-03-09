@@ -27,10 +27,10 @@
 }
 
 - (void)configureNavigationBar {
-    [[self navigationBar] setBarTintColor:[UIColor navigationBarColor]];
-    [[self navigationBar] setTranslucent:NO];
-    [[self navigationBar] setClipsToBounds:NO];
-    [[self navigationBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
+//    [[self navigationBar] setBarTintColor:[UIColor navigationBarColor]];
+//    [[self navigationBar] setTranslucent:NO];
+//    [[self navigationBar] setClipsToBounds:NO];
+//    [[self navigationBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 3/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMListPresenter.h"
 #import "HEMStyle.h"
@@ -97,6 +98,8 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     [tableView setDataSource:self];
     [tableView setSeparatorColor:[UIColor separatorColor]];
     
+    [SenseStyle applyWithTableView:tableView];
+    
     [self setTableView:tableView];
     [self setTableViewBottomConstraint:bottomConstraint];
 }
@@ -136,8 +139,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 }
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
-    [[cell itemLabel] setFont:[UIFont body]];
-    [[cell itemLabel] setTextColor:[UIColor textColor]];
+    [SenseStyle applyWithListItemCell:cell];
 }
 
 - (void)configureSelectionImageViewInCell:(UITableViewCell*)cell {
@@ -154,7 +156,7 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 }
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {
-    return -1;
+    return NSNotFound;
 }
 
 - (void)updateCell:(HEMListItemCell*)cell withItem:(id)item selected:(BOOL)selected {
@@ -180,6 +182,12 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 }
 
 #pragma mark - Presenter Events
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [SenseStyle applyWithTableView:[self tableView]];
+    [[self tableView] reloadData];
+}
 
 - (void)willAppear {
     [super willAppear];
@@ -245,6 +253,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self updateCell:cell withItem:item selected:YES];
     
     if (![tableView allowsMultipleSelection]) {
+        NSArray<NSIndexPath*>* visiblePaths = [tableView indexPathsForVisibleRows];
+        for(NSIndexPath* path in visiblePaths) {
+            if (![path isEqual:indexPath]) {
+                [self tableView:tableView didDeselectRowAtIndexPath:path];
+            }
+        }
+        
         [self willNotifyDelegateOfSelection];
         // add a delay to let delegate now selection has been made so dismissal
         // of the controller can be done
@@ -290,13 +305,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [header setTitle:[[self title] uppercaseString]];
     return header;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

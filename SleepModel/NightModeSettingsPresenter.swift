@@ -27,6 +27,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     }
     
     //MARK: List Presenter configuration
+    
     override func indexOfItem(withName name: String) -> Int {
         guard let options = self.items as? [String] else {
             return NSNotFound
@@ -44,17 +45,13 @@ class NightModeSettingsPresenter: HEMListPresenter {
         cell.isSelected = selectedOption == option
     }
     
-    override func update(_ cell: UITableViewCell, withItem item: Any, selected: Bool) {
-        super.update(cell, withItem: item, selected: selected)
-
-        if selected == true {
-            let description = item as! String
-            guard let option = NightModeService.Option.fromDescription(description: description) else {
-                return
-            }
-            self.nightModeService.save(option: option)
+    override func willNotifyDelegateOfSelection() {
+        super.willNotifyDelegateOfSelection()
+        let selectedName = self.selectedItemNames?.last as? String ?? ""
+        guard let option = NightModeService.Option.fromDescription(description: selectedName) else {
+            return
         }
-        
+        self.nightModeService.save(option: option)
     }
     
 }

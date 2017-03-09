@@ -56,7 +56,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
         let description = item as! String
         let option = NightModeService.Option.fromDescription(description: description)
         let selectedOption = self.nightModeService.savedOption()
-        cell.itemLabel.text = option?.localizedDescription()
+        cell.itemLabel?.text = option?.localizedDescription()
         cell.isSelected = selectedOption == option
         cell.descriptionLabel?.text = self.detail(forItem: item)
     }

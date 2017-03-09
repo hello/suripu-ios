@@ -85,7 +85,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         super.configureCell(cell, forItem: item)
         
         let text = item as? String
-        cell.itemLabel.text = text
+        cell.itemLabel?.text = text
         
         let currentSelection = self.account?.customGender ?? ""
         cell.isSelected = currentSelection == text

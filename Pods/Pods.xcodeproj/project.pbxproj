@@ -172,7 +172,6 @@
 		1CC6C2A96A01734A01F41B7AC8AEF590 /* SENTrends.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F00AD032DF1AACFDE4006CD2FA5D8F4 /* SENTrends.m */; };
 		1D0C393EF82D639858BC11F5E619D818 /* SecureDFUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9BB83630F696DCCB9D5E0CE56D8A39 /* SecureDFUService.swift */; };
 		1D82B380FD3E065A7D6343FBCB4EDDEF /* Pods-SenseApp-Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1CAEDECA9E86699CEC4C70BF6C24C8 /* Pods-SenseApp-Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DA85BF09B46571EEEE4E880A64387C3 /* SENService.h in Headers */ = {isa = PBXBuildFile; fileRef = AD462A3872316E82E40385584DEE453E /* SENService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DF6185F8AB2C3E54345128DE081EA00 /* BFTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CF1BDAF8086B880D10B55C87CED10C3 /* BFTask.m */; };
 		1E72699B9C95850F46BB3B43C48858B5 /* KWBeSubclassOfClassMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E342671205B6C2BE7D7D29B610730A6C /* KWBeSubclassOfClassMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		1E9777C016696220D373344CC2CA1F5F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
@@ -783,8 +782,8 @@
 		9E85F243EC7CAE570057D2C358D6F522 /* SORelativeDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = A48DB88F8D01016F6EE963CE2EFFDC6F /* SORelativeDateTransformer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9E9C3C88860122555BB1FECAC5E326BF /* CocoaLumberjack.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBF304132690D8DAF950670309F0D26 /* CocoaLumberjack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9ED36729FBBE9858E7B47C2335CDEE29 /* iOSDFULibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD854D75F99835EB41DE7EC3FDD8A71 /* iOSDFULibrary.framework */; };
-		9F3C9FB95A87B112F618F93CDE9814B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
 		9F09FD4936B9247568B68A83E20F77C8 /* SENExpansion.m in Sources */ = {isa = PBXBuildFile; fileRef = AA80E897358C5A79935B962F90D45106 /* SENExpansion.m */; };
+		9F3C9FB95A87B112F618F93CDE9814B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB1F94B51370B88CA98D17DEDAA213F /* Foundation.framework */; };
 		9F8838396CA2347D3462EFAED1DC7011 /* FBSDKDeviceRequestsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FD91BF0C9469B722023A07A2F421F7 /* FBSDKDeviceRequestsHelper.m */; };
 		9FB956B499D4B99BA22D53BD8BB5C592 /* RFC3339DateTool.h in Headers */ = {isa = PBXBuildFile; fileRef = BFD9A11887B4DF3658AF761173E962C1 /* RFC3339DateTool.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9FF20FFDDAA6263CEACA149939324CC5 /* KWMessageTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5D3567E59D56DE353BC99BCAD4E157 /* KWMessageTracker.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
@@ -877,9 +876,6 @@
 		B17FA738444A4AA242C000068121AB6F /* KWBeTrueMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E74AFD95B727ADFD8BC947E306AA738 /* KWBeTrueMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		B1E1F1689CAE0392E4CFE08990D8114C /* FBSDKURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F5A76F1E783ED3AA1C62292823584781 /* FBSDKURLConnection.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B208A7CA0809CB89ACE3C99B9B948071 /* KWExistVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F51B13344B7DB49A1AAE086920D1AD62 /* KWExistVerifier.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		B20D6EC8B49D5CA5C75D7E1D9EDCC971 /* Pods-SenseApp-Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8AD527F9E14607AEEB46E98372B9D /* Pods-SenseApp-Tests-dummy.m */; };
-		B23F5789DB715C5E12AE30E5921006A6 /* SENAPITrends.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4ABCAD46105A3838EBC4851CD75902 /* SENAPITrends.m */; };
-		B27FF486FEA3314DF4CFB2DBCB1BEE30 /* SENAPIDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFC82CE3606B6E699E4EBE66C56BC1C /* SENAPIDevice.m */; };
 		B28B002707A2CE4832AC4C05C96D5ACF /* FBSDKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4ECF708CFC279AA86629903D8983 /* FBSDKCrypto.m */; };
 		B2DFF9AA4138E8F6FC07E430047BA481 /* BarLineScatterCandleBubbleChartDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D4FDFF8FAA74A8CC19BAAC17F3F49 /* BarLineScatterCandleBubbleChartDataProvider.swift */; };
 		B3416F56597705C386CF4323A485BDAB /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FE6CF63861734987DB4937002673368A /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -6847,85 +6843,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D0F323E59EB4C50B5117E8E65B8871C /* Sources */ = {
+		349CE2381B3169258F82FA8607394BA0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCFA0CF719D094702565297B000217B0 /* Model.m in Sources */,
-				E584AFD83357A25D2DF23D63A3075976 /* SENAccount.m in Sources */,
-				491273AEF0DEADD80A9B88C8B430FA75 /* SENAlarm.m in Sources */,
-				FBD1585C4CC26BA5DA3993E0D46E7909 /* SENAlarmCollection.m in Sources */,
-				2A862239108DCD631870DD703ADF49E9 /* SENAnalytics.m in Sources */,
-				38CC96F0574AE941E0E63C5D1EB226F4 /* SENAnalyticsLogger.m in Sources */,
-				F499EC3BFBB3D884F4E170717D5D4948 /* SENAnswer.m in Sources */,
-				77763520F3D067EEF7A04F99231C75D5 /* SENAPIAccount.m in Sources */,
-				A01E519BC103B5358A4CB2744E96C1F6 /* SENAPIAlarms.m in Sources */,
-				ED2B9EC61F61EF5252E2D7A2F9D2B12A /* SENAPIAppFeedback.m in Sources */,
-				43919154410501DF6115D6D95F792ECC /* SENAPIAppStats.m in Sources */,
-				6AF03CA7D0BDE0C9042B57737536F47E /* SENAPIClient.m in Sources */,
-				B27FF486FEA3314DF4CFB2DBCB1BEE30 /* SENAPIDevice.m in Sources */,
-				E5589F66839BC168AF159D2C7C4AA52E /* SENAPIExpansion.m in Sources */,
-				CAD34D6D2F5B6AF9E65CB762451BED6C /* SENAPIInsight.m in Sources */,
-				301D8D74CA87F2D58C0D3D10CEC8761A /* SENAPINotification.m in Sources */,
-				CB3BE4FC1971152F27986F258B9B437B /* SENAPIPhoto.m in Sources */,
-				CF90AE06EC37CBC6645B64F9D796C03E /* SENAPIPreferences.m in Sources */,
-				EC58F097B56E393CECA91D59647EF52F /* SENAPIQuestions.m in Sources */,
-				12B478422D45E1276D8AA91874C8B72F /* SENAPISensor.m in Sources */,
-				C6E8442D4CBF449D6E91694729FF793C /* SENAPIShare.m in Sources */,
-				386F2E6A9648D1D82180AAA5FCF9CED7 /* SENAPISleepSounds.m in Sources */,
-				FB2A18E2574CF98B29AE9DD9A097E6A5 /* SENAPISpeech.m in Sources */,
-				7E27169BB957C8EC56797B60F517EF37 /* SENAPISupport.m in Sources */,
-				AD64E9627CD60171B59CECA473E23056 /* SENAPISystemAlerts.m in Sources */,
-				4819A2399DB15F1C660FC16F935843EB /* SENAPITimeline.m in Sources */,
-				EA61C9ADE36776736AD9EA4A02D658C2 /* SENAPITimeZone.m in Sources */,
-				B23F5789DB715C5E12AE30E5921006A6 /* SENAPITrends.m in Sources */,
-				38086828A9C77F35663252F569280751 /* SENAppStats.m in Sources */,
-				E471CB695D0EBB952B5E0D7F2A39CA33 /* SENAppUnreadStats.m in Sources */,
-				51A27DFE346B3C74E437DB3ADEEF8359 /* SENAuthorizationService.m in Sources */,
-				6443EF05FD5BE6431BF202378B4F8E88 /* SENCondition.m in Sources */,
-				BABA04220ECBEB893A14E5AA14074E56 /* SENConditionRange.m in Sources */,
-				885D10212DE054F16B2736B3A1194771 /* SENDeviceMetadata.m in Sources */,
-				FBABA39F444649DC3346E70928F3AF93 /* SENDevicePairingInfo.m in Sources */,
-				6B2BB11F317E51D5A73506308AF81B58 /* SENDFUStatus.m in Sources */,
-				5835713C54FF8EA974B242BE4D394BCF /* SENExpansion.m in Sources */,
-				BB5932DD536CBD95D13D96EE2C22BC94 /* SENInsight.m in Sources */,
-				8CE38F299B0EE9D0C9DFF12E1AE7954F /* SENKeyedArchiver.m in Sources */,
-				259F9E6C77429AC465BCB965893D38B0 /* SENLocalPreferences.m in Sources */,
-				B7F8096B519049BE1BBEB7305E218357 /* SENPairedDevices.m in Sources */,
-				044A7AF0965A8D7350116C2D832AA892 /* SENPeripheralManager.m in Sources */,
-				697A24EFC445CAD66F51881B6D59A2C2 /* SENPillMetadata.m in Sources */,
-				6917D162711089B571E47773BCFF04F3 /* SENPreference.m in Sources */,
-				AA25F9F8A63663142DE531F7292BD160 /* SENQuestion.m in Sources */,
-				FBAC3F2EDCA6704F87BA752A5FD06337 /* SENRemoteImage.m in Sources */,
-				12EA95C0ABFE0702886893745C28009D /* SenseKit-dummy.m in Sources */,
-				C205BA3CFAD4F360196E204F61A3359E /* SENSense.m in Sources */,
-				27078E63F5ABF72E0411D5E195BBBCDB /* SENSenseManager.m in Sources */,
-				F0812DC071CBBDAC612C74FD3697F882 /* SENSenseMessage.pb.m in Sources */,
-				BCC810B0534C7450BBC5316A5214A946 /* SENSenseMetadata.m in Sources */,
-				9064B5E6930852D39379D3B72753F182 /* SENSenseVoiceSettings.m in Sources */,
-				3B94C76D127A9A5444579DF7067205C2 /* SENSenseWiFiStatus.m in Sources */,
-				2C8E62D959BA7B7943185BA2198CD117 /* SENSensor.m in Sources */,
-				57D1CCE516E49BCF277E994DED30EF3A /* SENSensorDataRequest.m in Sources */,
-				5E2943A9760E2C9AD9701E465080D6F6 /* SENSensorStatus.m in Sources */,
-				0F26E338DF45767E92090A107A401013 /* SENService.m in Sources */,
-				9717EA008A4D26E4F0965761D15BF18C /* SENServiceDevice.m in Sources */,
-				4266AD25F83857D9FB129A1FB4B5CF3F /* SENSleepPill.m in Sources */,
-				57FB6A5C53796A8C136012D0544398BF /* SENSleepPillManager.m in Sources */,
-				49D7A2928618BE233B98F4B11A993507 /* SENSleepSoundDurations.m in Sources */,
-				39A6F9582E1AB3CEB205EE0C42D40C15 /* SENSleepSoundRequest.m in Sources */,
-				0DC66E89A853412A18F2A8046918571F /* SENSleepSounds.m in Sources */,
-				CF3EAC7F7C2E70C3A5010D28E8389C31 /* SENSleepSoundsState.m in Sources */,
-				02DAAA40B2F614A7FA459945988A39E4 /* SENSleepSoundStatus.m in Sources */,
-				A27410F6B9A928D500804F6012C80686 /* SENSound.m in Sources */,
-				324D97355166802A3EA19211D32DD721 /* SENSpeechResult.m in Sources */,
-				18EAEDD2498E0573EBC7864212755944 /* SENSupportTopic.m in Sources */,
-				E8C8802114048B00977CA3681E6A1A52 /* SENSwapStatus.m in Sources */,
-				3C93A35CE412175A2A9656A9801E21B5 /* SENSystemAlert.m in Sources */,
-				7A31491B5239EFA35B048EA085A2F444 /* SENTimeline.m in Sources */,
-				2EEF241334AA8F63B4B93119EC1C9E34 /* SENTimelineMetric.m in Sources */,
-				0DC0C0D8C7021DD8A608921565637EAD /* SENTimelineSegment.m in Sources */,
-				38C606D0C35C54F646E3EEB2F97281D5 /* SENTrends.m in Sources */,
-				7EEFBA9C7D48FA27C4AFBFF4BDBDC0B2 /* SENTrendsGraph.m in Sources */,
+				E02EC3A512654F278F377EA86E14975D /* Pods-SenseApp-Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9690,7 +9612,7 @@
 		};
 		7DDFF9C83884A93CB5E28F21DB4AC442 /* Dev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C33A098E384FE7985C207277E4A3564 /* SenseKit.xcconfig */;
+			baseConfigurationReference = 3F5035785F1E62EF9035AC8588B6805A /* Pods-SenseApp-Sense.dev.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -9725,7 +9647,7 @@
 		};
 		7E7C3C7C91F09B3A0C89B3752AB311AC /* Dev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F24BE0FE059E8ABA183F8CBF94466B7 /* SenseKit.xcconfig */;
+			baseConfigurationReference = 1C33A098E384FE7985C207277E4A3564 /* SenseKit.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

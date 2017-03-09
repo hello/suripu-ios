@@ -8,6 +8,7 @@
 
 import Foundation
 import SenseKit
+import UIKit
 
 @available(iOS 8.2, *)
 @objc class SenseStyle: NSObject {
@@ -97,8 +98,8 @@ import SenseKit
         let itemDetailColor = self.value(group: .listItem, property: .detailColor) as? UIColor
         cell.backgroundColor = itemBgColor
         cell.contentView.backgroundColor = itemBgColor
-        cell.itemLabel.textColor = itemTextColor
-        cell.itemLabel.font = itemTextFont
+        cell.itemLabel?.textColor = itemTextColor
+        cell.itemLabel?.font = itemTextFont
         cell.descriptionLabel?.font = itemDetailFont
         cell.descriptionLabel?.textColor = itemDetailColor
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08C1D0FC2B305C7865B15B77 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182BB7036B8B8CC09440B9AF /* Pods_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -142,8 +143,6 @@
 		BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */; };
 		BF2123F61B66E8B50017D67A /* HEMAppUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2123F51B66E8B50017D67A /* HEMAppUsage.m */; };
 		BF21DFA21E70F66600FF6D72 /* Themed.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAE7E351E6F8E5600F24E4B /* Themed.swift */; };
-		BF21DFA31E70F67000FF6D72 /* HEMOnboardingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7454AE1B5887BF00E6AE85 /* HEMOnboardingService.m */; };
-		BF21DFA41E70F67700FF6D72 /* HEMListItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6995F01CA6086E00C7AA55 /* HEMListItemCell.m */; };
 		BF21F01C1DAEE6400057F24E /* HEMVoiceExampleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF21F01B1DAEE6400057F24E /* HEMVoiceExampleView.xib */; };
 		BF21F0221DAEEB560057F24E /* HEMVoiceExampleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF21F0211DAEEB560057F24E /* HEMVoiceExampleView.m */; };
 		BF21F0241DAEF0430057F24E /* Voice.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF21F0231DAEF0430057F24E /* Voice.xcassets */; };
@@ -193,7 +192,6 @@
 		BF3713331E6E28F800EF9BAB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713311E6E28F800EF9BAB /* Font.swift */; };
 		BF3713341E6E28F800EF9BAB /* fonts.json in Resources */ = {isa = PBXBuildFile; fileRef = BF3713321E6E28F800EF9BAB /* fonts.json */; };
 		BF3713361E6E28FF00EF9BAB /* SenseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */; };
-		BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */; };
 		BF3713381E6E290800EF9BAB /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132A1E6E28E300EF9BAB /* Theme.swift */; };
 		BF3713391E6E290B00EF9BAB /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3713311E6E28F800EF9BAB /* Font.swift */; };
 		BF37133A1E6E290E00EF9BAB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37132D1E6E28EF00EF9BAB /* Color.swift */; };
@@ -524,6 +522,7 @@
 		BFFCEFD51D06116500CA0E54 /* HEMPresenter+HEMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD41D06116500CA0E54 /* HEMPresenter+HEMPhoto.m */; };
 		BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFCEFD81D074F6800CA0E54 /* HEMLocationService.m */; };
 		BFFDC1071DD171BE008F001B /* Sensors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFFDC1061DD171BE008F001B /* Sensors.xcassets */; };
+		D9F3642A4B990E472CE2C202 /* Pods_SenseApp_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C256158FE7DA2EE7EDDB80A /* Pods_SenseApp_Tests.framework */; };
 		EB784F705A26CD9F419529BF /* Pods_SenseApp_Sense.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */; };
 		EBD370F7E3364152E122EC70 /* Pods_SenseApp_RoomConditionsExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */; };
 /* End PBXBuildFile section */
@@ -569,9 +568,12 @@
 /* Begin PBXFileReference section */
 		0B8DEA791E6E5AE40C1AFE7D /* HEMPillDFUStoryboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HEMPillDFUStoryboard.m; sourceTree = "<group>"; };
 		0E191B22335665CA1D0D99C2 /* Pods-SenseApp-RoomConditionsExtension.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.dev.xcconfig"; sourceTree = "<group>"; };
+		182BB7036B8B8CC09440B9AF /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1981FB43C942E07FB85BEA0D /* HEMPillDFUStoryboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMPillDFUStoryboard.h; sourceTree = "<group>"; };
 		1CEC3006712323A3E96169F0 /* Pods-SenseApp-Sense.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.dev.xcconfig"; sourceTree = "<group>"; };
+		23CB2FE8250A9710C0A601D9 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2559FCAE45C2FDF1356B7CFE /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.release.xcconfig"; sourceTree = "<group>"; };
+		36A6A35B35E4D166FA1BC26B /* Pods-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.dev.xcconfig"; sourceTree = "<group>"; };
 		3A8188E0B665E234041EC0F7 /* Pods-SenseApp-RoomConditionsExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-RoomConditionsExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-RoomConditionsExtension/Pods-SenseApp-RoomConditionsExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		3B098BCFB64FABF5FD684491 /* HEMSettingsStoryboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMSettingsStoryboard.h; sourceTree = "<group>"; };
 		44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_RoomConditionsExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -743,6 +745,8 @@
 		8B45075C1C1794E500359453 /* HEMSelectHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostViewController.m; sourceTree = "<group>"; };
 		8B45075E1C17951F00359453 /* HEMSelectHostPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSelectHostPresenter.h; sourceTree = "<group>"; };
 		8B45075F1C17951F00359453 /* HEMSelectHostPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSelectHostPresenter.m; sourceTree = "<group>"; };
+		8C256158FE7DA2EE7EDDB80A /* Pods_SenseApp_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EA8EE1621AD6A404A7A918D /* Pods-Tests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.beta.xcconfig"; sourceTree = "<group>"; };
 		9A7FF086E3164E5F301A0EC7 /* Pods-SenseApp-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A736EFE31A8A304180BEABE8 /* Pods-SenseApp-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B17615B39D25C4F006BA0C14 /* Pods-SenseApp-Sense.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Sense.release.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense.release.xcconfig"; sourceTree = "<group>"; };
@@ -807,6 +811,7 @@
 		BF20B2211BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsHeaderFooterView.m; sourceTree = "<group>"; };
 		BF2123F41B66E8B50017D67A /* HEMAppUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAppUsage.h; sourceTree = "<group>"; };
 		BF2123F51B66E8B50017D67A /* HEMAppUsage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAppUsage.m; sourceTree = "<group>"; };
+		BF21DFA51E70F95E00FF6D72 /* SenseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenseKit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Sense-cesraqvnpezifydxcckhthtejbem/Build/Products/Debug-iphonesimulator/SenseKit/SenseKit.framework"; sourceTree = "<group>"; };
 		BF21F01B1DAEE6400057F24E /* HEMVoiceExampleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMVoiceExampleView.xib; sourceTree = "<group>"; };
 		BF21F0201DAEEB560057F24E /* HEMVoiceExampleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceExampleView.h; sourceTree = "<group>"; };
 		BF21F0211DAEEB560057F24E /* HEMVoiceExampleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceExampleView.m; sourceTree = "<group>"; };
@@ -1445,6 +1450,7 @@
 		BFFDC1061DD171BE008F001B /* Sensors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sensors.xcassets; sourceTree = "<group>"; };
 		D772BFE52D2777422290F4B9 /* Pods-SenseApp-Tests.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SenseApp-Tests.dev.xcconfig"; path = "Pods/Target Support Files/Pods-SenseApp-Tests/Pods-SenseApp-Tests.dev.xcconfig"; sourceTree = "<group>"; };
 		DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SenseApp_Sense.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E693F44E8034186E14A29F3F /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1470,6 +1476,8 @@
 				BFAE7E281E6E4D4900F24E4B /* Kiwi.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
+				08C1D0FC2B305C7865B15B77 /* Pods_Tests.framework in Frameworks */,
+				D9F3642A4B990E472CE2C202 /* Pods_SenseApp_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,6 +1522,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF21DFA51E70F95E00FF6D72 /* SenseKit.framework */,
 				BFAE7E291E6E4D5300F24E4B /* Nocilla.framework */,
 				BFAE7E271E6E4D4900F24E4B /* Kiwi.framework */,
 				BFD89A6D1DE6805F005DC2FF /* HealthKit.framework */,
@@ -1527,6 +1536,8 @@
 				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
 				DBFD3C7EB61BE26658C59485 /* Pods_SenseApp_Sense.framework */,
 				44CBE61C47CEA05389AA4BDB /* Pods_SenseApp_RoomConditionsExtension.framework */,
+				182BB7036B8B8CC09440B9AF /* Pods_Tests.framework */,
+				8C256158FE7DA2EE7EDDB80A /* Pods_SenseApp_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2114,6 +2125,10 @@
 				2559FCAE45C2FDF1356B7CFE /* Pods-SenseApp-RoomConditionsExtension.release.xcconfig */,
 				5FC3163179F316D2C6ABF78C /* Pods-SenseApp-RoomConditionsExtension.beta.xcconfig */,
 				0E191B22335665CA1D0D99C2 /* Pods-SenseApp-RoomConditionsExtension.dev.xcconfig */,
+				23CB2FE8250A9710C0A601D9 /* Pods-Tests.debug.xcconfig */,
+				E693F44E8034186E14A29F3F /* Pods-Tests.release.xcconfig */,
+				8EA8EE1621AD6A404A7A918D /* Pods-Tests.beta.xcconfig */,
+				36A6A35B35E4D166FA1BC26B /* Pods-Tests.dev.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -3738,8 +3753,8 @@
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AC195388D20070C39A /* Resources */,
-				0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */,
-				81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */,
+				0C9D92DF32CAAF54908A0FA8 /* [CP] Embed Pods Frameworks */,
+				81CC7BEB509B9DF8FD46F6C5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3936,14 +3951,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C9D92DF32CAAF54908A0FA8 /* 📦 Embed Pods Frameworks */ = {
+		0C9D92DF32CAAF54908A0FA8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3996,14 +4011,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SenseApp-Sense/Pods-SenseApp-Sense-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		81CC7BEB509B9DF8FD46F6C5 /* 📦 Copy Pods Resources */ = {
+		81CC7BEB509B9DF8FD46F6C5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4093,7 +4108,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F0635C9E7EEDF85F86626E86 /* [CP] Embed Pods Frameworks */ = {
@@ -4545,7 +4560,6 @@
 				BF3713491E6E2ADE00EF9BAB /* Date+Format.swift in Sources */,
 				BFDFCEA21B729FEC000DA303 /* HEMSensorValueFormatterSpec.m in Sources */,
 				8AFE909A1B9A20C0000D638E /* Config.m in Sources */,
-				BF21DFA41E70F67700FF6D72 /* HEMListItemCell.m in Sources */,
 				BFA884B91C1A40C200613069 /* HEMDeviceAlertServiceSpec.m in Sources */,
 				BFC99BC41B6BED49008F7F0D /* HEMAppReviewSpec.m in Sources */,
 				BF71BDA51C485B2800919D0F /* HEMTimelineServiceSpec.m in Sources */,
@@ -4554,10 +4568,8 @@
 				BF3713411E6E297D00EF9BAB /* FontSpec.m in Sources */,
 				BF3713531E6E356F00EF9BAB /* Bundle+JSON.swift in Sources */,
 				BF83397A1C0F8BF000BFD0F4 /* HEMQuestionsServiceSpec.m in Sources */,
-				BF3713371E6E290500EF9BAB /* SenseStyle.swift in Sources */,
 				BF8C09331C2A0BF7005AB5A7 /* HEMAccountServiceSpec.m in Sources */,
 				BFF93EA31D19AD080038419A /* HEMAlarmServiceSpec.m in Sources */,
-				BF21DFA31E70F67000FF6D72 /* HEMOnboardingService.m in Sources */,
 				BF7454B31B5D764200E6AE85 /* HEMOnboardingControllerSpec.m in Sources */,
 				BF539CD51C0F80B7000F77AA /* HEMInsightsServiceSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,

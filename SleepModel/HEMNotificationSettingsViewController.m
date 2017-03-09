@@ -35,8 +35,6 @@ typedef NS_ENUM(NSUInteger, HEMNotificationRow) {
 }
 
 - (void)configurePresenter {
-    [[self view] setBackgroundColor:[UIColor blackColor]];
-    
     PushNotificationService* pushService = [PushNotificationService new];
     NotificationSettingsPresenter* presenter
         = [[NotificationSettingsPresenter alloc] initWithService:pushService];

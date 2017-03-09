@@ -66,11 +66,10 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
-    HEMSettingsHeaderFooterView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    HEMSettingsHeaderFooterView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     NSString* footNote = NSLocalizedString(@"voice.settings.primary-user.foot.note", nil);
     NSDictionary* attrs = @{NSFontAttributeName : [UIFont h7Bold],
                             NSForegroundColorAttributeName : [UIColor grey3]};
@@ -80,10 +79,10 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
                                                 kHEMVoiceFootNoteHorzMargins,
                                                 kHEMVoiceFootNoteVertMargins,
                                                 kHEMVoiceFootNoteHorzMargins)];
+    [footerView setHidden:YES];
     [footerView setAdjustBasedOnTitle:YES];
-    
     [tableView setTableFooterView:footerView];
-    [tableView setHidden:YES];
+    [tableView applyStyle];
     [self setTableView:tableView];
     [self updateTableHeaderView];
     [self listenForOutsideUpdates];
@@ -98,7 +97,7 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
                                                    title:NSLocalizedString(@"voice.settings.fw.update.title", nil)
                                                  message:NSLocalizedString(@"voice.settings.fw.update.message", nil)];
     } else {
-        view = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+        view = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     }
     [[self tableView] setTableHeaderView:view];
 }
@@ -118,6 +117,12 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 }
 
 #pragma mark - Presenter events
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self tableView] applyStyle];
+    [[self tableView] reloadData];
+}
 
 - (void)didRelayout {
     [super didRelayout];
@@ -164,7 +169,6 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         [strongSelf setDataError:error];
         [[[strongSelf tableView] tableFooterView] setHidden:error != nil];
         [strongSelf updateTableHeaderView];
-        [[strongSelf tableView] setHidden:NO];
         [[strongSelf tableView] reloadData];
         [[strongSelf activityIndicatorView] stop];
         [[strongSelf activityIndicatorView] setHidden:YES];
@@ -209,6 +213,8 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
         rows = 0;
     } else if ([self dataError]) {
         rows = 1;
+    } else if ([self voiceSettings] == nil) {
+        rows = 0;
     } else {
         rows = HEMVoiceSettingsRowCount;
     }
@@ -247,18 +253,17 @@ static CGFloat const kHEMVoiceFootNoteVertMargins = 12.0f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self dataError] && [indexPath row] == 0) {
         [[cell textLabel] setText:[self dataErrorMessage]];
-        [[cell textLabel] setFont:[UIFont body]];
-        [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
+        [cell applyStyle];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [cell sizeToFit];
     } else if (![self dataError]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
         
         BOOL showCustomAccessory = YES;
+        BOOL highlightDetail = NO;
         NSString* title = nil;
         NSString* detail = nil;
-        UIColor* detailColor = [UIColor grey4];
         UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleGray;
         
         switch ([indexPath row]) {
@@ -290,18 +295,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                     showCustomAccessory = NO;
                 } else {
                     detail = NSLocalizedString(@"voice.settings.primary-user.change", nil);
-                    detailColor = [UIColor tintColor];
+                    highlightDetail = YES;
                 }
                 break;
             }
         }
         
+        [basicCell applyStyle];
         [[basicCell customTitleLabel] setText:title];
-        [[basicCell customTitleLabel] setFont:[UIFont body]];
-        [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
         [[basicCell customDetailLabel] setText:detail];
-        [[basicCell customDetailLabel] setFont:[UIFont body]];
-        [[basicCell customDetailLabel] setTextColor:detailColor];
+        [basicCell detail:highlightDetail];
         [basicCell showCustomAccessoryView:showCustomAccessory];
         [basicCell setSelectionStyle:selectionStyle];
     }

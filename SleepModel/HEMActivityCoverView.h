@@ -12,6 +12,7 @@
 
 @interface HEMActivityCoverView : UIView
 
+@property (nonatomic, strong, readonly) UIImageView* successMarkView;
 @property (nonatomic, strong, readonly) UILabel* activityLabel;
 @property (nonatomic, strong, readonly) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, readonly, getter=isShowing) BOOL showing;

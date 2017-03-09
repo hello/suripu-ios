@@ -21,11 +21,29 @@ import UIKit
         return Bundle.read(jsonFileName: resourceName) as? [String: Any]
     }
     
-    static func color(hex: UInt!, alpha: CGFloat?) -> UIColor {
-        return UIColor.init(red: CGFloat(hex & 0xFF0000 >> 16) / 255.0,
-                            green: CGFloat(hex & 0xFF00 >> 8) / 255.0,
-                            blue: CGFloat(hex & 0xFF) / 255.0,
-                            alpha: alpha ?? 1.0)
+    static func color(string: String!) -> UIColor {
+        let hex = string.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.characters.count {
+            case 3: // RGB (12-bit)
+                (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+            case 6: // RGB (24-bit)
+                (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+            case 8: // ARGB (32-bit)
+                (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+            default:
+                return .black
+        }
+        return UIColor(red: CGFloat(r) / 255,
+                       green: CGFloat(g) / 255,
+                       blue: CGFloat(b) / 255,
+                       alpha: CGFloat(a) / 255)
+    }
+    
+    static func color(string: String!, alpha: CGFloat!) -> UIColor {
+        return self.color(string: string).withAlphaComponent(alpha)
     }
     
     static func named(name: String!) -> UIColor {
@@ -41,13 +59,9 @@ import UIKit
             return UIColor.black
         }
         
-        guard let hex = UInt(hexText, radix: hexRadix) else {
-            return UIColor.black
-        }
-        
         let alphaNumber = info[keyAlpha] as? NSNumber
         let alpha = (alphaNumber != nil) ? CGFloat(alphaNumber!.floatValue) : CGFloat(1.0)
-        return color(hex: hex, alpha: alpha)
+        return color(string: hexText, alpha: alpha)
     }
     
 }

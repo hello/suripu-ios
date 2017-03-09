@@ -27,7 +27,7 @@
     "blue.3" : { "style.color.hex" : "B2E1FF" },
     "blue.4" : { "style.color.hex" : "7FCDFF" },
     "blue.5" : { "style.color.hex" : "4CB9FF" },
-    "blue.6" : { "style.color.hex" : "009AFF" },
+    "blue.6" : { "style.color.hex" : "0x009AFF" },
     "blue.7" : { "style.color.hex" : "0083D9" },
     
     "green.1" : { "style.color.hex" : "F9FEFD" },

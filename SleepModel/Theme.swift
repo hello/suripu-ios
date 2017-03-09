@@ -22,6 +22,7 @@ import UIKit
         case textColor
         case textFont
         case detailFont
+        case linkColor
         case detailColor
         case tintColor
         case hintFont
@@ -65,6 +66,8 @@ import UIKit
                     return "style.text.hint.color"
                 case .tintColor:
                     return "style.tint.color"
+                case .linkColor:
+                    return "style.link.color"
             }
         }
     }

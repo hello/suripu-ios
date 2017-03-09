@@ -35,6 +35,7 @@ import UIKit
         case listItem
         case navigationController
         case warningView
+        case activityView
         
         var key: String {
             switch self {
@@ -46,7 +47,10 @@ import UIKit
                 return "hello.navigation.controller"
             case .warningView:
                 return "hello.warning.view"
+            case .activityView:
+                return "hello.activity.cover.view"
             }
+            
         }
     }
     

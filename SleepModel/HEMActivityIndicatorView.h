@@ -10,6 +10,7 @@
 
 @interface HEMActivityIndicatorView : UIView
 
+@property (nonatomic, strong, readonly) CALayer* indicatorLayer;
 @property (nonatomic, assign, readonly, getter=isAnimating) BOOL animating;
 
 - (instancetype)initWithImage:(UIImage*)image andFrame:(CGRect)frame;

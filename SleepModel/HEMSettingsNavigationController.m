@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMSettingsNavigationController.h"
@@ -20,9 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[self view] setBackgroundColor:[UIColor backgroundColor]];
-    
+    [self applyStyle];
     [self configureNavigationBar];
 }
 

@@ -21,7 +21,9 @@
         "style.text.color" : "@color/light.primary.text",
         "style.text.font" : "@font/body",
         "style.text.detail.font" : "@font/body.small",
-        "style.text.detail.color" : "@color/light.secondary.text"
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.separator.color" : "@color/light.separator",
+        "style.link.color" : "@color/blue.6"
     },
     
     "hello.navigation.controller.view" : {
@@ -35,5 +37,12 @@
         "style.text.font" : "@font/body",
         "style.separator.color" : "@color/light.separator",
         "style.text.detail.font" : "@font/body"
+    },
+    
+    "hello.activity.cover.view" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/headline",
+        "style.tint.color" : "@color/blue.7"
     }
 }

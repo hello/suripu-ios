@@ -273,21 +273,14 @@
                         <viewControllerLayoutGuide type="top" id="jrj-im-u1n"/>
                         <viewControllerLayoutGuide type="bottom" id="BzK-ya-vrK"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="xBv-1F-ckT">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="xBv-1F-ckT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kb-PQ-PUr" customClass="HEMActivityIndicatorView">
-                                <rect key="frame" x="180" y="341" width="55" height="55"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="55" id="f8L-Es-9ij"/>
-                                    <constraint firstAttribute="height" constant="55" id="lMn-6P-Jkp"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h9D-gf-jFa">
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="l6O-fR-TVz" customClass="StatusMessageView">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -422,8 +415,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kb-PQ-PUr" customClass="HEMActivityIndicatorView">
+                                <rect key="frame" x="180" y="341" width="55" height="55"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="f8L-Es-9ij"/>
+                                    <constraint firstAttribute="height" constant="55" id="lMn-6P-Jkp"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="h9D-gf-jFa" secondAttribute="trailing" id="9mk-Ka-5kn"/>
                             <constraint firstItem="BzK-ya-vrK" firstAttribute="top" secondItem="h9D-gf-jFa" secondAttribute="bottom" id="HZF-wZ-Ecf"/>

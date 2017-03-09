@@ -46,6 +46,8 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 }
 
 - (void)setup {
+    _indicatorImage = [_indicatorImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
     if ([self indicatorLayer]) {
         [[self indicatorLayer] removeFromSuperlayer];
     }
@@ -57,6 +59,7 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
     [indicator setContentMode:UIViewContentModeScaleAspectFill];
     [indicator setBackgroundColor:[UIColor clearColor]];
     [indicator setFrame:[self bounds]];
+    [indicator setTintColor:[self tintColor]];
 
     CALayer* layer = [indicator layer];
     [self setIndicatorLayer:layer];

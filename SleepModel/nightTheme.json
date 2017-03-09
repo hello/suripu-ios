@@ -16,7 +16,9 @@
     "hello.list.item" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
-        "style.text.detail.color" : "@color/dark.secondary.text"
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator",
+        "style.link.color" : "@color/blue.6"
     },
     
     "hello.navigation.controller" : {
@@ -28,5 +30,11 @@
         "style.text.color" : "@color/dark.primary.text",
         "style.separator.color" : "@color/dark.separator",
         "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "hello.activity.cover.view" : {
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white"
     }
 }

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMBasicTableViewCell.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMStyle.h"
@@ -15,7 +17,6 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
 
 @interface HEMBasicTableViewCell()
 
-@property (strong, nonatomic) UIView* customSeparator;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingCustomAccessoryConstraint;
 @property (assign, nonatomic) CGFloat origLeadingAccessoryMargin;
 
@@ -39,7 +40,6 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
         separatorFrame.size.height = HEMBasicTableViewCellSeparatorHeight;
         separatorFrame.origin.y = y;
         UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
-        [separator setBackgroundColor:[UIColor separatorColor]];
         [self setCustomSeparator:separator];
         [[self contentView] addSubview:separator];
     }

@@ -406,6 +406,8 @@
 		BFB38D531E71CEF600BBD5CD /* UITableViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */; };
 		BFB38D551E71CF9100BBD5CD /* HEMListItemCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */; };
 		BFB38D571E71D42100BBD5CD /* UINavigationController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */; };
+		BFB38D591E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */; };
+		BFB38D5B1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */; };
 		BFB3A5B41E14408700AB47D2 /* SENSensorDataCollection+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */; };
 		BFB3A5B61E144A8900AB47D2 /* LineChartDataSet+Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB3A5B51E144A8900AB47D2 /* LineChartDataSet+Sensor.swift */; };
 		BFB59E0C1C03A7CB001BD941 /* HEMTimeZonePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB59E0B1C03A7CB001BD941 /* HEMTimeZonePresenter.m */; };
@@ -1233,6 +1235,8 @@
 		BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Style.swift"; sourceTree = "<group>"; };
 		BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMListItemCell+Style.swift"; sourceTree = "<group>"; };
 		BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Style.swift"; sourceTree = "<group>"; };
+		BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMBasicTableViewCell+Style.swift"; sourceTree = "<group>"; };
+		BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMActivityCoverView+Style.swift"; sourceTree = "<group>"; };
 		BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SENSensorDataCollection+Filter.swift"; sourceTree = "<group>"; };
 		BFB3A5B51E144A8900AB47D2 /* LineChartDataSet+Sensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LineChartDataSet+Sensor.swift"; sourceTree = "<group>"; };
 		BFB59E0A1C03A7CB001BD941 /* HEMTimeZonePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZonePresenter.h; sourceTree = "<group>"; };
@@ -3355,6 +3359,8 @@
 				BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */,
 				BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */,
 				BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */,
+				BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */,
+				BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4322,6 +4328,7 @@
 				BFE67D691DFA0DF600C5B8F5 /* StatusMessageCell.swift in Sources */,
 				BF3713461E6E2AC500EF9BAB /* PushNotification.swift in Sources */,
 				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
+				BFB38D591E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift in Sources */,
 				BF35839E1CB5BE3300760CD4 /* HEMSleepSoundStatusCheckOperation.m in Sources */,
 				BF8C091A1C24BB2C005AB5A7 /* HEMAccountService.m in Sources */,
 				8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */,
@@ -4471,6 +4478,7 @@
 				BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */,
 				BFC99BBA1B69A4C4008F7F0D /* HEMAppReviewQuestion.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
+				BFB38D5B1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift in Sources */,
 				BFD89A7F1DECD7C5005DC2FF /* RootViewController.swift in Sources */,
 				BFAE7E2E1E6F459800F24E4B /* NightModeSettingsPresenter.swift in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,

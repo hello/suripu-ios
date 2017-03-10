@@ -38,9 +38,12 @@ import UIKit
         case activityView
         case controller
         case volumeControl
+        case view
         
         var key: String {
             switch self {
+            case .view:
+                return "sense.view"
             case .tableView:
                 return "sense.tableview"
             case .listItem:

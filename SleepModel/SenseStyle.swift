@@ -36,19 +36,25 @@ import UIKit
         case navigationController
         case warningView
         case activityView
+        case controller
+        case volumeControl
         
         var key: String {
             switch self {
             case .tableView:
-                return "hello.tableview"
+                return "sense.tableview"
             case .listItem:
-                return "hello.list.item"
+                return "sense.list.item"
             case .navigationController:
-                return "hello.navigation.controller"
+                return "sense.navigation.controller"
             case .warningView:
-                return "hello.warning.view"
+                return "sense.warning.view"
             case .activityView:
-                return "hello.activity.cover.view"
+                return "sense.activity.cover.view"
+            case .controller:
+                return "sense.controller"
+            case .volumeControl:
+                return "sense.volume.control"
             }
             
         }
@@ -83,12 +89,24 @@ import UIKit
         return self.value(group: group, property: property) as? UIColor
     }
     
+    @objc static func color(group: Group, propertyName: String) -> UIColor? {
+        return self.theme.value(group: group.key, key: propertyName) as? UIColor
+    }
+    
     @objc static func font(group: Group, property: Theme.ThemeProperty) -> UIFont? {
         return self.value(group: group, property: property) as? UIFont
     }
     
+    @objc static func font(group: Group, propertyName: String) -> UIFont? {
+        return self.theme.value(group: group.key, key: propertyName) as? UIFont
+    }
+    
     @objc static func value(group: Group, property: Theme.ThemeProperty) -> Any? {
         return self.theme.value(group: group.key, property: property)
+    }
+    
+    @objc static func value(group: Group, propertyName: String) -> Any? {
+        return self.theme.value(group: group.key, key: propertyName)
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  UINavigationController+Style.swift
+//  UIViewController+Style.swift
 //  Sense
 //
 //  Created by Jimmy Lu on 3/9/17.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension UINavigationController {
+extension UIViewController {
     
     @objc func applyStyle() {
-        let bgColor = SenseStyle.value(group: .navigationController, property: .backgroundColor) as? UIColor
+        let bgColor = SenseStyle.value(group: .controller, property: .backgroundColor) as? UIColor
         self.view.backgroundColor = bgColor
         self.view.clipsToBounds = true
     }

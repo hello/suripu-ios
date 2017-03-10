@@ -8,7 +8,7 @@
         "style.navigation.include.shadow" : false
     },
     
-    "hello.tableview" : {
+    "sense.tableview" : {
         "style.background.color" : "@color/grey.3",
         "style.separator.color" : "@color/light.separator",
         "style.text.hint.color" : "@color/light.disabled.text",
@@ -16,7 +16,7 @@
         "style.tint.color" : "@color/light.disabled.text"
     },
     
-    "hello.list.item" : {
+    "sense.list.item" : {
         "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
         "style.text.font" : "@font/body",
@@ -26,11 +26,11 @@
         "style.link.color" : "@color/blue.6"
     },
     
-    "hello.navigation.controller.view" : {
+    "sense.controller" : {
         "style.background.color" : "@color/white"
     },
     
-    "hello.warning.view" : {
+    "sense.warning.view" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/light.primary.text",
         "style.text.detail.color" : "@color/light.secondary.text",
@@ -39,10 +39,23 @@
         "style.text.detail.font" : "@font/body"
     },
     
-    "hello.activity.cover.view" : {
+    "sense.activity.cover.view" : {
         "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
         "style.text.font" : "@font/headline",
         "style.tint.color" : "@color/blue.7"
+    },
+    
+    "sense.volume.control" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/headline",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body",
+        "style.primary.button.text.color" : "@color/white",
+        "style.secondary.button.text.color" : "@color/blue.6",
+        "style.navigation.bar.tint.color" : "@color/white",
+        "sense.volume.bar.tint.color" : "@color/blue.6",
+        "sense.volume.bar.color" : "@color/grey.3",
+        "sense.volume.number.font" : "@font/display.4"
     }
 }

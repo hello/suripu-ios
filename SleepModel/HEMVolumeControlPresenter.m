@@ -8,6 +8,8 @@
 
 #import <SenseKit/SENSenseVoiceSettings.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMVolumeControlPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMStyle.h"
@@ -32,6 +34,7 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 @property (nonatomic, weak) HEMActionButton* saveButton;
 @property (nonatomic, weak) UIView* activityContainer;
 @property (nonatomic, copy) NSString* senseId;
+@property (nonatomic, weak) UINavigationBar* navBar;
 @property (nonatomic, strong) SENSenseVoiceSettings* cachedSettings;
 
 @end
@@ -84,40 +87,77 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
 
 - (void)bindWithVolumeLabel:(UILabel*)volumeLabel volumeSlider:(HEMVolumeSlider*)volumeSlider {
     NSInteger volumeLevel = [[self voiceService] volumeLevelFrom:[self cachedSettings]];
-    
-    [volumeLabel setFont:[UIFont h1]];
-    [volumeLabel setTextColor:[UIColor tintColor]];
+
     [volumeLabel setText:[NSString stringWithFormat:@"%ld", volumeLevel]];
     
-    [volumeSlider setHighlightColor:[UIColor tintColor]];
-    [volumeSlider setNormalColor:[UIColor grey3]];
     [volumeSlider setCurrentVolume:volumeLevel];
     [volumeSlider setChangeDelegate:self];
     [volumeSlider setMaxVolumeLevel:HEMVoiceServiceMaxVolumeLevel];
+    [volumeSlider setBackgroundColor:[UIColor clearColor]];
     
     [self setVolumeLabel:volumeLabel];
     [self setVolumeSlider:volumeSlider];
 }
 
 - (void)bindWithCancelButton:(UIButton*)cancelButton saveButton:(HEMActionButton*)saveButton {
-    [[cancelButton titleLabel] setFont:[UIFont button]];
-    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [cancelButton setTitle:NSLocalizedString(@"actions.cancel", nil) forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
-    
     [saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     
     [self setCancelButton:cancelButton];
     [self setSaveButton:saveButton];
 }
 
+- (void)bindWithNavigationBar:(UINavigationBar*)navBar {
+    [self setNavBar:navBar];
+}
+
 #pragma mark - Presenter events
+
+- (void)willAppear {
+    [super willAppear];
+    [self applyStyle];
+}
 
 - (void)didAppear {
     [super didAppear];
     if (![[self volumeSlider] isRendered]) {
         [[self volumeSlider] render];
     }
+}
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [self applyStyle];
+}
+
+#pragma mark - Styling
+
+- (void)applyStyle {
+    static NSString* barTintColorPropName = @"sense.volume.bar.tint.color";
+    static NSString* barColorPropName = @"sense.volume.bar.color";
+    static NSString* volumeLabelFontPropName = @"sense.volume.number.font";
+    UIColor* titleColor = [SenseStyle colorWithGroup:GroupVolumeControl property:ThemePropertyTextColor];
+    UIFont* titleFont = [SenseStyle fontWithGroup:GroupVolumeControl property:ThemePropertyTextFont];
+    UIColor* detailColor = [SenseStyle colorWithGroup:GroupVolumeControl property:ThemePropertyDetailColor];
+    UIFont* detailFont = [SenseStyle fontWithGroup:GroupVolumeControl property:ThemePropertyDetailFont];
+    UIColor* saveTextColor = [SenseStyle colorWithGroup:GroupVolumeControl property:ThemePropertyPrimaryButtonTextColor];
+    UIColor* cancelTextColor = [SenseStyle colorWithGroup:GroupVolumeControl property:ThemePropertySecondaryButtonTextColor];
+    UIColor* navBarColor = [SenseStyle colorWithGroup:GroupVolumeControl property:ThemePropertyNavigationBarTintColor];
+    UIColor* volumeBarTintColor = [SenseStyle colorWithGroup:GroupVolumeControl propertyName:barTintColorPropName];
+    UIColor* volumeBarColor = [SenseStyle colorWithGroup:GroupVolumeControl propertyName:barColorPropName];
+    UIFont* volumeLabelFont = [SenseStyle fontWithGroup:GroupVolumeControl propertyName:volumeLabelFontPropName];
+    [[self titleLabel] setTextColor:titleColor];
+    [[self titleLabel] setFont:titleFont];
+    [[self descriptionLabel] setTextColor:detailColor];
+    [[self descriptionLabel] setFont:detailFont];
+    [[self saveButton] setTitleColor:saveTextColor forState:UIControlStateNormal];
+    [[self cancelButton] setTitleColor:cancelTextColor forState:UIControlStateNormal];
+    [[self navBar] setBarTintColor:navBarColor];
+    [[self volumeSlider] setHighlightColor:volumeBarTintColor];
+    [[self volumeSlider] setNormalColor:volumeBarColor];
+    [[self volumeLabel] setTextColor:volumeBarTintColor];
+    [[self volumeLabel] setFont:volumeLabelFont];
 }
 
 #pragma mark - Actions

@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithCancelButton:(UIButton*)cancelButton saveButton:(HEMActionButton*)saveButton;
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 - (void)bindWithActivityContainer:(UIView*)activityContainer;
+- (void)bindWithNavigationBar:(UINavigationBar*)navBar;
 
 @end
 

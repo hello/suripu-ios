@@ -6,14 +6,14 @@
         "style.status.bar.style" : "style.status.bar.DARK"
     },
     
-    "hello.tableview" : {
+    "sense.tableview" : {
         "style.background.color" : "@color/black",
         "style.separator.color" : "@color/dark.separator",
         "style.text.hint.color" : "@color/dark.disabled.text",
         "style.tint.color" : "@color/dark.disabled.text"
     },
     
-    "hello.list.item" : {
+    "sense.list.item" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
@@ -21,20 +21,28 @@
         "style.link.color" : "@color/blue.6"
     },
     
-    "hello.navigation.controller" : {
+    "sense.controller" : {
         "style.background.color" : "@color/black"
     },
     
-    "hello.warning.view" : {
+    "sense.warning.view" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
         "style.separator.color" : "@color/dark.separator",
         "style.text.detail.color" : "@color/dark.secondary.text"
     },
     
-    "hello.activity.cover.view" : {
+    "sense.activity.cover.view" : {
         "style.background.color" : "@color/black",
         "style.text.color" : "@color/dark.primary.text",
         "style.tint.color" : "@color/white"
+    },
+    
+    "sense.volume.control" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.secondary.button.text.color" : "@color/white",
+        "style.navigation.bar.tint.color" : "@color/black",
+        "sense.volume.bar.color" : "@color/white"
     }
 }

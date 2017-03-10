@@ -33,6 +33,8 @@ import UIKit
         case navigationTitleFont
         case navigationIncludeShadow
         case statusBarStyle
+        case primaryButtonTextColor
+        case secondaryButtonTextColor
         
         var key: String {
             switch self {
@@ -68,6 +70,10 @@ import UIKit
                     return "style.tint.color"
                 case .linkColor:
                     return "style.link.color"
+                case .primaryButtonTextColor:
+                    return "style.primary.button.text.color"
+                case .secondaryButtonTextColor:
+                    return "style.secondary.button.text.color"
             }
         }
     }

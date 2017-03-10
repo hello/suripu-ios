@@ -54,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self applyStyle];
     [self listenForAppEvents];
 }
 

@@ -371,6 +371,7 @@
 		BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */; };
 		BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */; };
 		BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC381A9BB29D00AEC04C /* HEMConfig.m */; };
+		BF9C0EBF1E723997008601CB /* UIViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9C0EBE1E723997008601CB /* UIViewController+Style.swift */; };
 		BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */; };
 		BFA2056D1D551CBD0090265B /* HEMSetupDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2056C1D551CBD0090265B /* HEMSetupDoneViewController.m */; };
 		BFA540E71BCDC326007AF607 /* HEMMeetSenseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFA540E61BCDC326007AF607 /* HEMMeetSenseView.xib */; };
@@ -405,7 +406,6 @@
 		BFB38D511E71CD3100BBD5CD /* UITableView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D501E71CD3100BBD5CD /* UITableView+Style.swift */; };
 		BFB38D531E71CEF600BBD5CD /* UITableViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */; };
 		BFB38D551E71CF9100BBD5CD /* HEMListItemCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */; };
-		BFB38D571E71D42100BBD5CD /* UINavigationController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */; };
 		BFB38D591E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */; };
 		BFB38D5B1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */; };
 		BFB3A5B41E14408700AB47D2 /* SENSensorDataCollection+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */; };
@@ -1183,6 +1183,7 @@
 		BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextFooterCollectionReusableView.m; sourceTree = "<group>"; };
 		BF98FC371A9BB29D00AEC04C /* HEMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfig.h; sourceTree = "<group>"; };
 		BF98FC381A9BB29D00AEC04C /* HEMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfig.m; sourceTree = "<group>"; };
+		BF9C0EBE1E723997008601CB /* UIViewController+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Style.swift"; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
 		BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillPairViewController.m; sourceTree = "<group>"; };
 		BFA2056B1D551CBD0090265B /* HEMSetupDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSetupDoneViewController.h; sourceTree = "<group>"; };
@@ -1234,7 +1235,6 @@
 		BFB38D501E71CD3100BBD5CD /* UITableView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Style.swift"; sourceTree = "<group>"; };
 		BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Style.swift"; sourceTree = "<group>"; };
 		BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMListItemCell+Style.swift"; sourceTree = "<group>"; };
-		BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Style.swift"; sourceTree = "<group>"; };
 		BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMBasicTableViewCell+Style.swift"; sourceTree = "<group>"; };
 		BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMActivityCoverView+Style.swift"; sourceTree = "<group>"; };
 		BFB3A5B31E14408700AB47D2 /* SENSensorDataCollection+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SENSensorDataCollection+Filter.swift"; sourceTree = "<group>"; };
@@ -3358,9 +3358,9 @@
 				BFB38D501E71CD3100BBD5CD /* UITableView+Style.swift */,
 				BFB38D521E71CEF600BBD5CD /* UITableViewCell+Style.swift */,
 				BFB38D541E71CF9100BBD5CD /* HEMListItemCell+Style.swift */,
-				BFB38D561E71D42100BBD5CD /* UINavigationController+Style.swift */,
 				BFB38D581E71EA9600BBD5CD /* HEMBasicTableViewCell+Style.swift */,
 				BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */,
+				BF9C0EBE1E723997008601CB /* UIViewController+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4246,6 +4246,7 @@
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,
 				BFE375E01CEB98640029EE66 /* HEMFacebookService.m in Sources */,
 				BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */,
+				BF9C0EBF1E723997008601CB /* UIViewController+Style.swift in Sources */,
 				BF8C092A1C28E52D005AB5A7 /* HEMNameChangePresenter.m in Sources */,
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BF3326EF1D876BE3009A3E65 /* HEMSensorDetailPresenter.m in Sources */,
@@ -4450,7 +4451,6 @@
 				BFE376091CF78AA00029EE66 /* HEMBreadcrumbService.m in Sources */,
 				BF412EA81C920095009514A1 /* HEMSleepSoundViewController.m in Sources */,
 				BFA540F21BCEFDF1007AF607 /* NSBundle+HEMUtils.m in Sources */,
-				BFB38D571E71D42100BBD5CD /* UINavigationController+Style.swift in Sources */,
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,

@@ -57,5 +57,9 @@
         "sense.volume.bar.tint.color" : "@color/blue.6",
         "sense.volume.bar.color" : "@color/grey.3",
         "sense.volume.number.font" : "@font/display.4"
+    },
+    
+    "sense.view" : {
+        "sense.disabled.overlay.color" : "@color/light.disabled.overlay"
     }
 }

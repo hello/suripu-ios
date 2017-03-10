@@ -44,5 +44,9 @@
         "style.secondary.button.text.color" : "@color/white",
         "style.navigation.bar.tint.color" : "@color/black",
         "sense.volume.bar.color" : "@color/white"
+    },
+    
+    "sense.view" : {
+        "sense.disabled.overlay.color" : "@color/dark.disabled.overlay"
     }
 }

@@ -35,6 +35,7 @@ import UIKit
         case statusBarStyle
         case primaryButtonTextColor
         case secondaryButtonTextColor
+        case borderColor
         
         var key: String {
             switch self {
@@ -74,13 +75,16 @@ import UIKit
                     return "style.primary.button.text.color"
                 case .secondaryButtonTextColor:
                     return "style.secondary.button.text.color"
+                case .borderColor:
+                    return "style.border.color"
             }
         }
     }
  
     fileprivate static let defaultThemeFile = "defaultTheme"
 
-    fileprivate static let keyParent = "style.parent"
+    fileprivate static let classPrefix = "#"
+    fileprivate static let keyParent = "style.group.parent"
     fileprivate static let statusBarLight = "style.status.bar.LIGHT"
     fileprivate static let statusBarDark = "style.status.bar.DARK"
     
@@ -313,11 +317,23 @@ import UIKit
     }
     
     /**
+     Convenience method for Swift to retrieve the value specified for the class
+     
+     - Parameter aClass: the class of values to retireve
+     - Returns: the value that matches the property in the class
+     */
+    func value(aClass: AnyClass!, key: String!) -> Any? {
+        let fullClassName = NSStringFromClass(aClass)
+        let groupName = Theme.classPrefix.appending(fullClassName)
+        return self.value(group: groupName, key: key)
+    }
+    
+    /**
         Convenience method for Swift to retrieve the value for the specified
         style and theme property that is supported
      
         - Parameter group: the group to retrieve value from
-        - Returns: the value that matches the property in the group, if any
+        - Returns: the value that matches the property in the group
     */
     func value(group: String!, property: ThemeProperty) -> Any? {
         return self.value(group: group, key: property.key)

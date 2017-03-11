@@ -13,6 +13,11 @@
         "style.tint.color" : "@color/dark.disabled.text"
     },
     
+    "sense.tableview.fill" : {
+        "style.group.parent" : "sense.tableview",
+        "style.background.color" : "@color/grey.9"
+    },
+    
     "sense.list.item" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
@@ -48,5 +53,10 @@
     
     "sense.view" : {
         "sense.disabled.overlay.color" : "@color/dark.disabled.overlay"
+    },
+    
+    "#HEMExpansionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
     }
 }

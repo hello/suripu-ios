@@ -32,6 +32,7 @@ import UIKit
     
     @objc enum Group: Int {
         case tableView = 1
+        case tableViewFill
         case listItem
         case navigationController
         case warningView
@@ -39,6 +40,7 @@ import UIKit
         case controller
         case volumeControl
         case view
+        case remoteImageView
         
         var key: String {
             switch self {
@@ -46,6 +48,8 @@ import UIKit
                 return "sense.view"
             case .tableView:
                 return "sense.tableview"
+            case .tableViewFill:
+                return "sense.tableview.fill"
             case .listItem:
                 return "sense.list.item"
             case .navigationController:
@@ -58,6 +62,8 @@ import UIKit
                 return "sense.controller"
             case .volumeControl:
                 return "sense.volume.control"
+            case .remoteImageView:
+                return "sense.remote.image.view"
             }
             
         }
@@ -86,7 +92,11 @@ import UIKit
         self.loadSavedTheme()
     }
     
-    //MARK: - Convenience methods
+    //MARK: - Colors
+    
+    @objc static func color(aClass: AnyClass, property: Theme.ThemeProperty) -> UIColor? {
+        return self.theme.value(aClass: aClass, key: property.key) as? UIColor
+    }
     
     @objc static func color(group: Group, property: Theme.ThemeProperty) -> UIColor? {
         return self.value(group: group, property: property) as? UIColor
@@ -96,6 +106,12 @@ import UIKit
         return self.theme.value(group: group.key, key: propertyName) as? UIColor
     }
     
+    //MARK: - Fonts
+    
+    @objc static func font(aClass: AnyClass, property: Theme.ThemeProperty) -> UIFont? {
+        return self.theme.value(aClass: aClass, key: property.key) as? UIFont
+    }
+    
     @objc static func font(group: Group, property: Theme.ThemeProperty) -> UIFont? {
         return self.value(group: group, property: property) as? UIFont
     }
@@ -103,6 +119,8 @@ import UIKit
     @objc static func font(group: Group, propertyName: String) -> UIFont? {
         return self.theme.value(group: group.key, key: propertyName) as? UIFont
     }
+    
+    //MARK: - Value
     
     @objc static func value(group: Group, property: Theme.ThemeProperty) -> Any? {
         return self.theme.value(group: group.key, property: property)

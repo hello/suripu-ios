@@ -108,6 +108,8 @@
 		BF037C011B7C178D00E1638D /* HEMTappableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF037C001B7C178D00E1638D /* HEMTappableView.m */; };
 		BF045B6E1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */; };
 		BF0489EC1E73211A00D1A79E /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489EB1E73211A00D1A79E /* UIView+Style.swift */; };
+		BF0489EE1E73323300D1A79E /* HEMURLImageView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */; };
+		BF0489F01E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */; };
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
@@ -767,6 +769,8 @@
 		BF045B6C1A1EC2210026D5B9 /* HEMBeforeSleepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBeforeSleepViewController.h; sourceTree = "<group>"; };
 		BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBeforeSleepViewController.m; sourceTree = "<group>"; };
 		BF0489EB1E73211A00D1A79E /* UIView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
+		BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMURLImageView+Style.swift"; sourceTree = "<group>"; };
+		BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMExpansionHeaderView+Style.swift"; sourceTree = "<group>"; };
 		BF05C8DF1A3A52CB002A1307 /* HEMMultipleResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMultipleResponseCell.h; sourceTree = "<group>"; };
 		BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMultipleResponseCell.m; sourceTree = "<group>"; };
 		BF05C8EE1A3A830D002A1307 /* HEMResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResponseCell.h; sourceTree = "<group>"; };
@@ -3364,6 +3368,8 @@
 				BFB38D5A1E7207BC00BBD5CD /* HEMActivityCoverView+Style.swift */,
 				BF9C0EBE1E723997008601CB /* UIViewController+Style.swift */,
 				BF0489EB1E73211A00D1A79E /* UIView+Style.swift */,
+				BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */,
+				BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4251,6 +4257,7 @@
 				BFFCEFCF1D00D90400CA0E54 /* HEMWhatsNewHeaderView.m in Sources */,
 				BF9C0EBF1E723997008601CB /* UIViewController+Style.swift in Sources */,
 				BF8C092A1C28E52D005AB5A7 /* HEMNameChangePresenter.m in Sources */,
+				BF0489F01E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift in Sources */,
 				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				BF3326EF1D876BE3009A3E65 /* HEMSensorDetailPresenter.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
@@ -4490,6 +4497,7 @@
 				BFE375E31CEBD1200029EE66 /* HEMPhotoHeaderView.m in Sources */,
 				BFBC78B11D2C8E1200076235 /* HEMSleepPillFinderViewController.m in Sources */,
 				BFF3648A1D64EBE1008D4DF8 /* HEMUpgradePairPillPresenter.m in Sources */,
+				BF0489EE1E73323300D1A79E /* HEMURLImageView+Style.swift in Sources */,
 				BF885F221CE55B7500A92F90 /* HEMProfileImageView.m in Sources */,
 				8B1DB6DD1C18AC00006C8AFF /* HEMNonsenseScanService.m in Sources */,
 				BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */,

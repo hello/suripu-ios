@@ -18,6 +18,7 @@
 #import "NSString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "UIBarButtonItem+HEMNav.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMAppDelegate.h"
 
@@ -69,3 +70,4 @@
 #import "HEMSettingsStoryboard.h"
 #import "HEMListPresenter.h"
 #import "HEMListItemCell.h"
+#import "HEMExpansionHeaderView.h"

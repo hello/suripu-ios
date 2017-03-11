@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 #import <AFNetworking/UIKit+AFNetworking.h>
+#import "Sense-Swift.h"
 #import "HEMURLImageView.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -74,6 +75,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
 
 - (void)configureDefaults {
     [self setIndicateActivity:YES];
+    [self applyStyle];
 }
 
 - (void)usePlaceholderView:(UIView*)placeholderView {

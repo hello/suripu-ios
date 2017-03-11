@@ -46,8 +46,6 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 }
 
 - (void)setup {
-    _indicatorImage = [_indicatorImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
     if ([self indicatorLayer]) {
         [[self indicatorLayer] removeFromSuperlayer];
     }

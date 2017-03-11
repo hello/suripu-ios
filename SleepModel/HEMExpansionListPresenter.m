@@ -176,10 +176,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         [[[basicCell remoteImageView] layer] setCornerRadius:kHEMExpansionListImageCornerRadius];
         [[[basicCell remoteImageView] layer] setBorderWidth:kHEMExpansionListImageBorder];
-        [[[basicCell remoteImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
         [[basicCell remoteImageView] setClipsToBounds:YES];
         [[basicCell remoteImageView] setContentMode:UIViewContentModeScaleAspectFit];
-        [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
         
         __weak typeof(self) weakSelf = self;
         __weak typeof([basicCell remoteImageView]) weakImageView = [basicCell remoteImageView];

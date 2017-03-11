@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0.2
+
+New:
+
+* Themed voice, volume control
+* Themed Expansion list
+* Themed Expansion detail view, minus dependent components
+
 ## 2.1.0.1
 
 New:

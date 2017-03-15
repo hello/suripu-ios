@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0.3
+
+New:
+
+* Themed expansion web view container
+* Themed expansion configuration screen
+
 ## 2.1.0.2
 
 New:

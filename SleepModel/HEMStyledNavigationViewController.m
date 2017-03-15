@@ -37,6 +37,10 @@
     [self applyStyle];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [[SenseStyle theme] statusBarStyle];
+}
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self setBackButtonOnViewController:viewController];
     [super pushViewController:viewController animated:animated];

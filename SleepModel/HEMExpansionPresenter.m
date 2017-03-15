@@ -244,6 +244,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     }
     [self setRows:rows];
 }
+
 #pragma mark - UITableViewDelegate and UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

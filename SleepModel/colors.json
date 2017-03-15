@@ -4,6 +4,7 @@
     "light.disabled.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.38},
     "light.separator" : { "style.color.hex" : "000000", "style.color.alpha" : 0.12},
     "light.disabled.overlay" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.7},
+    "light.toolbar.item.disabled" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54 },
     
     "dark.primary.text" : { "style.color.hex" : "FFFFFF"},
     "dark.secondary.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.70},
@@ -11,8 +12,16 @@
     "dark.separator" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.12},
     "dark.disabled.overlay" : { "style.color.hex" : "000000", "style.color.alpha" : 0.7},
     
+    "disabled.button" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.4},
+    
+    "light.icon.normal" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54},
+    "light.icon.disabled" : { "style.color.hex" : "000000", "style.color.alpha" : 0.26},
+    "dark.icon.disabled" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.5},
+    
     "black" : { "style.color.hex" : "000000" },
     "white" : { "style.color.hex" : "FFFFFF" },
+    "clear" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.0 },
+    "clear" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.0 },
     
     "grey.1" : { "style.color.hex" : "FAFAFA" },
     "grey.2" : { "style.color.hex" : "EEEEEE" },
@@ -29,7 +38,7 @@
     "blue.3" : { "style.color.hex" : "B2E1FF" },
     "blue.4" : { "style.color.hex" : "7FCDFF" },
     "blue.5" : { "style.color.hex" : "4CB9FF" },
-    "blue.6" : { "style.color.hex" : "0x009AFF" },
+    "blue.6" : { "style.color.hex" : "009AFF" },
     "blue.7" : { "style.color.hex" : "0083D9" },
     
     "green.1" : { "style.color.hex" : "F9FEFD" },

@@ -110,6 +110,10 @@
 		BF0489EC1E73211A00D1A79E /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489EB1E73211A00D1A79E /* UIView+Style.swift */; };
 		BF0489EE1E73323300D1A79E /* HEMURLImageView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */; };
 		BF0489F01E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */; };
+		BF0489F21E774BD500D1A79E /* UILabel+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489F11E774BD500D1A79E /* UILabel+Style.swift */; };
+		BF0489F41E77841D00D1A79E /* HEMActionButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489F31E77841D00D1A79E /* HEMActionButton+Style.swift */; };
+		BF0489F81E789D5E00D1A79E /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489F71E789D5E00D1A79E /* UIButton+Style.swift */; };
+		BF0489FA1E78BEDD00D1A79E /* UIImage+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489F91E78BEDD00D1A79E /* UIImage+Style.swift */; };
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
@@ -771,6 +775,10 @@
 		BF0489EB1E73211A00D1A79E /* UIView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMURLImageView+Style.swift"; sourceTree = "<group>"; };
 		BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMExpansionHeaderView+Style.swift"; sourceTree = "<group>"; };
+		BF0489F11E774BD500D1A79E /* UILabel+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Style.swift"; sourceTree = "<group>"; };
+		BF0489F31E77841D00D1A79E /* HEMActionButton+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMActionButton+Style.swift"; sourceTree = "<group>"; };
+		BF0489F71E789D5E00D1A79E /* UIButton+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Style.swift"; sourceTree = "<group>"; };
+		BF0489F91E78BEDD00D1A79E /* UIImage+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Style.swift"; sourceTree = "<group>"; };
 		BF05C8DF1A3A52CB002A1307 /* HEMMultipleResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMultipleResponseCell.h; sourceTree = "<group>"; };
 		BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMultipleResponseCell.m; sourceTree = "<group>"; };
 		BF05C8EE1A3A830D002A1307 /* HEMResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResponseCell.h; sourceTree = "<group>"; };
@@ -3370,6 +3378,10 @@
 				BF0489EB1E73211A00D1A79E /* UIView+Style.swift */,
 				BF0489ED1E73323300D1A79E /* HEMURLImageView+Style.swift */,
 				BF0489EF1E734DEC00D1A79E /* HEMExpansionHeaderView+Style.swift */,
+				BF0489F11E774BD500D1A79E /* UILabel+Style.swift */,
+				BF0489F31E77841D00D1A79E /* HEMActionButton+Style.swift */,
+				BF0489F71E789D5E00D1A79E /* UIButton+Style.swift */,
+				BF0489F91E78BEDD00D1A79E /* UIImage+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4284,6 +4296,7 @@
 				BFB7B2171CD13F910060999E /* AVAudioPlayer+HEMVolumeControl.m in Sources */,
 				BF6995F11CA6086E00C7AA55 /* HEMListItemCell.m in Sources */,
 				BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */,
+				BF0489FA1E78BEDD00D1A79E /* UIImage+Style.swift in Sources */,
 				BF238DE71D1A15FC00F6E62C /* HEMShareContentProvider.m in Sources */,
 				8A576F121A79B12200287398 /* HEMTutorial.m in Sources */,
 				BF3713361E6E28FF00EF9BAB /* SenseStyle.swift in Sources */,
@@ -4344,6 +4357,7 @@
 				BF8C091A1C24BB2C005AB5A7 /* HEMAccountService.m in Sources */,
 				8A50A18A1B548C1A007FDECC /* UIImage+HEMBlurTint.m in Sources */,
 				BF5BACE51C5AE09A00347185 /* HEMTrendsV2ViewController.m in Sources */,
+				BF0489F81E789D5E00D1A79E /* UIButton+Style.swift in Sources */,
 				BF8339991C17607700BFD0F4 /* HEMLoadingCollectionViewCell.m in Sources */,
 				BF78E9991B2129AD0015949F /* HEMZendeskService.m in Sources */,
 				8A91F2A61A44DB3D00F211B4 /* HEMAlarmTableViewCell.m in Sources */,
@@ -4537,12 +4551,14 @@
 				BF8C092D1C29D508005AB5A7 /* HEMEmailChangePresenter.m in Sources */,
 				BF0B15EC1DF254FB00DF2373 /* RoomConditionsNavPresenter.swift in Sources */,
 				BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */,
+				BF0489F21E774BD500D1A79E /* UILabel+Style.swift in Sources */,
 				BFD4012C1BDED8E600F6C419 /* HEMSimpleModalTransitionDelegate.m in Sources */,
 				BFB815231BFD06AA009740D0 /* HEMSenseSettingsDataSource+HEMCollectionView.m in Sources */,
 				8A7D801C1A40D71400B0BFD7 /* HEMCardCollectionViewCell.m in Sources */,
 				BF3FC55E1C3DA17A00C5B248 /* UIDevice+HEMUtils.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				BF539CC41C0D3558000F77AA /* HEMQuestionsService.m in Sources */,
+				BF0489F41E77841D00D1A79E /* HEMActionButton+Style.swift in Sources */,
 				BFA5C86B1D8B686200A0BDB7 /* HEMSensorScaleCollectionViewCell.m in Sources */,
 				BFD603D41D5D3E7B00F4E2D4 /* HEMUpgradeFlow.m in Sources */,
 				BF6995E71CA5FF6200C7AA55 /* HEMListItemSelectionViewController.m in Sources */,

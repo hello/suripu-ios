@@ -1,11 +1,59 @@
 {
-    "style.appearance" : {
-        "style.navigation.bar.tint.color" : "@color/white",
-        "style.navigation.tint.color" : "@color/black",
-        "style.navigation.title.color" : "@color/black",
-        "style.navigation.title.font" : "@font/title.1",
-        "style.status.bar.style" : "style.status.bar.LIGHT",
-        "style.navigation.include.shadow" : false
+    "#HEMExpansionHeaderView" : {
+        "style.group.parent" : "sense.tableview.fill",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UILabel" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UIToolbar" : {
+        "style.bar.tint.color" : "@color/white",
+        "style.tint.color" : "@color/blue.6",
+        "style.translucent" : false
+    },
+    
+    "#UIButton" : {
+        "style.background.color" : "@color/clear",
+        "style.text.color" : "@color/blue.6",
+        "style.text.disabled.color" : "@color/disabled.button",
+        "style.text.highlighted.color" : "@color/blue.7",
+        "style.text.font" : "@font/button"
+    },
+    
+    "#UINavigationBar" : {
+        "style.bar.tint.color" : "@color/white",
+        "style.tint.color" : "@color/black",
+        "style.text.color" : "@color/black",
+        "style.text.font" : "@font/title.1",
+        "style.include.shadow" : false,
+        "style.translucent" : false
+    },
+    
+    "#HEMActionButton" :  {
+        "style.background.color" : "@color/blue.6",
+        "style.background.highlighted.color" : "@color/blue.7",
+        "style.background.disabled.color" : "@color/disabled.button",
+        "style.text.color" : "@color/white",
+        "style.text.disabled.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white",
+        "style.text.font" : "@font/button"
+    },
+    
+    "#UIImage" : {
+        "style.tint.color" : "@color/light.icon.normal",
+        "style.tint.disabled.color" : "@color/light.icon.disabled",
+        "style.tint.highlighted.color" : "@color/blue.6"
+    },
+    
+    "style.app" : {
+        "style.status.bar.style" : "style.status.bar.LIGHT"
     },
     
     "sense.tableview" : {
@@ -71,13 +119,5 @@
     "sense.remote.image.view" : {
         "style.background.color" : "@color/grey.3",
         "style.border.color" : "@color/grey.2"
-    },
-    
-    "#HEMExpansionHeaderView" : {
-        "style.group.parent" : "sense.tableview.fill",
-        "style.text.color" : "@color/light.primary.text",
-        "style.text.font" : "@font/body.2",
-        "style.text.detail.color" : "@color/light.secondary.text",
-        "style.text.detail.font" : "@font/body.1"
     }
 }

@@ -71,3 +71,5 @@
 #import "HEMListPresenter.h"
 #import "HEMListItemCell.h"
 #import "HEMExpansionHeaderView.h"
+#import "UIImage+HEMBlurTint.h"
+

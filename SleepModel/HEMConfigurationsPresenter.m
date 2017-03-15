@@ -8,6 +8,8 @@
 
 #import <SenseKit/SENExpansion.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMConfigurationsPresenter.h"
 #import "HEMExpansionService.h"
 #import "HEMListItemCell.h"
@@ -62,6 +64,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     [tableView setDataSource:self];
     [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setTableFooterView:[self tableFooter]];
+    [tableView applyFillStyle];
     [self setTableView:tableView];
 }
 
@@ -99,31 +102,27 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
     NSString* title = [NSString stringWithFormat:titleFormat, [[self expansion] companyName]];
     NSString* description = [NSString stringWithFormat:descriptionFormat, [self configurationName]];
 
+    [titleLabel applyTitleStyle];
     [titleLabel setText:title];
-    [titleLabel setTextColor:[UIColor grey6]];
     [titleLabel setFont:[UIFont h5]];
     
     [descriptionLabel setText:description];
-    [descriptionLabel setTextColor:[UIColor grey5]];
-    [descriptionLabel setFont:[UIFont body]];
+    [descriptionLabel applyDescriptionStyleWithOverride:YES];
     
     [self setTitleLabel:titleLabel];
     [self setDescriptionLabel:descriptionLabel];
 }
 
 - (void)bindWithSkipButton:(UIButton*)skipButton {
-    [skipButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[skipButton titleLabel] setFont:[UIFont button]];
     [skipButton addTarget:self
                    action:@selector(skip)
          forControlEvents:UIControlEventTouchUpInside];
+    [skipButton applyStyle];
     [self setSkipButton:skipButton];
 }
 
 - (void)bindWithDoneButton:(HEMActionButton*)doneButton {
     [doneButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
-    [[doneButton titleLabel] setFont:[UIFont button]];
-    [doneButton setBackgroundColor:[UIColor grey3] forState:UIControlStateDisabled];
     [doneButton setEnabled:NO];
     [self setSaveButton:doneButton];
 }
@@ -152,11 +151,8 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat cellHeight = CGRectGetHeight([cell bounds]);
     
-    [[cell textLabel] setFont:[UIFont body]];
-    
     if ([indexPath row] < [[self configs] count]) {
         SENExpansionConfig* config = [self configs][[indexPath row]];
-        [[cell textLabel] setTextColor:[UIColor grey6]];
         [[cell textLabel] setText:[config localizedName]];
         
         if (![cell accessoryView]) {
@@ -178,14 +174,14 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
         
         UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
         [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        [separator setBackgroundColor:[UIColor separatorColor]];
         
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [[cell textLabel] setTextColor:[UIColor grey3]];
         [[cell textLabel] setText:text];
         [cell setAccessoryView:[self accessoryViewWithImage:warningImage withHeight:cellHeight]];
         [[cell contentView] addSubview:separator];
     }
+    
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

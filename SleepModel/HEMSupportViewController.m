@@ -62,12 +62,11 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 }
 
 - (void)configureTableView {
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [[self tableView] setTableHeaderView:header];
     [[self tableView] setTableFooterView:footer];
-    [[self tableView] setBackgroundColor:[UIColor clearColor]];
-    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
+    [[self tableView] applyStyle];
 }
 
 - (void)overrideNavigationDelegate {
@@ -122,10 +121,9 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor textColor]];
     [cell showStyledAccessoryViewIfNone];
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

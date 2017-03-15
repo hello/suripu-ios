@@ -83,7 +83,7 @@ PODS:
   - ZendeskSDK/Localization (1.5.4.1):
     - ZendeskSDK/Core
   - ZendeskSDK/Providers (1.5.4.1)
-  - Zip (0.6.0)
+  - Zip (0.7.0)
 
 DEPENDENCIES:
   - Analytics (= 3.0.7)
@@ -177,7 +177,7 @@ SPEC CHECKSUMS:
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
-  Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
+  Zip: e34513299ac38c0686d5b24504da7ce343799ab9
 
 PODFILE CHECKSUM: 890602e76527b77e1b1495b68a26c1096e062056
 

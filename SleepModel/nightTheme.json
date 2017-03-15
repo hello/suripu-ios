@@ -1,9 +1,39 @@
 {
-    "style.appearance" : {
-        "style.navigation.bar.tint.color" : "@color/grey.9",
-        "style.navigation.title.color" : "@color/white",
-        "style.navigation.tint.color" : "@color/white",
+    "style.app" : {
         "style.status.bar.style" : "style.status.bar.DARK"
+    },
+    
+    "#UILabel" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UIToolbar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
+    "#UIButton" : {
+        "style.background.color" : "@color/clear",
+        "style.text.color" : "@color/white",
+        "style.text.disabled.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white"
+    },
+    
+    "#UINavigationBar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/white",
+        "style.text.color" : "@color/white"
+    },
+    
+    "#HEMExpansionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UIImage" : {
+        "style.tint.color" : "@color/white",
+        "style.tint.disabled.color" : "@color/dark.icon.disabled"
     },
     
     "sense.tableview" : {
@@ -53,10 +83,5 @@
     
     "sense.view" : {
         "sense.disabled.overlay.color" : "@color/dark.disabled.overlay"
-    },
-    
-    "#HEMExpansionHeaderView" : {
-        "style.text.color" : "@color/dark.primary.text",
-        "style.text.detail.color" : "@color/dark.secondary.text",
     }
 }

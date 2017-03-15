@@ -6,6 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMExpansionAuthViewController.h"
 #import "HEMExpansionAuthPresenter.h"
 #import "HEMConfigurationsPresenter.h"

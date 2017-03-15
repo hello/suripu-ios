@@ -28,7 +28,7 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
     [super awakeFromNib];
     
     [[self activityView] setUserInteractionEnabled:NO];
-    [[self activityView] setIndicatorImage:[UIImage imageNamed:@"smallLoaderGray"]];
+    [[self activityView] setIndicatorImage:[UIImage imageNamed:@"settingsLoader"]];
     [self setOrigLeadingAccessoryMargin:[[self leadingCustomAccessoryConstraint] constant]];
 }
 

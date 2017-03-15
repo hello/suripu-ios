@@ -12,10 +12,6 @@ import UIKit
 @available(iOS 8.2, *)
 @objc class Theme: NSObject {
     
-    fileprivate enum ThemeGroup: String {
-        case appearance = "style.appearance"
-    }
-    
     @objc enum ThemeProperty: Int {
         case backgroundColor
         case separatorColor
@@ -25,38 +21,42 @@ import UIKit
         case linkColor
         case detailColor
         case tintColor
+        case tintDisabledColor
+        case tintHighlightedColor
         case hintFont
         case hintColor
-        case navigationBarTintColor
-        case navigationTintColor
-        case navigationTitleColor
-        case navigationTitleFont
-        case navigationIncludeShadow
+        case includeShadow
         case statusBarStyle
         case primaryButtonTextColor
         case secondaryButtonTextColor
         case borderColor
+        case barTintColor
+        case translucent
+        case backgroundHighlightedColor
+        case backgroundDisabledColor
+        case textDisabledColor
+        case textHighlightedColor
         
         var key: String {
             switch self {
                 case .backgroundColor:
                     return "style.background.color"
+                case .backgroundHighlightedColor:
+                    return "style.background.highlighted.color"
+                case .backgroundDisabledColor:
+                    return "style.background.disabled.color"
                 case .separatorColor:
                     return "style.separator.color"
                 case .textColor:
                     return "style.text.color"
+                case .textDisabledColor:
+                    return "style.text.disabled.color"
+                case .textHighlightedColor:
+                return "style.text.highlighted.color"
                 case .textFont:
                     return "style.text.font"
-                case .navigationTintColor:
-                    return "style.navigation.tint.color"
-                case .navigationBarTintColor:
-                    return "style.navigation.bar.tint.color"
-                case .navigationTitleColor:
-                    return "style.navigation.title.color"
-                case .navigationTitleFont:
-                    return "style.navigation.title.font"
-                case .navigationIncludeShadow:
-                    return "style.navigation.include.shadow"
+                case .includeShadow:
+                    return "style.include.shadow"
                 case .statusBarStyle:
                     return "style.status.bar.style"
                 case .detailFont:
@@ -69,6 +69,10 @@ import UIKit
                     return "style.text.hint.color"
                 case .tintColor:
                     return "style.tint.color"
+                case .tintDisabledColor:
+                    return "style.tint.disabled.color"
+                case .tintHighlightedColor:
+                    return "style.tint.highlighted.color"
                 case .linkColor:
                     return "style.link.color"
                 case .primaryButtonTextColor:
@@ -77,11 +81,16 @@ import UIKit
                     return "style.secondary.button.text.color"
                 case .borderColor:
                     return "style.border.color"
+                case .barTintColor:
+                    return "style.bar.tint.color"
+                case .translucent:
+                    return "style.translucent"
             }
         }
     }
  
     fileprivate static let defaultThemeFile = "defaultTheme"
+    fileprivate static let appGroup = "style.app"
 
     fileprivate static let classPrefix = "#"
     fileprivate static let keyParent = "style.group.parent"
@@ -158,16 +167,6 @@ import UIKit
         return font
     }
     
-    /**
-     Convenience method to retrieve an appearance value defined by the supported
-     "style.appearance" group.  This will be used when apply a theme instance
-     
-     - Parameter property: the themed property to retrieve
-     */
-    fileprivate func appearanceValue(property: ThemeProperty) -> Any? {
-        return self.value(group: ThemeGroup.appearance.rawValue, key: property.key)
-    }
-    
     // MARK: - Apply
     
     func apply() {
@@ -179,30 +178,8 @@ import UIKit
     }
     
     fileprivate func applyApearances() {
-        let navBarTintColor = self.appearanceValue(property: .navigationBarTintColor) as? UIColor
-        let navTintColor = self.appearanceValue(property: .navigationTintColor) as? UIColor
-        let navTitleColor = self.appearanceValue(property: .navigationTitleColor) as? UIColor
-        let navTitleFont = self.appearanceValue(property: .navigationTitleFont) as? UIFont
-        let navIncludeShadow = self.appearanceValue(property: .navigationIncludeShadow) as? NSNumber
-        
-        let navigationBar = UINavigationBar.appearance()
-        navigationBar.barTintColor = navBarTintColor
-        navigationBar.tintColor = navTintColor
-        navigationBar.isTranslucent = false
-        
-        if navIncludeShadow?.boolValue == false {
-            navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-            navigationBar.shadowImage = UIImage()
-        }
-        
-        var navTitleAttributes: [String: Any] = [:]
-        if navTitleColor != nil {
-            navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
-        }
-        if navTitleFont != nil {
-            navTitleAttributes[NSFontAttributeName] = navTitleFont
-        }
-        navigationBar.titleTextAttributes = navTitleAttributes
+        self.applyNavigationBarApperance()
+        self.applyToolbarAppearance()
         
         let windows = UIApplication.shared.windows
         windows.forEach { (window: UIWindow) in
@@ -211,6 +188,38 @@ import UIKit
                 window.addSubview(view)
             })
         }
+    }
+    
+    fileprivate func applyNavigationBarApperance() {
+        let aClass = UINavigationBar.self
+        let translucent = self.value(aClass: aClass, property: .translucent) as? NSNumber
+        let shadow = self.value(aClass: aClass, property: .includeShadow) as? NSNumber
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.barTintColor = self.value(aClass: aClass, property: .barTintColor) as? UIColor
+        navigationBar.tintColor = self.value(aClass: aClass, property: .tintColor) as? UIColor
+        navigationBar.isTranslucent = translucent?.boolValue ?? false
+        
+        if shadow?.boolValue == false {
+            navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            navigationBar.shadowImage = UIImage()
+        }
+        
+        var navTitleAttributes: [String: Any] = [:]
+        if let navTitleColor = self.value(aClass: aClass, property: .textColor) as? UIColor {
+            navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
+        }
+        if let navTitleFont = self.value(aClass: aClass, property: .textFont) as? UIFont {
+            navTitleAttributes[NSFontAttributeName] = navTitleFont
+        }
+        navigationBar.titleTextAttributes = navTitleAttributes
+    }
+    
+    fileprivate func applyToolbarAppearance() {
+        let toolbar = UIToolbar.appearance()
+        let translucent = self.value(aClass: UIToolbar.self, property: .translucent) as? NSNumber
+        toolbar.isTranslucent = translucent?.boolValue ?? false
+        toolbar.barTintColor = self.value(aClass: UIToolbar.self, property: .barTintColor) as? UIColor
+        toolbar.tintColor = self.value(aClass: UIToolbar.self, property: .tintColor) as? UIColor
     }
     
     fileprivate func apply(viewController: UIViewController?) {
@@ -270,7 +279,7 @@ import UIKit
         - Returns: status bar style specified in theme, or default
     */
     @objc func statusBarStyle() -> UIStatusBarStyle {
-        let styleValue = self.appearanceValue(property: .statusBarStyle) as? String
+        let styleValue = self.value(group: Theme.appGroup, property: .statusBarStyle) as? String
         if styleValue == Theme.statusBarLight {
             return UIStatusBarStyle.default
         } else {
@@ -306,7 +315,7 @@ import UIKit
         
         if value == nil {
             let themedParentGroup = themedGroupProps?[Theme.keyParent] as? String
-            let parentGroup = defaultProperties?[Theme.keyParent] as? String
+            let parentGroup = defaultGroupProps?[Theme.keyParent] as? String
             if let parentGroupName = themedParentGroup ?? parentGroup {
                 // recursively look for parent value, if value not found
                 return self.value(group: parentGroupName, key: key)
@@ -315,12 +324,24 @@ import UIKit
         
         return self.transform(value: value)
     }
+
+    /**
+        Convenience method for Swift to retrieve the value specified for the class
+        and a supported property
+     
+        - Parameter aClass: the class of values to retireve
+        - Parameter property: the natively supported property
+        - Returns: the value that matches the property in the class
+     */
+    func value(aClass: AnyClass!, property: ThemeProperty) -> Any? {
+        return self.value(aClass: aClass, key: property.key)
+    }
     
     /**
-     Convenience method for Swift to retrieve the value specified for the class
+        Convenience method for Swift to retrieve the value specified for the class
      
-     - Parameter aClass: the class of values to retireve
-     - Returns: the value that matches the property in the class
+        - Parameter aClass: the class of values to retireve
+        - Returns: the value that matches the property in the class
      */
     func value(aClass: AnyClass!, key: String!) -> Any? {
         let fullClassName = NSStringFromClass(aClass)

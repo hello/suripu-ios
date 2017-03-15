@@ -3,6 +3,11 @@
         "style.status.bar.style" : "style.status.bar.LIGHT"
     },
     
+    "#UIView" : {
+        "sense.disabled.overlay.color" : "@color/light.disabled.overlay",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
     "#HEMExpansionHeaderView" : {
         "style.group.parent" : "sense.tableview.fill",
         "style.text.color" : "@color/light.primary.text",
@@ -13,6 +18,7 @@
     
     "#UILabel" : {
         "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.text.detail.font" : "@font/body.1"
     },
@@ -50,10 +56,51 @@
         "style.text.font" : "@font/button"
     },
     
+    "#UICollectionView" : {
+        "style.background.color" : "@color/grey.3"
+    },
+    
+    "#HEMCardCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/light.separator",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMDeviceCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
     "#UIImage" : {
         "style.tint.color" : "@color/light.icon.normal",
         "style.tint.disabled.color" : "@color/light.icon.disabled",
         "style.tint.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMTextFooterCollectionReusableView" : {
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#Sense.CollapsableActionCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
+    "#UITextView" : {
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#NSMutableAttributedString" : {
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
     },
     
     "sense.tableview" : {
@@ -72,7 +119,7 @@
     "sense.list.item" : {
         "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
-        "style.text.font" : "@font/body",
+        "style.text.font" : "@font/body.1",
         "style.text.detail.font" : "@font/body.small",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.separator.color" : "@color/light.separator",
@@ -112,12 +159,14 @@
         "sense.volume.number.font" : "@font/display.4"
     },
     
-    "sense.view" : {
-        "sense.disabled.overlay.color" : "@color/light.disabled.overlay"
-    },
-    
     "sense.remote.image.view" : {
         "style.background.color" : "@color/grey.3",
         "style.border.color" : "@color/grey.2"
+    },
+    
+    "sense.condition" : {
+        "sense.alert" : "@color/red.6",
+        "sense.warning" : "@color/orange.6",
+        "sense.ideal" : "@color/green.6"
     }
 }

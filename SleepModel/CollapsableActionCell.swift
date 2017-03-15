@@ -58,8 +58,9 @@ import Foundation
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.titleLabel?.font = UIFont.body()
-        self.titleLabel?.textColor = UIColor.grey6()
+        var accessory = self.accessoryView?.image
+        accessory = accessory?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        self.accessoryView?.image = accessory
         self.bodyView?.isEditable = false
         self.bodyView?.isScrollEnabled = false
         self.bodyView?.textContainerInset = UIEdgeInsets(top: CollapsableActionCell.bodyTopInset,
@@ -67,6 +68,7 @@ import Foundation
                                                          bottom: CGFloat(0),
                                                          right: CGFloat(0))
         self.bodyView?.delegate = self
+        self.applyStyle()
         self.collapse()
     }
     
@@ -76,6 +78,7 @@ import Foundation
     
     @objc func set(body: NSAttributedString!) {
         self.bodyView?.attributedText = body
+        self.bodyView?.applyStyle()
     }
     
     @objc func set(state: ViewState) {
@@ -103,6 +106,20 @@ import Foundation
         }
         self.bodyView?.isHidden = false
         self.actionButton?.isHidden = false
+    }
+    
+}
+
+extension CollapsableActionCell {
+    
+    func applyStyle() {
+        let aClass = CollapsableActionCell.self
+        self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
+        self.titleLabel?.font = SenseStyle.font(aClass: aClass, property: .textFont)
+        self.titleLabel?.textColor = SenseStyle.color(aClass: aClass, property: .textColor)
+        self.accessoryView?.tintColor = SenseStyle.color(aClass: aClass, property: .tintColor)
+        self.bodyView?.backgroundColor = self.backgroundColor
+        self.bodyView?.applyStyle()
     }
     
 }

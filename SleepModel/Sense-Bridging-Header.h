@@ -72,4 +72,6 @@
 #import "HEMListItemCell.h"
 #import "HEMExpansionHeaderView.h"
 #import "UIImage+HEMBlurTint.h"
-
+#import "HEMDeviceCollectionViewCell.h"
+#import "HEMPillCollectionViewCell.h"
+#import "HEMTextFooterCollectionReusableView.h"

@@ -75,27 +75,40 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                           usingBlock:^(NSDictionary *currentAttributes, NSRange range, BOOL *stop) {
                               for (NSString* key in allKeys) {
-                                  if ([currentAttributes valueForKey:key] == nil
+                                  if ([key isEqualToString:NSFontAttributeName]
+                                      && [currentAttributes valueForKey:key] != nil
                                       && [attributes valueForKey:key] != nil) {
-                                      [self addAttribute:key
-                                                   value:[attributes valueForKey:key]
-                                                   range:range];
+                                      
+                                      UIFont* currentFont = [currentAttributes valueForKey:key];
+                                      UIFont* font = [attributes valueForKey:key];
+                                      if (![[currentFont familyName] isEqualToString:[font familyName]]) {
+                                          [self addAttribute:key value:font range:range];
+                                      }
+                                  } else if ([currentAttributes valueForKey:key] == nil
+                                      && [attributes valueForKey:key] != nil) {
+                                      [self addAttribute:key value:[attributes valueForKey:key] range:range];
                                   }
                               }
                           }];
 }
 
 - (void)applyColor:(UIColor*)color andFont:(UIFont*)font {
+    if (!color && !font) {
+        return;
+    }
+    
     [self enumerateAttributesInRange:NSMakeRange(0, [self length])
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-                              if ([attrs valueForKey:NSFontAttributeName] == nil) {
+                              if ([attrs valueForKey:NSFontAttributeName] == nil
+                                  && font) {
                                   [self addAttribute:NSFontAttributeName
                                                value:font
                                                range:range];
                               }
                                   
-                              if ([attrs valueForKey:NSForegroundColorAttributeName] == nil) {
+                              if ([attrs valueForKey:NSForegroundColorAttributeName] == nil
+                                  && color) {
                                   [self addAttribute:NSForegroundColorAttributeName
                                                value:color
                                                range:range];

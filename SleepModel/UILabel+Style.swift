@@ -10,27 +10,20 @@ import Foundation
 
 extension UILabel {
     
-    @objc func applyTitleStyle() {
-        self.textColor = SenseStyle.color(aClass: UILabel.self, property: .textColor)
-    }
-    
-    @objc func applyDescriptionStyle(override: Bool) {
-        guard let attributedText = self.attributedText else {
-            self.textColor = SenseStyle.color(aClass: UILabel.self, property: .detailColor)
-            self.font = SenseStyle.font(aClass: UILabel.self, property: .detailFont)
-            return
-        }
+    fileprivate func apply(fontProperty: Theme.ThemeProperty, colorProperty: Theme.ThemeProperty, override: Bool) {
+        self.textColor = SenseStyle.color(aClass: UILabel.self, property: colorProperty)
+        self.font = SenseStyle.font(aClass: UILabel.self, property: fontProperty)
         
-        guard let mutableText = attributedText.mutableCopy() as? NSMutableAttributedString else {
+        guard let mutableText = self.attributedText?.mutableCopy() as? NSMutableAttributedString else {
             return
         }
         
         var attributes: [String: Any] = [:]
         
-        if let color = SenseStyle.color(aClass: UILabel.self, property: .detailColor) {
+        if let color = SenseStyle.color(aClass: UILabel.self, property: colorProperty) {
             attributes[NSForegroundColorAttributeName] = color
         }
-        if let font = SenseStyle.font(aClass: UILabel.self, property: .detailFont) {
+        if let font = SenseStyle.font(aClass: UILabel.self, property: fontProperty) {
             attributes[NSFontAttributeName] = font
         }
         
@@ -42,7 +35,19 @@ extension UILabel {
             }
             self.attributedText = mutableText
         }
-        
+    }
+    
+    @objc func applyTitleStyle() {
+        self.textColor = SenseStyle.color(aClass: UILabel.self, property: .textColor)
+        self.font = SenseStyle.font(aClass: UILabel.self, property: .textFont)
+    }
+    
+    @objc func applyDescriptionStyle(override: Bool) {
+        self.apply(fontProperty: .detailFont, colorProperty: .detailColor, override: override)
+    }
+    
+    @objc func applyHintStyle() {
+        self.apply(fontProperty: .hintFont, colorProperty: .hintColor, override: false)
     }
     
 }

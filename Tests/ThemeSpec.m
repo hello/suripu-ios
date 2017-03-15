@@ -35,14 +35,14 @@ describe(@"Theme", ^{
             });
             
             it(@"should have navigation title color", ^{
-                NSString* key = [theme keyWithProperty:ThemePropertyNavigationTintColor];
-                id color = [theme valueWithGroup:@"style.appearance" key:key];
+                NSString* key = [theme keyWithProperty:ThemePropertyTintColor];
+                id color = [theme valueWithGroup:@"#UINavigationBar" key:key];
                 [[color should] beKindOfClass:[UIColor class]];
             });
             
             it(@"should have navigation title font", ^{
-                NSString* key = [theme keyWithProperty:ThemePropertyNavigationTitleFont];
-                id font = [theme valueWithGroup:@"style.appearance" key:key];
+                NSString* key = [theme keyWithProperty:ThemePropertyTextFont];
+                id font = [theme valueWithGroup:@"#UINavigationBar" key:key];
                 [[font should] beKindOfClass:[UIFont class]];
             });
             
@@ -64,17 +64,17 @@ describe(@"Theme", ^{
             });
             
             it(@"should not match default navigation title color", ^{
-                NSString* key = [theme keyWithProperty:ThemePropertyNavigationTintColor];
-                id defaultColor = [theme valueWithGroup:@"style.appearance" key:key];
-                id nightColor = [night valueWithGroup:@"style.appearance" key:key];
+                NSString* key = [theme keyWithProperty:ThemePropertyTintColor];
+                id defaultColor = [theme valueWithGroup:@"#UINavigationBar" key:key];
+                id nightColor = [night valueWithGroup:@"#UINavigationBar" key:key];
                 [[nightColor should] beKindOfClass:[UIColor class]];
                 [[nightColor shouldNot] equal:defaultColor];
             });
             
             it(@"should match default navigation title font", ^{
-                NSString* key = [theme keyWithProperty:ThemePropertyNavigationTitleFont];
-                id defaultFont = [theme valueWithGroup:@"style.appearance" key:key];
-                id nightFont = [night valueWithGroup:@"style.appearance" key:key];
+                NSString* key = [theme keyWithProperty:ThemePropertyTextFont];
+                id defaultFont = [theme valueWithGroup:@"#UINavigationBar" key:key];
+                id nightFont = [night valueWithGroup:@"#UINavigationBar" key:key];
                 [[nightFont should] beKindOfClass:[UIFont class]];
                 [[nightFont should] equal:defaultFont];
             });

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMNoDeviceCollectionViewCell.h"
 #import "HEMActionButton.h"
-#import "UIColor+HEMStyle.h"
 
 @implementation HEMNoDeviceCollectionViewCell
 
@@ -16,6 +16,10 @@
     [super awakeFromNib];
     [[self actionButton] setUserInteractionEnabled:NO]; // let cell cause the action instead
     [[self messageLabel] setNumberOfLines:0];
+    [[self nameLabel] applyTitleStyle];
+    [[self messageLabel] applyDescriptionStyleWithOverride:NO];
+    [[self separator] applySeparatorStyle];
+    [self applyStyle];
 }
 
 - (void)configureForSense {
@@ -23,7 +27,6 @@
     self.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
     [self.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
                        forState:UIControlStateNormal];
-    [[self actionButton] setBackgroundColor:[UIColor tintColor]];
     [self layoutIfNeeded];
 }
 

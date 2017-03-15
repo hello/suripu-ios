@@ -1405,6 +1405,7 @@
                                             <outlet property="property2InfoButton" destination="5gE-nR-FA5" id="FGS-Yq-GcW"/>
                                             <outlet property="property2Label" destination="JYJ-RL-o8K" id="2Kh-1q-FaZ"/>
                                             <outlet property="property2ValueLabel" destination="0fI-ih-XCM" id="MRP-ZH-GMw"/>
+                                            <outlet property="separator" destination="4C1-gZ-3mC" id="e4P-EQ-sYn"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pill" id="VUm-K7-lee" customClass="HEMPillCollectionViewCell">
@@ -1571,6 +1572,7 @@
                                             <outlet property="property2InfoButton" destination="pwg-8E-bgg" id="fNd-4P-Car"/>
                                             <outlet property="property2Label" destination="PKl-oB-UpS" id="ZJX-d3-xDu"/>
                                             <outlet property="property2ValueLabel" destination="Z4b-if-dfw" id="Zev-TA-18B"/>
+                                            <outlet property="separator" destination="Exw-MJ-X5l" id="Amx-3c-3DV"/>
                                             <outlet property="updateButton" destination="f8K-0K-Zjr" id="zyD-1n-Ues"/>
                                         </connections>
                                     </collectionViewCell>
@@ -1631,6 +1633,7 @@
                                             <outlet property="actionButton" destination="c5Y-wS-OTw" id="I9c-5P-c71"/>
                                             <outlet property="messageLabel" destination="Hzb-RB-4Wp" id="vpW-LS-nIK"/>
                                             <outlet property="nameLabel" destination="TTJ-5F-ZO7" id="0Zm-72-lXk"/>
+                                            <outlet property="separator" destination="Y7z-RF-k4k" id="87P-9r-6dV"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="upgrade" id="xcy-XD-VMR" customClass="CollapsableActionCell" customModule="Sense" customModuleProvider="target">
@@ -1649,7 +1652,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settingsAccessory" translatesAutoresizingMaskIntoConstraints="NO" id="Uom-pi-Fql">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Uom-pi-Fql">
                                                     <rect key="frame" x="366" y="16" width="24" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="5gM-Ta-GEF"/>
@@ -2560,11 +2563,11 @@
         <image name="addIconSmall" width="24" height="24"/>
         <image name="defaultAvatar" width="104" height="104"/>
         <image name="infoIconSmall" width="22" height="22"/>
+        <image name="rightArrow" width="10" height="24"/>
         <image name="senseUpdate" width="190" height="185"/>
-        <image name="settingsAccessory" width="10" height="18"/>
         <image name="warning" width="24" height="21"/>
         <image name="webBack" width="10" height="24"/>
         <image name="webForward" width="10" height="24"/>
-        <image name="webRefresh" width="10" height="18"/>
+        <image name="webRefresh" width="24" height="24"/>
     </resources>
 </document>

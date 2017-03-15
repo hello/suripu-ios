@@ -19,6 +19,7 @@
 @interface HEMTextFooterCollectionReusableView : UICollectionReusableView
 
 @property (nonatomic, weak) id<HEMTextFooterDelegate> delegate;
+@property (nonatomic, strong) IBOutlet UITextView* textView;
 
 - (void)setText:(NSAttributedString*)attributedText;
 

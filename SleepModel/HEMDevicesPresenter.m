@@ -94,7 +94,8 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
     [collectionView setAlwaysBounceVertical:YES];
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
+    [collectionView applyStyle];
+    
     [self setCollectionView:collectionView];
     [self refresh];
 }
@@ -151,20 +152,15 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
         NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
         NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
-        UIColor* color = [UIColor grey4];
         UIFont* font = [UIFont body];
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
         NSArray* args = @[[attrPill hyperlink:url font:font]];
-        NSMutableAttributedString* attributedText =
-            [[NSMutableAttributedString alloc] initWithFormat:textFormat
-                                                         args:args
-                                                    baseColor:color
-                                                     baseFont:font];
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+        NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithFormat:textFormat args:args baseColor:nil baseFont:font];
+        
         [attributedText addAttribute:NSParagraphStyleAttributeName
-                               value:style
-                               range:NSMakeRange(0, [attributedText length])];
+                                      value:DefaultBodyParagraphStyle()
+                                      range:NSMakeRange(0, [attributedText length])];
         
         _attributedFooterText = attributedText;
     }
@@ -185,10 +181,6 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         case HEMDevicesRowPill:
             return [devices hasPairedPill];
     }
-}
-
-- (UIColor*)lastSeenTextColorFor:(SENDeviceMetadata*)deviceMetadata {
-    return [[self deviceService] shouldWarnAboutLastSeenForDevice:deviceMetadata] ? [UIColor redColor] : [UIColor grey6];
 }
 
 - (NSString*)lastSeenFor:(SENDeviceMetadata*)deviceMetadata {
@@ -248,19 +240,17 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         default:
         case SENWiFiConditionNone:
             *icon = [UIImage imageNamed:@"wifiIconNone"];
-            *color = [UIColor redColor];
+            *color = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
             break;
         case SENWiFiConditionBad:
             *icon = [UIImage imageNamed:@"wifiIconLow"];
-            *color = [UIColor orangeColor];
+            *color = [SenseStyle colorWithCondition:SENConditionWarning defaultColor:nil];
             break;
         case SENWiFiConditionFair:
             *icon = [UIImage imageNamed:@"wifiIconMedium"];
-            *color = [UIColor grey6];
             break;
         case SENWiFiConditionGood:
             *icon = [UIImage imageNamed:@"wifiIconHigh"];
-            *color = [UIColor grey6];
             break;
     }
 }
@@ -285,7 +275,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         NSMutableAttributedString* attributedText =
         [[NSMutableAttributedString alloc] initWithFormat:format
                                                      args:args
-                                                baseColor:[UIColor grey5]
+                                                baseColor:nil
                                                  baseFont:[UIFont body]];
         
         NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
@@ -436,6 +426,8 @@ referenceSizeForFooterInSection:(NSInteger)section {
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMDeviceCollectionViewCell class]]) {
         HEMDeviceCollectionViewCell* deviceCell = (id)cell;
+        [deviceCell applyStyle];
+        
         switch ([indexPath row]) {
             default:
             case HEMDevicesRowSense:
@@ -482,21 +474,24 @@ referenceSizeForFooterInSection:(NSInteger)section {
     [self wiFiColor:&wiFiColor icon:&wiFiIcon];
     
     NSString* lastSeen = [self lastSeenFor:senseMetadata];
-    UIColor* lastSeenColor = [self lastSeenTextColorFor:senseMetadata];
     NSString* name = [self senseTitleForMetadata:senseMetadata];
     NSString* property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
     NSString* property1Value = [self senseConnectedSSID];
-    UIColor* property1ValueColor = wiFiColor;
     NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* property2Value = [senseMetadata firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
-    [[cell lastSeenValueLabel] setTextColor:lastSeenColor];
+    if ([[self deviceService] shouldWarnAboutLastSeenForDevice:senseMetadata]) {
+        UIColor* alertColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
+        [[cell lastSeenValueLabel] setTextColor:alertColor];
+    }
     [[cell property1Label] setText:property1Name];
     [[cell property1ValueLabel] setText:property1Value];
     [[cell property1IconView] setImage:wiFiIcon];
-    [[cell property1ValueLabel] setTextColor:property1ValueColor];
+    if (wiFiColor) {
+        [[cell property1ValueLabel] setTextColor:wiFiColor];
+    }
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:YES];
@@ -509,16 +504,14 @@ referenceSizeForFooterInSection:(NSInteger)section {
     
     BOOL hasUpdate = [[self deviceService] isPillFirmwareUpdateAvailable];
     NSString* lastSeen = [self lastSeenFor:pillMetadata];
-    UIColor* lastSeenColor = [self lastSeenTextColorFor:pillMetadata];
     NSString* name = NSLocalizedString(@"settings.device.pill", nil);
     NSString* property1Name = NSLocalizedString(@"settings.device.battery", nil);
     NSString* property1Value = nil;
-    UIColor* property1ValueColor =nil;
+    UIColor* property1ValueColor = nil;
     NSString* property2Name = NSLocalizedString(@"settings.device.color", nil);
     NSString* property2Value = [self colorStringForDevice:pillMetadata];
     NSString* firmwareName = NSLocalizedString(@"settings.device.firmware-version", nil);
     NSString* firmwareVers = [pillMetadata firmwareVersion];
-    UIColor* firmwareColor = hasUpdate ? [UIColor redColor] : [UIColor grey6];
     NSString* updateButtonText = nil;
     
     if (hasUpdate) {
@@ -528,7 +521,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
     switch ([pillMetadata state]) {
         case SENPillStateLowBattery:
             property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
-            property1ValueColor = [UIColor redColor];
+            property1ValueColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
             break;
         case SENPillStateNormal:
             property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
@@ -541,10 +534,15 @@ referenceSizeForFooterInSection:(NSInteger)section {
     
     [[cell nameLabel] setText:name];
     [[cell lastSeenValueLabel] setText:lastSeen];
-    [[cell lastSeenValueLabel] setTextColor:lastSeenColor];
+    if ([[self deviceService] shouldWarnAboutLastSeenForDevice:pillMetadata]) {
+        UIColor* alertColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
+        [[cell lastSeenValueLabel] setTextColor:alertColor];
+    }
     [[cell property1Label] setText:property1Name];
     [[cell property1ValueLabel] setText:property1Value];
-    [[cell property1ValueLabel] setTextColor:property1ValueColor];
+    if (property1ValueColor) {
+        [[cell property1ValueLabel] setTextColor:property1ValueColor];
+    }
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
     [[cell property2InfoButton] setHidden:NO];
@@ -553,7 +551,10 @@ referenceSizeForFooterInSection:(NSInteger)section {
                          forControlEvents:UIControlEventTouchUpInside];
     [[pillCell firmwareLabel] setText:firmwareName];
     [[pillCell firmwareValueLabel] setText:firmwareVers];
-    [[pillCell firmwareValueLabel] setTextColor:firmwareColor];
+    if (hasUpdate) {
+        UIColor* alertColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
+        [[pillCell firmwareValueLabel] setTextColor:alertColor];
+    }
     [[pillCell updateButton] setHidden:!hasUpdate];
     [[pillCell updateButton] setUserInteractionEnabled:hasUpdate];
     [[pillCell updateButton] addTarget:self

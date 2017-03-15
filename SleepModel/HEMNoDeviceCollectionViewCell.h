@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *actionButton;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 /**
  *  Set the title, message and styling for a missing sense device

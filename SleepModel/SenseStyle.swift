@@ -30,6 +30,23 @@ import UIKit
         }
     }
     
+    @objc enum ConditionStyle: Int {
+        case alert = 0
+        case warning
+        case ideal
+        
+        var key: String {
+            switch self {
+            case .alert:
+                return "sense.alert"
+            case .warning:
+                return "sense.warning"
+            case .ideal:
+                return "sense.ideal"
+            }
+        }
+    }
+    
     @objc enum Group: Int {
         case tableView = 1
         case tableViewFill
@@ -39,13 +56,11 @@ import UIKit
         case activityView
         case controller
         case volumeControl
-        case view
         case remoteImageView
+        case condition
         
         var key: String {
             switch self {
-            case .view:
-                return "sense.view"
             case .tableView:
                 return "sense.tableview"
             case .tableViewFill:
@@ -64,6 +79,8 @@ import UIKit
                 return "sense.volume.control"
             case .remoteImageView:
                 return "sense.remote.image.view"
+            case .condition:
+                return "sense.condition"
             }
             
         }
@@ -98,6 +115,10 @@ import UIKit
         return self.theme.value(aClass: aClass, key: property.key) as? UIColor
     }
     
+    @objc static func color(aClass: AnyClass, propertyName: String) -> UIColor? {
+        return self.theme.value(aClass: aClass, key: propertyName) as? UIColor
+    }
+    
     @objc static func color(group: Group, property: Theme.ThemeProperty) -> UIColor? {
         return self.value(group: group, property: property) as? UIColor
     }
@@ -128,6 +149,21 @@ import UIKit
     
     @objc static func value(group: Group, propertyName: String) -> Any? {
         return self.theme.value(group: group.key, key: propertyName)
+    }
+    
+    //MARK: - Color based on condition
+    
+    @objc static func color(condition: SENCondition, defaultColor: UIColor?) -> UIColor? {
+        switch condition {
+            case .alert:
+                return self.color(group: .condition, propertyName: ConditionStyle.alert.key)
+            case .warning:
+                return self.color(group: .condition, propertyName: ConditionStyle.warning.key)
+            case .ideal:
+                return self.color(group: .condition, propertyName: ConditionStyle.ideal.key)
+            default:
+                return defaultColor
+        }
     }
     
 }

@@ -1,4 +1,8 @@
 {
+    "style.app" : {
+        "style.status.bar.style" : "style.status.bar.LIGHT"
+    },
+    
     "#HEMExpansionHeaderView" : {
         "style.group.parent" : "sense.tableview.fill",
         "style.text.color" : "@color/light.primary.text",
@@ -52,10 +56,6 @@
         "style.tint.highlighted.color" : "@color/blue.6"
     },
     
-    "style.app" : {
-        "style.status.bar.style" : "style.status.bar.LIGHT"
-    },
-    
     "sense.tableview" : {
         "style.background.color" : "@color/grey.3",
         "style.separator.color" : "@color/light.separator",
@@ -106,7 +106,7 @@
         "style.text.detail.font" : "@font/body.1",
         "style.primary.button.text.color" : "@color/white",
         "style.secondary.button.text.color" : "@color/blue.6",
-        "style.navigation.bar.tint.color" : "@color/white",
+        "style.bar.tint.color" : "@color/white",
         "sense.volume.bar.tint.color" : "@color/blue.6",
         "sense.volume.bar.color" : "@color/grey.3",
         "sense.volume.number.font" : "@font/display.4"

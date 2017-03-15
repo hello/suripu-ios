@@ -77,7 +77,7 @@
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
         "style.secondary.button.text.color" : "@color/white",
-        "style.navigation.bar.tint.color" : "@color/black",
+        "style.bar.tint.color" : "@color/black",
         "sense.volume.bar.color" : "@color/white"
     },
     

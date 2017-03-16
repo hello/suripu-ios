@@ -11,11 +11,9 @@ import Foundation
 extension HEMURLImageView {
     
     @objc func applyStyle() {
-        self.backgroundColor = SenseStyle.color(group: .remoteImageView,
-                                                property: .backgroundColor)
-        self.layer.borderColor = SenseStyle.color(group: .remoteImageView,
-                                                  property: .borderColor)?.cgColor
-        
+        let aClass = HEMURLImageView.self
+        self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
+        self.layer.borderColor = SenseStyle.color(aClass: aClass, property: .borderColor)?.cgColor
     }
     
 }

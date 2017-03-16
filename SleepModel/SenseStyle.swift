@@ -56,7 +56,6 @@ import UIKit
         case warningView
         case activityView
         case volumeControl
-        case remoteImageView
         case condition
         case collectionViewFill
         case headerFooter
@@ -81,8 +80,6 @@ import UIKit
                 return "sense.activity.cover.view"
             case .volumeControl:
                 return "sense.volume.control"
-            case .remoteImageView:
-                return "sense.remote.image.view"
             case .condition:
                 return "sense.condition"
             case .collectionViewFill:

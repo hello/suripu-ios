@@ -51,6 +51,7 @@ import UIKit
         case tableView = 1
         case tableViewFill
         case listItem
+        case listItemSelection
         case navigationController
         case warningView
         case activityView
@@ -71,6 +72,8 @@ import UIKit
                 return "sense.tableview.fill"
             case .listItem:
                 return "sense.list.item"
+            case .listItemSelection:
+                return "sense.list.item.selection"
             case .navigationController:
                 return "sense.navigation.controller"
             case .warningView:

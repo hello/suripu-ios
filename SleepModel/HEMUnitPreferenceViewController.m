@@ -7,8 +7,7 @@
 //
 #import <SenseKit/SENPreference.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 #import "UITableViewCell+HEMSettings.h"
 
 #import "HEMUnitPreferenceViewController.h"
@@ -50,7 +49,8 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
     [[self unitTableView] setTableFooterView:footer];
     [[self unitTableView] setDataSource:self];
     [[self unitTableView] setDelegate:self];
-    [[self unitTableView] setBackgroundColor:[UIColor backgroundColor]];
+    
+    [[self unitTableView] applyStyle];
 }
 
 - (NSString*)sectionTitleForSection:(NSInteger)section {
@@ -111,8 +111,7 @@ typedef NS_ENUM(NSInteger, HEMUnitSection) {
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [cell setAccessorySelection:NO];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor textColor]];
+    [cell applyStyle];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     switch ([indexPath section]) {

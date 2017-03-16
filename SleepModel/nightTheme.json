@@ -118,6 +118,10 @@
         "style.tint.color" : "@color/white"
     },
     
+    "sense.list.item.selection" : {
+        "style.tint.color" : "@color/white"
+    },
+    
     "sense.controller" : {
         "style.background.color" : "@color/black"
     },

@@ -102,7 +102,6 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView applyStyle];
     [self setTableView:tableView];
     [self setTableViewBottomConstraint:bottomConstraint];
@@ -157,10 +156,9 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     HEMListItemCell* itemCell = (id) cell;
     NSString* name = [[itemCell itemLabel] text];
     BOOL selected = [[self selectedItemNames] containsObject:name];
-    UIColor* tint = selected ? [UIColor tintColor] : [UIColor grey3];
     [[itemCell selectionImageView] setImage:[self selectedImage]];
     [[itemCell selectionImageView] setHighlightedImage:[self highlightedSelectionImage]];
-    [[itemCell selectionImageView] setTintColor:tint];
+    [itemCell applyTintStyleWithHighlighted:selected];
 }
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {

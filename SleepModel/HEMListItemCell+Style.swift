@@ -24,4 +24,10 @@ extension HEMListItemCell {
         self.descriptionLabel?.textColor = itemDetailColor
     }
     
+    @objc override func applyTintStyle(highlighted: Bool) {
+        let property: Theme.ThemeProperty = highlighted ? .tintHighlightedColor : .tintColor
+        let tintColor = SenseStyle.color(group: .listItemSelection, property: property)
+        self.selectionImageView?.tintColor = tintColor
+    }
+    
 }

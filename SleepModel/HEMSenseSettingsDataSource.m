@@ -12,6 +12,8 @@
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENPillMetadata.h>
 
+#import "Sense-Swift.h"
+
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
 
@@ -205,9 +207,7 @@
 #pragma mark - Warnings
 
 - (NSDictionary*)attributesForWarningMessages {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName: [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+    return @{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
 - (nonnull NSOrderedSet*)deviceWarnings {

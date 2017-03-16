@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         
         NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
         NSArray* args = @[[attrPill hyperlink:url font:font]];
-        NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithFormat:textFormat args:args baseColor:nil baseFont:font];
+        NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithFormat:textFormat args:args];
         
         [attributedText addAttribute:NSParagraphStyleAttributeName
                                       value:DefaultBodyParagraphStyle()

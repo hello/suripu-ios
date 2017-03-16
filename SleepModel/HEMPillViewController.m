@@ -10,6 +10,8 @@
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "Sense-Swift.h"
+
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -116,12 +118,11 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [[self collectionView] setDataSource:self];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
+    [[self collectionView] applyFillStyle];
 }
 
 - (NSDictionary*)attributesForWarningMessages {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+    return @{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
 - (NSAttributedString*)attributedLongLastSeenMessage {
@@ -230,8 +231,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
                 break;
         }
         
-        [[actionCell textLabel] setTextColor:[UIColor grey6]];
-        [[actionCell textLabel] setFont:[UIFont body]];
+        icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [[actionCell textLabel] setText:text];
         [[actionCell iconView] setImage:icon];
         [[actionCell separatorView] setHidden:!showSeparator];
@@ -260,7 +260,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:HEMPillHeaderReuseId
                                                                                forIndexPath:indexPath];
-    [view setBackgroundColor:[UIColor backgroundColor]];
+    [view applyHeaderFooterStyle];
     return view;
     
 }

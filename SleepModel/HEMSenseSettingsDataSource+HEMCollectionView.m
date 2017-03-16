@@ -6,6 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
@@ -81,8 +83,7 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     } else {
         message = NSLocalizedString(@"settings.sense.connecting", nil);
     }
-    [[actionCell textLabel] setFont:[UIFont body]];
-    [[actionCell textLabel] setTextColor:[UIColor grey6]];
+    
     [actionCell showActivity:!connected withText:message];
     [[actionCell separatorView] setHidden:NO];
     [[actionCell topSeparatorView] setHidden:NO];
@@ -122,10 +123,9 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
             break;
     }
     
+    icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [actionCell setEnabled:enabled];
     [[actionCell textLabel] setText:actionText];
-    [[actionCell textLabel] setFont:[UIFont body]];
-    [[actionCell textLabel] setTextColor:[UIColor grey6]];
     [[actionCell iconView] setImage:icon];
     [[actionCell separatorView] setHidden:!showSeparator];
     [[actionCell topSeparatorView] setHidden:!showTopSeparator];
@@ -138,7 +138,8 @@ static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
     UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:HEMSenseSettingsHeaderReuseId
                                                                                forIndexPath:indexPath];
-    [view setBackgroundColor:[UIColor backgroundColor]];
+    [view applyHeaderFooterStyle];
+    
     return view;
     
 }

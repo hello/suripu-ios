@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 
 static NSString* const kHEMStringFormatSymbol = @"%@";
@@ -13,9 +14,12 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 @implementation NSMutableAttributedString (HEMFormat)
 
 - (instancetype)initWithFormat:(NSString*)format args:(NSArray*)args {
-    self = [self init];
-    if (self) {
+    if (self = [self init]) {
         [self process:format args:args];
+        
+        UIColor* baseColor = [SenseStyle colorWithGroup:GroupAttributedString property:ThemePropertyTextColor];
+        UIFont* baseFont = [SenseStyle fontWithGroup:GroupAttributedString property:ThemePropertyTextFont];
+        [self applyColor:baseColor andFont:baseFont];
     }
     return self;
 }
@@ -24,8 +28,8 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                           args:(NSArray *)args
                      baseColor:(UIColor*)color
                       baseFont:(UIFont*)font {
-    self = [self initWithFormat:format args:args];
-    if (self) {
+    if (self = [super init]) {
+        [self process:format args:args];
         [self applyColor:color andFont:font];
     }
     return self;
@@ -34,7 +38,8 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 - (instancetype)initWithFormat:(NSString *)format
                           args:(NSArray *)args
                     attributes:(NSDictionary*)attributes {
-    if (self = [self initWithFormat:format args:args]) {
+    if (self = [super init]) {
+        [self process:format args:args];
         [self applyAttributes:attributes];
     }
     return self;
@@ -94,6 +99,10 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 
 - (void)applyColor:(UIColor*)color andFont:(UIFont*)font {
     if (!color && !font) {
+        return;
+    }
+    
+    if ([self length] == 0) {
         return;
     }
     

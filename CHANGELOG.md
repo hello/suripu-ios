@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0.4
+
+New:
+
+* Themed account settings
+* Themed device settings
+* Themed Sense settings
+* Themed Sleep Pill settings
+* Themed support screens
+
 ## 2.1.0.3
 
 New:

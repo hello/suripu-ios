@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMBirthdatePickerView.h"
-#import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 
 CGFloat const kHEMBirthdateValueHeight = 50.0f;
 
@@ -27,8 +27,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
 @property (nonatomic, strong) UITableView* yearTableView;
 
 @property (nonatomic, strong) NSDateFormatter* monthFormatter;
-@property (nonatomic, strong) UIFont* pickerTextFont;
-@property (nonatomic, strong) UIColor* pickerTextColor;
 @property (nonatomic, strong) NSMutableDictionary* daysInMonth;
 
 @property (nonatomic, strong) NSMutableArray* accessibleElements;
@@ -78,9 +76,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [[self monthFormatter] setDateFormat:@"MMMM"];
     [[self monthFormatter] setLocale:[NSLocale currentLocale]];
     
-    [self setPickerTextColor:[UIColor colorWithWhite:56.0f/255.0f alpha:1.0f]];
-    [self setPickerTextFont:[UIFont h5]];
-    
     [self setMonthTableView:[self componentTableView]];
     [self addSubview:[self monthTableView]];
     
@@ -104,8 +99,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [tv setBackgroundColor:[UIColor clearColor]];
-    [tv setSeparatorColor:[UIColor separatorColor]];
+    [tv applyFillStyle];
     
     CGRect footerFrame = CGRectZero;
     footerFrame.size.width = CGRectGetWidth([tv bounds]);
@@ -115,8 +109,10 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
 }
 
 - (UIView*)transparentView {
-    UIView* view = [[UIView alloc] init];
-    [view setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.8f]];
+    UIView* view = [UIView new];
+    // use any table view's background color as they will all be the same
+    UIColor* bgColor = [[self monthTableView] backgroundColor];
+    [view setBackgroundColor:[bgColor colorWithAlphaComponent:0.8f]];
     [view setUserInteractionEnabled:NO];
     return view;
 }
@@ -283,7 +279,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellId];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [cell setBackgroundColor:[UIColor clearColor]];
     }
     return cell;
 }
@@ -313,9 +308,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell setIndentationLevel:-1];
     [[cell textLabel] setText:title];
     [[cell textLabel] setTextAlignment:alignment];
-    [[cell textLabel] setFont:[self pickerTextFont]];
-    [[cell textLabel] setTextColor:[self pickerTextColor]];
-    
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

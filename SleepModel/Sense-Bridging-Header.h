@@ -75,3 +75,6 @@
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMPillCollectionViewCell.h"
 #import "HEMTextFooterCollectionReusableView.h"
+#import "HEMTextFieldCollectionViewCell.h"
+#import "HEMTitledTextField.h"
+#import "HEMSimpleLineTextField.h"

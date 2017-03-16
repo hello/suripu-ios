@@ -15,7 +15,6 @@ static CGFloat const kHEMTitledTextFieldPlaceholderExtraOffset = 5.0f;
 
 @interface HEMTitledTextField() <HEMTextFieldFocusDelegate>
 
-@property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* titleTopConstraint;
 @property (nonatomic, assign) CGFloat origTitleTopMargin;
 

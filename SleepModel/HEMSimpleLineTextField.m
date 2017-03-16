@@ -22,6 +22,8 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
         [self setTintColor:[UIColor tintColor]];
         [self setFont:[UIFont body]];
         [self setTextColor:[UIColor grey6]];
+        [self setPlaceholderColor:[UIColor grey4]];
+        [self setFocusedPlaceholderColor:[UIColor grey3]];
         [self setFocus:NO];
     }
     return self;
@@ -71,7 +73,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
 }
 
 - (void)setFocus:(BOOL)focus {
-    UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey3] : [UIColor grey4];
+    UIColor* placeholderColor = [self isFirstResponder] ? [self focusedPlaceholderColor] : [self placeholderColor];
     
     NSDictionary* placeHolderAttrs = @{
         NSFontAttributeName : [UIFont body],

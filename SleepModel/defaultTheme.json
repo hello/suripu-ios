@@ -110,6 +110,12 @@
         "style.tint.color" : "@color/black"
     },
     
+    "#HEMTextFieldCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.color" : "@color/light.primary.text"
+    },
+    
     "sense.collectionview.fill" : {
         "style.group.parent" : "#UICollectionView",
         "style.background.color" : "@color/white"

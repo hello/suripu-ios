@@ -13,6 +13,7 @@
 @interface HEMTitledTextField : UIView
 
 @property (nonatomic, weak) IBOutlet HEMSimpleLineTextField* textField;
+@property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, copy) NSString* placeholderText;
 
 @end

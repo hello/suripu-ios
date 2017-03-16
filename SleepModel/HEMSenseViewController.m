@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -72,6 +74,7 @@
     [[self collectionView] setDataSource:dataSource];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
+    [[self collectionView] applyFillStyle];
 }
 
 - (void)showBLEDisconnectErrorIfNeeded {

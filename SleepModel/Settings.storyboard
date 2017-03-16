@@ -1868,13 +1868,13 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qWb-So-94c" customClass="HEMExtendedHeaderCollectionViewLayout">
                                     <size key="itemSize" width="600" height="50"/>
-                                    <size key="headerReferenceSize" width="600" height="15"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="warning" id="DpL-nK-ncw" customClass="HEMWarningCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="15" width="600" height="170"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="170"/>
@@ -1939,12 +1939,13 @@
                                         <connections>
                                             <outlet property="actionButton" destination="NEk-Xp-yLW" id="pz3-BI-r29"/>
                                             <outlet property="iconImageView" destination="Yxh-H9-pN3" id="gw4-AC-kWI"/>
+                                            <outlet property="separator" destination="KgH-NY-rcS" id="AMy-77-ck7"/>
                                             <outlet property="warningMessageLabel" destination="drw-vZ-r4Z" id="PCB-15-XPQ"/>
                                             <outlet property="warningSummaryLabel" destination="Zi9-4j-h5a" id="gzL-QR-YtD"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="action" id="fEA-62-u8E" customClass="HEMDeviceActionCell">
-                                        <rect key="frame" x="0.0" y="185" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="220" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
@@ -2001,7 +2002,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="connection" id="1km-7K-K2Z" customClass="HEMDeviceActionCell">
-                                        <rect key="frame" x="0.0" y="241" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="276" width="600" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
@@ -2059,7 +2060,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sectionHeader" id="e01-W8-8rB">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="15"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </collectionReusableView>
@@ -2248,6 +2249,7 @@
                                         <connections>
                                             <outlet property="actionButton" destination="Z2C-Ue-k1S" id="tsb-v7-dNX"/>
                                             <outlet property="iconImageView" destination="fY4-14-ol4" id="L8H-Up-v7L"/>
+                                            <outlet property="separator" destination="Pk6-1Y-hk6" id="qgx-9Q-yxF"/>
                                             <outlet property="warningMessageLabel" destination="NUv-3Y-GA9" id="rru-1K-mIT"/>
                                             <outlet property="warningSummaryLabel" destination="n6E-T5-ZhY" id="96S-Vi-F4S"/>
                                         </connections>

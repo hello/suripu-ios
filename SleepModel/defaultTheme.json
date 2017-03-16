@@ -98,9 +98,25 @@
         "style.text.font" : "@font/body.1"
     },
     
-    "#NSMutableAttributedString" : {
+    "sense.attributed.string" : {
         "style.text.color" : "@color/light.secondary.text",
         "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMDeviceActionCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
+    "sense.collectionview.fill" : {
+        "style.group.parent" : "#UICollectionView",
+        "style.background.color" : "@color/white"
+    },
+    
+    "sense.header.or.footer" : {
+        "style.background.color" : "@color/grey.3"
     },
     
     "sense.tableview" : {
@@ -131,7 +147,7 @@
     },
     
     "sense.warning.view" : {
-        "style.background.color" : "@color/grey.9",
+        "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.text.font" : "@font/body.2",

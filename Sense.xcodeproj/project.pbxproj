@@ -119,6 +119,7 @@
 		BF048A001E79CAAE00D1A79E /* HEMDeviceCollectionViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0489FF1E79CAAE00D1A79E /* HEMDeviceCollectionViewCell+Style.swift */; };
 		BF048A061E79EB4F00D1A79E /* HEMCardCollectionViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A051E79EB4F00D1A79E /* HEMCardCollectionViewCell+Style.swift */; };
 		BF048A081E79F64100D1A79E /* UITextView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A071E79F64100D1A79E /* UITextView+Style.swift */; };
+		BF048A0A1E7A0B3200D1A79E /* UICollectionReusableView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */; };
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
@@ -788,6 +789,7 @@
 		BF0489FF1E79CAAE00D1A79E /* HEMDeviceCollectionViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMDeviceCollectionViewCell+Style.swift"; sourceTree = "<group>"; };
 		BF048A051E79EB4F00D1A79E /* HEMCardCollectionViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMCardCollectionViewCell+Style.swift"; sourceTree = "<group>"; };
 		BF048A071E79F64100D1A79E /* UITextView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Style.swift"; sourceTree = "<group>"; };
+		BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Style.swift"; sourceTree = "<group>"; };
 		BF05C8DF1A3A52CB002A1307 /* HEMMultipleResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMultipleResponseCell.h; sourceTree = "<group>"; };
 		BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMultipleResponseCell.m; sourceTree = "<group>"; };
 		BF05C8EE1A3A830D002A1307 /* HEMResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResponseCell.h; sourceTree = "<group>"; };
@@ -3396,6 +3398,7 @@
 				BF0489FF1E79CAAE00D1A79E /* HEMDeviceCollectionViewCell+Style.swift */,
 				BF048A051E79EB4F00D1A79E /* HEMCardCollectionViewCell+Style.swift */,
 				BF048A071E79F64100D1A79E /* UITextView+Style.swift */,
+				BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4226,6 +4229,7 @@
 				8AF18E2A1BC31A7800EEF412 /* HEMAlertTextView.m in Sources */,
 				BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */,
 				BF37132C1E6E28E300EF9BAB /* Theme.swift in Sources */,
+				BF048A0A1E7A0B3200D1A79E /* UICollectionReusableView+Style.swift in Sources */,
 				BFD7E7A51D9B45E0007DB6E4 /* HEMLogUtils.m in Sources */,
 				BF3583921CB441B000760CD4 /* HEMAudioButton.m in Sources */,
 				BF5BACF91C5C186000347185 /* HEMTrendsGraphsPresenter.m in Sources */,

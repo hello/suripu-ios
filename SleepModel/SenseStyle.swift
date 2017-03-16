@@ -58,6 +58,9 @@ import UIKit
         case volumeControl
         case remoteImageView
         case condition
+        case collectionViewFill
+        case headerFooter
+        case attributedString
         
         var key: String {
             switch self {
@@ -81,6 +84,12 @@ import UIKit
                 return "sense.remote.image.view"
             case .condition:
                 return "sense.condition"
+            case .collectionViewFill:
+                return "sense.collectionview.fill"
+            case .headerFooter:
+                return "sense.header.or.footer"
+            case .attributedString:
+                return "sense.attributed.string"
             }
             
         }

@@ -71,6 +71,25 @@
         "style.text.color" : "@color/dark.secondary.text"
     },
     
+    "#HEMDeviceActionCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white"
+    },
+    
+    "sense.attributed.string" : {
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.collectionview.fill" : {
+        "style.group.parent" : "#UICollectionView",
+        "style.background.color" : "@color/grey.9"
+    },
+    
+    "sense.header.or.footer" : {
+        "style.background.color" : "@color/black"
+    },
+    
     "sense.tableview" : {
         "style.background.color" : "@color/black",
         "style.separator.color" : "@color/dark.separator",

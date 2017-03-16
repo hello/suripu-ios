@@ -20,4 +20,10 @@ extension UITableViewCell {
         self.imageView?.tintColor = SenseStyle.color(group: .listItem, property: .tintColor)
     }
     
+    @objc func applyTintStyle(highlighted: Bool) {
+        let property: Theme.ThemeProperty = highlighted ? .tintHighlightedColor : .tintColor
+        let tintColor = SenseStyle.color(group: .listItemSelection, property: property)
+        self.accessoryView?.tintColor = tintColor
+    }
+    
 }

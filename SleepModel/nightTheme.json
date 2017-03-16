@@ -122,8 +122,14 @@
         "style.tint.color" : "@color/white"
     },
     
-    "sense.controller" : {
+    "#UIViewController" : {
         "style.background.color" : "@color/black"
+    },
+    
+    "#HEMOnboardingController" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
     },
     
     "sense.warning.view" : {

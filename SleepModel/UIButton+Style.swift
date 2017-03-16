@@ -10,7 +10,7 @@ import Foundation
 
 extension UIButton {
     
-    func applyStyle() {
+    @objc func applyStyle() {
         let aClass = UIButton.self
         self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
         self.titleLabel?.font = SenseStyle.font(aClass: aClass, property: .textFont)

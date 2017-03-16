@@ -28,7 +28,7 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                           args:(NSArray *)args
                      baseColor:(UIColor*)color
                       baseFont:(UIFont*)font {
-    if (self = [super init]) {
+    if (self = [self init]) {
         [self process:format args:args];
         [self applyColor:color andFont:font];
     }
@@ -38,7 +38,7 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 - (instancetype)initWithFormat:(NSString *)format
                           args:(NSArray *)args
                     attributes:(NSDictionary*)attributes {
-    if (self = [super init]) {
+    if (self = [self init]) {
         [self process:format args:args];
         [self applyAttributes:attributes];
     }

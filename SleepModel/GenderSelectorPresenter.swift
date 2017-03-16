@@ -85,6 +85,7 @@ import SenseKit
         optionsTable?.dataSource = self
         optionsTable?.tableFooterView = UIView()
         optionsTable?.separatorColor = UIColor.separator()
+        optionsTable?.applyFillStyle()
         self.optionsTable = optionsTable
     }
     
@@ -186,18 +187,15 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
         return tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
     }
     
-    func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let customCell = cell as? HEMBasicTableViewCell
         let selected = self.isSelected(indexPath: indexPath)
         var radio = selected ? UIImage(named: "radioSelected") : UIImage(named: "radio")
-        let selectionTint = selected ? UIColor.tint() : UIColor.grey2()
         var accessoryImage: UIImage? = nil
         let accessoryView = customCell?.customAccessoryView as? UIImageView
         var title: String? = nil
         var detail: String? = nil
-        var detailTextColor =  UIColor.grey3()
+        var detailTextColor: UIColor? = nil
         let row = Row(rawValue: indexPath.row)!
         
         switch row {
@@ -216,17 +214,17 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
         }
         
         accessoryView?.image = accessoryImage
-        accessoryView?.tintColor = UIColor.grey3()
         radio = radio?.withRenderingMode(.alwaysTemplate)
-        customCell?.customTitleLabel.font = UIFont.body()
-        customCell?.customTitleLabel.textColor = UIColor.grey6()
         customCell?.customTitleLabel.text = title
         customCell?.customDetailLabel?.text = detail
-        customCell?.customDetailLabel?.textColor = detailTextColor
-        customCell?.customDetailLabel?.font = UIFont.body()
         customCell?.remoteImageView.image = radio
-        customCell?.remoteImageView.tintColor = selectionTint
         customCell?.selectionStyle = .none
+        customCell?.applyStyle()
+        customCell?.applyTintStyle(highlighted: selected)
+        
+        if detailTextColor != nil {
+            customCell?.customDetailLabel?.textColor = detailTextColor
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -61,4 +61,9 @@
  */
 - (void)applyAttributes:(NSDictionary*)attributes;
 
+/**
+ * Apply the style of a footer
+ */
+- (void)applyFooterStyle;
+
 @end

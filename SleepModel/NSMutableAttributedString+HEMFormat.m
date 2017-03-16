@@ -126,4 +126,19 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                           }];
 }
 
+- (void)applyFooterStyle {
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupHeaderFooter property:ThemePropertyTextColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupHeaderFooter property:ThemePropertyTextFont];
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
+    if (textFont) {
+        attributes[NSFontAttributeName] = textFont;
+    }
+    if (textColor) {
+        attributes[NSForegroundColorAttributeName] = textColor;
+    }
+    if ([attributes count] > 0) {
+        [self addAttributes:attributes range:NSMakeRange(0, [self length])];
+    }
+}
+
 @end

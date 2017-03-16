@@ -116,7 +116,9 @@
     },
     
     "sense.header.or.footer" : {
-        "style.background.color" : "@color/grey.3"
+        "style.background.color" : "@color/grey.3",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/body.small"
     },
     
     "sense.tableview" : {
@@ -139,7 +141,8 @@
         "style.text.detail.font" : "@font/body.small",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.separator.color" : "@color/light.separator",
-        "style.link.color" : "@color/blue.6"
+        "style.link.color" : "@color/blue.6",
+        "style.tint.color" : "@color/black"
     },
     
     "sense.controller" : {
@@ -184,5 +187,9 @@
         "sense.alert" : "@color/red.6",
         "sense.warning" : "@color/orange.6",
         "sense.ideal" : "@color/green.6"
+    },
+    
+    "sense.action" : {
+        "style.tint.color" : "@color/blue.6"
     }
 }

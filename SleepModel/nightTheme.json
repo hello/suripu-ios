@@ -87,7 +87,8 @@
     },
     
     "sense.header.or.footer" : {
-        "style.background.color" : "@color/black"
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.disabled.text"
     },
     
     "sense.tableview" : {
@@ -107,7 +108,8 @@
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
         "style.separator.color" : "@color/dark.separator",
-        "style.link.color" : "@color/blue.6"
+        "style.link.color" : "@color/blue.6",
+        "style.tint.color" : "@color/white"
     },
     
     "sense.controller" : {

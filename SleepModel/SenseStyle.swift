@@ -61,6 +61,7 @@ import UIKit
         case collectionViewFill
         case headerFooter
         case attributedString
+        case action
         
         var key: String {
             switch self {
@@ -90,6 +91,8 @@ import UIKit
                 return "sense.header.or.footer"
             case .attributedString:
                 return "sense.attributed.string"
+            case .action:
+                return "sense.action"
             }
             
         }

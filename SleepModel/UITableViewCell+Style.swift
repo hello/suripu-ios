@@ -11,17 +11,13 @@ import Foundation
 extension UITableViewCell {
     
     @objc func applyStyle() {
-        let itemBgColor = SenseStyle.value(group: .listItem, property: .backgroundColor) as? UIColor
-        let itemTextColor = SenseStyle.value(group: .listItem, property: .textColor) as? UIColor
-        let itemTextFont = SenseStyle.value(group: .listItem, property: .textFont) as? UIFont
-        let itemDetailFont = SenseStyle.value(group: .listItem, property: .detailFont) as? UIFont
-        let itemDetailColor = SenseStyle.value(group: .listItem, property: .detailColor) as? UIColor
-        self.backgroundColor = itemBgColor
-        self.contentView.backgroundColor = itemBgColor
-        self.textLabel?.textColor = itemTextColor
-        self.textLabel?.font = itemTextFont
-        self.detailTextLabel?.textColor = itemDetailColor
-        self.detailTextLabel?.font = itemDetailFont
+        self.backgroundColor = SenseStyle.color(group: .listItem, property: .backgroundColor)
+        self.contentView.backgroundColor = self.backgroundColor
+        self.textLabel?.textColor = SenseStyle.color(group: .listItem, property: .textColor)
+        self.textLabel?.font = SenseStyle.font(group: .listItem, property: .textFont)
+        self.detailTextLabel?.textColor = SenseStyle.color(group: .listItem, property: .detailColor)
+        self.detailTextLabel?.font = SenseStyle.font(group: .listItem, property: .detailFont)
+        self.imageView?.tintColor = SenseStyle.color(group: .listItem, property: .tintColor)
     }
     
 }

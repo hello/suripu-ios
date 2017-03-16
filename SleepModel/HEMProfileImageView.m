@@ -40,7 +40,6 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 
 - (void)configureDefaults {
     [self setClipsToBounds:YES];
-    [self setBackgroundColor:[UIColor whiteColor]];
     [self setIndicateActivity:YES];
 }
 
@@ -57,7 +56,7 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
     CAShapeLayer* mask = [CAShapeLayer layer];
     [mask setPath:[rectPath CGPath]];
     [mask setFillRule:kCAFillRuleEvenOdd];
-    [mask setFillColor:[[UIColor whiteColor] CGColor]];
+    [mask setFillColor:[[self backgroundColor] CGColor]];
     
     [[self layer] addSublayer:mask];
 }

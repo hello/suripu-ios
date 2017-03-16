@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"

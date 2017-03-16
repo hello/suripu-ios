@@ -121,6 +121,7 @@
 		BF048A081E79F64100D1A79E /* UITextView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A071E79F64100D1A79E /* UITextView+Style.swift */; };
 		BF048A0A1E7A0B3200D1A79E /* UICollectionReusableView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */; };
 		BF048A0C1E7B245E00D1A79E /* HEMTextFieldCollectionViewCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A0B1E7B245E00D1A79E /* HEMTextFieldCollectionViewCell+Style.swift */; };
+		BF048A0E1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF048A0D1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift */; };
 		BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */; };
 		BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8EF1A3A830D002A1307 /* HEMResponseCell.m */; };
 		BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF05C8FC1A3FC6E3002A1307 /* HEMQuestionCell.m */; };
@@ -792,6 +793,7 @@
 		BF048A071E79F64100D1A79E /* UITextView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Style.swift"; sourceTree = "<group>"; };
 		BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Style.swift"; sourceTree = "<group>"; };
 		BF048A0B1E7B245E00D1A79E /* HEMTextFieldCollectionViewCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMTextFieldCollectionViewCell+Style.swift"; sourceTree = "<group>"; };
+		BF048A0D1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HEMOnboardingController+Style.swift"; sourceTree = "<group>"; };
 		BF05C8DF1A3A52CB002A1307 /* HEMMultipleResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMultipleResponseCell.h; sourceTree = "<group>"; };
 		BF05C8E01A3A52CB002A1307 /* HEMMultipleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMultipleResponseCell.m; sourceTree = "<group>"; };
 		BF05C8EE1A3A830D002A1307 /* HEMResponseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMResponseCell.h; sourceTree = "<group>"; };
@@ -2362,7 +2364,6 @@
 			isa = PBXGroup;
 			children = (
 				BF3713351E6E28FF00EF9BAB /* SenseStyle.swift */,
-				BFAE7E351E6F8E5600F24E4B /* Themed.swift */,
 				BF3713261E6E28C700EF9BAB /* Color */,
 				BF3713271E6E28CE00EF9BAB /* Font */,
 				BF3713281E6E28D300EF9BAB /* Theme */,
@@ -2395,6 +2396,7 @@
 				BF37134A1E6E2AF000EF9BAB /* nightTheme.json */,
 				BF3713291E6E28E300EF9BAB /* defaultTheme.json */,
 				BF37132A1E6E28E300EF9BAB /* Theme.swift */,
+				BFAE7E351E6F8E5600F24E4B /* Themed.swift */,
 			);
 			name = Theme;
 			sourceTree = "<group>";
@@ -3402,6 +3404,7 @@
 				BF048A071E79F64100D1A79E /* UITextView+Style.swift */,
 				BF048A091E7A0B3200D1A79E /* UICollectionReusableView+Style.swift */,
 				BF048A0B1E7B245E00D1A79E /* HEMTextFieldCollectionViewCell+Style.swift */,
+				BF048A0D1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4614,6 +4617,7 @@
 				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,
 				BF43047B1E32C9DB008669B0 /* StatusMesssageView.swift in Sources */,
 				BF9826671D3ECF89009518CA /* HEMSenseDFUPresenter.m in Sources */,
+				BF048A0E1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift in Sources */,
 				BFC99BBD1B69AC04008F7F0D /* HEMAppReviewAnswer.m in Sources */,
 				BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */,
 				BFE375FA1CF4CAAD0029EE66 /* UIAlertController+HEMPhotoOptions.m in Sources */,

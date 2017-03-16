@@ -11,7 +11,8 @@ import Foundation
 extension UIViewController {
     
     @objc func applyStyle() {
-        let bgColor = SenseStyle.value(group: .controller, property: .backgroundColor) as? UIColor
+        let aClass = UIViewController.self
+        let bgColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
         self.view.backgroundColor = bgColor
         self.view.clipsToBounds = true
     }

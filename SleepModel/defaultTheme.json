@@ -157,8 +157,16 @@
         "style.tint.highlighted.color" : "@color/blue.6"
     },
     
-    "sense.controller" : {
+    "#UIViewController" : {
         "style.background.color" : "@color/white"
+    },
+    
+    "#HEMOnboardingController" : {
+        "style.group.parent" : "#UIViewController",
+        "style.text.font" : "@font/title.2",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.secondary.text"
     },
     
     "sense.warning.view" : {

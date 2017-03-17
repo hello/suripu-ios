@@ -592,7 +592,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
                                                      formatter:[self formatter]];
     
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
-    [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
+    [[sensorCell nameLabel] setText:[sensor localizedName]];
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];

@@ -42,6 +42,7 @@
         "style.background.color" : "@color/grey.9",
         "style.border.color" : "@color/dark.separator",
         "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
         "style.separator.color" : "@color/dark.separator"
     },
     

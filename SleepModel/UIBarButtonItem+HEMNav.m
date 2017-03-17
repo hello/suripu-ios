@@ -14,11 +14,12 @@
 
 + (UIButton*)buttonWithTitle:(NSString*)title andImage:(UIImage*)image {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIColor* tintColor = [[UIBarButtonItem appearance] tintColor];
     [button setTitle:title forState:UIControlStateNormal];
     [button setImage:image forState:UIControlStateNormal];
     [[button titleLabel] setFont:[UIFont body]];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [button setTintColor:[UIColor tintColor]];
+    [button setTitleColor:tintColor forState:UIControlStateNormal];
+    [button setTintColor:tintColor];
     [button sizeToFit];
     return button;
 }

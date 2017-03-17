@@ -79,8 +79,7 @@
                         from:(GenderSelectorPresenter *)presenter {
     HEMListItemSelectionViewController* listVC = (id)[HEMMainStoryboard instantiateListItemViewController];
     [listVC setListPresenter:optionsPresenter];
-
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:listVC];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:listVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

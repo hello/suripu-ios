@@ -180,6 +180,7 @@ import UIKit
     fileprivate func applyApearances() {
         self.applyNavigationBarApperance()
         self.applyToolbarAppearance()
+        self.applyBarButtonItemAppearance()
         
         let windows = UIApplication.shared.windows
         windows.forEach { (window: UIWindow) in
@@ -208,7 +209,7 @@ import UIKit
         if let navTitleColor = self.value(aClass: aClass, property: .textColor) as? UIColor {
             navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
         }
-        if let navTitleFont = self.value(aClass: aClass, property: .textFont) as? UIFont {
+        if let navTitleFont = self.value(aClass: aClass, property:. textFont) as? UIFont {
             navTitleAttributes[NSFontAttributeName] = navTitleFont
         }
         navigationBar.titleTextAttributes = navTitleAttributes
@@ -220,6 +221,11 @@ import UIKit
         toolbar.isTranslucent = translucent?.boolValue ?? false
         toolbar.barTintColor = self.value(aClass: UIToolbar.self, property: .barTintColor) as? UIColor
         toolbar.tintColor = self.value(aClass: UIToolbar.self, property: .tintColor) as? UIColor
+    }
+    
+    fileprivate func applyBarButtonItemAppearance() {
+        let barButtonItem = UIBarButtonItem.appearance()
+        barButtonItem.tintColor = self.value(aClass: UIBarButtonItem.self, property: .tintColor) as? UIColor
     }
     
     fileprivate func apply(viewController: UIViewController?) {

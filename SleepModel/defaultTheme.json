@@ -16,6 +16,10 @@
         "style.text.detail.font" : "@font/body.1"
     },
     
+    "#UIBarButtonItem" : {
+        "style.tint.color" : "@color/black"
+    },
+    
     "#UILabel" : {
         "style.text.color" : "@color/light.primary.text",
         "style.text.font" : "@font/body.1",

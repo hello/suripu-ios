@@ -34,6 +34,7 @@ import UIKit
         case alert = 0
         case warning
         case ideal
+        case unknown
         
         var key: String {
             switch self {
@@ -43,6 +44,8 @@ import UIKit
                 return "sense.warning"
             case .ideal:
                 return "sense.ideal"
+            case .unknown:
+                return "sense.default"
             }
         }
     }
@@ -61,9 +64,13 @@ import UIKit
         case headerFooter
         case attributedString
         case action
+        case sensorCard
+        case chartGradient
         
         var key: String {
             switch self {
+            case .chartGradient:
+                return "sense.chart.gradient"
             case .tableView:
                 return "sense.tableview"
             case .tableViewFill:
@@ -90,6 +97,8 @@ import UIKit
                 return "sense.attributed.string"
             case .action:
                 return "sense.action"
+            case .sensorCard:
+                return "sense.sensor.card"
             }
             
         }
@@ -171,7 +180,7 @@ import UIKit
             case .ideal:
                 return self.color(group: .condition, propertyName: ConditionStyle.ideal.key)
             default:
-                return defaultColor
+                return defaultColor ?? self.color(group: .condition, propertyName: ConditionStyle.unknown.key)
         }
     }
     

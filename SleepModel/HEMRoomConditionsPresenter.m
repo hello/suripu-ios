@@ -48,8 +48,6 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 @property (nonatomic, weak) HEMIntroService* introService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) CGFloat headerViewHeight;
-@property (nonatomic, strong) NSAttributedString* attributedIntroTitle;
-@property (nonatomic, strong) NSAttributedString* attributedIntroDesc;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
@@ -81,9 +79,9 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
+    [collectionView applyStyle];
     [self setCollectionView:collectionView];
 }
 
@@ -161,6 +159,12 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 - (void)didGainConnectivity {
     [super didGainConnectivity];
     [self startPolling];
+}
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self collectionView] applyStyle];
+    [[self collectionView] reloadData];
 }
 
 #pragma mark - Data
@@ -293,7 +297,7 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
     }
     
     SENCondition condition = [sensor condition];
-    UIColor* sensorColor = [UIColor colorForCondition:condition];
+    UIColor* sensorColor = [SenseStyle colorWithCondition:condition defaultColor:nil];
     NSArray* chartData = [self chartDataBySensor][@([sensor type])];
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[chartData copy] color:sensorColor];
     
@@ -307,35 +311,13 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 #pragma mark - Text
 
 - (NSAttributedString*)attributedIntroTitle {
-    if (!_attributedIntroTitle) {
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-        [style setAlignment:NSTextAlignmentCenter];
-        
-        NSDictionary* attrs = @{NSFontAttributeName : [UIFont h5],
-                                NSForegroundColorAttributeName : [UIColor grey6],
-                                NSParagraphStyleAttributeName : style};
-        
-        NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
-        
-        _attributedIntroTitle = [[NSAttributedString alloc] initWithString:title attributes:attrs];
-    }
-    return _attributedIntroTitle;
+    NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
+    return [HEMDescriptionHeaderView attributedTitle:title];
 }
 
 - (NSAttributedString*)attributedIntroDesc {
-    if (!_attributedIntroDesc) {
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-        [style setAlignment:NSTextAlignmentCenter];
-        
-        NSDictionary* attrs = @{NSFontAttributeName : [UIFont body],
-                                NSForegroundColorAttributeName : [UIColor grey5],
-                                NSParagraphStyleAttributeName : style};
-        
-        NSString* desc = NSLocalizedString(@"room-conditions.intro.desc", nil);
-        
-        _attributedIntroDesc = [[NSAttributedString alloc] initWithString:desc attributes:attrs];
-    }
-    return _attributedIntroDesc;
+    NSString* desc = NSLocalizedString(@"room-conditions.intro.desc", nil);
+    return [HEMDescriptionHeaderView attributedDescription:desc];
 }
 
 #pragma mark - UICollectionView
@@ -382,7 +364,7 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
         default: {
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
-                UIFont* font = [UIFont body];
+                UIFont* font = [HEMTextCollectionViewCell defaultTextFont];
                 CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
                 CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
                 itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -534,7 +516,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         [[self formatter] setDecimalPlaces:NSNotFound];
         [[self formatter] setSensorUnit:[sensor unit]];
         [[self formatter] setIncludeUnitSymbol:YES];
-        UIColor* conditionColor = [UIColor colorForCondition:[sensor condition]];
+        UIColor* conditionColor = [SenseStyle colorWithCondition:[sensor condition] defaultColor:nil];
         NSString* valueText = nil;
         if ([sensor condition] != SENConditionCalibrating) {
             valueText = [[self formatter] stringFromSensor:sensor];
@@ -551,6 +533,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     }
     [[groupCell groupMessageLabel] setText:worstConditionString];
     [[groupCell groupMessageLabel] setFont:[UIFont body]];
+    [groupCell applyStyle];
 }
 
 - (void)configureSensorCell:(HEMSensorCollectionViewCell*)sensorCell forSensor:(SENSensor*)sensor {
@@ -558,7 +541,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     [[self formatter] setSensorUnit:[sensor unit]];
     
     SENCondition condition = [sensor condition];
-    UIColor* conditionColor = [UIColor colorForCondition:condition];
+    UIColor* conditionColor = [SenseStyle colorWithCondition:condition defaultColor:nil];
     
     if ([sensor type] == SENSensorTypeTemp) {
         [[self formatter] setIncludeUnitSymbol:YES];
@@ -571,9 +554,11 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     } else if ([sensor type] == SENSensorTypeHumidity) {
         [[self formatter] setIncludeUnitSymbol:YES];
         
-        NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h4],
+        UIFont* font = [[sensorCell valueLabel] font];
+        UIFont* unitFont = [[sensorCell unitLabel] font];
+        NSDictionary* valueAttributes = @{NSFontAttributeName : font,
                                           NSForegroundColorAttributeName : conditionColor};
-        NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h8],
+        NSDictionary* unitAttributes = @{NSFontAttributeName : unitFont,
                                          NSForegroundColorAttributeName : conditionColor,
                                          NSBaselineOffsetAttributeName : @(5.0f)};
         
@@ -607,7 +592,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
                                                      formatter:[self formatter]];
     
     [[sensorCell descriptionLabel] setText:[sensor localizedMessage]];
-    [[sensorCell nameLabel] setText:[[sensor localizedName] uppercaseString]];
+    [[sensorCell nameLabel] setText:[sensor localizedName]];
     
     HEMSensorChartContainer* chartContainer = [sensorCell graphContainerView];
     [chartContainer setChartView:chartView];
@@ -619,12 +604,13 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
     if (animate) {
         [chartView animateIn];
     }
+    
+    [sensorCell applyStyle];
 }
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
-    [[errorCell textLabel] setFont:[UIFont body]];
-    [errorCell displayAsACard:YES];
+    [errorCell applyStyle];
 }
 
 - (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)pairSenseCell {

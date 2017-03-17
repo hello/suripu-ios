@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMCardCollectionViewCell.h"
 
 @class HEMSensorGroupMemberView;
 
-@interface HEMSensorGroupCollectionViewCell : UICollectionViewCell
+@interface HEMSensorGroupCollectionViewCell : HEMCardCollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *groupNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *groupMessageLabel;

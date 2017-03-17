@@ -15,7 +15,7 @@ extension UISearchBar {
         update the background color of the text field inside of a search bar,
         besides using a background image
     */
-    func changeFieldColor(color : UIColor?) {
+    func changeFieldColor(color : UIColor?, textColor: UIColor?) {
         guard color != nil else {
             return
         }
@@ -25,6 +25,7 @@ extension UISearchBar {
                 if let _ = subSubView as? UITextInputTraits {
                     let textField = subSubView as! UITextField
                     textField.backgroundColor = color
+                    textField.textColor = textColor
                     break
                 }
             }

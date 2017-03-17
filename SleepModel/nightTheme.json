@@ -18,6 +18,11 @@
         "style.text.color" : "@color/dark.disabled.text"
     },
     
+    "#UITabBar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
     "#UIToolbar" : {
         "style.bar.tint.color" : "@color/grey.9",
         "style.tint.color" : "@color/blue.6"
@@ -42,7 +47,13 @@
         "style.background.color" : "@color/grey.9",
         "style.border.color" : "@color/dark.separator",
         "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
         "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMDescriptionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
     },
     
     "#HEMDeviceCollectionViewCell" : {
@@ -155,5 +166,17 @@
         "style.secondary.button.text.color" : "@color/white",
         "style.bar.tint.color" : "@color/black",
         "sense.volume.bar.color" : "@color/white"
+    },
+    
+    "sense.sensor.card" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "sense.chart.gradient" : {
+        "style.background.color" : "@color/white",
+        "sense.top.alpha": 0.5,
     }
 }

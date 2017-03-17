@@ -26,7 +26,7 @@
     "headline" : {
         "style.font.name" : "style.font.SYSTEM",
         "style.font.size" : 24.0,
-        "style.font.weight" : "style.font.REGULAR"
+        "style.font.weight" : "style.font.LIGHT"
     },
     
     "title.2" : {
@@ -68,7 +68,7 @@
     "caption.1" : {
         "style.font.name" : "style.font.SYSTEM",
         "style.font.size" : 10.0,
-        "style.font.weight" : "style.font.REGULAR"
+        "style.font.weight" : "style.font.MEDIUM"
     },
     
     "button" : {

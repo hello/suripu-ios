@@ -18,6 +18,11 @@
         "style.text.color" : "@color/dark.disabled.text"
     },
     
+    "#UITabBar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
     "#UIToolbar" : {
         "style.bar.tint.color" : "@color/grey.9",
         "style.tint.color" : "@color/blue.6"

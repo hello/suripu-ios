@@ -101,10 +101,15 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [tv setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [tv applyFillStyle];
     
+    UIView* bgView = [[UIView alloc] initWithFrame:[self bounds]];
+    [bgView setBackgroundColor:[tv backgroundColor]];
+    [tv setBackgroundView:bgView];
+    
     CGRect footerFrame = CGRectZero;
     footerFrame.size.width = CGRectGetWidth([tv bounds]);
     footerFrame.size.height = 1.0f;
     [tv setTableFooterView:[[UIView alloc] initWithFrame:footerFrame]];
+
     return tv;
 }
 

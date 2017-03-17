@@ -180,6 +180,7 @@ import UIKit
     fileprivate func applyApearances() {
         self.applyNavigationBarApperance()
         self.applyToolbarAppearance()
+        self.applyTabBarAppearance()
         self.applyBarButtonItemAppearance()
         
         let windows = UIApplication.shared.windows
@@ -189,6 +190,14 @@ import UIKit
                 window.addSubview(view)
             })
         }
+    }
+    
+    fileprivate func applyTabBarAppearance() {
+        let tabBar = UITabBar.appearance()
+        let translucent = self.value(aClass: UITabBar.self, property: .translucent) as? NSNumber
+        tabBar.isTranslucent = translucent?.boolValue ?? false
+        tabBar.barTintColor = self.value(aClass: UITabBar.self, property: .barTintColor) as? UIColor
+        tabBar.tintColor = self.value(aClass: UITabBar.self, property: .tintColor) as? UIColor
     }
     
     fileprivate func applyNavigationBarApperance() {

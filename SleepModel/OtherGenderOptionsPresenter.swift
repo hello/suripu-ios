@@ -45,7 +45,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         super.bind(with: navItem)
         let backImage = BackIndicator()
         var searchImage = UIImage(named: "iconSearch")
-        searchImage = searchImage?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+        searchImage = searchImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         
         let cancelAction = #selector(OtherGenderOptionsPresenter.cancel)
         let searchAction = #selector(OtherGenderOptionsPresenter.showSearch)
@@ -132,7 +132,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         self.listenForKeyboardEvents()
         self.searchBar = UISearchBar()
         self.searchBar!.setImage(searchIcon, for: UISearchBarIcon.search, state: UIControlState.normal)
-        self.searchBar?.isHidden = true
+        self.searchBar!.isHidden = true
         self.searchBar!.delegate = self
         
         self.mainNavBar?.addSubview(transitionView)
@@ -148,6 +148,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
             leftFrame.origin.x = navBarWidth - rightMaxX
             transitionView.frame = leftFrame
         }) { (finished: Bool) in
+            self.searchBar!.changeFieldColor(color: self.mainNavBar?.barTintColor)
             self.searchBar!.isHidden = false
             self.searchTransitionView?.removeFromSuperview()
         }

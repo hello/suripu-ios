@@ -23,6 +23,10 @@
         "style.tint.color" : "@color/blue.6"
     },
     
+    "#UIBarButtonItem" : {
+        "style.tint.color" : "@color/white"
+    },
+    
     "#UIButton" : {
         "style.background.color" : "@color/clear",
         "style.text.color" : "@color/white",

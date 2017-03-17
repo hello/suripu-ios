@@ -226,6 +226,9 @@ import UIKit
     fileprivate func applyBarButtonItemAppearance() {
         let barButtonItem = UIBarButtonItem.appearance()
         barButtonItem.tintColor = self.value(aClass: UIBarButtonItem.self, property: .tintColor) as? UIColor
+        
+        let button = UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
+        button.tintColor = barButtonItem.tintColor
     }
     
     fileprivate func apply(viewController: UIViewController?) {

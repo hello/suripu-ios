@@ -131,6 +131,18 @@
         "style.text.font" : "@font/body.small"
     },
     
+    "sense.sensor.card" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.hint.font" : "@font/caption.1",
+        "sense.sensor.value.font" : "@font/headline",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
     "sense.tableview" : {
         "style.background.color" : "@color/grey.3",
         "style.separator.color" : "@color/light.separator",
@@ -210,10 +222,16 @@
     "sense.condition" : {
         "sense.alert" : "@color/red.6",
         "sense.warning" : "@color/orange.6",
-        "sense.ideal" : "@color/green.6"
+        "sense.ideal" : "@color/green.6",
+        "sense.default" : "@color/grey.3"
     },
     
     "sense.action" : {
         "style.tint.color" : "@color/blue.6"
+    },
+    
+    "sense.chart.gradient" : {
+        "sense.top.alpha": 0.8,
+        "sense.bottom.alpha" : 0.2
     }
 }

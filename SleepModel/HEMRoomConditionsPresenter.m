@@ -48,8 +48,6 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 @property (nonatomic, weak) HEMIntroService* introService;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, assign) CGFloat headerViewHeight;
-@property (nonatomic, strong) NSAttributedString* attributedIntroTitle;
-@property (nonatomic, strong) NSAttributedString* attributedIntroDesc;
 @property (nonatomic, weak) HEMActivityIndicatorView* activityIndicator;
 @property (nonatomic, strong) NSError* sensorError;
 @property (nonatomic, strong) NSMutableDictionary* chartDataBySensor;
@@ -313,35 +311,13 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
 #pragma mark - Text
 
 - (NSAttributedString*)attributedIntroTitle {
-    if (!_attributedIntroTitle) {
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-        [style setAlignment:NSTextAlignmentCenter];
-        
-        NSDictionary* attrs = @{NSFontAttributeName : [UIFont h5],
-                                NSForegroundColorAttributeName : [UIColor grey6],
-                                NSParagraphStyleAttributeName : style};
-        
-        NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
-        
-        _attributedIntroTitle = [[NSAttributedString alloc] initWithString:title attributes:attrs];
-    }
-    return _attributedIntroTitle;
+    NSString* title = NSLocalizedString(@"room-conditions.intro.title", nil);
+    return [HEMDescriptionHeaderView attributedTitle:title];
 }
 
 - (NSAttributedString*)attributedIntroDesc {
-    if (!_attributedIntroDesc) {
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-        [style setAlignment:NSTextAlignmentCenter];
-        
-        NSDictionary* attrs = @{NSFontAttributeName : [UIFont body],
-                                NSForegroundColorAttributeName : [UIColor grey5],
-                                NSParagraphStyleAttributeName : style};
-        
-        NSString* desc = NSLocalizedString(@"room-conditions.intro.desc", nil);
-        
-        _attributedIntroDesc = [[NSAttributedString alloc] initWithString:desc attributes:attrs];
-    }
-    return _attributedIntroDesc;
+    NSString* desc = NSLocalizedString(@"room-conditions.intro.desc", nil);
+    return [HEMDescriptionHeaderView attributedDescription:desc];
 }
 
 #pragma mark - UICollectionView
@@ -388,7 +364,7 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
         default: {
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
-                UIFont* font = [UIFont body];
+                UIFont* font = [HEMTextCollectionViewCell defaultTextFont];
                 CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
                 CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
                 itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
@@ -634,8 +610,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
-    [[errorCell textLabel] setFont:[UIFont body]];
-    [errorCell displayAsACard:YES];
+    [errorCell applyStyle];
 }
 
 - (void)configurePairSenseCell:(HEMSenseRequiredCollectionViewCell*)pairSenseCell {

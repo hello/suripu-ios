@@ -46,6 +46,11 @@
         "style.separator.color" : "@color/dark.separator"
     },
     
+    "#HEMDescriptionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
     "#HEMDeviceCollectionViewCell" : {
         "style.tint.color" : "@color/white",
         "style.text.detail.color" : "@color/dark.secondary.text"

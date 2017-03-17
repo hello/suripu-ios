@@ -74,6 +74,13 @@
         "style.separator.color" : "@color/light.separator"
     },
     
+    "#HEMDescriptionHeaderView" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/title.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
     "#HEMDeviceCollectionViewCell" : {
         "style.group.parent" : "#HEMCardCollectionViewCell",
         "style.text.detail.color" : "@color/light.secondary.text",

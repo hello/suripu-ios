@@ -7,6 +7,8 @@
 //
 #import "UICollectionViewCell+HEMCard.h"
 
+#import "Sense-Swift.h"
+
 #import "HEMTextCollectionViewCell.h"
 #import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
@@ -21,6 +23,11 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 @end
 
 @implementation HEMTextCollectionViewCell
+
++ (UIFont*)defaultTextFont {
+    Class aClass = [HEMCardCollectionViewCell class];
+    return [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+}
 
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width {
     CGFloat textWidth = width - (2 * HEMTextCollectionHorzPadding);
@@ -72,9 +79,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
     [[self contentView] setBackgroundColor:[UIColor clearColor]];
     
     [[self textLabel] setNumberOfLines:0];
-    [[self textLabel] setBackgroundColor:[UIColor clearColor]];
-    
-    [[self separator] setBackgroundColor:[UIColor separatorColor]];
+    [self applyStyle];
 }
 
 - (void)prepareForReuse {
@@ -85,6 +90,17 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 
 - (void)displayAsACard:(BOOL)card {
     [super displayAsACard:YES];
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    Class superClass = [HEMCardCollectionViewCell class];
+    UIColor* textColor = [SenseStyle colorWithAClass:superClass property:ThemePropertyTextColor];
+    UIFont* font = [[self class] defaultTextFont];
+    [[self textLabel] setTextColor:textColor];
+    [[self textLabel] setFont:font];
+    [[self separator] applySeparatorStyle];
 }
 
 @end

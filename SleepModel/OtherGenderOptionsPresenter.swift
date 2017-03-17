@@ -148,7 +148,8 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
             leftFrame.origin.x = navBarWidth - rightMaxX
             transitionView.frame = leftFrame
         }) { (finished: Bool) in
-            self.searchBar!.changeFieldColor(color: self.mainNavBar?.barTintColor)
+            self.searchBar!.changeFieldColor(color: self.mainNavBar?.barTintColor,
+                                             textColor: self.mainNavBar?.tintColor)
             self.searchBar!.isHidden = false
             self.searchTransitionView?.removeFromSuperview()
         }

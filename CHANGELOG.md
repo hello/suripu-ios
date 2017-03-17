@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0.5
+
+New:
+
+* Themed Name, Password, Email change screen
+* Themed Units and time screen
+* Themed Height picker screen
+* Themed Weight picker screen
+* Themed birthday screen
+* Themed gender screen
+* Themed gender options screen
+
 ## 2.1.0.4
 
 New:

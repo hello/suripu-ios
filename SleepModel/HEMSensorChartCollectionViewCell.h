@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *xAxisLabelContainer;
 
 - (void)setXAxisLabels:(NSArray<NSString*>*)labels;
+- (void)applyStyle;
 
 @end

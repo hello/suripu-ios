@@ -73,6 +73,7 @@ static CGFloat const HEMSensorCellTextWidthRatio = 0.75f;
     [[[self graphContainerView] botLimitLabel] setTextColor:hintColor];
     [[[self graphContainerView] topLimitLine] setBackgroundColor:separatorColor];
     [[[self graphContainerView] botLimitLine] setBackgroundColor:separatorColor];
+    [[[self graphContainerView] noDataLabel] setTextColor:hintColor];
 }
 
 @end

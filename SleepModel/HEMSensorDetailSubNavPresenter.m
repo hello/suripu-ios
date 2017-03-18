@@ -35,6 +35,7 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav {
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeDay]];
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeWeek]];
+    [subNav applyStyle];
     [self setSubNav:subNav];
     [self bindWithShadowView:[subNav shadowView]];
 }
@@ -79,6 +80,11 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
     [[self delegate] didChangeScopeTo:scope fromPresenter:self];
 }
 #pragma mark - Presenter Events
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self subNav] applyStyle];
+}
 
 - (void)didRelayout {
     [super didRelayout];

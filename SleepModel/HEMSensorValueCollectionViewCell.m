@@ -6,9 +6,21 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMSensorValueCollectionViewCell.h"
 
 @implementation HEMSensorValueCollectionViewCell
+
++ (UIFont*)valueFont {
+    static NSString* valueFontKey = @"sense.value.font";
+    return [SenseStyle fontWithAClass:self propertyName:valueFontKey];
+}
+
++ (UIFont*)smallValueUnitFont {
+    static NSString* valueFontKey = @"sense.value.unit.font";
+    return [SenseStyle fontWithAClass:self propertyName:valueFontKey];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,6 +33,13 @@
     [[self valueLabel] setHidden:hideLabel];
     [[self valueReplacementImageView] setHidden:!hideLabel];
     [[self valueReplacementImageView] setImage:image];
+}
+
+- (void)applyStyle {
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIFont* textFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    [[self messageLabel] setFont:textFont];
+    [[self messageLabel] setTextColor:textColor];
 }
 
 @end

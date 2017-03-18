@@ -25,8 +25,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 @implementation HEMTextCollectionViewCell
 
 + (UIFont*)defaultTextFont {
-    Class aClass = [HEMCardCollectionViewCell class];
-    return [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+    return [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
 }
 
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width {
@@ -89,18 +88,20 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 }
 
 - (void)displayAsACard:(BOOL)card {
-    [super displayAsACard:YES];
+    [super displayAsACard:card];
 }
 
 - (void)applyStyle {
-    [super applyStyle];
-    
-    Class superClass = [HEMCardCollectionViewCell class];
-    UIColor* textColor = [SenseStyle colorWithAClass:superClass property:ThemePropertyTextColor];
+    UIColor* borderColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
     UIFont* font = [[self class] defaultTextFont];
     [[self textLabel] setTextColor:textColor];
     [[self textLabel] setFont:font];
     [[self separator] applySeparatorStyle];
+    [self setBackgroundColor:bgColor];
+    [[self contentView] setBackgroundColor:bgColor];
+    [[[self contentView] layer] setBorderColor:[borderColor CGColor]];
 }
 
 @end

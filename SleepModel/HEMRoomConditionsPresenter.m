@@ -610,6 +610,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
     [[errorCell textLabel] setText:NSLocalizedString(@"sensor.data-unavailable", nil)];
+    [errorCell displayAsACard:YES];
     [errorCell applyStyle];
 }
 

@@ -51,6 +51,11 @@
         "style.separator.color" : "@color/dark.separator"
     },
     
+    "#HEMTextCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
     "#HEMDescriptionHeaderView" : {
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text"
@@ -178,5 +183,27 @@
     "sense.chart.gradient" : {
         "style.background.color" : "@color/white",
         "sense.top.alpha": 0.5,
+    },
+    
+    "#HEMSubNavigationView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white"
+    },
+    
+    "#HEMSensorValueCollectionViewCell" : {
+        "style.text.color" : "@color/white"
+    },
+    
+    "#HEMSensorScaleCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.text.hint.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSensorAboutCollectionViewCell" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
     }
 }

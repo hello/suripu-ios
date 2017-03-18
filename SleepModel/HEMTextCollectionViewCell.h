@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
 
-@interface HEMTextCollectionViewCell : HEMCardCollectionViewCell
+@interface HEMTextCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel* textLabel;
 @property (nonatomic, weak) IBOutlet UIView* separator;
@@ -20,5 +20,6 @@
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width;
 + (CGFloat)heightWithAttributedText:(NSAttributedString*)text cellWidth:(CGFloat)width;
 - (void)displayAsACard:(BOOL)card;
+- (void)applyStyle;
 
 @end

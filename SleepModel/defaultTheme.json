@@ -135,6 +135,11 @@
         "style.text.color" : "@color/light.primary.text"
     },
     
+    "#HEMTextCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/grey.5"
+    },
+    
     "sense.collectionview.fill" : {
         "style.group.parent" : "#UICollectionView",
         "style.background.color" : "@color/white"
@@ -248,5 +253,40 @@
     "sense.chart.gradient" : {
         "sense.top.alpha": 0.8,
         "sense.bottom.alpha" : 0.2
+    },
+    
+    "#HEMSubNavigationView" : {
+        "style.background.color" : "@color/white",
+        "style.text.font" : "@font/button",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.highlighted.color" : "@color/black"
+    },
+    
+    "#HEMSensorValueCollectionViewCell" : {
+        "style.text.color" : "@color/grey.5",
+        "style.text.font" : "@font/body.1",
+        "sense.value.font" : "@font/display.4",
+        "sense.value.unit.font" : "@font/headline",
+    },
+    
+    "#HEMSensorChartCollectionViewCell" : {
+        "style.group.parent" : "sense.sensor.card"
+    },
+    
+    "#HEMSensorScaleCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/title.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.hint.font" : "@font/caption.1",
+        "style.text.hint.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMSensorAboutCollectionViewCell" : {
+        "style.text.font" : "@font/title.1",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
     }
 }

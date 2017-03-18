@@ -151,6 +151,10 @@ import UIKit
         return self.theme.value(aClass: aClass, key: property.key) as? UIFont
     }
     
+    @objc static func font(aClass: AnyClass, propertyName: String) -> UIFont? {
+        return self.theme.value(aClass: aClass, key: propertyName) as? UIFont
+    }
+    
     @objc static func font(group: Group, property: Theme.ThemeProperty) -> UIFont? {
         return self.value(group: group, property: property) as? UIFont
     }

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.1.0.6
+
+New:
+
+* Themed room conditions
+* Themed sensor detail
+
+Fixes:
+
+* Fixed crasher on sign in
+* Fixed gender seach text color
+* Fixed birthday overscroll color
+
 ## 2.1.0.5
 
 New:

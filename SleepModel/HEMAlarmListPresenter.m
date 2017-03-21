@@ -8,6 +8,7 @@
 #import <AttributedMarkdown/markdown_peg.h>
 #import <SenseKit/SENLocalPreferences.h>
 
+#import "Sense-Swift.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSString+HEMUtils.h"
 
@@ -17,7 +18,6 @@
 #import "HEMNavigationShadowView.h"
 #import "NSString+HEMUtils.h"
 #import "HEMAlarmListCell.h"
-#import "HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMMainStoryboard.h"
 #import "HEMNoAlarmCell.h"
@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 @property (nonatomic, weak) HEMAlarmAddButton* addButton;
 @property (nonatomic, strong) HEMActivityIndicatorView* addButtonActivityIndicator;
 @property (nonatomic, weak) HEMActivityIndicatorView* dataLoadingIndicator;
-@property (nonatomic, strong) NSAttributedString* attributedNoAlarmText;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSError* loadError;
 @property (nonatomic, strong) NSDateFormatter *hour24Formatter;
@@ -87,14 +86,16 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     layout.minimumLineSpacing = HEMAlarmListItemSpacing;
 
     [collectionView setHidden:YES];
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
     
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
+    [collectionView applyStyle];
+    
     [self setCollectionView:collectionView];
 }
 
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav {
+    [subNav applyStyle];
     [self setSubNav:subNav];
 }
 
@@ -175,6 +176,12 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 }
 
 #pragma mark - Presenter Events
+
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self collectionView] applyStyle];
+    [[self collectionView] reloadData];
+}
 
 - (void)willAppear {
     [super willAppear];
@@ -299,20 +306,6 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 
 #pragma mark - Collection View Delegate / Data Source
 
-- (NSAttributedString*)attributedNoAlarmText {
-    if (!_attributedNoAlarmText) {
-        NSMutableParagraphStyle *paraStyle = DefaultBodyParagraphStyle();
-        [paraStyle setAlignment:NSTextAlignmentCenter];
-        
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
-                                     NSParagraphStyleAttributeName : paraStyle};
-        
-        NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
-        _attributedNoAlarmText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
-    }
-    return _attributedNoAlarmText;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSArray* alarms = [[self alarmService] alarms];
     if (!alarms && ![self loadError]) {
@@ -345,11 +338,8 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 - (NSAttributedString*)attributedExpansionTextFor:(SENAlarmExpansion*)expansion
                                          forAlarm:(SENAlarm*)alarm {
     SENExpansionValueRange range = [expansion targetRange];
-    UIColor* titleColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
-    NSDictionary* titleAttributes = @{NSFontAttributeName : [UIFont h7],
-                                      NSForegroundColorAttributeName : titleColor};
-    NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h7],
-                                      NSForegroundColorAttributeName : [UIColor grey4]};
+    NSDictionary* titleAttributes = [HEMAlarmExpansionListCell attributesForExpansionText:[alarm isOn]];
+    NSDictionary* valueAttributes = [HEMAlarmExpansionListCell attributesForExpansionValueText:[alarm isOn]];
     NSString* format = nil;
     NSArray* args = nil;
     
@@ -395,19 +385,18 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
         }
     }
     
-    return [[NSMutableAttributedString alloc] initWithFormat:format
-                                                        args:args
-                                                   baseColor:[UIColor grey4]
-                                                    baseFont:[UIFont h7]];
+    UIFont* baseFont = titleAttributes[NSFontAttributeName];
+    UIColor* baseColor = titleAttributes[NSForegroundColorAttributeName];
+    return [[NSMutableAttributedString alloc] initWithFormat:format args:args baseColor:baseColor baseFont:baseFont];
     
 }
 
 - (UIImage*)iconForExpansion:(SENAlarmExpansion*)expansion {
     switch ([expansion type]) {
         case SENExpansionTypeThermostat:
-            return [UIImage imageNamed:@"alarmThermostatIcon"];
+            return [[UIImage imageNamed:@"alarmThermostatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         case SENExpansionTypeLights:
-            return [UIImage imageNamed:@"alarmLightIcon"];
+            return [[UIImage imageNamed:@"alarmLightIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         default:
             return nil;
     }
@@ -431,13 +420,12 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
                                    tyep:[expansion type]];
         }
     }
-
-    [[cell timeLabel] setTextColor:[UIColor grey5]];
-    [[cell meridiemLabel] setTextColor:[UIColor grey5]];
     
     [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
     [self updateDetailTextInCell:cell fromAlarm:alarm];
     [self updateTimeTextInCell:cell fromAlarm:alarm];
+    
+    [cell applyStyle];
     
     return cell;
 }
@@ -452,6 +440,9 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     [self updateSwitchInCell:cell forAlarm:alarm atIndexPath:indexPath];
     [self updateDetailTextInCell:cell fromAlarm:alarm];
     [self updateTimeTextInCell:cell fromAlarm:alarm];
+    
+    [cell applyStyle];
+    
     return cell;
 }
 
@@ -459,10 +450,11 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
                     emptyCellAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
     HEMNoAlarmCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    [[cell detailLabel] setAttributedText:[self attributedNoAlarmText]];
+    [cell setMessage:NSLocalizedString(@"alarms.no-alarm.message", nil)];
     [[cell alarmButton] addTarget:self action:@selector(addNewAlarm:) forControlEvents:UIControlEventTouchUpInside];
     [[cell alarmButton] setTitle:[NSLocalizedString(@"alarms.first-alarm.button-title", nil) uppercaseString]
                         forState:UIControlStateNormal];
+    [cell applyStyle];
     return cell;
 }
 
@@ -486,14 +478,12 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     NSString *identifier = [HEMMainStoryboard alarmListStatusCellReuseIdentifier];
     HEMAlarmListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     cell.detailLabel.text = NSLocalizedString(@"alarms.no-data", nil);
+    [cell applyStyle];
     return cell;
 }
 
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm {
-    UIColor* textColor = [alarm isOn] ? [UIColor grey6] : [UIColor grey4];
     cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
-    cell.timeLabel.textColor = textColor;
-    cell.meridiemLabel.textColor = textColor;
     if (![[self alarmService] useMilitaryTimeFormat]) {
         NSString *meridiem = alarm.hour < 12 ? @"am" : @"pm";
         NSString *key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
@@ -525,10 +515,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     }
     
     NSString *repeatText = [[self alarmService] localizedTextForRepeatFlags:alarm.repeatFlags];
-    NSString *detailText = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];
-    NSDictionary *attributes = [HEMMarkdown attributesForBackViewTitle][@(PARA)];
-    
-    cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:detailText attributes:attributes];
+    cell.titleLabel.text = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];
 }
 
 - (NSString *)localizedTimeForAlarm:(SENAlarm *)alarm {
@@ -571,7 +558,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
         return CGSizeMake(width, [HEMSenseRequiredCollectionViewCell heightWithDescription:text
                                                                              withCellWidth:width]);
     } else if ([self loadError]) {
-        UIFont* font = [UIFont body];
+        UIFont* font = [HEMAlarmExpansionListCell detailFont];
         NSString *text = NSLocalizedString(@"alarms.no-data", nil);
         CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
@@ -584,8 +571,8 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
         CGFloat expansionHeight = expansions * kHEMAlarmExpansionViewHeight;
         return CGSizeMake(width, height + expansionHeight);
     } else if ([[[self alarmService] alarms] count] == 0) {
-        NSAttributedString* attributedText = [self attributedNoAlarmText];
-        CGFloat textHeight = [HEMNoAlarmCell heightWithDetail:attributedText cellWidth:width];
+        NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
+        CGFloat textHeight = [HEMNoAlarmCell heightWithDetail:text cellWidth:width];
         return CGSizeMake(width, textHeight);
     }
     

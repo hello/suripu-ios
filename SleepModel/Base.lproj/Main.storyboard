@@ -1610,9 +1610,8 @@
                                                     <color key="textColor" red="0.75240164995193481" green="0.75240164995193481" blue="0.75240164995193481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU" customClass="HEMSwitchControl">
                                                     <rect key="frame" x="333" y="51.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.9984821081161499" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2r6-zA-JWU">
                                                     <rect key="frame" x="92.5" y="63" width="24" height="19.5"/>
@@ -1660,9 +1659,8 @@
                                                     <color key="textColor" red="0.75240164995193481" green="0.75240164995193481" blue="0.75240164995193481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s" customClass="HEMSwitchControl">
                                                     <rect key="frame" x="333" y="48" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.9984821081161499" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eg-5V-O9q">
                                                     <rect key="frame" x="92.5" y="58" width="24" height="19.5"/>
@@ -4396,7 +4394,7 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="listItemDetail" rowHeight="68" id="A9T-BS-guo" customClass="HEMListItemCell">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="68"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9T-BS-guo" id="N4e-VY-RVm">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="68"/>
@@ -4437,7 +4435,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="listItem" id="337-DO-cAU" customClass="HEMListItemCell">
-                                        <rect key="frame" x="0.0" y="123.5" width="375" height="62"/>
+                                        <rect key="frame" x="0.0" y="124" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="337-DO-cAU" id="CB9-6U-YUe">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>

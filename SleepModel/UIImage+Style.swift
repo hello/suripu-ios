@@ -23,10 +23,7 @@ extension UIImage {
     }
     
     fileprivate func tint(with property: Theme.ThemeProperty) -> UIImage {
-        guard let color = SenseStyle.color(aClass: UIImage.self, property: property) else {
-            return self
-        }
-        
+        let color = SenseStyle.color(aClass: UIImage.self, property: property)
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         color.set()
         self.draw(in: CGRect(origin: CGPoint.zero, size: self.size))

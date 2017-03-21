@@ -18,14 +18,10 @@ extension UILabel {
             return
         }
         
-        var attributes: [String: Any] = [:]
-        
-        if let color = SenseStyle.color(aClass: UILabel.self, property: colorProperty) {
-            attributes[NSForegroundColorAttributeName] = color
-        }
-        if let font = SenseStyle.font(aClass: UILabel.self, property: fontProperty) {
-            attributes[NSFontAttributeName] = font
-        }
+        let font = SenseStyle.font(aClass: UILabel.self, property: fontProperty)
+        let color = SenseStyle.color(aClass: UILabel.self, property: colorProperty)
+        let attributes: [String: Any] = [NSForegroundColorAttributeName : color,
+                                         NSFontAttributeName : font]
         
         if attributes.count > 0 {
             if override == true {

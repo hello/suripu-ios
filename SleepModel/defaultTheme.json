@@ -70,6 +70,10 @@
         "style.background.color" : "@color/grey.3"
     },
     
+    "#UIScrollView" : {
+        "style.background.color" : "@color/grey.3"
+    },
+    
     "#HEMCardCollectionViewCell" : {
         "style.background.color" : "@color/white",
         "style.border.color" : "@color/light.separator",
@@ -78,6 +82,21 @@
         "style.text.detail.font" : "@font/body.1",
         "style.text.font" : "@font/body.2",
         "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMAlarmListCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.disabled.color" : "@color/light.disabled.text",
+        "sense.alarm.title.font" : "@font/caption.1",
+        "sense.alarm.meridien.font" : "@font/body.1",
+        "sense.alarm.time.font" : "@font/display.2"
+    },
+    
+    "#HEMAlarmExpansionListCell" : {
+        "style.group.parent" : "#HEMAlarmListCell",
+        "sense.expansion.detail.color" : "@color/light.secondary.text",
+        "sense.expansion.detail.font" : "@font/body.small",
+        "style.tint.color" : "@color/blue.6"
     },
     
     "#HEMDescriptionHeaderView" : {
@@ -251,15 +270,21 @@
     },
     
     "sense.chart.gradient" : {
+        "sense.use.sensor.color" : true,
         "sense.top.alpha": 0.8,
         "sense.bottom.alpha" : 0.2
     },
     
-    "#HEMSubNavigationView" : {
+    "sense.sub.navigation" : {
         "style.background.color" : "@color/white",
         "style.text.font" : "@font/button",
         "style.text.color" : "@color/light.disabled.text",
         "style.text.highlighted.color" : "@color/black"
+    },
+    
+    "#Sense.SlidingNavigationTitleView" : {
+        "style.group.parent" : "sense.sub.navigation",
+        "style.text.highlighted.color" : "@color/blue.6"
     },
     
     "#HEMSensorValueCollectionViewCell" : {
@@ -288,5 +313,11 @@
         "style.text.color" : "@color/light.primary.text",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UISwitch" : {
+        "style.tint.color" : "@color/grey.2",
+        "style.tint.highlighted.color" : "@color/blue.6",
+        "style.background.color" : "@color/white"
     }
 }

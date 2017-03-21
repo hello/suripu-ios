@@ -43,12 +43,24 @@
         "style.background.color" : "@color/black"
     },
     
+    "#UIScrollView" : {
+        "style.background.color" : "@color/black"
+    },
+    
     "#HEMCardCollectionViewCell" : {
         "style.background.color" : "@color/grey.9",
         "style.border.color" : "@color/dark.separator",
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
         "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMAlarmListCell" : {
+        "style.text.disabled.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMAlarmExpansionListCell" : {
+        "sense.expansion.detail.color" : "@color/dark.secondary.text"
     },
     
     "#HEMTextCollectionViewCell" : {
@@ -181,13 +193,18 @@
     },
     
     "sense.chart.gradient" : {
-        "style.background.color" : "@color/white",
+        "sense.use.sensor.color" : false,
+        "sense.gradient.color" : "@color/white",
         "sense.top.alpha": 0.5,
     },
     
-    "#HEMSubNavigationView" : {
+    "sense.sub.navigation" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white"
+    },
+    
+    "#Sense.SlidingNavigationTitleView" : {
         "style.text.highlighted.color" : "@color/white"
     },
     
@@ -205,5 +222,10 @@
     "#HEMSensorAboutCollectionViewCell" : {
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UISwitch" : {
+        "style.background.color" : "@color/black",
+        "style.tint.color" : "@color/white"
     }
 }

@@ -136,11 +136,10 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 }
 
 - (void)applyStyle {
-    Class aClass = [self class];
-    UIColor* bgColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyBackgroundColor];
-    UIColor* textColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextColor];
-    UIColor* highlightedColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextHighlightedColor];
-    UIFont* textFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyTextColor];
+    UIColor* highlightedColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyTextHighlightedColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupSubNav property:ThemePropertyTextFont];
     
     [self setBackgroundColor:bgColor];
     [[self shadowView] setBackgroundColor:[UIColor clearColor]];

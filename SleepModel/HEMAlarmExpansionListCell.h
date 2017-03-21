@@ -16,6 +16,8 @@ extern CGFloat const kHEMAlarmExpansionViewHeight;
 @property (weak, nonatomic) IBOutlet UIImageView* expansionIconView;
 @property (weak, nonatomic) IBOutlet UILabel* expansionLabel;
 
++ (NSDictionary*)attributesForExpansionValueText:(BOOL)enabled;
++ (NSDictionary*)attributesForExpansionText:(BOOL)enabled;
 - (void)showExpansionWithIcon:(UIImage*)icon
                          text:(NSAttributedString*)attributedText
                          tyep:(NSUInteger)type;

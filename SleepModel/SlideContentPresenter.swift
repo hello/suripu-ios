@@ -169,7 +169,10 @@ class SlideContentPresenter: HEMPresenter {
     
     override func didChange(_ theme: Theme) {
         super.didChange(theme)
+        let bgColor = SenseStyle.color(aClass: UIScrollView.self,
+                                       property: .backgroundColor);
         self.slidingTitleView?.applyStyle()
+        self.contentScrollView?.backgroundColor = bgColor
     }
     
     override func willAppear() {
@@ -234,7 +237,6 @@ extension SlideContentPresenter {
     
     func bind(scrollView: UIScrollView!) {
         self.configureContent(scrollView: scrollView)
-        scrollView.backgroundColor = UIColor.background()
         scrollView.delegate = self
         self.contentScrollView = scrollView
     }

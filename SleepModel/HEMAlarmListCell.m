@@ -31,7 +31,7 @@
     static NSString* titleFontKey = @"sense.alarm.title.font";
     UIFont* titleFont = [SenseStyle fontWithAClass:[self class] propertyName:titleFontKey];
     [[self titleLabel] setFont:titleFont];
-    [[self titleLabel] setTextColor:textColor];
+    [[self titleLabel] setTextColor:disabledColor];
     
     static NSString* meridienFontKey = @"sense.alarm.meridient.font";
     UIFont* meridienFont = [SenseStyle fontWithAClass:[self class] propertyName:meridienFontKey];

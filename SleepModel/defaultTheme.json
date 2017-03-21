@@ -95,7 +95,8 @@
     "#HEMAlarmExpansionListCell" : {
         "style.group.parent" : "#HEMAlarmListCell",
         "sense.expansion.detail.color" : "@color/light.secondary.text",
-        "sense.expansion.detail.font" : "@font/body.small"
+        "sense.expansion.detail.font" : "@font/body.small",
+        "style.tint.color" : "@color/blue.6"
     },
     
     "#HEMDescriptionHeaderView" : {
@@ -317,6 +318,6 @@
     "#UISwitch" : {
         "style.tint.color" : "@color/white",
         "style.tint.highlighted.color" : "@color/blue.6",
-        "style.background.color" : "@color/white"
+        "style.background.color" : "@color/grey.2"
     }
 }

@@ -177,6 +177,12 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
 
 #pragma mark - Presenter Events
 
+- (void)didChangeTheme:(Theme *)theme {
+    [super didChangeTheme:theme];
+    [[self collectionView] applyStyle];
+    [[self collectionView] reloadData];
+}
+
 - (void)willAppear {
     [super willAppear];
     [self loadData];
@@ -379,16 +385,18 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
         }
     }
     
-    return [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    UIFont* baseFont = titleAttributes[NSFontAttributeName];
+    UIColor* baseColor = titleAttributes[NSForegroundColorAttributeName];
+    return [[NSMutableAttributedString alloc] initWithFormat:format args:args baseColor:baseColor baseFont:baseFont];
     
 }
 
 - (UIImage*)iconForExpansion:(SENAlarmExpansion*)expansion {
     switch ([expansion type]) {
         case SENExpansionTypeThermostat:
-            return [UIImage imageNamed:@"alarmThermostatIcon"];
+            return [[UIImage imageNamed:@"alarmThermostatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         case SENExpansionTypeLights:
-            return [UIImage imageNamed:@"alarmLightIcon"];
+            return [[UIImage imageNamed:@"alarmLightIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         default:
             return nil;
     }

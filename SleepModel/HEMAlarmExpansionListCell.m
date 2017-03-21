@@ -133,12 +133,16 @@ static NSString* const kHEMAlarmExpansionStyleColorKey = @"sense.expansion.detai
     static NSString* fontKey = @"sense.expansion.detail.font";
     static NSString* colorKey = @"sense.expansion.detail.color";
     
+    BOOL enabled = [[self enabledSwitch] isOn];
     UIColor* separatorColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
     UIColor* normalColor = [SenseStyle colorWithAClass:[self class] propertyName:colorKey];
     UIColor* disabledColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextDisabledColor];
     UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
-    UIColor* textColor = [[self enabledSwitch] isOn] ? normalColor : disabledColor;
+    UIColor* textColor = enabled ? normalColor : disabledColor;
     UIFont* textFont = [SenseStyle fontWithAClass:[self class] propertyName:fontKey];
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
+    
+    [[self expansionIconView] setTintColor:enabled ? tintColor : disabledColor];
     
     for (UIView* expansionView in [[self expansionsContainer] subviews]) {
         UIView* separator = [expansionView viewWithTag:kHEMAlarmexpansionTagSepartor];

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMTutorialDataSource.h"
 #import "HEMTutorialContent.h"
 #import "HEMImageCollectionViewCell.h"
@@ -70,8 +71,10 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 
 - (NSAttributedString*)attributedBody {
     if (!_attributedBody) {
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
-                                     NSForegroundColorAttributeName : [UIColor grey5],
+        UIColor* color = [SenseStyle colorWithGroup:GroupInfo property:ThemePropertyDetailColor];
+        UIFont* font = [SenseStyle fontWithGroup:GroupInfo property:ThemePropertyDetailFont];
+        NSDictionary* attributes = @{NSFontAttributeName : font,
+                                     NSForegroundColorAttributeName : color,
                                      NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
         _attributedBody = [[NSAttributedString alloc] initWithString:[[self content] text]
                                                           attributes:attributes];
@@ -172,8 +175,8 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 - (UICollectionViewCell*)titleCellFor:(UICollectionView*)collectionView atIndexPath:(NSIndexPath*)indexPath {
     HEMTextCollectionViewCell* titleCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdTitle forIndexPath:indexPath];
-    [[titleCell textLabel] setFont:[UIFont h6]];
     [[titleCell textLabel] setText:[[self content] title]];
+    [self applyStyleToTitleCell:titleCell];
     return titleCell;
 }
 
@@ -181,6 +184,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
     HEMTextCollectionViewCell* descriptionCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdDesc forIndexPath:indexPath];
     [[descriptionCell textLabel] setAttributedText:[self attributedBody]];
+    [self applyBackgroundColorTo:descriptionCell];
     return descriptionCell;
 }
 
@@ -197,6 +201,21 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
         }
     }
 
+}
+
+- (void)applyStyleToTitleCell:(HEMTextCollectionViewCell*)cell {
+    UIColor* color = [SenseStyle colorWithGroup:GroupInfo property:ThemePropertyTextColor];
+    UIFont* font = [SenseStyle fontWithGroup:GroupInfo property:ThemePropertyTextFont];
+    [[cell textLabel] setFont:font];
+    [[cell textLabel] setTextColor:color];
+    [self applyBackgroundColorTo:cell];
+}
+
+- (void)applyBackgroundColorTo:(HEMTextCollectionViewCell*)cell {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupInfo property:ThemePropertyBackgroundColor];
+    [[cell textLabel] setBackgroundColor:bgColor];
+    [cell setBackgroundColor:bgColor];
+    [[cell contentView] setBackgroundColor:bgColor];
 }
 
 @end

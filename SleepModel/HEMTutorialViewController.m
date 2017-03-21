@@ -163,11 +163,10 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
     UICollectionView* screen = [[UICollectionView alloc] initWithFrame:frame
                                                   collectionViewLayout:layout];
     
-    [screen setBackgroundColor:[UIColor whiteColor]];
     [screen setDelegate:self];
     [screen setTag:tag];
     [[screen layer] setCornerRadius:HEMTutorialContentCornerRadius];
-    
+    [screen applyStyle];
     return screen;
 }
 

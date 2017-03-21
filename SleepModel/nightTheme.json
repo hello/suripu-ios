@@ -234,5 +234,11 @@
         "style.background.color" : "@color/grey.9",
         "style.separator.color" : "@color/dark.separator",
         "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.info" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.background.color" : "@color/black"
     }
 }

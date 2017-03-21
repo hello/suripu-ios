@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.7
+
+New:
+
+* Themed alarm list
+
 ## 2.1.0.6
 
 New:

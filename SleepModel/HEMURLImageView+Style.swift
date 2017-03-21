@@ -13,7 +13,7 @@ extension HEMURLImageView {
     @objc func applyStyle() {
         let aClass = HEMURLImageView.self
         self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
-        self.layer.borderColor = SenseStyle.color(aClass: aClass, property: .borderColor)?.cgColor
+        self.layer.borderColor = SenseStyle.color(aClass: aClass, property: .borderColor).cgColor
     }
     
 }

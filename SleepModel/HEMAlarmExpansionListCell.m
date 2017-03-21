@@ -14,8 +14,14 @@ static CGFloat const kHEMAlarmExpansionSeparatorHeight = 0.5f;
 
 static NSInteger const kHEMAlarmExpansionTagIcon = 10;
 static NSInteger const kHEMAlarmExpansionTagLabel = 11;
+static NSInteger const kHEMAlarmexpansionTagSepartor = 12;
 
+static NSString* const kHEMAlarmExpansionStyleFontKey = @"sense.expansion.detail.font";
+static NSString* const kHEMAlarmExpansionStyleColorKey = @"sense.expansion.detail.color";
+
+#import "Sense-Swift.h"
 #import "HEMAlarmExpansionListCell.h"
+#import "HEMCardCollectionViewCell.h"
 #import "HEMStyle.h"
 
 @interface HEMAlarmExpansionListCell()
@@ -25,6 +31,25 @@ static NSInteger const kHEMAlarmExpansionTagLabel = 11;
 @end
 
 @implementation HEMAlarmExpansionListCell
+
++ (NSDictionary*)attributesForExpansionValueText:(BOOL)enabled {
+    NSMutableDictionary* attributes = [[self attributesForExpansionText:enabled] mutableCopy];
+    if (enabled) {
+        UIColor* color = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
+        [attributes setValue:color forKey:NSForegroundColorAttributeName];
+    }
+    return attributes;
+}
+
++ (NSDictionary*)attributesForExpansionText:(BOOL)enabled {
+    UIFont* font = [SenseStyle fontWithAClass:self propertyName:kHEMAlarmExpansionStyleFontKey];
+    UIColor* color = [SenseStyle colorWithAClass:self propertyName:kHEMAlarmExpansionStyleColorKey];
+    UIColor* disabledColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextDisabledColor];
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
+    [attributes setValue:font forKey:NSFontAttributeName];
+    [attributes setValue:enabled ? color : disabledColor forKey:NSForegroundColorAttributeName];
+    return attributes;
+}
 
 - (void)prepareForReuse {
     [super prepareForReuse];
@@ -67,7 +92,6 @@ static NSInteger const kHEMAlarmExpansionTagLabel = 11;
     expansionFrame.origin.y = yOrigin;
     
     UIView* view = [[UIView alloc] initWithFrame:expansionFrame];
-    [view setBackgroundColor:[UIColor whiteColor]];
     [view setTag:tag];
     
     CGRect separatorFrame = CGRectZero;
@@ -75,7 +99,7 @@ static NSInteger const kHEMAlarmExpansionTagLabel = 11;
     separatorFrame.size.height = kHEMAlarmExpansionSeparatorHeight;
     
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setBackgroundColor:[UIColor separatorColor]];
+    [separator setTag:kHEMAlarmexpansionTagSepartor];
     
     CGRect iconFrame = CGRectZero;
     iconFrame.size = icon.size;
@@ -101,6 +125,36 @@ static NSInteger const kHEMAlarmExpansionTagLabel = 11;
     [view addSubview:label];
     
     return view;
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    static NSString* fontKey = @"sense.expansion.detail.font";
+    static NSString* colorKey = @"sense.expansion.detail.color";
+    
+    UIColor* separatorColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
+    UIColor* normalColor = [SenseStyle colorWithAClass:[self class] propertyName:colorKey];
+    UIColor* disabledColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextDisabledColor];
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [[self enabledSwitch] isOn] ? normalColor : disabledColor;
+    UIFont* textFont = [SenseStyle fontWithAClass:[self class] propertyName:fontKey];
+    
+    for (UIView* expansionView in [[self expansionsContainer] subviews]) {
+        UIView* separator = [expansionView viewWithTag:kHEMAlarmexpansionTagSepartor];
+        UILabel* label = (UILabel*) [expansionView viewWithTag:kHEMAlarmExpansionTagLabel];
+        
+        if (separator) {
+            separator.backgroundColor = separatorColor;
+        }
+        
+        if (label) {
+            label.textColor = textColor;
+            label.font = textFont;
+        }
+        
+        expansionView.backgroundColor = bgColor;
+    }
 }
 
 @end

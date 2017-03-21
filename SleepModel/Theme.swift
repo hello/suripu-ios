@@ -182,6 +182,7 @@ import UIKit
         self.applyToolbarAppearance()
         self.applyTabBarAppearance()
         self.applyBarButtonItemAppearance()
+        self.applySwitchAppearance()
         
         let windows = UIApplication.shared.windows
         windows.forEach { (window: UIWindow) in
@@ -238,6 +239,11 @@ import UIKit
         
         let button = UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         button.tintColor = barButtonItem.tintColor
+    }
+    
+    fileprivate func applySwitchAppearance() {
+        let switchControl = UISwitch.appearance()
+        switchControl.onTintColor = self.value(aClass: UISwitch.self, property: .tintHighlightedColor) as? UIColor
     }
     
     fileprivate func apply(viewController: UIViewController?) {

@@ -15,6 +15,8 @@ extension LineChartDataSet {
     static let lineColorAlpha = CGFloat(0.8)
     static let topAlphaKey = "sense.top.alpha"
     static let botAlphaKey = "sense.bot.alpha"
+    static let useSensorColorKey = "sense.use.sensor.color"
+    static let gradientColorKey = "sense.gradient.color"
     
     @objc convenience init(data: [ChartDataEntry]?, color: UIColor) {
         self.init(values: data, label: nil)
@@ -34,11 +36,13 @@ extension LineChartDataSet {
     }
     
     fileprivate func gradient(color: UIColor) -> [CGColor] {
-        let gradientColor = SenseStyle.color(group: .chartGradient, property: .backgroundColor) ?? color
+        let useSensorColor = SenseStyle.value(group: .chartGradient, propertyName: LineChartDataSet.useSensorColorKey) as? NSNumber
         let topAlphaNumber = SenseStyle.value(group: .chartGradient, propertyName: LineChartDataSet.topAlphaKey) as? NSNumber
         let botAlphaNumber = SenseStyle.value(group: .chartGradient, propertyName: LineChartDataSet.botAlphaKey) as? NSNumber
-        return [gradientColor.withAlphaComponent(CGFloat(botAlphaNumber?.floatValue ?? 0)).cgColor,
-                gradientColor.withAlphaComponent(CGFloat(topAlphaNumber?.floatValue ?? 0)).cgColor];
+        let gradientColor = SenseStyle.color(group: .chartGradient, propertyName: LineChartDataSet.gradientColorKey)
+        let colorToUse = (useSensorColor?.boolValue ?? true) == true ? color : gradientColor
+        return [colorToUse.withAlphaComponent(CGFloat(botAlphaNumber?.floatValue ?? 0)).cgColor,
+                colorToUse.withAlphaComponent(CGFloat(topAlphaNumber?.floatValue ?? 0)).cgColor];
     }
     
     fileprivate func lineColor(color: UIColor) -> UIColor {

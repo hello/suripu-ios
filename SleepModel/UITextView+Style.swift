@@ -25,15 +25,11 @@ extension UITextView {
             return
         }
         
-        var attributes: [String: Any] = [:]
-        attributes[NSParagraphStyleAttributeName] = DefaultBodyParagraphStyle()
-        
-        if let color = SenseStyle.color(aClass: aClass, property: .textColor) {
-            attributes[NSForegroundColorAttributeName] = color
-        }
-        if let font = SenseStyle.font(aClass: aClass, property: .textFont) {
-            attributes[NSFontAttributeName] = font
-        }
+        let font = SenseStyle.font(aClass: aClass, property: .textFont)
+        let color = SenseStyle.color(aClass: aClass, property: .textColor)
+        let attributes: [String: Any] = [NSParagraphStyleAttributeName : DefaultBodyParagraphStyle,
+                                         NSFontAttributeName : font,
+                                         NSForegroundColorAttributeName : color]
         
         mutableText.applyAttributes(attributes)
         self.attributedText = mutableText

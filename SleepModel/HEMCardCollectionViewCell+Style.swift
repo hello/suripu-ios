@@ -14,7 +14,7 @@ extension HEMCardCollectionViewCell {
         let aClass = HEMCardCollectionViewCell.self
         self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
         self.contentView.backgroundColor = self.backgroundColor
-        self.contentView.layer.borderColor = SenseStyle.color(aClass: aClass, property: .borderColor)?.cgColor
+        self.contentView.layer.borderColor = SenseStyle.color(aClass: aClass, property: .borderColor).cgColor
     }
     
 }

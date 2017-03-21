@@ -11,25 +11,29 @@ import Foundation
 extension UIImage {
     
     func normalIconStyle() -> UIImage {
-        return self.tint(with: .tintColor)
+        return self.tint(property: .tintColor)
     }
     
     func disabledIconStyle() -> UIImage {
-        return self.tint(with: .tintDisabledColor)
+        return self.tint(property: .tintDisabledColor)
     }
     
     func highlightedIconStyle() -> UIImage {
-        return self.tint(with: .tintHighlightedColor)
+        return self.tint(property: .tintHighlightedColor)
     }
     
-    fileprivate func tint(with property: Theme.ThemeProperty) -> UIImage {
-        let color = SenseStyle.color(aClass: UIImage.self, property: property)
+    @objc func tint(with color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         color.set()
         self.draw(in: CGRect(origin: CGPoint.zero, size: self.size))
         let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return tintedImage!
+    }
+    
+    @objc fileprivate func tint(property: Theme.ThemeProperty) -> UIImage {
+        let color = SenseStyle.color(aClass: UIImage.self, property: property)
+        return self.tint(with: color)
     }
     
 }

@@ -81,7 +81,8 @@
     "#UINavigationBar" : {
         "style.bar.tint.color" : "@color/grey.9",
         "style.tint.color" : "@color/white",
-        "style.text.color" : "@color/white"
+        "style.text.color" : "@color/white",
+        "style.separator.color" : "@color/dark.separator"
     },
     
     "#HEMExpansionHeaderView" : {
@@ -227,5 +228,11 @@
     "#UISwitch" : {
         "style.background.color" : "@color/black",
         "style.tint.color" : "@color/white"
+    },
+    
+    "#HEMClockPickerView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.separator.color" : "@color/dark.separator",
+        "style.text.detail.color" : "@color/dark.secondary.text"
     }
 }

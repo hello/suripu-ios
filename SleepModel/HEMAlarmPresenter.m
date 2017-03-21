@@ -10,6 +10,7 @@
 #import <SenseKit/SENExpansion.h>
 
 #import "UIBarButtonItem+HEMNav.h"
+#import "Sense-Swift.h"
 
 #import "HEMAlarmPresenter.h"
 #import "HEMAlarmService.h"
@@ -134,10 +135,9 @@ static CGFloat const HEMAlarmConfigCellMaskAlpha = 0.7f;
 - (void)bindWithTableView:(UITableView*)tableView {
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    [tableView setBackgroundColor:[UIColor clearColor]];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
     [tableView setTableFooterView:[UIView new]];
     [tableView setBounces:YES];
+    [tableView applyStyle];
     
     HEMClockPickerView* timePicker = (id) [tableView tableHeaderView];
     [timePicker setDelegate:self];
@@ -438,14 +438,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                           action:@selector(showSmartTutorial:)
                 forControlEvents:UIControlEventTouchUpInside];
     
+    UIImage* icon = [[[cell iconView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [[cell iconView] setImage:icon];
     [[cell titleLabel] setText:NSLocalizedString(@"alarm.smart.title", nil)];
-    [[cell titleLabel] setFont:[UIFont body]];
-    [[cell titleLabel] setTextColor:[UIColor grey6]];
+    [cell applyStyle];
 }
 
 - (void)configureAlarmDetailCell:(HEMAlarmTableViewCell*)cell forType:(HEMAlarmRowType)type {
     NSString *title = nil, *detail = nil;
-    UIColor* titleColor = [UIColor grey6];
+    UIColor* titleColor = nil;
     
     switch (type) {
         case HEMAlarmRowTypeTone:
@@ -458,21 +459,23 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         case HEMAlarmRowTypeDelete:
             title = NSLocalizedString(@"alarm.delete.title", nil);
-            titleColor = [UIColor red6];
+            titleColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
             break;
         default:
             break;
     }
     
+    UIImage* icon = [[[cell iconView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [[cell iconView] setImage:icon];
     [[cell titleLabel] setText:title];
-    [[cell titleLabel] setFont:[UIFont body]];
-    [[cell titleLabel] setTextColor:titleColor];
-    
     [[cell detailLabel] setText:detail];
-    [[cell detailLabel] setFont:[UIFont body]];
-    [[cell detailLabel] setTextColor:[UIColor grey4]];
     
-    [cell setBackgroundColor:[UIColor clearColor]];
+    [cell applyStyle];
+    
+    if (titleColor) {
+        [[cell titleLabel] setTextColor:titleColor];
+        [[cell iconView] setTintColor:titleColor];
+    }
 }
 
 - (UIView*)customAccessoryViewWithHeight:(CGFloat)height {
@@ -522,7 +525,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureExpansionCell:(HEMAlarmTableViewCell*)expansionCell forType:(HEMAlarmRowType)type {
     NSString *title = nil, *detail = nil;
-    UIColor* titleColor = [UIColor grey6], *detailColor = [UIColor grey4];
+    UIColor* detailColor = nil;
     BOOL isStillLoading = [self isLoadingExpansions], showError = NO;
     UIView* accessoryView = nil;
     UIImage* icon = nil;
@@ -555,27 +558,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     
+    icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [expansionCell showActivity:isStillLoading];
     [[expansionCell errorIcon] setHidden:!showError];
     [[expansionCell iconView] setImage:icon];
-    
     [[expansionCell titleLabel] setText:title];
-    [[expansionCell titleLabel] setFont:[UIFont body]];
-    [[expansionCell titleLabel] setTextColor:titleColor];
-    
     [[expansionCell detailLabel] setText:detail];
-    [[expansionCell detailLabel] setFont:[UIFont body]];
-    [[expansionCell detailLabel] setTextColor:detailColor];
-    
-    [expansionCell setBackgroundColor:[UIColor clearColor]];
     
     UIView* maskView = [expansionCell viewWithTag:HEMAlarmConfigCellExpansionMaskTag];
     if ([expansion state] == SENExpansionStateNotAvailable) {
         if (!maskView) {
             maskView = [[UIView alloc] initWithFrame:[expansionCell bounds]];
-            [maskView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:HEMAlarmConfigCellMaskAlpha]];
             [maskView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
             [maskView setTag:HEMAlarmConfigCellExpansionMaskTag];
+            [maskView applyDisabledOverlayStyle];
         }
         [expansionCell addSubview:maskView];
         [expansionCell setUserInteractionEnabled:NO];
@@ -584,6 +580,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [maskView removeFromSuperview];
         [expansionCell setUserInteractionEnabled:YES];
         [expansionCell setAccessoryView:accessoryView];
+    }
+    
+    [expansionCell applyStyle];
+    
+    if (detailColor) {
+        [[expansionCell detailLabel] setTextColor:detailColor];
     }
 }
 

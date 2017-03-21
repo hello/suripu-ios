@@ -13,9 +13,4 @@
 
 @property (nonatomic, assign) BOOL manuallyHandleDrawerVisibility;
 
-/**
- *  Apply navigation bar styling
- */
-- (void)configureNavigationBar;
-
 @end

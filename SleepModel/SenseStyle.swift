@@ -69,6 +69,7 @@ import UIKit
         case sensorCard
         case chartGradient
         case subNav
+        case info
         
         var key: String {
             switch self {
@@ -104,6 +105,8 @@ import UIKit
                 return "sense.sensor.card"
             case .subNav:
                 return "sense.sub.navigation"
+            case .info:
+                return "sense.info"
             }
             
         }

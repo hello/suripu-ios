@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMAlarmTableViewCell.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -46,6 +48,26 @@ static CGFloat const kHEMAlarmCellFadeDuration = 0.5f;
             [[self detailTextLabel] setAlpha:1.0f];
         }];
     }
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    [[self titleLabel] setFont:titleFont];
+    [[self titleLabel] setTextColor:titleColor];
+
+    UIFont* detailFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+    [[self detailLabel] setFont:detailFont];
+    
+    if ([[self detailLabel] isHighlighted]) {
+        [[self detailLabel] setTextColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyLinkColor]];
+    } else {
+        [[self detailLabel] setTextColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor]];
+    }
+
+    [[self iconView] setTintColor:titleColor];
 }
 
 @end

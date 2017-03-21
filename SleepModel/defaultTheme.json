@@ -316,8 +316,8 @@
     },
     
     "#UISwitch" : {
-        "style.tint.color" : "@color/white",
+        "style.tint.color" : "@color/grey.2",
         "style.tint.highlighted.color" : "@color/blue.6",
-        "style.background.color" : "@color/grey.2"
+        "style.background.color" : "@color/white"
     }
 }

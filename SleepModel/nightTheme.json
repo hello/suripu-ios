@@ -225,6 +225,7 @@
     },
     
     "#UISwitch" : {
-        "style.background.color" : "@color/black"
+        "style.background.color" : "@color/black",
+        "style.tint.color" : "@color/white"
     }
 }

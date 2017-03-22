@@ -23,7 +23,7 @@
 + (instancetype)transitionViewFromCell:(HEMInsightCollectionViewCell*)cell {
     HEMInsightTransitionView* transitionView = [HEMInsightTransitionView new];
     [transitionView setFrame:[cell bounds]];
-    [transitionView setBackgroundColor:[UIColor whiteColor]];
+    [transitionView setBackgroundColor:[cell backgroundColor]];
     [transitionView setClipsToBounds:YES];
     [transitionView copyFromCell:cell];
     return transitionView;

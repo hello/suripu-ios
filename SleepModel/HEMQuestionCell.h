@@ -21,4 +21,6 @@ extern CGFloat const HEMQuestionCellBaseHeight;
 + (CGFloat)heightForCellWithQuestion:(NSAttributedString*)question
                            cellWidth:(CGFloat)width;
 
++ (NSDictionary*)questionTextAttributes;
+
 @end

@@ -250,5 +250,19 @@
     
     "#HEMSleepSoundConfigurationCell" : {
         "style.title.color" : "@font/dark.primary.text"
+    },
+    
+    "#HEMQuestionCell" : {
+        "style.title.color" : "@color/dark.secondary.text",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.secondary.button.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMInsightCollectionViewCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.disabled.text",
+        "style.primary.button.text.color" : "@color/dark.disabled.text"
     }
 }

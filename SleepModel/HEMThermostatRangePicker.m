@@ -99,17 +99,13 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
 }
 
 - (void)configureButtonStyles {
-    static NSString* fontKey = @"sense.button.font";
-    static NSString* textColorKey = @"sense.button.text.color";
-    static NSString* textPressedColorKey = @"sense.button.text.pressed.color";
-    static NSString* textDisabledColorKey = @"sense.button.text.disabled.color";
     static NSString* bgColorKey = @"sense.button.background.color";
     static NSString* bgPressedColorKey = @"sense.button.background.pressed.color";
     static NSString* bgDisabledColorKey = @"sense.button.background.disabled.color";
-    [self setButtonFont:[SenseStyle fontWithGroup:GroupExpansionRangePicker propertyName:fontKey]];
-    [self setButtonTextColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textColorKey]];
-    [self setButtonTextPressedColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textPressedColorKey]];
-    [self setButtonTextDisabledColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textDisabledColorKey]];
+    [self setButtonFont:[SenseStyle fontWithGroup:GroupExpansionRangePicker property:ThemePropertyPrimaryButtonTextFont]];
+    [self setButtonTextColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyPrimaryButtonTextColor]];
+    [self setButtonTextPressedColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyPrimaryButtonTextHighlightedColor]];
+    [self setButtonTextDisabledColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyPrimaryButtonTextDisabledColor]];
     [self setButtonBgColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgColorKey]];
     [self setButtonBgPressedColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgPressedColorKey]];
     [self setButtonBgDisabledColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgDisabledColorKey]];

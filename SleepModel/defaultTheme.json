@@ -353,10 +353,10 @@
     
     "sense.expansion.range.picker" : {
         "style.group.parent" : "#HEMClockPickerView",
-        "sense.button.font" : "@font/button.large",
-        "sense.button.text.color" : "@color/white",
-        "sense.button.text.pressed.color" : "@color/white",
-        "sense.button.text.disabled.color" : "@color/light.disabled.text",
+        "style.primary.button.text.font" : "@font/button.large",
+        "style.primary.button.text.color" : "@color/white",
+        "style.primary.button.text.highlighted.color" : "@color/white",
+        "style.primary.button.text.disabled.color" : "@color/light.disabled.text",
         "sense.button.background.color" : "@color/blue.6",
         "sense.button.background.pressed.color" : "@color/blue.7",
         "sense.button.background.disabled.color" : "@color/disabled.button"
@@ -366,5 +366,28 @@
         "style.group.parent" : "sense.list.item",
         "style.title.font" : "@font/body.2",
         "style.title.color" : "@font/light.primary.text"
+    },
+    
+    "#HEMQuestionCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.secondary.text",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.primary.button.text.font" : "@font/button.large",
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.secondary.button.text.font" : "@font/button.large",
+        "style.secondary.button.text.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMInsightCollectionViewCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.disabled.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.primary.button.text.font" : "@font/button",
+        "style.primary.button.text.color" : "@color/light.disabled.text"
     }
 }

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet HEMShareButton *shareButton;
 
++ (NSDictionary*)messageAttributes;
 + (CGFloat)contentHeightWithMessage:(NSAttributedString*)message
                             inWidth:(CGFloat)contentWidth
                           shareable:(BOOL)shareable;

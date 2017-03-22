@@ -14,7 +14,7 @@
     "display.2" : {
         "style.font.name" : "style.font.SYSTEM",
         "style.font.size" : 40.0,
-        "style.font.weight" : "style.font.LIGHT"
+        "style.font.weight" : "style.font.THIN"
     },
     
     "display.1" : {

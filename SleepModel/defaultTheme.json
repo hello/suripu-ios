@@ -360,5 +360,11 @@
         "sense.button.background.color" : "@color/blue.6",
         "sense.button.background.pressed.color" : "@color/blue.7",
         "sense.button.background.disabled.color" : "@color/disabled.button"
+    },
+    
+    "#HEMSleepSoundConfigurationCell" : {
+        "style.group.parent" : "sense.list.item",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@font/light.primary.text"
     }
 }

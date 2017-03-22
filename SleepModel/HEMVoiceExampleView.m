@@ -35,6 +35,8 @@
 }
 
 - (void)applyStyle {
+    [super applyFillStyle];
+    
     UIFont* categoryFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
     UIFont* exampleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
     UIColor* categoryColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];

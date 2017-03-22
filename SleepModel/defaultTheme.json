@@ -369,7 +369,7 @@
     "#HEMSleepSoundConfigurationCell" : {
         "style.group.parent" : "sense.list.item",
         "style.title.font" : "@font/body.2",
-        "style.title.color" : "@font/light.primary.text"
+        "style.title.color" : "@color/light.primary.text"
     },
     
     "#HEMQuestionCell" : {
@@ -429,5 +429,17 @@
         "style.text.color" : "@color/light.primary.text",
         "style.text.detail.font" : "@font/body.small",
         "style.text.detail.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMVoiceGroupHeaderCell" : {
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMVoiceExampleGroupCell" : {
+        "style.group.parent" : "#HEMVoiceGroupHeaderCell",
+        "style.title.font" : "@font/body.2"
     }
 }

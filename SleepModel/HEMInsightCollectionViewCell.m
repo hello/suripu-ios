@@ -98,14 +98,17 @@ static CGFloat const HEMInsightCellShareButtonHeight = 46.0f;
     UIFont* dateFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
     UIColor* buttonColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyPrimaryButtonTextColor];
     UIFont* buttonFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyPrimaryButtonTextFont];
+    UIColor* separatorColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
     
     [[self categoryLabel] setFont:categoryFont];
     [[self categoryLabel] setTextColor:categoryColor];
     [[self dateLabel] setFont:dateFont];
     [[self dateLabel] setTextColor:dateColor];
     [[[self shareButton] titleLabel] setFont:buttonFont];
-    [[[self shareButton] titleLabel] setTextColor:buttonColor];
+    [[self shareButton] setTitleColor:buttonColor forState:UIControlStateNormal];
     [[self shareButton] setTintColor:buttonColor];
+    [[self shareButton] setAdjustsImageWhenHighlighted:NO];
+    [[self separator] setBackgroundColor:separatorColor];
 }
 
 @end

@@ -4,6 +4,7 @@
     },
     
     "#UIView" : {
+        "sense.background.fill.color" : "@color/grey.9",
         "sense.disabled.overlay.color" : "@color/dark.disabled.overlay",
         "style.separator.color" : "@color/dark.separator"
     },
@@ -263,6 +264,15 @@
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.highlighted.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.disabled.text",
-        "style.primary.button.text.color" : "@color/dark.disabled.text"
+        "style.primary.button.text.color" : "@color/dark.button.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "sense.insight" : {
+        "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.disabled.color" : "@color/dark.button.disabled.text",
+        "style.secondary.button.text.color" : "@color/dark.button.text",
+        "style.separator.color" : "@color/dark.separator",
+        "style.border.color" : "@color/dark.separator"
     }
 }

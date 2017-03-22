@@ -6,6 +6,11 @@
     "light.disabled.overlay" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.7},
     "light.toolbar.item.disabled" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54 },
     
+    "light.button.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.87 },
+    "light.button.disabled.text" : { "style.color.hex" : "000000", "style.color.alpha" : 0.26 },
+    "dark.button.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.87 },
+    "dark.button.disabled.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.26 },
+    
     "dark.primary.text" : { "style.color.hex" : "FFFFFF"},
     "dark.secondary.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.70},
     "dark.disabled.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.50},

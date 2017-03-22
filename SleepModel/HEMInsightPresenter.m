@@ -10,17 +10,16 @@
 #import <SenseKit/SENInsight.h>
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 
+#import "Sense-Swift.h"
+
 #import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 #import "NSShadow+HEMStyle.h"
 #import "UIImage+HEMPixelColor.h"
 
 #import "HEMInsightPresenter.h"
 #import "HEMInsightsService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMMarkdown.h"
 #import "HEMURLImageView.h"
 #import "HEMImageCollectionViewCell.h"
 #import "HEMTextCollectionViewCell.h"
@@ -88,6 +87,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView withImageColor:(UIColor*)imageColor {
+    [collectionView applyFillStyle];
     [self setImageColor:imageColor];
     [self setCollectionView:collectionView];
     [[self collectionView] setDelegate:self];
@@ -169,9 +169,10 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
 
 - (NSAttributedString*)attributedAbout {
     if (!_attributedAbout) {
+        UIColor* color = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyDetailColor];
+        UIFont* font = [SenseStyle fontWithGroup:GroupInsight property:ThemePropertyDetailFont];
         NSString* about = [NSLocalizedString(@"insight.about", nil) uppercaseString];
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
-                                     NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
+        NSDictionary* attributes = @{NSFontAttributeName : font, NSForegroundColorAttributeName : color};
         _attributedAbout = [[NSAttributedString alloc] initWithString:about attributes:attributes];
     }
     return _attributedAbout;
@@ -189,14 +190,19 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     return _attributedSummary;
 }
 
+- (NSDictionary*)titleAttributes {
+    UIColor* titleColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyTitleColor];
+    UIFont* titleFont = [SenseStyle fontWithGroup:GroupInsight property:ThemePropertyTitleFont];
+    return @{NSFontAttributeName : titleFont, NSForegroundColorAttributeName : titleColor};
+}
+
 - (NSAttributedString*)attributedErrorTitle {
-    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
     NSString* errorTitle = NSLocalizedString(@"sleep.insight.info.title.no-text", nil);
-    return [[NSAttributedString alloc] initWithString:errorTitle attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:errorTitle attributes:[self titleAttributes]];
 }
 
 - (NSAttributedString*)attributedErrorBody {
-    NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText][@(PARA)];
+    NSDictionary* attributes = [HEMInsightCollectionViewCell messageAttributes];
     NSString* body = NSLocalizedString(@"sleep.insight.info.message.no-text", nil);
     return [[NSAttributedString alloc] initWithString:body attributes:attributes];
 }
@@ -205,9 +211,8 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     if (!_attributedTitle) {
         NSString* title = [[[self insightDetail] title] trim];
         if (title) {
-            NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
             _attributedTitle = [[NSAttributedString alloc] initWithString:title
-                                                               attributes:attributes];
+                                                               attributes:[self titleAttributes]];
         }
     }
     return _attributedTitle;
@@ -217,7 +222,7 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     if (!_attributedDetail) {
         NSString* detail = [[[self insightDetail] info] trim];
         if (detail) {
-            NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText];
+            NSDictionary* attributes = [HEMInsightCollectionViewCell messageAttributes];
             _attributedDetail = [markdown_to_attr_string(detail, 0, attributes) trim];
         }
     }

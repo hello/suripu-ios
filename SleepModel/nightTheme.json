@@ -279,4 +279,10 @@
     "sense.question" : {
         "style.title.color" : "@color/dark.primary.text"
     },
+    
+    "#HEMVoiceExampleView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    }
 }

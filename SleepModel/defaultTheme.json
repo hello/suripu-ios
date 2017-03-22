@@ -417,5 +417,17 @@
         "style.text.color" : "@color/blue.2",
         "style.text.highlighted.color" : "@color/blue.6",
         "style.separator.color" : "@color/highlighted.separator"
+    },
+    
+    "#HEMWelcomeVoiceCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.font" : "@font/caption.2"
+    },
+    
+    "#HEMVoiceExampleView" : {
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/body.small",
+        "style.text.detail.color" : "@color/light.secondary.text"
     }
 }

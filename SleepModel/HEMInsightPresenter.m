@@ -26,6 +26,7 @@
 #import "HEMTextCollectionViewCell.h"
 #import "HEMLoadingCollectionViewCell.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMInsightCollectionViewCell.h"
 
 typedef NS_ENUM(NSInteger, HEMInsightRow) {
     HEMInsightRowImage = 0,
@@ -180,7 +181,8 @@ static CGFloat const HEMInsightTextAppearanceAnimation = 0.6f;
     if (!_attributedSummary) {
         NSString* summary = [[[self insight] message] trim];
         if (summary) {
-            NSDictionary* attributes = [HEMMarkdown attributesForInsightSummaryText];
+            // use same as insight card attributes
+            NSDictionary* attributes = [HEMInsightCollectionViewCell messageAttributes];
             _attributedSummary = [markdown_to_attr_string(summary, 0, attributes) trim];
         }
     }

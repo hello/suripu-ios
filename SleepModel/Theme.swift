@@ -29,8 +29,14 @@ import UIKit
         case hintColor
         case includeShadow
         case statusBarStyle
+        case primaryButtonTextFont
         case primaryButtonTextColor
+        case primaryButtonTextHighlightedColor
+        case primaryButtonTextDisabledColor
+        case secondaryButtonTextFont
         case secondaryButtonTextColor
+        case secondaryButtonTextHighlightedColor
+        case secondaryButtonTextDisabledColor
         case borderColor
         case barTintColor
         case translucent
@@ -58,7 +64,7 @@ import UIKit
                 case .textDisabledColor:
                     return "style.text.disabled.color"
                 case .textHighlightedColor:
-                return "style.text.highlighted.color"
+                    return "style.text.highlighted.color"
                 case .textFont:
                     return "style.text.font"
                 case .includeShadow:
@@ -81,10 +87,22 @@ import UIKit
                     return "style.tint.highlighted.color"
                 case .linkColor:
                     return "style.link.color"
+                case .primaryButtonTextFont:
+                    return "style.primary.button.text.font"
                 case .primaryButtonTextColor:
                     return "style.primary.button.text.color"
+                case .primaryButtonTextHighlightedColor:
+                    return "style.primary.button.text.highlighted.color"
+                case .primaryButtonTextDisabledColor:
+                    return "style.primary.button.text.disabled.color"
+                case .secondaryButtonTextFont:
+                    return "style.secondary.button.text.font"
                 case .secondaryButtonTextColor:
                     return "style.secondary.button.text.color"
+                case .secondaryButtonTextHighlightedColor:
+                    return "style.secondary.button.text.highlighted.color"
+                case .secondaryButtonTextDisabledColor:
+                    return "style.secondary.button.text.disabled.color"
                 case .borderColor:
                     return "style.border.color"
                 case .barTintColor:

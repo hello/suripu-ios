@@ -12,34 +12,6 @@
 
 @implementation HEMMarkdown
 
-+ (NSDictionary *)attributesForInsightSummaryText {
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
-    style.lineBreakMode = NSLineBreakByWordWrapping;
-    style.alignment = NSTextAlignmentLeft;
-    return @{
-             @(EMPH) : @{
-                     NSFontAttributeName : [UIFont bodySmallBold],
-                     NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor grey6]
-                     },
-             @(STRONG) : @{
-                     NSFontAttributeName : [UIFont bodySmallBold],
-                     NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor grey6]
-                     },
-             @(PARA) : @{
-                     NSFontAttributeName : [UIFont bodySmall],
-                     NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor grey5]
-                     },
-             @(BULLETLIST) : @{
-                     NSFontAttributeName : [UIFont bodySmall],
-                     NSParagraphStyleAttributeName : style,
-                     NSForegroundColorAttributeName : [UIColor grey5]
-                     }
-             };
-}
-
 + (NSDictionary *)attributesForAlertMessageText {
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],

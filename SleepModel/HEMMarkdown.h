@@ -21,5 +21,5 @@
 + (NSDictionary*)attributesForTimelineBreakdownMessage;
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForTimelineSegmentPopup;
-+ (NSDictionary *)attributesForInsightSummaryText;
+
 @end

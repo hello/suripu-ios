@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 2/11/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMIntroMessageCell.h"
 
@@ -38,7 +39,9 @@ static CGFloat const HEMIntroMessageCellTitleBotPadding = 4.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self applyStyle];
     [[self imageView] setContentMode:UIViewContentModeCenter];
+    [[self imageView] setBackgroundColor:[self backgroundColor]];
     [[self messageLabel] setNumberOfLines:0];
 }
 

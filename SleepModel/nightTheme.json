@@ -246,5 +246,9 @@
     "#HEMAudioButton" : {
         "style.tint.color" : "@color/white",
         "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSleepSoundConfigurationCell" : {
+        "style.title.color" : "@font/dark.primary.text"
     }
 }

@@ -15,6 +15,8 @@ import UIKit
     @objc enum ThemeProperty: Int {
         case backgroundColor
         case separatorColor
+        case titleFont
+        case titleColor
         case textColor
         case textFont
         case detailFont
@@ -39,6 +41,10 @@ import UIKit
         
         var key: String {
             switch self {
+                case .titleFont:
+                    return "style.title.font"
+                case .titleColor:
+                return "style.title.color"
                 case .backgroundColor:
                     return "style.background.color"
                 case .backgroundHighlightedColor:

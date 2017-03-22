@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0.8
+
+New:
+
+* Themed alarm edit screen
+* Themed alarm sound screen
+* Themed alarm days screen
+* Themed alarm + hue setup screen
+* Themed alarm + nest setup screen
+* Themed no alarm state
+* Themed sleep sounds details screens
+
 ## 2.1.0.7
 
 New:

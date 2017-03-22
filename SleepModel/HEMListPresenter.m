@@ -46,7 +46,6 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
             selectedItemNames:(NSArray*)selectedItemNames {
     self = [super init];
     if (self) {
-        _hideExtraNavigationBar = YES;
         _title = [title copy];
         _items = [items copy];
         _mutableSelectedNames = [selectedItemNames mutableCopy];
@@ -56,27 +55,6 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 - (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar {
     [self setMainNavBar:navigationBar];
-}
-
-- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
-            withTopConstraint:(NSLayoutConstraint*)topConstraint {
-    
-    if ([self hideExtraNavigationBar]) {
-        CGFloat height = CGRectGetHeight([navigationBar bounds]);
-        [topConstraint setConstant:-height];
-        [navigationBar setHidden:YES];
-    } else {
-        UINavigationItem* topItem = [navigationBar topItem];
-        UIBarButtonItem* backButton = [topItem leftBarButtonItem];
-        [backButton setTarget:self];
-        [backButton setAction:@selector(back:)];
-        
-        HEMNavigationShadowView* shadowView =
-            [[HEMNavigationShadowView alloc] initWithNavigationBar:navigationBar];
-        [shadowView showSeparator:YES];
-        [navigationBar addSubview:shadowView];
-        [self bindWithShadowView:shadowView];
-    }
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -93,6 +71,8 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView bottomConstraint:(NSLayoutConstraint *)bottomConstraint {
+    [self setDefaultSelectionImages:[tableView allowsMultipleSelection]];
+    
     UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
                                                                bottomBorder:NO];
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
@@ -103,26 +83,21 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView applyStyle];
+    
     [self setTableView:tableView];
     [self setTableViewBottomConstraint:bottomConstraint];
 }
 
-- (void)setDefaultSelectionImages {
+- (void)setDefaultSelectionImages:(BOOL)allowMultiple {
     if (![self selectedImage]) {
-        UIImage* image = nil;
-        if ([[self tableView] allowsMultipleSelection]) {
-            image = [UIImage imageNamed:@"settingsToggleIconInactive"];
-            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        } else {
-            image = [UIImage imageNamed:@"radio"];
-            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        }
+        UIImage* image = [UIImage imageNamed:@"radio"];
+        image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [self setSelectedImage:image];
     }
     
     if (![self highlightedSelectionImage]) {
         UIImage* image = nil;
-        if ([[self tableView] allowsMultipleSelection]) {
+        if (allowMultiple) {
             image = [UIImage imageNamed:@"settingsToggleIconActive"];
             image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         } else {
@@ -195,11 +170,6 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     [[self tableView] reloadData];
 }
 
-- (void)willAppear {
-    [super willAppear];
-    [self setDefaultSelectionImages];
-}
-
 - (void)didAppear {
     [super didAppear];
     [self preSelectItems];
@@ -250,11 +220,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id item = [self items][[indexPath row]];
     
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    if ([cell isKindOfClass:[HEMListItemCell class]]) {
-        HEMListItemCell* listCell = (id)cell;
-        [listCell flashTouchIndicator];
-    }
     
     [self updateCell:cell withItem:item selected:YES];
     
@@ -342,7 +307,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (detail != nil) {
         identifier = [HEMMainStoryboard listItemDetailReuseIdentifier];
     }
-    return [tableView dequeueReusableCellWithIdentifier:identifier];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    [self configureSelectionImageViewInCell:(id)cell];
+    return cell;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

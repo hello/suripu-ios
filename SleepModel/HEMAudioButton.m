@@ -5,10 +5,10 @@
 //  Created by Jimmy Lu on 4/5/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMAudioButton.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMAudioButtonImageRightInset = 4.0f;
 static CGFloat const HEMAudioButtonTitleLeftInset = 8.0f;
@@ -17,6 +17,8 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 @interface HEMAudioButton()
 
 @property (nonatomic, strong) HEMActivityIndicatorView* loadingView;
+@property (nonatomic, strong) UIImage* playIcon;
+@property (nonatomic, strong) UIImage* stopIcon;
 
 @end
 
@@ -47,9 +49,21 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 }
 
 - (void)configureDefaults {
+    UIImage* playIcon = [UIImage imageNamed:@"miniPlayButton"];
+    [self setPlayIcon:[playIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    
+    UIImage* stopIcon = [UIImage imageNamed:@"miniStopButton"];
+    [self setStopIcon:[stopIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
+    [self setTintColor:tintColor];
+    
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIFont* textFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    
     [self setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, HEMAudioButtonImageRightInset)];
-    [[self titleLabel] setFont:[UIFont h8]];
-    [self setTitleColor:[UIColor lowImportanceTextColor] forState:UIControlStateNormal];
+    [[self titleLabel] setFont:textFont];
+    [self setTitleColor:textColor forState:UIControlStateNormal];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, HEMAudioButtonTitleLeftInset, 0.0f, 0.0f)];
     [self putIconToTheRightOfTitle];
 }
@@ -62,10 +76,9 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
 
 - (HEMActivityIndicatorView*)loadingView {
     if (!_loadingView) {
-        UIImage* playIcon = [UIImage imageNamed:@"miniPlayButton"];
         CGRect loadingFrame = CGRectZero;
-        loadingFrame.size = playIcon.size;
-        UIImage* loadingIndicator = [UIImage imageNamed:@"smallLoaderGray"];
+        loadingFrame.size = [self playIcon].size;
+        UIImage* loadingIndicator = [UIImage imageNamed:@"settingsLoader"];
         _loadingView = [[HEMActivityIndicatorView alloc] initWithImage:loadingIndicator
                                                               andFrame:loadingFrame];
         [_loadingView setHidden:YES];
@@ -105,8 +118,7 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
             [[self imageView] setHidden:NO];
             [self setTitle:[NSLocalizedString(@"sounds.audio.stop", nil) uppercaseString]
                   forState:UIControlStateNormal];
-            [self setImage:[UIImage imageNamed:@"miniStopButton"]
-                  forState:UIControlStateNormal];
+            [self setImage:[self stopIcon] forState:UIControlStateNormal];
             [self adjustSize];
             break;
         default:
@@ -116,8 +128,7 @@ static CGFloat const HEMAudioButtonAnimeLabelFadeDuration = 0.2f;
             [[self imageView] setHidden:NO];
             [self setTitle:[NSLocalizedString(@"sounds.audio.preview", nil) uppercaseString]
                   forState:UIControlStateNormal];
-            [self setImage:[UIImage imageNamed:@"miniPlayButton"]
-                  forState:UIControlStateNormal];
+            [self setImage:[self playIcon] forState:UIControlStateNormal];
             [self adjustSize];
             break;
     }

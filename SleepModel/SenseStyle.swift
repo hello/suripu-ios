@@ -70,6 +70,7 @@ import UIKit
         case chartGradient
         case subNav
         case info
+        case expansionRangePicker
         
         var key: String {
             switch self {
@@ -107,6 +108,8 @@ import UIKit
                 return "sense.sub.navigation"
             case .info:
                 return "sense.info"
+            case .expansionRangePicker:
+                return "sense.expansion.range.picker"
             }
             
         }

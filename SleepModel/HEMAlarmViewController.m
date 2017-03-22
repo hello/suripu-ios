@@ -171,8 +171,6 @@
                                                alarmCache:[[self presenter] cache]
                                                   basedOn:[[self presenter] alarm]
                                               withService:[self alarmService]];
-    
-    [daysPresenter setHideExtraNavigationBar:NO];
     [daysPresenter setDelegate:self];
     
     HEMListItemSelectionViewController* listVC = segue.destinationViewController;
@@ -194,7 +192,6 @@
                                      selectedItemName:selectedName
                                          audioService:[self audioService]
                                          alarmService:[self alarmService]];
-    [soundsPresenter setHideExtraNavigationBar:NO];
     [soundsPresenter setDelegate:self];
     
     HEMListItemSelectionViewController* listVC = segue.destinationViewController;

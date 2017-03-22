@@ -18,6 +18,7 @@ extension UITableViewCell {
         self.detailTextLabel?.textColor = SenseStyle.color(group: .listItem, property: .detailColor)
         self.detailTextLabel?.font = SenseStyle.font(group: .listItem, property: .detailFont)
         self.imageView?.tintColor = SenseStyle.color(group: .listItem, property: .tintColor)
+        self.selectedBackgroundView?.backgroundColor = SenseStyle.color(group: .listItem, property: .backgroundHighlightedColor)
     }
     
     @objc func applyTintStyle(highlighted: Bool) {

@@ -8,7 +8,7 @@
 #import <SenseKit/SENQuestion.h>
 #import <SenseKit/SENAnswer.h>
 
-#import "UIFont+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMActionButton.h"
@@ -57,10 +57,7 @@
 
 - (void)configure {
     [self setUnreadService:[HEMUnreadAlertService new]];
-    
-    [[self questionLabel] setFont:[UIFont h4]];
-    [[[self skipButton] titleLabel] setFont:[UIFont h6Bold]];
-    
+
     [[self questionLabel] setText:[[self dataSource] selectedQuestionText]];
     
     CGRect questionFrame = [[self questionLabel] frame];
@@ -78,6 +75,15 @@
         [self setSelectedAnswerPaths:[NSMutableSet set]];
     }
     [[self answerTableView] setAllowsMultipleSelection:multiple];
+    
+    // styles
+    UIFont* questionFont = [SenseStyle fontWithGroup:GroupQuestion property:ThemePropertyTitleFont];
+    UIColor* questionColor = [SenseStyle colorWithGroup:GroupQuestion property:ThemePropertyTitleColor];
+    [[self questionLabel] setFont:questionFont];
+    [[self questionLabel] setTextColor:questionColor];
+    [[self answerTableView] applyFillStyle];
+    [[self skipButton] applySecondaryStyle];
+    [[self view] applyFillStyle];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -118,6 +124,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[multiCell answerLabel] setText:text];
         [[multiCell separator] setHidden:isLastCell];
     }
+    
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

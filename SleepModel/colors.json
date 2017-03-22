@@ -23,6 +23,8 @@
     "light.icon.disabled" : { "style.color.hex" : "000000", "style.color.alpha" : 0.26},
     "dark.icon.disabled" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.5},
     
+    "highlighted.separator" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.5},
+    
     "black" : { "style.color.hex" : "000000" },
     "white" : { "style.color.hex" : "FFFFFF" },
     "clear" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.0 },

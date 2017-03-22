@@ -34,10 +34,10 @@
     },
     
     "#UIButton" : {
-        "style.background.color" : "@color/clear",
-        "style.text.color" : "@color/white",
-        "style.text.disabled.color" : "@color/dark.disabled.text",
-        "style.text.highlighted.color" : "@color/white"
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.primary.button.text.disabled.color" : "@color/dark.button.disabled.text",
+        "style.secondary.button.text.color" : "@color/dark.button.text",
+        "style.secondary.button.text.disabled.color" : "@color/dark.button.disabled.text"
     },
     
     "#UICollectionView" : {
@@ -274,5 +274,9 @@
         "style.secondary.button.text.color" : "@color/dark.button.text",
         "style.separator.color" : "@color/dark.separator",
         "style.border.color" : "@color/dark.separator"
-    }
+    },
+    
+    "sense.question" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
 }

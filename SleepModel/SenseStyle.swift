@@ -72,6 +72,7 @@ import UIKit
         case info
         case expansionRangePicker
         case insight
+        case question
         
         var key: String {
             switch self {
@@ -113,6 +114,8 @@ import UIKit
                 return "sense.expansion.range.picker"
             case .insight:
                 return "sense.insight"
+            case .question:
+                return "sense.question"
             }
             
         }

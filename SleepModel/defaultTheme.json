@@ -42,10 +42,13 @@
     
     "#UIButton" : {
         "style.background.color" : "@color/clear",
-        "style.text.color" : "@color/blue.6",
-        "style.text.disabled.color" : "@color/disabled.button",
-        "style.text.highlighted.color" : "@color/blue.7",
-        "style.text.font" : "@font/button"
+        "style.primary.button.text.font" : "@font/button",
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.primary.button.text.disabled.color" : "@color/light.button.disabled.text",
+        "style.primary.button.text.highlighted.color" : "@color/blue.7",
+        "style.secondary.button.text.font" : "@font/button",
+        "style.secondary.button.text.color" : "@color/light.button.text",
+        "style.secondary.button.text.disabled.color" : "@color/light.button.disabled.text"
     },
     
     "#UINavigationBar" : {
@@ -402,5 +405,17 @@
         "style.secondary.button.text.font" : "@font/button",
         "style.secondary.button.text.color" : "@color/light.button.text",
         "style.border.color" : "@color/light.separator"
+    },
+    
+    "sense.question" : {
+        "style.title.font" : "@font/headline",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMResponseCell" : {
+        "style.text.font" : "@font/title.1",
+        "style.text.color" : "@color/blue.2",
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.separator.color" : "@color/highlighted.separator"
     }
 }

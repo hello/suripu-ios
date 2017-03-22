@@ -16,7 +16,7 @@ extension UICollectionView {
         self.superview?.backgroundColor = self.backgroundColor
     }
     
-    @objc func applyFillStyle() {
+    @objc override func applyFillStyle() {
         self.backgroundColor = SenseStyle.color(group: .collectionViewFill, property: .backgroundColor)
         self.superview?.backgroundColor = self.backgroundColor
     }

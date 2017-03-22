@@ -8,13 +8,13 @@
 #import <SenseKit/SENInsight.h>
 
 #import "UIActivityViewController+HEMSharing.h"
+#import "Sense-Swift.h"
 
 #import "HEMInsightActionPresenter.h"
 #import "HEMActivityCoverView.h"
 #import "HEMShareContentProvider.h"
 #import "HEMConfirmationView.h"
 #import "HEMShareService.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMInsightButtonAnimationDuration = 0.5f;
 static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
@@ -88,6 +88,7 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
 - (void)bindWithButtonContainer:(UIView*)buttonContainer
                 containerShadow:(UIView*)shadowView
            withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    [buttonContainer applyFillStyle];
     [[buttonContainer layer] setBorderWidth:HEMInsightButtonContainerBorderWidth];
     [[buttonContainer layer] setBorderColor:[[UIColor borderColor] CGColor]];
     [bottomConstraint setConstant:-CGRectGetHeight([buttonContainer bounds])];
@@ -121,6 +122,34 @@ static CGFloat const HEMInsightButtonContainerBorderWidth = 0.5f;
     [self setCloseButton:closeButton];
     [self setShareButton:shareButton];
     [self setButtonDivider:divider];
+    [self applyButtonStyle];
+}
+
+#pragma mark - Themes
+
+- (void)applyButtonStyle {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyBackgroundColor];
+    UIColor* borderColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyBorderColor];
+    UIColor* separatorColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertySeparatorColor];
+    UIColor* primaryColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyPrimaryButtonTextColor];
+    UIColor* primaryDisabledColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertyPrimaryButtonTextDisabledColor];
+    UIColor* secondaryColor = [SenseStyle colorWithGroup:GroupInsight property:ThemePropertySecondaryButtonTextColor];
+    UIFont* primaryFont = [SenseStyle fontWithGroup:GroupInsight property:ThemePropertySecondaryButtonTextFont];
+    UIFont* secondaryFont = [SenseStyle fontWithGroup:GroupInsight property:ThemePropertySecondaryButtonTextColor];
+    
+    [[self closeButton] setTitleColor:secondaryColor forState:UIControlStateNormal];
+    [[[self closeButton] titleLabel] setFont:secondaryFont];
+    [[self closeButton] setBackgroundColor:bgColor];
+    
+    [[self shareButton] setTitleColor:primaryColor forState:UIControlStateNormal];
+    [[self shareButton] setTitleColor:primaryDisabledColor forState:UIControlStateDisabled];
+    [[self shareButton] setAdjustsImageWhenHighlighted:YES];
+    [[[self shareButton] titleLabel] setFont:primaryFont];
+    [[self shareButton] setBackgroundColor:bgColor];
+    
+    [[self buttonContainer] setBackgroundColor:bgColor];
+    [[[self buttonContainer] layer] setBorderColor:[borderColor CGColor]];
+    [[self buttonDivider] setBackgroundColor:separatorColor];
 }
 
 #pragma mark - Hide / Show Sharing

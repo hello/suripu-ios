@@ -19,4 +19,9 @@ extension UIView {
         self.backgroundColor = SenseStyle.color(aClass: UIView.self, property: .separatorColor)
     }
     
+    @objc func applyFillStyle() {
+        let bgFillKey = "sense.background.fill.color"
+        self.backgroundColor = SenseStyle.color(aClass: UIView.self, propertyName:bgFillKey)
+    }
+    
 }

@@ -33,7 +33,7 @@ extension UITableView {
         self.applyGroupStyle(group: .tableView)
     }
     
-    @objc func applyFillStyle() {
+    @objc override func applyFillStyle() {
         self.applyGroupStyle(group: .tableViewFill)
     }
     

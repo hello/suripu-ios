@@ -14,6 +14,4 @@
 @property (weak, nonatomic, nullable) IBOutlet UILabel* itemLabel;
 @property (weak, nonatomic, nullable) IBOutlet UILabel *descriptionLabel;
 
-- (void)flashTouchIndicator;
-
 @end

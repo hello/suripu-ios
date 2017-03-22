@@ -148,7 +148,8 @@
         "style.text.detail.color" : "@color/dark.secondary.text",
         "style.separator.color" : "@color/dark.separator",
         "style.link.color" : "@color/blue.6",
-        "style.tint.color" : "@color/white"
+        "style.tint.color" : "@color/white",
+        "style.background.highlighted.color" : "@color/grey.8"
     },
     
     "sense.list.item.selection" : {
@@ -226,7 +227,7 @@
     },
     
     "#UISwitch" : {
-        "style.background.color" : "@color/black",
+        "style.background.color" : "@color/grey.9",
         "style.tint.color" : "@color/white"
     },
     
@@ -239,6 +240,11 @@
     "sense.info" : {
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
-        "style.background.color" : "@color/black"
+        "style.background.color" : "@color/grey.9"
+    },
+    
+    "#HEMAudioButton" : {
+        "style.tint.color" : "@color/white",
+        "style.text.color" : "@color/dark.disabled.text"
     }
 }

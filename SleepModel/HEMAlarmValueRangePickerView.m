@@ -6,12 +6,12 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <NAPickerView/NAPickerView.h>
-
 #import "NSBundle+HEMUtils.h"
-
+#import "Sense-Swift.h"
 #import "HEMAlarmValueRangePickerView.h"
-#import "HEMStyle.h"
 
+static CGFloat const HEMAlarmPickerDarkGradient = 0.8f;
+static CGFloat const HEMAlarmPickerLightGradient = 0.05f;
 static CGFloat const HEMAlarmValueRangePickerWidth = 90.f;
 static CGFloat const HEMAlarmValueRangeDividerWidth = 40.0f;
 static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
@@ -32,13 +32,13 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
     return [NSBundle loadNibWithOwner:[self class]];
 }
 
-- (void)addGradient:(HEMGradient*)gradient toView:(UIView*)view {
-    if (view && gradient) {
+- (void)addGradient:(NSArray*)colors toView:(UIView*)view {
+    if (view && colors) {
         [[[view layer] sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         
         CAGradientLayer* layer = [CAGradientLayer layer];
         [layer setFrame:[view bounds]];
-        [layer setColors:[gradient colorRefs]];
+        [layer setColors:colors];
         [[view layer] addSublayer:layer];
         [view setBackgroundColor:[UIColor clearColor]];
         [view setUserInteractionEnabled:NO];
@@ -46,11 +46,14 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
 }
 
 - (void)configureGradientViews {
-    [self addGradient:[HEMGradient topGradientForTimePicker]
-               toView:[self topGradientView]];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyBackgroundColor];
+    [self setBackgroundColor:bgColor];
     
-    [self addGradient:[HEMGradient bottomGradientForTimePicker]
-               toView:[self botGradientView]];
+    NSArray* colors = @[(id) [[bgColor colorWithAlphaComponent:HEMAlarmPickerDarkGradient] CGColor],
+                        (id) [[bgColor colorWithAlphaComponent:HEMAlarmPickerLightGradient] CGColor]];
+    
+    [self addGradient:colors toView:[self topGradientView]];
+    [self addGradient:[[colors reverseObjectEnumerator] allObjects] toView:[self botGradientView]];
 }
 
 - (void)configureValuesArray:(NSInteger)min max:(NSInteger)max {
@@ -99,6 +102,9 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
     
     [self insertSubview:[self minPicker] atIndex:0];
     
+    UIColor* highlightedColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyTextHighlightedColor];
+    UIFont* highlightedFont = [SenseStyle fontWithGroup:GroupExpansionRangePicker property:ThemePropertyTextFont];
+    
     // add divider
     CGRect dividerFrame = CGRectZero;
     dividerFrame.size.width = HEMAlarmValueRangeDividerWidth;
@@ -107,8 +113,8 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
     
     UILabel* dividerLabel = [[UILabel alloc] initWithFrame:dividerFrame];
     [dividerLabel setTextAlignment:NSTextAlignmentCenter];
-    [dividerLabel setFont:[UIFont alarmSelectedNumberFont]];
-    [dividerLabel setTextColor:[UIColor tintColor]];
+    [dividerLabel setFont:highlightedFont];
+    [dividerLabel setTextColor:highlightedColor];
     [dividerLabel setText:@"-"];
     [dividerLabel setAutoresizingMask:UIViewAutoresizingFlexibleHeight
                                     | UIViewAutoresizingFlexibleWidth];
@@ -147,6 +153,11 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
     pickerFrame.origin.y = 0.0f;
     pickerFrame.origin.x = xOrigin;
 
+    UIColor* highlightedColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyTextHighlightedColor];
+    UIFont* highlightedFont = [SenseStyle fontWithGroup:GroupExpansionRangePicker property:ThemePropertyTextFont];
+    UIFont* normalFont = [SenseStyle fontWithGroup:GroupExpansionRangePicker property:ThemePropertyDetailFont];
+    UIColor* normalColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyDetailColor];
+    
     NAPickerView* pickerView = [[NAPickerView alloc] initWithFrame:pickerFrame
                                                           andItems:[self values]
                                                        andDelegate:nil];
@@ -155,8 +166,8 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
     [pickerView setBackgroundColor:[UIColor clearColor]];
     [pickerView setOverlayColor:[UIColor clearColor]];
     [pickerView setConfigureBlock:^(NALabelCell *cell, NSString *item) {
-        [[cell textView] setFont:[UIFont alarmSelectedNumberFont]];
-        [[cell textView] setTextColor:[UIColor textColor]];
+        [[cell textView] setFont:normalFont];
+        [[cell textView] setTextColor:normalColor];
         [[cell textView] setBackgroundColor:[UIColor clearColor]];
         [[cell textView] setTextAlignment:NSTextAlignmentCenter];
         [[cell textView] setText:item];
@@ -181,22 +192,22 @@ static NSInteger const HEMAlarmValueRangeDefaultDiff = 10;
         }
         
         [[cell textView] setTransform:CGAffineTransformMakeScale(0.5, 0.5)];
-        [[cell textView] setFont:[UIFont alarmSelectedNumberFont]];
+        [[cell textView] setFont:highlightedFont];
         [UIView animateWithDuration:0.2f
                          animations:^{
-                              [[cell textView] setTransform:CGAffineTransformIdentity];
-                              [[cell textView] setTextColor:[UIColor tintColor]];
+                             [[cell textView] setTransform:CGAffineTransformIdentity];
+                             [[cell textView] setTextColor:highlightedColor];
                          }];
     }];
 
     [pickerView setUnhighlightBlock:^(NALabelCell *cell) {
-        if ([[[cell textView] font] pointSize] != [[UIFont alarmNumberFont] pointSize]) {
-            [[cell textView] setFont:[UIFont alarmNumberFont]];
+        if ([[[cell textView] font] pointSize] != [normalFont pointSize]) {
+            [[cell textView] setFont:normalFont];
             [[cell textView] setTransform:CGAffineTransformMakeScale(2, 2)];
             [UIView animateWithDuration:0.2f
                              animations:^{
                                  [[cell textView] setTransform:CGAffineTransformIdentity];
-                                 [[cell textView] setTextColor:[UIColor grey4]];
+                                 [[cell textView] setTextColor:normalColor];
                              }];
         }
     }];

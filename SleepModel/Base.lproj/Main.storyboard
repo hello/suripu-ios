@@ -87,7 +87,7 @@
                                                         <constraint firstAttribute="width" constant="32" id="TUB-v9-3mt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1r-jw-nVy" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1r-jw-nVy">
                                                     <rect key="frame" x="343" y="17" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.9984821081161499" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
@@ -399,9 +399,8 @@
                                                     <color key="textColor" red="0.30000001192092896" green="0.30000001192092896" blue="0.30000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSs-2H-8Sv" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uSs-2H-8Sv">
                                                     <rect key="frame" x="341" y="17" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.9984821081161499" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -491,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7LM-Yo-OT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5000" y="1687"/>
+            <point key="canvasLocation" x="5171" y="1687"/>
         </scene>
         <!--Settings Navigation Controller-->
         <scene sceneID="TnO-RW-DgT">
@@ -1614,7 +1613,7 @@
                                                     <color key="textColor" red="0.75240164995193481" green="0.75240164995193481" blue="0.75240164995193481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU">
                                                     <rect key="frame" x="333" y="51.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2r6-zA-JWU">
@@ -1663,7 +1662,7 @@
                                                     <color key="textColor" red="0.75240164995193481" green="0.75240164995193481" blue="0.75240164995193481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s" customClass="HEMSwitchControl">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Egr-uh-f2s">
                                                     <rect key="frame" x="333" y="48" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5eg-5V-O9q">
@@ -4394,7 +4393,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="62" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="NeY-wL-Vb4">
-                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="listItemDetail" rowHeight="68" id="A9T-BS-guo" customClass="HEMListItemCell">
@@ -4404,7 +4403,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="Vfd-XS-vvW">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radio" translatesAutoresizingMaskIntoConstraints="NO" id="Vfd-XS-vvW">
                                                     <rect key="frame" x="21" y="19" width="24" height="24"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b29-Xl-tbU">
@@ -4445,7 +4444,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="hg4-o0-FXx">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radio" translatesAutoresizingMaskIntoConstraints="NO" id="hg4-o0-FXx">
                                                     <rect key="frame" x="21" y="19" width="24" height="24"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orr-ij-e8g">
@@ -4470,20 +4469,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BF3-aD-yRd">
-                                <rect key="frame" x="0.0" y="64" width="414" height="44"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                    <color key="textColor" red="0.23404698073863983" green="0.23403999209403992" blue="0.23404392600059509" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem id="kEi-ZR-9wT">
-                                        <barButtonItem key="leftBarButtonItem" image="backIcon" id="l48-cs-Mb7">
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Zz-Jv-r2A" customClass="HEMActivityIndicatorView">
                                 <rect key="frame" x="182" y="343" width="50" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4496,21 +4481,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="NeY-wL-Vb4" firstAttribute="leading" secondItem="JWB-uI-Lm8" secondAttribute="leading" id="1tS-2F-G1t"/>
-                            <constraint firstAttribute="trailing" secondItem="BF3-aD-yRd" secondAttribute="trailing" id="ExQ-E2-Wfq"/>
-                            <constraint firstItem="BF3-aD-yRd" firstAttribute="top" secondItem="XDq-cm-A7X" secondAttribute="bottom" id="OZA-BK-Mbo"/>
-                            <constraint firstItem="NeY-wL-Vb4" firstAttribute="top" secondItem="BF3-aD-yRd" secondAttribute="bottom" id="UDE-9w-4Sm"/>
                             <constraint firstAttribute="bottom" secondItem="NeY-wL-Vb4" secondAttribute="bottom" id="X8b-kW-RzL"/>
-                            <constraint firstItem="BF3-aD-yRd" firstAttribute="leading" secondItem="JWB-uI-Lm8" secondAttribute="leading" id="YiJ-kz-j6i"/>
                             <constraint firstAttribute="trailing" secondItem="NeY-wL-Vb4" secondAttribute="trailing" id="ayG-Xq-qJx"/>
                             <constraint firstItem="7Zz-Jv-r2A" firstAttribute="centerX" secondItem="JWB-uI-Lm8" secondAttribute="centerX" id="c5n-Ah-R0X"/>
                             <constraint firstItem="7Zz-Jv-r2A" firstAttribute="centerY" secondItem="JWB-uI-Lm8" secondAttribute="centerY" id="kxY-af-wAT"/>
+                            <constraint firstItem="NeY-wL-Vb4" firstAttribute="top" secondItem="JWB-uI-Lm8" secondAttribute="topMargin" id="y7Y-7y-m2h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PZX-lA-CLj"/>
                     <connections>
                         <outlet property="activityIndicator" destination="7Zz-Jv-r2A" id="YBb-cB-EhK"/>
-                        <outlet property="extraNavigationBar" destination="BF3-aD-yRd" id="Wl2-d4-DnD"/>
-                        <outlet property="navigationBarTopConstraint" destination="OZA-BK-Mbo" id="dXc-Ud-BcX"/>
                         <outlet property="tableView" destination="NeY-wL-Vb4" id="SHd-HI-eA9"/>
                         <outlet property="tableViewBottomConstraint" destination="X8b-kW-RzL" id="Hr7-jw-xcc"/>
                     </connections>
@@ -4737,7 +4717,6 @@
         <image name="alarmRepeatIcon" width="21" height="24"/>
         <image name="alarmSmartIcon" width="21" height="20"/>
         <image name="alarmSoundIcon" width="20" height="21"/>
-        <image name="backIcon" width="10" height="18"/>
         <image name="bottomShadow" width="375" height="4"/>
         <image name="cardLoadingState" width="375" height="144"/>
         <image name="checkmark" width="19" height="14"/>
@@ -4751,7 +4730,6 @@
         <image name="noSense" width="359" height="180"/>
         <image name="questions_circle" width="21" height="21"/>
         <image name="radio" width="24" height="24"/>
-        <image name="radioSelected" width="24" height="24"/>
         <image name="sleepSoundIcon" width="24" height="24"/>
         <image name="soundGraphLeft" width="80" height="20"/>
         <image name="soundGraphRight" width="80" height="20"/>

@@ -11,6 +11,8 @@
 #import <UICountingLabel/UICountingLabel.h>
 #import <SenseKit/SENPreference.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMActionSheetViewController.h"
 #import "HEMAlarmExpansionSetupPresenter.h"
 #import "HEMAlarmValueRangePickerView.h"
@@ -83,7 +85,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     [tableView setDataSource:self];
     [tableView setScrollEnabled:NO];
     [tableView setTableFooterView:[UIView new]];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
+    [tableView applyFillStyle];
     [self setTableView:tableView];
 }
 
@@ -117,9 +119,9 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
             break;
         }
     }
+    [container setBackgroundColor:[[self tableView] backgroundColor]];
     [heightConstraint setConstant:kHEMAlarmExpPickerSeparatorHeight];
-    
-    [separator setBackgroundColor:[UIColor separatorColor]];
+    [separator applySeparatorStyle];
     [activityIndicator start];
     [activityIndicator setHidden:NO];
     [activityIndicator setUserInteractionEnabled:NO];
@@ -159,6 +161,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmExpSetupRowType) {
     [[self targetValueActivityIndicator] setHidden:YES];
     
     UIView* picker = [[self targetValueContainer] viewWithTag:kHEMAlarmExpPickerTag];
+    [picker setBackgroundColor:[[self tableView] backgroundColor]];
     [picker setHidden:NO];
     
     SENExpansionType type = [[self expansion] type];
@@ -314,7 +317,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = nil;
     NSString* detail = nil;
     BOOL showLoading = NO;
-    UIColor* detailColor = [UIColor grey4];
+    UIColor* detailColor = nil;
     
     NSNumber* rowType = [self rows][[indexPath row]];
     switch ([rowType unsignedIntegerValue]) {
@@ -343,14 +346,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[bCell customTitleLabel] setText:title];
-    [[bCell customTitleLabel] setFont:[UIFont body]];
-    [[bCell customTitleLabel] setTextColor:[UIColor grey6]];
-    
     [[bCell customDetailLabel] setText:detail];
-    [[bCell customDetailLabel] setFont:[UIFont body]];
-    [[bCell customDetailLabel] setTextColor:detailColor];
-    
     [bCell showActivity:showLoading];
+    [bCell applyStyle];
+    
+    if (detailColor) {
+        [[bCell customDetailLabel] setTextColor:detailColor];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {

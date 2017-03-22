@@ -293,7 +293,6 @@
 		BF658A4C1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */; };
 		BF68B6771D8B6452001AD1EF /* HEMSensorScaleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF68B6761D8B6452001AD1EF /* HEMSensorScaleView.xib */; };
 		BF68B67A1D8B6649001AD1EF /* HEMSensorScaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF68B6791D8B6649001AD1EF /* HEMSensorScaleView.m */; };
-		BF6952541C52D3FD000A8E85 /* HEMSwitchControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952531C52D3FD000A8E85 /* HEMSwitchControl.m */; };
 		BF6952581C52FB8F000A8E85 /* HEMHandHoldingService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */; };
 		BF69525F1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF69525E1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.m */; };
 		BF6952631C570424000A8E85 /* HEMSensorHandHoldingPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6952621C570424000A8E85 /* HEMSensorHandHoldingPresenter.m */; };
@@ -1052,8 +1051,6 @@
 		BF68B6761D8B6452001AD1EF /* HEMSensorScaleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSensorScaleView.xib; sourceTree = "<group>"; };
 		BF68B6781D8B6649001AD1EF /* HEMSensorScaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorScaleView.h; sourceTree = "<group>"; };
 		BF68B6791D8B6649001AD1EF /* HEMSensorScaleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorScaleView.m; sourceTree = "<group>"; };
-		BF6952521C52D3FD000A8E85 /* HEMSwitchControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSwitchControl.h; sourceTree = "<group>"; };
-		BF6952531C52D3FD000A8E85 /* HEMSwitchControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSwitchControl.m; sourceTree = "<group>"; };
 		BF6952561C52FB8F000A8E85 /* HEMHandHoldingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHandHoldingService.h; sourceTree = "<group>"; };
 		BF6952571C52FB8F000A8E85 /* HEMHandHoldingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandHoldingService.m; sourceTree = "<group>"; };
 		BF69525D1C56FE5F000A8E85 /* HEMInsightsHandHoldingPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsHandHoldingPresenter.h; sourceTree = "<group>"; };
@@ -2939,8 +2936,6 @@
 				BF8339A11C18E05600BFD0F4 /* HEMNavigationShadowView.m */,
 				BF0E37951C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.h */,
 				BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */,
-				BF6952521C52D3FD000A8E85 /* HEMSwitchControl.h */,
-				BF6952531C52D3FD000A8E85 /* HEMSwitchControl.m */,
 				BF5BACF41C5BF20300347185 /* HEMSubNavigationView.h */,
 				BF5BACF51C5BF20300347185 /* HEMSubNavigationView.m */,
 				BF6995EF1CA6086E00C7AA55 /* HEMListItemCell.h */,
@@ -4512,7 +4507,6 @@
 				BF20B2221BFAA3BE00AD1F21 /* HEMSettingsHeaderFooterView.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
-				BF6952541C52D3FD000A8E85 /* HEMSwitchControl.m in Sources */,
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,
 				BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */,
 				BF412EA41C91098F009514A1 /* HEMSleepSoundConfigurationCell.m in Sources */,

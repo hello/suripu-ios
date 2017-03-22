@@ -8,10 +8,10 @@
 
 #import <UICountingLabel/UICountingLabel.h>
 
+#import "Sense-Swift.h"
 #import "NSBundle+HEMUtils.h"
 
 #import "HEMThermostatRangePicker.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMThermostatBottomBorderWidth = 0.5f;
 static NSInteger const kHEMThermostatValueSeparation = 3;
@@ -22,6 +22,13 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
 @interface HEMThermostatRangePicker()
 
 @property (nonatomic, weak) UIButton* buttonBeingPressed;
+@property (nonatomic, strong) UIFont* buttonFont;
+@property (nonatomic, strong) UIColor* buttonBgColor;
+@property (nonatomic, strong) UIColor* buttonBgPressedColor;
+@property (nonatomic, strong) UIColor* buttonBgDisabledColor;
+@property (nonatomic, strong) UIColor* buttonTextColor;
+@property (nonatomic, strong) UIColor* buttonTextPressedColor;
+@property (nonatomic, strong) UIColor* buttonTextDisabledColor;
 
 @end
 
@@ -68,12 +75,20 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[self separatorLabel] setFont:[UIFont alarmSelectedNumberFont]];
-    [[self separatorLabel] setTextColor:[UIColor tintColor]];
     
-    [self setValueLabelDefaultsFor:[self minLabel]];
-    [self setValueLabelDefaultsFor:[self maxLabel]];
+    UIColor* backgroundColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyBackgroundColor];
+    UIColor* highlightedColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertyTextHighlightedColor];
+    UIFont* highlightedFont = [SenseStyle fontWithGroup:GroupExpansionRangePicker property:ThemePropertyTextFont];
     
+    [self setBackgroundColor:backgroundColor];
+    
+    [[self separatorLabel] setFont:highlightedFont];
+    [[self separatorLabel] setTextColor:highlightedColor];
+    
+    [self setValueLabelDefaultsFor:[self minLabel] font:highlightedFont color:highlightedColor];
+    [self setValueLabelDefaultsFor:[self maxLabel] font:highlightedFont color:highlightedColor];
+    
+    [self configureButtonStyles];
     [self setButtonDefaultsFor:[self increaseMinButton]];
     [self setButtonDefaultsFor:[self increaseMaxButton]];
     [self setButtonDefaultsFor:[self decreaseMinButton]];
@@ -83,11 +98,28 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
     [self setMaxLimit:kHEMThermostatDefaultMax];
 }
 
-- (void)setValueLabelDefaultsFor:(UICountingLabel*)label {
+- (void)configureButtonStyles {
+    static NSString* fontKey = @"sense.button.font";
+    static NSString* textColorKey = @"sense.button.text.color";
+    static NSString* textPressedColorKey = @"sense.button.text.pressed.color";
+    static NSString* textDisabledColorKey = @"sense.button.text.disabled.color";
+    static NSString* bgColorKey = @"sense.button.background.color";
+    static NSString* bgPressedColorKey = @"sense.button.background.pressed.color";
+    static NSString* bgDisabledColorKey = @"sense.button.background.disabled.color";
+    [self setButtonFont:[SenseStyle fontWithGroup:GroupExpansionRangePicker propertyName:fontKey]];
+    [self setButtonTextColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textColorKey]];
+    [self setButtonTextPressedColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textPressedColorKey]];
+    [self setButtonTextDisabledColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:textDisabledColorKey]];
+    [self setButtonBgColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgColorKey]];
+    [self setButtonBgPressedColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgPressedColorKey]];
+    [self setButtonBgDisabledColor:[SenseStyle colorWithGroup:GroupExpansionRangePicker propertyName:bgDisabledColorKey]];
+}
+
+- (void)setValueLabelDefaultsFor:(UICountingLabel*)label font:(UIFont*)font color:(UIColor*)color {
     NSString* valueFormat = NSLocalizedString(@"expansion.range.picker.value.format", nil);
     [label setFormat:valueFormat];
-    [label setFont:[UIFont alarmSelectedNumberFont]];
-    [label setTextColor:[UIColor tintColor]];
+    [label setFont:font];
+    [label setTextColor:color];
 }
 
 - (void)setButtonDefaultsFor:(UIButton*)button {
@@ -98,10 +130,10 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
     
     [button setExclusiveTouch:YES];
     [button setAdjustsImageWhenHighlighted:NO];
-    [[button titleLabel] setFont:[UIFont buttonLarge]];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-    [button setBackgroundColor:[UIColor blue2]];
+    [[button titleLabel] setFont:[self buttonFont]];
+    [button setTitleColor:[self buttonTextColor] forState:UIControlStateNormal];
+    [button setTitleColor:[self buttonTextDisabledColor] forState:UIControlStateDisabled];
+    [button setBackgroundColor:[self buttonBgColor]];
     [button addTarget:self
                action:@selector(touchDownOnButton:)
      forControlEvents:UIControlEventTouchDown];
@@ -117,7 +149,8 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
-    CGContextSetStrokeColorWithColor(context, [[UIColor separatorColor] CGColor]);
+    UIColor* separatorColor = [SenseStyle colorWithGroup:GroupExpansionRangePicker property:ThemePropertySeparatorColor];
+    CGContextSetStrokeColorWithColor(context, [separatorColor CGColor]);
     CGContextSetLineWidth(context, kHEMThermostatBottomBorderWidth);
     
     CGFloat y = CGRectGetHeight([self bounds]) - kHEMThermostatBottomBorderWidth;
@@ -135,25 +168,38 @@ static CGFloat const kHEMThermostatAutoChangeDelay = 0.1f;
     CGFloat currentMax = [[self maxLabel] currentValue];
     CGFloat maxMinValue = [self maxLimit] - kHEMThermostatValueSeparation;
     CGFloat minMaxValue = [self minLimit] + kHEMThermostatValueSeparation;
-    [[self increaseMinButton] setEnabled:currentMin != maxMinValue];
-    [[self decreaseMinButton] setEnabled:currentMin != [self minLimit]];
-    [[self increaseMaxButton] setEnabled:currentMax !=[self maxLimit]];
-    [[self decreaseMaxButton] setEnabled:currentMax != minMaxValue];
+    [self setButton:[self increaseMinButton] enabled:currentMin != maxMinValue];
+    [self setButton:[self decreaseMinButton] enabled:currentMin != [self minLimit]];
+    [self setButton:[self increaseMaxButton] enabled:currentMax !=[self maxLimit]];
+    [self setButton:[self decreaseMaxButton] enabled:currentMax != minMaxValue];
+}
+
+- (void)setButton:(UIButton*)button enabled:(BOOL)enabled {
+    [button setEnabled:enabled];
+    if (enabled) {
+        [button setBackgroundColor:[self buttonBgColor]];
+    } else {
+        [button setBackgroundColor:[self buttonBgDisabledColor]];
+    }
 }
 
 #pragma mark - Touches
 
 - (void)touchDownOnButton:(UIButton*)button {
     [self setButtonBeingPressed:button];
-    [button setBackgroundColor:[UIColor blue6]];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    if ([button isEnabled]) {
+        [button setBackgroundColor:[self buttonBgPressedColor]];
+    }
+    [button setTitleColor:[self buttonTextPressedColor] forState:UIControlStateNormal];
     [self rollingValue];
 }
 
 - (void)touchDownUpButton:(UIButton*)button {
     [self setButtonBeingPressed:nil];
-    [button setBackgroundColor:[UIColor blue2]];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    if ([button isEnabled]) {
+        [button setBackgroundColor:[self buttonBgColor]];
+    }
+    [button setTitleColor:[self buttonTextColor] forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions

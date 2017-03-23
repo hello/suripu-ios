@@ -5,9 +5,9 @@
 //  Created by Delisa Mason on 5/21/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-
+#import <AttributedMarkdown/markdown_peg.h>
+#import "Sense-Swift.h"
 #import "HEMEventBubbleView.h"
-#import "UIColor+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMScreenUtils.h"
 
@@ -20,6 +20,8 @@ CGFloat const HEMEventBubbleWaveformHeight = 26.f;
 @property (nonatomic, weak) IBOutlet UIImageView *topWaveformView;
 @property (nonatomic, weak) IBOutlet UIImageView *bottomWaveformView;
 @property (nonatomic, getter=isShowingWaveforms, readwrite) BOOL showingWaveforms;
+@property (nonatomic, strong) UIColor* highlightedBgColor;
+@property (nonatomic, strong) UIColor* normalBgColor;
 @end
 
 @implementation HEMEventBubbleView
@@ -35,6 +37,26 @@ CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
 CGFloat const HEMEventBubbleShadowOpacity = 0.25f;
 CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
+
++ (NSDictionary*)messageAttributes {
+    UIColor* textColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
+    UIColor* textHighlightedColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
+    UIFont* textFont = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSTextAlignmentLeft;
+    style.lineSpacing = 2.f;
+    style.maximumLineHeight = 18.f;
+    style.minimumLineHeight = 18.f;
+    return @{@(STRONG) : @{NSFontAttributeName : textFont,
+                           NSParagraphStyleAttributeName : style,
+                           NSForegroundColorAttributeName :textHighlightedColor},
+             @(PARA) : @{NSFontAttributeName : textFont,
+                         NSParagraphStyleAttributeName : style,
+                         NSForegroundColorAttributeName : textColor},
+             @(EMPH) : @{NSFontAttributeName : textFont,
+                         NSParagraphStyleAttributeName : style,
+                         NSForegroundColorAttributeName : textHighlightedColor}};
+}
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text
                         timeText:(NSAttributedString *)time
@@ -57,6 +79,11 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    self.normalBgColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyBackgroundColor];
+    self.highlightedBgColor = [SenseStyle colorWithAClass:[self class]
+                                                 property:ThemePropertyBackgroundHighlightedColor];
     self.layer.shadowRadius = 2.f;
     self.layer.shadowColor = [[UIColor tintColor] CGColor];
     self.layer.shadowOpacity = HEMEventBubbleShadowOpacity;
@@ -66,7 +93,7 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 
     self.layer.masksToBounds = NO;
     self.backgroundColor = [UIColor clearColor];
-    self.cornerView.backgroundColor = [UIColor whiteColor];
+    self.cornerView.backgroundColor = self.normalBgColor;
     self.showingWaveforms = NO;
 }
 
@@ -86,16 +113,15 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
     self.timeLabel.attributedText = time;
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
-    self.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.accessibility-value.format", nil), [time string], [message string]];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
     if (highlighted) {
-        self.cornerView.backgroundColor = [UIColor blue1];
+        self.cornerView.backgroundColor = self.highlightedBgColor;
         [self setShadowVisible:NO];
     } else {
         [self setShadowVisible:YES];
-        self.cornerView.backgroundColor = [UIColor whiteColor];
+        self.cornerView.backgroundColor = self.normalBgColor;
     }
 }
 

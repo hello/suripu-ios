@@ -12,6 +12,7 @@ extern CGFloat const HEMEventBubbleWaveformHeight;
 
 @interface HEMEventBubbleView : UIView
 
++ (NSDictionary*)messageAttributes;
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time showWaveform:(BOOL)visible;
 
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time;

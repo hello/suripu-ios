@@ -571,7 +571,6 @@
 "sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.incorrect.title" = "Mark as incorrect";
 "sleep-event.action.remove.title" = "Remove this event";
-"sleep-event.accessibility-value.format" = "%@, %@";
 "sleep-event.accessibility-hint" = "Double tap to open event options";
 
 "sleep-segment.accessibility-label" = "State";

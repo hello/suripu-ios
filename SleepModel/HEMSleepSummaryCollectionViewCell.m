@@ -10,6 +10,7 @@
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
+@property (weak, nonatomic) IBOutlet UIView *borderView;
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
@@ -147,6 +148,7 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
     self.summaryLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyPrimaryButtonTextFont];
     self.sleepScoreTextLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
     self.sleepScoreTextLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+    self.borderView.backgroundColor = self.backgroundColor;
 }
 
 @end

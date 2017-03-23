@@ -94,31 +94,6 @@
                           NSFontAttributeName : [UIFont h4] }};
 }
 
-+ (NSDictionary *)attributesForEventMessageText {
-    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.alignment = NSTextAlignmentLeft;
-    style.lineSpacing = 2.f;
-    style.maximumLineHeight = 18.f;
-    style.minimumLineHeight = 18.f;
-    return @{
-        @(STRONG) : @{
-            NSFontAttributeName : [UIFont bodyBold],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor blackColor]
-        },
-        @(PARA) : @{
-            NSFontAttributeName : [UIFont timelineEventMessageFont],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor blackColor]
-        },
-        @(EMPH) : @{
-            NSFontAttributeName : [UIFont body],
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : [UIColor lightGrayColor]
-        },
-    };
-}
-
 + (NSDictionary *)attributesForTimelineMessageText {
     NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
     style.alignment = NSTextAlignmentCenter;

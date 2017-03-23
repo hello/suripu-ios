@@ -80,13 +80,11 @@ import UIKit
         case insight
         case question
         case sleepDepth
+        case sleepDepthAlpha
         case trendsTitles
-        case timeline
         
         var key: String {
             switch self {
-            case .timeline:
-                return "sense.timeline"
             case .trendsTitles:
                 return "sense.trends.titles"
             case .chartGradient:
@@ -131,6 +129,8 @@ import UIKit
                 return "sense.question"
             case .sleepDepth:
                 return "sense.sleep.depth"
+            case .sleepDepthAlpha:
+                return "sense.sleep.depth.alpha"
             }
             
         }
@@ -227,13 +227,18 @@ import UIKit
     //MARK: - Color based on sleep depth
     
     @objc static func color(sleepState: SENTimelineSegmentSleepState) -> UIColor {
+        return self.color(sleepState: sleepState, useAlpha: false)
+    }
+    
+    @objc static func color(sleepState: SENTimelineSegmentSleepState, useAlpha: Bool) -> UIColor {
+        let group = useAlpha == true ? Group.sleepDepthAlpha : Group.sleepDepth
         switch sleepState {
             case .light:
-                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.light.rawValue)
+                return self.color(group: group, propertyName: SleepDepthStyle.light.rawValue)
             case .medium:
-                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.medium.rawValue)
+                return self.color(group: group, propertyName: SleepDepthStyle.medium.rawValue)
             case .sound:
-                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.deep.rawValue)
+                return self.color(group: group, propertyName: SleepDepthStyle.deep.rawValue)
             case .awake:
                 fallthrough
             case .unknown:

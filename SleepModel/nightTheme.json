@@ -101,6 +101,12 @@
         "style.tint.color" : "@color/white"
     },
     
+    "sense.sleep.depth.alpha" : {
+        "sense.light" : "@color/night.timeline.sleep.depth.light",
+        "sense.medium" : "@color/night.timeline.sleep.depth.medium",
+        "sense.deep" : "@color/night.timeline.sleep.depth.deep"
+    },
+    
     "#UITextView" : {
         "style.text.color" : "@color/dark.secondary.text"
     },
@@ -324,10 +330,6 @@
         "style.text.highlighted.color" : "@color/dark.primary.text"
     },
     
-    "sense.timeline" : {
-        "style.background.color" : "@color/black"
-    },
-    
     "#HEMSleepSummaryCollectionViewCell" : {
         "style.background.color" : "@color/grey.9",
         "style.primary.button.text.color" : "@color/dark.secondary.text",
@@ -337,6 +339,25 @@
     },
     
     "#HEMSleepScoreGraphView" : {
-        "style.border.color" : "@color/dark.separator"
+        "style.border.color" : "@color/dark.separator",
+        "style.background.highlighted.color" : "@color/grey.8"
+    },
+    
+    "#HEMSleepSegmentCollectionViewCell" : {
+        "style.background.color" : "@color/black",
+        "style.text.hint.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMTimelineFooterCollectionReusableView" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#HEMEventBubbleView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.background.highlighted.color" : "@color/dark.event.pressed.state",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white",
+        "style.text.detail.color" : "@color/dark.disabled.text"
     }
 }

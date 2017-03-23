@@ -42,6 +42,7 @@
 #import "HEMHandHoldingService.h"
 #import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
+#import "HEMTimelineFooterCollectionReusableView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -110,6 +111,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     [self configureCollectionView];
     [self configureTransitions];
     [self configureErrorProperties];
+    [self configurePopupView];
 
     [self loadData];
 
@@ -125,6 +127,10 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     }
     
     [self setAudioService:[HEMAudioService new]];
+}
+
+- (void)configurePopupView {
+    [[self popupMaskView] setBackgroundColor:[[self view] backgroundColor]];
 }
 
 - (void)configureErrorProperties {
@@ -847,9 +853,10 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
 - (void)configureCollectionView {
     self.statusBarBackgroundView.backgroundColor = [SenseStyle colorWithAClass:[UINavigationBar class] property:ThemePropertyBarTintColor];
-    self.collectionView.backgroundColor = [SenseStyle colorWithGroup:GroupTimeline property:ThemePropertyBackgroundColor];
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.delegate = self;
+    self.collectionView.backgroundColor = [SenseStyle colorWithAClass:[HEMTimelineFooterCollectionReusableView class]
+                                                             property:ThemePropertyBackgroundColor];
 }
 
 - (void)loadData {

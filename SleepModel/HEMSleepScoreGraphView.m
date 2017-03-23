@@ -79,9 +79,12 @@ CGFloat const arcOffsetY = 80.f;
             mask.frame = self.backgroundLayer.bounds;
             mask.path = self.backgroundLayer.path;
             
+            UIColor* highlightedColor = [SenseStyle colorWithAClass:[self class]
+                                                           property:ThemePropertyBackgroundHighlightedColor];
+            NSArray* colors = @[(id)highlightedColor.CGColor, (id)self.backgroundColor.CGColor];
             CAGradientLayer* gradientLayer = [CAGradientLayer layer];
             gradientLayer.frame = self.backgroundLayer.bounds;
-            gradientLayer.colors = [UIColor timelineSelectedGradientColorRefs];
+            gradientLayer.colors = colors;
             gradientLayer.mask = mask;
             
             self.highlightedLayer = gradientLayer;

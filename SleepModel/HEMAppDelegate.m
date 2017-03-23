@@ -291,6 +291,8 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 }
 
 - (void)didSignIn {
+    [SenseStyle loadSavedTheme];
+    
     if ([[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
         [self renewPushNotificationToken];
     }

@@ -109,6 +109,15 @@ import SenseKit
     
     // MARK: - Tab Configuration
     
+    fileprivate func reloadTabs(except index: Int) {
+        let timelineVC = index == 0 && self.selectedViewController != nil ? self.selectedViewController : HEMSleepSummarySlideViewController()
+        let trendsVC = index == 1 && self.selectedViewController != nil ? self.selectedViewController : self.trendsController()!
+        let feedVC = index == 2 && self.selectedViewController != nil ? self.selectedViewController : self.feedController()!
+        let soundsVC = index == 3 && self.selectedViewController != nil ? self.selectedViewController : self.soundController()!
+        let conditionsVC = index == 4 && self.selectedViewController != nil ? self.selectedViewController : HEMMainStoryboard.instantiateCurrentNavController() as? UIViewController
+        self.viewControllers = [timelineVC!, trendsVC!, feedVC!, soundsVC!, conditionsVC!];
+    }
+    
     fileprivate func configureTabs() {
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = self.trendsController()!
@@ -312,6 +321,14 @@ extension MainViewController: ShortcutHandler {
     func takeAction(action: HEMShortcutAction, data: Any?) {
         self.shortcutHandler?.takeAction(action: action, data: data)
         self.shortcutHandler = nil
+    }
+    
+}
+
+extension MainViewController: Themed {
+    
+    func didChange(theme: Theme) {
+        self.reloadTabs(except: self.selectedIndex)
     }
     
 }

@@ -143,11 +143,11 @@ import UIKit
         
         let preferences = SENLocalPreferences.shared()
         guard let themeValue = preferences!.userPreference(forKey: themeKey) as? NSNumber else {
-            return
+            return theme.apply() // apply default
         }
 
         guard let supportedTheme = SupportedTheme(rawValue: themeValue.intValue) else {
-            return // day is default
+            return theme.apply() // apply default
         }
         
         if supportedTheme == .night {

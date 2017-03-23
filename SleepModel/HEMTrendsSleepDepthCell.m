@@ -6,12 +6,12 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <UICountingLabel/UICountingLabel.h>
+#import "Sense-Swift.h"
 
 #import "HEMTrendsSleepDepthCell.h"
 #import "HEMScreenUtils.h"
 #import "HEMTrendsBubbleView.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMTrendsSleepDepthHeight = 240.0f;
 static CGFloat const HEMTrendsSleepDepthMinWidthCoef = 0.3f;
@@ -36,13 +36,13 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [[[self lightBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.light", nil) uppercaseString]];
-    [[self lightBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateLight]];
+    [[self lightBubbleView] setBubbleColor:[SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateLight]];
     
     [[[self mediumBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.medium", nil) uppercaseString]];
-    [[self mediumBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateMedium]];
+    [[self mediumBubbleView] setBubbleColor:[SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateMedium]];
     
     [[[self deepBubbleView] nameLabel] setText:[NSLocalizedString(@"trends.sleep-depth.deep", nil) uppercaseString]];
-    [[self deepBubbleView] setBubbleColor:[UIColor colorForSleepState:SENTimelineSegmentSleepStateSound]];
+    [[self deepBubbleView] setBubbleColor:[SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateSound]];
 }
 
 - (CGFloat)minWidth {
@@ -124,6 +124,11 @@ static CGFloat const HEMTrendsSleepDepthUnitFontSizeCoef = 0.167f;
     [[[self lightBubbleView] valueLabel] countFromCurrentValueTo:lightValue withDuration:duration];
     [[[self mediumBubbleView] valueLabel] countFromCurrentValueTo:mediumValue withDuration:duration];
     [[[self deepBubbleView] valueLabel] countFromCurrentValueTo:deepValue withDuration:duration];
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    [[self mainContentView] setBackgroundColor:[self backgroundColor]];
 }
 
 @end

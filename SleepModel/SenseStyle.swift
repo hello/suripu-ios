@@ -52,6 +52,12 @@ import UIKit
         }
     }
     
+    enum SleepDepthStyle: String {
+        case light = "sense.light"
+        case medium = "sense.medium"
+        case deep = "sense.deep"
+    }
+    
     @objc enum Group: Int {
         case tableView = 1
         case tableViewFill
@@ -73,9 +79,13 @@ import UIKit
         case expansionRangePicker
         case insight
         case question
+        case sleepDepth
+        case trendsTitles
         
         var key: String {
             switch self {
+            case .trendsTitles:
+                return "sense.trends.titles"
             case .chartGradient:
                 return "sense.chart.gradient"
             case .tableView:
@@ -116,6 +126,8 @@ import UIKit
                 return "sense.insight"
             case .question:
                 return "sense.question"
+            case .sleepDepth:
+                return "sense.sleep.depth"
             }
             
         }
@@ -209,4 +221,22 @@ import UIKit
         }
     }
     
+    //MARK: - Color based on sleep depth
+    
+    @objc static func color(sleepState: SENTimelineSegmentSleepState) -> UIColor {
+        switch sleepState {
+            case .light:
+                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.light.rawValue)
+            case .medium:
+                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.medium.rawValue)
+            case .sound:
+                return self.color(group: .sleepDepth, propertyName: SleepDepthStyle.deep.rawValue)
+            case .awake:
+                fallthrough
+            case .unknown:
+                return UIColor.clear
+            
+        }
+    }
+
 }

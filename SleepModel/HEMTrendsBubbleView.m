@@ -6,27 +6,15 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <UICountingLabel/UICountingLabel.h>
+#import "Sense-Swift.h"
 #import "HEMTrendsBubbleView.h"
-#import "HEMStyle.h"
 
 @implementation HEMTrendsBubbleView
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    [self setBackgroundColor:[UIColor clearColor]];
-    [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self valueLabel] setTextColor:[UIColor whiteColor]];
-    [[self valueLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:35.0f]];
     [[self valueLabel] setFormat:@"%.0f"];
-    
-    [[self unitLabel] setFont:[UIFont trendSleepDepthValueFontWithSize:23.0f]];
-    [[self unitLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self unitLabel] setTextColor:[UIColor colorWithWhite:1.0f alpha:0.7f]];
-    
-    [[self nameLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self nameLabel] setFont:[UIFont h8]];
-    [[self nameLabel] setTextColor:[UIColor whiteColor]];
+    [self applyStyle];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -54,6 +42,25 @@
     CGContextRestoreGState(context);
     
     [super drawRect:rect];
+}
+
+- (void)applyStyle {
+    UIColor* valueColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIColor* unitColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+    UIFont* valueFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIFont* unitFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    [[self valueLabel] setTextColor:valueColor];
+    [[self unitLabel] setTextColor:unitColor];
+    [[self nameLabel] setTextColor:titleColor];
+    [[self valueLabel] setFont:valueFont];
+    [[self unitLabel] setFont:unitFont];
+    [[self nameLabel] setFont:titleFont];
+    [[self nameLabel] setBackgroundColor:[UIColor clearColor]];
+    [[self unitLabel] setBackgroundColor:[UIColor clearColor]];
+    [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
+    [self setBackgroundColor:[UIColor clearColor]];
 }
 
 @end

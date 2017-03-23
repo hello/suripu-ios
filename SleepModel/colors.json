@@ -25,6 +25,12 @@
     
     "highlighted.separator" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.5},
     
+    "sleep.depth.light" : { "style.color.hex" : "7FCDFF" },
+    "sleep.depth.medium" : { "style.color.hex" : "4CB9FF" },
+    "sleep.depth.deep" : { "style.color.hex" : "009AFF" },
+    
+    "highlighted.bar" : { "style.color.hex" : "009AFF"},
+    
     "black" : { "style.color.hex" : "000000" },
     "white" : { "style.color.hex" : "FFFFFF" },
     "clear" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.0 },

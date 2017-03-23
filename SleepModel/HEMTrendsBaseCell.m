@@ -6,9 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMTrendsBaseCell.h"
 #import "HEMTrendsAverageView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMTrendsAveragesHeight = 52.0f;
 static CGFloat const HEMTrendsAveragesBotMargin = 20.0f;
@@ -27,11 +27,9 @@ static CGFloat const HEMTrendsCellLoadingAnimeDuration = 1.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
 
-    [[self titleLabel] setFont:[UIFont bodyBold]];
-    [[self titleLabel] setTextColor:[UIColor cardTitleColor]];
-    [[self titleSeparator] setBackgroundColor:[UIColor separatorColor]];
     [[[self titleSeparator] layer] setMasksToBounds:YES];
     [self setUserInteractionEnabled:NO];
+    [self applyStyle];
 }
 
 - (void)setAverageTitles:(NSArray<NSAttributedString*>*)titles
@@ -110,6 +108,20 @@ static CGFloat const HEMTrendsCellLoadingAnimeDuration = 1.0f;
         [[self indicatorLayer] removeAllAnimations];
         [[self indicatorLayer] removeFromSuperlayer];
     }
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    Class aClass = [HEMTrendsBaseCell class];
+    UIColor* separatorColor = [SenseStyle colorWithAClass:aClass property:ThemePropertySeparatorColor];
+    UIColor* titleColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTitleColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTitleFont];
+    
+    [[self titleLabel] setFont:titleFont];
+    [[self titleLabel] setTextColor:titleColor];
+    [[self titleSeparator] setBackgroundColor:separatorColor];
+    [[self averagesView] applyStyle];
 }
 
 @end

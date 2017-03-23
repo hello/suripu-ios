@@ -165,14 +165,17 @@ class SlideContentPresenter: HEMPresenter {
         }
     }
     
+    func applyStyle() {
+        let bgColor = SenseStyle.color(aClass: UIScrollView.self, property: .backgroundColor)
+        self.contentScrollView.backgroundColor = bgColor
+        self.slidingTitleView?.applyStyle()
+    }
+    
     // MARK: Presenter Events
     
     override func didChange(_ theme: Theme) {
         super.didChange(theme)
-        let bgColor = SenseStyle.color(aClass: UIScrollView.self,
-                                       property: .backgroundColor);
-        self.slidingTitleView?.applyStyle()
-        self.contentScrollView?.backgroundColor = bgColor
+        self.applyStyle()
     }
     
     override func willAppear() {
@@ -239,6 +242,7 @@ extension SlideContentPresenter {
         self.configureContent(scrollView: scrollView)
         scrollView.delegate = self
         self.contentScrollView = scrollView
+        self.applyStyle()
     }
     
 }

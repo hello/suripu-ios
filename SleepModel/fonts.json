@@ -87,6 +87,24 @@
         "style.font.name" : "style.font.SYSTEM",
         "style.font.size" : 24.0,
         "style.font.weight" : "style.font.REGULAR"
-    }
+    },
+    
+    "trends.sleep.depth.value" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 35.0,
+        "style.font.weight" : "style.font.LIGHT"
+    },
+    
+    "trends.sleep.depth.unit" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 23.0,
+        "style.font.weight" : "style.font.LIGHT"
+    },
+    
+    "trends.average.value" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 28.0,
+        "style.font.weight" : "style.font.LIGHT"
+    },
     
 }

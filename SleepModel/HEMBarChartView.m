@@ -5,10 +5,9 @@
 //  Created by Jimmy Lu on 2/4/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMBarChartView.h"
 #import "HEMTrendsDisplayPoint.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMBarChartAnimeDuration = 0.2f;
 static CGFloat const HEMBarChartBaseLine = 0.0f;
@@ -52,7 +51,7 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
-    UIColor* lineColor = [[UIColor grey6] colorWithAlphaComponent:0.15f];
+    UIColor* lineColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
     
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
     CGContextSetLineWidth(context, HEMBarChartBorderWidth);
@@ -67,6 +66,7 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
 
 - (void)setDefaults {
     [self setClipsToBounds:YES];
+    [self applyFillStyle];
 }
 
 - (void)updateBarChartWith:(NSArray<HEMTrendsDisplayPoint*>*)values
@@ -90,6 +90,10 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
     barFrame.size.width = [self barWidth];
     barFrame.origin.y = fullHeight; // hide it when added
     
+    static NSString* barColorKey = @"sense.bar.color";
+    static NSString* barHighlightedColorKey = @"sense.bar.highlighted.color";
+    UIColor* normalColor = [SenseStyle colorWithAClass:[self class] propertyName:barColorKey];
+    UIColor* highlightedColor = [SenseStyle colorWithAClass:[self class] propertyName:barHighlightedColorKey];
     UIColor* barColor = nil;
     NSInteger index = 0;
     CGFloat minYOrigin = fullHeight;
@@ -98,7 +102,7 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
     for (HEMTrendsDisplayPoint* point in [self values]) {
         CGFloat value = [[point value] CGFloatValue];
         
-        barColor = [point highlighted] ? [self highlightedBarColor] : [self normalBarColor];
+        barColor = [point highlighted] ? highlightedColor : normalColor;
         
         barFrame.origin.x = (index * ([self barWidth] + [self barSpacing]));
         
@@ -172,6 +176,11 @@ static CGFloat const HEMBarChartBarCornerRadiusRatio = 10.0f;
         frame = [subview convertRect:[subview bounds] toView:view];
     }
     return frame;
+}
+
+- (void)applyFillStyle {
+    [super applyFillStyle];
+    [self setNeedsDisplay];
 }
 
 @end

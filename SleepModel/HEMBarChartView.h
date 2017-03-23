@@ -16,8 +16,6 @@ typedef void(^HEMBarChartAnimCompletion)(NSInteger minIndex, NSInteger maxIndex)
 
 @interface HEMBarChartView : UIView
 
-@property (nonatomic, strong) UIColor* normalBarColor;
-@property (nonatomic, strong) UIColor* highlightedBarColor;
 @property (nonatomic, assign) CGFloat barSpacing;
 @property (nonatomic, assign) CGFloat barWidth;
 @property (nonatomic, assign) CGFloat maxValue;

@@ -9,7 +9,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "NSDate+HEMRelative.h"
-
+#import "Sense-Swift.h"
 #import "HEMTrendsCalendarMonthView.h"
 #import "HEMTrendsDisplayPoint.h"
 #import "HEMMultiTitleView.h"
@@ -75,7 +75,6 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     self = [super initWithFrame:frame];
     if (self) {
         _scoreLabels = [NSMutableArray array];
-        [self setBackgroundColor:[UIColor whiteColor]];
         [self configureTitleView];
     }
     return self;
@@ -327,16 +326,20 @@ static CGFloat const HEMTrendsCalMonthTitleBotMargin = 12.0f;
     [[self scoreLabels] addObject:scoreLabel];
     
     [scoreLabel setFrame:frame];
-    [scoreLabel setBackgroundColor:[UIColor whiteColor]];
     
     if ([dataPoint isKindOfClass:[HEMTrendsDisplayPoint class]]) {
-        UIColor* color = [UIColor colorForCondition:[dataPoint condition]];
+        UIColor* color = [SenseStyle colorWithCondition:[dataPoint condition] defaultColor:nil];
         [scoreLabel setScoreColor:color];
         [scoreLabel setScoreBorderColor:color];
         [scoreLabel setHighlighted:[dataPoint highlighted]];
     }
     
     return scoreLabel;
+}
+
+- (void)applyFillStyle {
+    [super applyFillStyle];
+    [[self scoreLabels] makeObjectsPerformSelector:@selector(applyStyle)];
 }
 
 @end

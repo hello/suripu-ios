@@ -322,5 +322,21 @@
         "style.title.color" : "@color/dark.primary.text",
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.timeline" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#HEMSleepSummaryCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.color" : "@color/dark.secondary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSleepScoreGraphView" : {
+        "style.border.color" : "@color/dark.separator"
     }
 }

@@ -81,9 +81,12 @@ import UIKit
         case question
         case sleepDepth
         case trendsTitles
+        case timeline
         
         var key: String {
             switch self {
+            case .timeline:
+                return "sense.timeline"
             case .trendsTitles:
                 return "sense.trends.titles"
             case .chartGradient:

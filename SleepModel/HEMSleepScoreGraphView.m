@@ -1,5 +1,6 @@
 
 #import <UICountingLabel/UICountingLabel.h>
+#import "Sense-Swift.h"
 #import "HEMSleepScoreGraphView.h"
 #import "SENSensorAccessibility.h"
 #import "HEMStyle.h"
@@ -32,6 +33,8 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)configureLayers {
+    UIColor* borderColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
     self.scoreLayer = [CAShapeLayer layer];
     self.backgroundLayer = [CAShapeLayer layer];
     self.loadingLayer = [CAShapeLayer layer];
@@ -48,23 +51,24 @@ CGFloat const arcOffsetY = 80.f;
                                                         clockwise:YES];
     self.backgroundLayer.path = arcPath.CGPath;
     self.backgroundLayer.fillColor = fillColor.CGColor;
-    self.backgroundLayer.strokeColor = [UIColor borderColor].CGColor;
+    self.backgroundLayer.strokeColor = borderColor.CGColor;
     self.backgroundLayer.lineWidth = 1.f;
     self.backgroundLayer.frame = self.bounds;
     self.loadingLayer.fillColor = fillColor.CGColor;
     self.loadingLayer.path = arcPath.CGPath;
-    self.loadingLayer.strokeColor = [UIColor tintColor].CGColor;
+    self.loadingLayer.strokeColor = tintColor.CGColor;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
 }
 
 - (void)configureScoreValueLabel {
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
     self.scoreValueLabel.animationDuration = HEMSleepScoreAnimationDuration;
     self.scoreValueLabel.formatBlock = ^NSString *(float value) { return [NSString stringWithFormat:@"%0.f", value]; };
     self.scoreValueLabel.alpha = 0;
     self.scoreValueLabel.method = UILabelCountingMethodEaseInOut;
-    self.scoreValueLabel.font = [UIFont h1];
+    self.scoreValueLabel.font = font;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

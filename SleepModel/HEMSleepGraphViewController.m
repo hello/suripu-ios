@@ -60,6 +60,7 @@ CGFloat const HEMTimelineBarHeaderHeight = 44.0f;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackgroundView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
@@ -845,7 +846,8 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 #pragma mark - UICollectionView
 
 - (void)configureCollectionView {
-    self.collectionView.backgroundColor = [UIColor timelineBackgroundColor];
+    self.statusBarBackgroundView.backgroundColor = [SenseStyle colorWithAClass:[UINavigationBar class] property:ThemePropertyBarTintColor];
+    self.collectionView.backgroundColor = [SenseStyle colorWithGroup:GroupTimeline property:ThemePropertyBackgroundColor];
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.delegate = self;
 }

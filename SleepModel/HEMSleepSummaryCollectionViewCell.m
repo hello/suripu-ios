@@ -1,5 +1,6 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
+#import "Sense-Swift.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMTimelineMessageContainerView.h"
@@ -26,6 +27,23 @@ CGFloat const HEMSleepSummarySummaryHeight = 12.0f;
 CGFloat const HEMSleepSummaryBottomPadding = 24.0f;
 CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
 
++ (NSDictionary*)summaryTextAttributes {
+    UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
+    UIColor* boldColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
+    UIColor* regColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    style.alignment = NSTextAlignmentCenter;
+    return @{@(STRONG) : @{ NSFontAttributeName : font,
+                            NSForegroundColorAttributeName : boldColor,
+                            NSParagraphStyleAttributeName : style},
+             @(PLAIN) : @{ NSFontAttributeName : font,
+                           NSForegroundColorAttributeName : regColor,
+                           NSParagraphStyleAttributeName : style},
+             @(PARA) : @{ NSFontAttributeName : font,
+                          NSForegroundColorAttributeName : regColor,
+                          NSParagraphStyleAttributeName : style}};
+}
+
 + (CGFloat)heightWithMessage:(NSString*)message itemWidth:(CGFloat)width {
     NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
     NSAttributedString *attributedMessage = [markdown_to_attr_string(message, 0, attributes) trim];
@@ -50,10 +68,9 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.summaryLabel.font = [UIFont bodyBold];
-    self.summaryLabel.textColor = [UIColor grey4];
     self.summaryLabel.text = NSLocalizedString(@"timeline.summary", nil);
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
+    [self applyStyle];
 }
 
 - (void)prepareForReuse {
@@ -89,7 +106,7 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
         animated:(BOOL)animated {
     CGFloat const fullScoreDelay = 0.05f;
     BOOL scoreIsEmpty = sleepScore == 0;
-    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
+    NSDictionary *attributes = [[self class] summaryTextAttributes];
     NSAttributedString *attributedMessage = [markdown_to_attr_string(message, 0, attributes) trim];
     self.messageLabel.attributedText = attributedMessage;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
@@ -122,6 +139,14 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
         [[NSAttributedString alloc] initWithString:[button titleForState:UIControlStateNormal] attributes:attributes];
     [button setAttributedTitle:text forState:UIControlStateNormal];
     [button setTintColor:tintColor];
+}
+
+- (void)applyStyle {
+    self.backgroundColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    self.summaryLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyPrimaryButtonTextColor];
+    self.summaryLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyPrimaryButtonTextFont];
+    self.sleepScoreTextLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
+    self.sleepScoreTextLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
 }
 
 @end

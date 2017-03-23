@@ -289,5 +289,38 @@
     "#HEMVoiceGroupHeaderCell" : {
         "style.title.color" : "@color/dark.primary.text",
         "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMTrendsBaseCell" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.trends.titles" : {
+        "style.text.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMBarChartView" : {
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMTrendsAverageView" : {
+        "style.title.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMTrendsScoreLabel" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/dark.separator"
+    },
+    
+    "sense.condition" : {
+        "sense.default" : "@color/dark.separator"
+    },
+    
+    "#Sense.StatusMessageCell" : {
+        "style.background.color" : "@color/black",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
     }
 }

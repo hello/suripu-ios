@@ -5,12 +5,11 @@
 //  Created by Jimmy Lu on 1/29/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMTrendsCalendarViewCell.h"
 #import "HEMTrendsCalendarView.h"
 #import "HEMTrendsAverageView.h"
 #import "HEMTrendsDisplayPoint.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMTrendsCalendarCellTitleHeightWithSeparator = 49.0f;
 static CGFloat const HEMTrendsCalendarCellTitleSeparatorBotMargin = 8.0f;
@@ -68,6 +67,11 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     [self setScores:scores];
     [[self calendarView] setType:[self type]];
     [[self calendarView] updateWithValues:scores titles:sectionTitles];
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    [[self calendarView] applyStyle];
 }
 
 @end

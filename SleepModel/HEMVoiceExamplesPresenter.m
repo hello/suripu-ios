@@ -13,7 +13,6 @@
 #import "HEMVoiceExampleGroupCell.h"
 #import "HEMMainStoryboard.h"
 
-static CGFloat const kHEMVoiceExamplesParaSpacing = 8.0f;
 static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 
 @interface HEMVoiceExamplesPresenter() <

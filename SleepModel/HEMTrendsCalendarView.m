@@ -7,7 +7,7 @@
 //
 
 #import "NSDate+HEMRelative.h"
-
+#import "Sense-Swift.h"
 #import "HEMTrendsCalendarView.h"
 #import "HEMTrendsCalendarMonthView.h"
 #import "HEMMultiTitleView.h"
@@ -53,6 +53,11 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
     }
     
     return height;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self applyStyle];
 }
 
 - (NSCalendar*)calendar {
@@ -159,6 +164,15 @@ static CGFloat const HEMTrendsCalendarMonthVertSpacing = 32.0f;
     [monthView showCurrentMonthWithValues:values titles:localizedTitles];
     [self addSubview:monthView];
     [self setCurrentMonthView:monthView];
+}
+
+- (void)applyStyle {
+    [super applyFillStyle];
+    for (UIView* subview in [self subviews]) {
+        if ([subview isKindOfClass:[HEMTrendsCalendarMonthView class]]) {
+            [subview applyFillStyle];
+        }
+    }
 }
 
 @end

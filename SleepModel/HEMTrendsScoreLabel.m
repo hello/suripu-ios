@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 2/9/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMTrendsScoreLabel.h"
 #import "HEMStyle.h"
 
@@ -25,12 +25,12 @@ static CGFloat const HEMTrendsScoreHighlightWidth = 4.0f;
 - (void)drawRect:(CGRect)rect {
     UIColor* fillColor = [self scoreColor];
     if (!fillColor) {
-        fillColor = [UIColor whiteColor];
+        fillColor = [self backgroundColor];
     }
     
     UIColor* borderColor = [self scoreBorderColor];
     if (!borderColor) {
-        borderColor = [UIColor borderColor];
+        borderColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
     }
     
     CGFloat borderInset = HEMTrendsScoreBorderWidth / 2.0f;
@@ -46,6 +46,11 @@ static CGFloat const HEMTrendsScoreHighlightWidth = 4.0f;
     CGContextRestoreGState(context);
     
     [super drawRect:rect];
+}
+
+- (void)applyStyle {
+    [self applyFillStyle];
+    [self setNeedsDisplay];
 }
 
 @end

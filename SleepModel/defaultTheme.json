@@ -266,9 +266,15 @@
     
     "sense.condition" : {
         "sense.alert" : "@color/red.6",
-        "sense.warning" : "@color/orange.6",
+        "sense.warning" : "@color/yellow.6",
         "sense.ideal" : "@color/green.6",
-        "sense.default" : "@color/grey.3"
+        "sense.default" : "@color/light.separator"
+    },
+    
+    "sense.sleep.depth" : {
+        "sense.light" : "@color/sleep.depth.light",
+        "sense.medium" : "@color/sleep.depth.medium",
+        "sense.deep" : "@color/sleep.depth.deep",
     },
     
     "sense.action" : {
@@ -441,5 +447,52 @@
     "#HEMVoiceExampleGroupCell" : {
         "style.group.parent" : "#HEMVoiceGroupHeaderCell",
         "style.title.font" : "@font/body.2"
+    },
+    
+    "#HEMTrendsBaseCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMTrendsBubbleView" : {
+        "style.text.color" : "@color/white",
+        "style.text.font" : "@font/trends.sleep.depth.value",
+        "style.text.detail.font" : "@font/trends.sleep.depth.unit",
+        "style.title.font" : "@font/caption.1",
+        "style.text.color" : "@color/white",
+        "style.text.detail.color" : "@color/white",
+        "style.title.color" : "@color/white"
+    },
+    
+    "sense.trends.titles" : {
+        "style.text.font" : "@font/caption.1",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.highlighted.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMBarChartView" : {
+        "sense.bar.color" : "@color/blue.3",
+        "sense.bar.highlighted.color" : "@color/highlighted.bar",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMTrendsAverageView" : {
+        "style.title.font" :  "@font/caption.1",
+        "style.title.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMTrendsScoreLabel" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/light.separator"
+    },
+    
+    "#Sense.StatusMessageCell" : {
+        "style.background.color" : "@color/white",
+        "style.title.color" : "@color/light.primary.text",
+        "style.title.font" : "@font/title.2",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text"
     }
 }

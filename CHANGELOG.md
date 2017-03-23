@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.0.9
+
+New:
+
+* Themed Trends
+* Themed Voice feed
+* Themed Voice examples
+* Themed Insights feed
+* Themed Questions
+* Themed Insight
+
+Fixes:
+
+* Fixed Voice example scroll issue
+
 ## 2.1.0.8
 
 New:

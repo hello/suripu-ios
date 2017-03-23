@@ -20,5 +20,6 @@
 + (instancetype)exampleViewWithCategoryName:(NSString*)name
                                     example:(NSString*)example
                                   iconImage:(UIImage*)iconImage;
+- (void)applyStyle;
 
 @end

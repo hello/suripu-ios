@@ -149,7 +149,7 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
                                             icon:[UIImage imageNamed:[group iconNameSmall]]];
         [exampleView setTag:index++];
         [[exampleView tapGesture] addTarget:self action:@selector(didTapOnCommandGroup:)];
-        [exampleView applyFillStyle];
+        [exampleView applyStyle];
     }
     
     [commandsCell applyStyle];

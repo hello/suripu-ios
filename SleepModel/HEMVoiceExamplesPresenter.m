@@ -5,13 +5,13 @@
 //  Created by Jimmy Lu on 10/13/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMVoiceExamplesPresenter.h"
 #import "HEMVoiceCommandGroup.h"
 #import "HEMVoiceGroupHeaderCell.h"
 #import "HEMVoiceExampleGroupCell.h"
 #import "HEMMainStoryboard.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMVoiceExamplesParaSpacing = 8.0f;
 static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
@@ -45,7 +45,7 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     [layout setSectionInset:UIEdgeInsetsMake(0.0f, 0.0f, kHEMVoiceExamplesBottomInset, 0.0f)];
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
-    [collectionView setBackgroundColor:[UIColor whiteColor]];
+    [collectionView applyFillStyle];
     [self setCollectionView:collectionView];
 }
 
@@ -59,12 +59,7 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 }
 
 - (void)prepareCommands {
-    NSMutableParagraphStyle* pStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [pStyle setParagraphSpacing:kHEMVoiceExamplesParaSpacing];
-    [pStyle setAlignment:NSTextAlignmentCenter];
-    [self setExamplesBodyAttributes:@{NSFontAttributeName : [UIFont body],
-                                      NSForegroundColorAttributeName : [UIColor grey5],
-                                      NSParagraphStyleAttributeName : pStyle}];
+    [self setExamplesBodyAttributes:[HEMVoiceExampleGroupCell examplesAttributes]];
     
     NSUInteger count = [[[self group] examples] count];
     NSUInteger index = 0;
@@ -107,16 +102,13 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     
     if ([indexPath row] == 0) {
         itemSize.height = [HEMVoiceGroupHeaderCell heightWithCategory:[[self group] categoryName]
-                                                         categoryFont:[UIFont h5]
                                                               message:[[self group] message]
-                                                          messageFont:[UIFont body]
                                                             fullWidth:itemSize.width];
     } else {
         HEMVoiceCommandExamples* commandGroup = [[self group] examples][[indexPath row] -1];
         NSString* groupCategoryName = [commandGroup categoryName];
         NSAttributedString* groupCommands = [self appendedCommands][[indexPath row] - 1];
         itemSize.height = [HEMVoiceExampleGroupCell heightWithCategoryName:groupCategoryName
-                                                              categoryFont:[UIFont bodyBold]
                                                                   examples:groupCommands
                                                                  cellWidth:itemSize.width];
     }
@@ -155,12 +147,8 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 - (void)configureHeaderCell:(HEMVoiceGroupHeaderCell*)headerCell {
     [[headerCell imageView] setImage:[UIImage imageNamed:[[self group] iconNameLarge]]];
     [[headerCell categoryLabel] setText:[[self group] categoryName]];
-    [[headerCell categoryLabel] setFont:[UIFont h5]];
-    [[headerCell categoryLabel] setTextColor:[UIColor grey6]];
-    
     [[headerCell messageLabel] setText:[[self group] message]];
-    [[headerCell messageLabel] setFont:[UIFont body]];
-    [[headerCell messageLabel] setTextColor:[UIColor grey5]];
+    [headerCell applyStyle];
 }
 
 - (void)configureExamplesCell:(HEMVoiceExampleGroupCell*)examplesCell atRow:(NSInteger)row {
@@ -168,9 +156,8 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     NSString* groupCategoryName = [commandGroup categoryName];
     NSAttributedString* groupCommands = [self appendedCommands][row - 1];
     [[examplesCell categoryLabel] setText:groupCategoryName];
-    [[examplesCell categoryLabel] setFont:[UIFont bodyBold]];
-    [[examplesCell categoryLabel] setTextColor:[UIColor grey6]];
     [[examplesCell examplesLabel] setAttributedText:groupCommands];
+    [examplesCell applyStyle];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

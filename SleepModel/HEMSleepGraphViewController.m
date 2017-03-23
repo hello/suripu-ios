@@ -42,6 +42,7 @@
 #import "HEMHandHoldingService.h"
 #import "HEMNavigationShadowView.h"
 #import "HEMStyle.h"
+#import "HEMTimelineFooterCollectionReusableView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -60,6 +61,7 @@ CGFloat const HEMTimelineBarHeaderHeight = 44.0f;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackgroundView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, weak) IBOutlet HEMPopupMaskView *popupMaskView;
@@ -109,6 +111,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     [self configureCollectionView];
     [self configureTransitions];
     [self configureErrorProperties];
+    [self configurePopupView];
 
     [self loadData];
 
@@ -124,6 +127,10 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     }
     
     [self setAudioService:[HEMAudioService new]];
+}
+
+- (void)configurePopupView {
+    [[self popupMaskView] setBackgroundColor:[[self view] backgroundColor]];
 }
 
 - (void)configureErrorProperties {
@@ -845,9 +852,11 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 #pragma mark - UICollectionView
 
 - (void)configureCollectionView {
-    self.collectionView.backgroundColor = [UIColor timelineBackgroundColor];
+    self.statusBarBackgroundView.backgroundColor = [SenseStyle colorWithAClass:[UINavigationBar class] property:ThemePropertyBarTintColor];
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.delegate = self;
+    self.collectionView.backgroundColor = [SenseStyle colorWithAClass:[HEMTimelineFooterCollectionReusableView class]
+                                                             property:ThemePropertyBackgroundColor];
 }
 
 - (void)loadData {

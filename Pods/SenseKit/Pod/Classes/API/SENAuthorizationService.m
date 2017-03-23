@@ -49,8 +49,8 @@ static NSString* const SENAuthorizationServiceContentType = @"application/x-www-
 {
     [self authorize:username password:password onCompletion:^(NSDictionary *response, NSError *error) {
         if (error == nil) {
-            [self authorizeRequestsWithResponse:response notify:notification];
             [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
+            [self authorizeRequestsWithResponse:response notify:notification];
         }
         if (block) block(error);
     }];

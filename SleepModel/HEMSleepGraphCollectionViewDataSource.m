@@ -381,11 +381,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / HEMTimelineMaxSleepDepth;
     CGFloat previousFillRatio = 0;
-    color = [UIColor colorForSleepState:segment.sleepState];
+    color = [SenseStyle colorWithSleepState:segment.sleepState useAlpha:YES];
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
+        previousColor = [SenseStyle colorWithSleepState:previousSegment.sleepState useAlpha:YES];
         previousFillRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
@@ -430,14 +430,14 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
+        previousColor = [SenseStyle colorWithSleepState:previousSegment.sleepState useAlpha:YES];
         previousRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
     }
     
     [cell setSegmentRatio:sleepDepth / HEMTimelineMaxSleepDepth
-            withFillColor:[UIColor colorForSleepState:segment.sleepState]
+            withFillColor:[SenseStyle colorWithSleepState:segment.sleepState useAlpha:YES]
             previousRatio:previousRatio
             previousColor:previousColor];
     [cell.playButton addTarget:collectionView.delegate
@@ -495,8 +495,17 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         unit = [self.meridiemFormatter stringFromDate:date];
     }
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
-    NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
+    NSDictionary *attrs = [self timeTextAttributes];
     return [self.inlineNumberFormatter attributedStringForObjectValue:obj withDefaultAttributes:attrs];
+}
+
+- (NSDictionary*)timeTextAttributes {
+    Class aClass = [HEMEventBubbleView class];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertyDetailFont];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertyDetailColor];
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    style.alignment = NSTextAlignmentCenter;
+    return @{ NSFontAttributeName : font, NSParagraphStyleAttributeName : style, NSForegroundColorAttributeName : color };
 }
 
 #pragma mark - Data Parsing

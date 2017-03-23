@@ -274,7 +274,13 @@
     "sense.sleep.depth" : {
         "sense.light" : "@color/sleep.depth.light",
         "sense.medium" : "@color/sleep.depth.medium",
-        "sense.deep" : "@color/sleep.depth.deep",
+        "sense.deep" : "@color/sleep.depth.deep"
+    },
+    
+    "sense.sleep.depth.alpha" : {
+        "sense.light" : "@color/day.timeline.sleep.depth.light",
+        "sense.medium" : "@color/day.timeline.sleep.depth.medium",
+        "sense.deep" : "@color/day.timeline.sleep.depth.deep"
     },
     
     "sense.action" : {
@@ -494,5 +500,44 @@
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.secondary.text",
         "style.text.highlighted.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMSleepSummaryCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.primary.button.text.font" : "@font/body.2",
+        "style.primary.button.text.color" : "@color/light.secondary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.text.detail.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMSleepScoreGraphView" : {
+        "style.border.color" : "@color/light.separator",
+        "style.tint.color" : "@color/blue.6",
+        "style.text.font" : "@font/display.4",
+        "style.background.highlighted.color" : "@color/blue.2"
+    },
+    
+    "#HEMSleepSegmentCollectionViewCell" : {
+        "style.background.color" : "@color/blue.2",
+        "style.text.hint.font" : "@font/caption.1",
+        "style.text.hint.color" : "@color/blue.6"
+    },
+    
+    "#HEMTimelineFooterCollectionReusableView" : {
+        "style.background.color" : "@color/blue.2"
+    },
+    
+    "#HEMEventBubbleView" : {
+        "style.background.color" : "@color/white",
+        "style.background.highlighted.color" : "@color/light.event.pressed.state",
+        "style.text.font" : "@font/body.small",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.text.detail.color" : "@color/light.disabled.text",
+        "style.tint.color" : "@color/blue.6"
     }
 }

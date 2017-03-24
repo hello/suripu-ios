@@ -24,31 +24,6 @@
                            NSKernAttributeName : @1 } };
 }
 
-+ (NSDictionary *)attributesForTimelineBreakdownMessage {
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
-    style.alignment = NSTextAlignmentLeft;
-    return @{
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont body],
-                      NSForegroundColorAttributeName : [UIColor grey5],
-                      NSParagraphStyleAttributeName : style
-        },
-        @(PARA) : @{ NSFontAttributeName : [UIFont body],
-                     NSForegroundColorAttributeName : [UIColor grey5],
-                     NSParagraphStyleAttributeName : style
-        },
-        @(EMPH) : @{
-            NSFontAttributeName : [UIFont bodyBold],
-            NSForegroundColorAttributeName : [UIColor grey5],
-            NSParagraphStyleAttributeName : style
-        },
-        @(STRONG) : @{
-            NSFontAttributeName : [UIFont bodyBold],
-            NSForegroundColorAttributeName : [UIColor grey6],
-            NSParagraphStyleAttributeName : style
-        },
-    };
-}
-
 + (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor *)color {
     return @{
         @(PARA) :

@@ -359,5 +359,19 @@
         "style.text.highlighted.color" : "@color/dark.primary.text",
         "style.tint.color" : "@color/white",
         "style.text.detail.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMBreakdownSummaryCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMBreakdownLineCell" : {
+        "style.title.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.transparent.overlay" : {
+        "style.background.color" : "@color/dark.transparent.overlay"
     }
 }

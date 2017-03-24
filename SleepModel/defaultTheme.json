@@ -539,5 +539,23 @@
         "style.text.detail.font" : "@font/caption.1",
         "style.text.detail.color" : "@color/light.disabled.text",
         "style.tint.color" : "@color/blue.6"
+    },
+    
+    "#HEMBreakdownSummaryCell" : {
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMBreakdownLineCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/headline"
+    },
+    
+    "sense.transparent.overlay" : {
+        "style.background.color" : "@color/light.transparent.overlay"
     }
 }

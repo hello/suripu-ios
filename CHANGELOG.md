@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.0.10
+
+New:
+
+* Themed Timeline
+* Themed Timeline Summary
+* Themed Timeline history
+* Themed Action sheet
+
+Fixes:
+
+* Fixed issue with sign in not loading theme
+* Fixed issue where insight transition flashes white
+* Fixed issue where theme is messed up after re-installing
+
 ## 2.1.0.9
 
 New:

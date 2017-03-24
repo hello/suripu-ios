@@ -31,6 +31,7 @@ import SenseKit
     fileprivate var voiceService: HEMVoiceService!
     fileprivate var unreadService: HEMUnreadAlertService!
     fileprivate weak var shortcutHandler: ShortcutHandler?
+    fileprivate weak var tabBarPresenter: TabBarPresenter?
     
     override var prefersStatusBarHidden: Bool {
         return false
@@ -116,6 +117,7 @@ import SenseKit
         let soundsVC = index == 3 && self.selectedViewController != nil ? self.selectedViewController : self.soundController()!
         let conditionsVC = index == 4 && self.selectedViewController != nil ? self.selectedViewController : HEMMainStoryboard.instantiateCurrentNavController() as? UIViewController
         self.viewControllers = [timelineVC!, trendsVC!, feedVC!, soundsVC!, conditionsVC!];
+        self.tabBarPresenter?.adjustInsets()
     }
     
     fileprivate func configureTabs() {
@@ -128,6 +130,7 @@ import SenseKit
         
         let presenter = TabBarPresenter()
         presenter.bind(with: self.tabBar)
+        self.tabBarPresenter = presenter
         self.presenters.append(presenter)
     }
     

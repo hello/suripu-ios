@@ -137,7 +137,7 @@ static CGFloat const HEMAlarmConfigCellMaskAlpha = 0.7f;
     [tableView setDataSource:self];
     [tableView setTableFooterView:[UIView new]];
     [tableView setBounces:YES];
-    [tableView applyStyle];
+    [tableView applyFillStyle];
     
     HEMClockPickerView* timePicker = (id) [tableView tableHeaderView];
     [timePicker setDelegate:self];

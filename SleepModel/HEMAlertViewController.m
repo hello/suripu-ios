@@ -7,9 +7,8 @@
 //
 
 #import <AttributedMarkdown/markdown_peg.h>
+#import "Sense-Swift.h"
 #import "UIView+HEMSnapshot.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMAlertViewController.h"
 #import "HEMAlertView.h"
 #import "HEMSupportUtil.h"
@@ -113,7 +112,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[UIColor seeThroughBackgroundColor]];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTransparentOverlay
+                                         property:ThemePropertyBackgroundColor];
+    [[self view] setBackgroundColor:bgColor];
     [self configureGestures];
 }
 

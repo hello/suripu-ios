@@ -79,24 +79,6 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
     [self.sleepScoreGraphView setLoading:NO];
 }
 
-- (NSInteger)accessibilityElementCount {
-    return 2;
-}
-
-- (id)accessibilityElementAtIndex:(NSInteger)index {
-    if (index == 0)
-        return self.sleepScoreGraphView;
-    return self.messageContainerView;
-}
-
-- (NSInteger)indexOfAccessibilityElement:(id)element {
-    if ([element isEqual:self.sleepScoreGraphView])
-        return 0;
-    else if ([element isEqual:self.messageContainerView])
-        return 1;
-    return NSNotFound;
-}
-
 - (void)setLoading:(BOOL)loading {
     [self.sleepScoreGraphView setLoading:loading];
 }
@@ -121,7 +103,6 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
                          }
                          completion:NULL];
     }
-   self.messageContainerView.accessibilityValue = [attributedMessage string];
 }
 
 - (void)setSummaryViewsVisible:(BOOL)visible {

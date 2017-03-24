@@ -526,9 +526,12 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
         negativeTitle = NSLocalizedString(@"sleep-event.action.incorrect.title", nil);
     }
 
+    Class titleClass = [HEMActionSheetTitleView class];
+    UIColor* titleColor = [SenseStyle colorWithAClass:titleClass
+                                             property:ThemePropertyTitleColor];
     if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
         [sheet addOptionWithTitle:approveTitle
-                       titleColor:nil
+                       titleColor:titleColor
                       description:nil
                         imageName:@"timeline_action_approve"
                            action:^{
@@ -539,7 +542,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
     if ([segment canPerformAction:SENTimelineSegmentActionAdjustTime]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                       titleColor:nil
+                       titleColor:titleColor
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
@@ -555,7 +558,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     if ([segment canPerformAction:SENTimelineSegmentActionRemove]
         || [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
         [sheet addOptionWithTitle:negativeTitle
-                       titleColor:nil
+                       titleColor:titleColor
                       description:nil
                         imageName:@"timeline_action_delete"
                            action:^{

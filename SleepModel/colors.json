@@ -29,13 +29,13 @@
     "sleep.depth.medium" : { "style.color.hex" : "4CB9FF" },
     "sleep.depth.deep" : { "style.color.hex" : "009AFF" },
     
-    "day.timeline.sleep.depth.light" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.8 },
+    "day.timeline.sleep.depth.light" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.3 },
     "day.timeline.sleep.depth.medium" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.50},
-    "day.timeline.sleep.depth.deep" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.3 },
+    "day.timeline.sleep.depth.deep" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.8 },
     
-    "night.timeline.sleep.depth.light" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.8 },
-    "night.timeline.sleep.depth.medium" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.50},
-    "night.timeline.sleep.depth.deep" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.3 },
+    "night.timeline.sleep.depth.light" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.15 },
+    "night.timeline.sleep.depth.medium" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.25},
+    "night.timeline.sleep.depth.deep" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.4 },
     
     "highlighted.bar" : { "style.color.hex" : "009AFF"},
     

@@ -94,8 +94,6 @@
  */
 - (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
 
-- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
-
 - (NSUInteger)numberOfSleepSegments;
 
 - (BOOL)dateIsLastNight;

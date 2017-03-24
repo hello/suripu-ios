@@ -82,9 +82,12 @@ import UIKit
         case sleepDepth
         case sleepDepthAlpha
         case trendsTitles
+        case transparentOverlay
         
         var key: String {
             switch self {
+            case .transparentOverlay:
+                return "sense.transparent.overlay"
             case .trendsTitles:
                 return "sense.trends.titles"
             case .chartGradient:

@@ -60,6 +60,7 @@ CGFloat const arcOffsetY = 80.f;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
+    self.backgroundColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
 }
 
 - (void)configureScoreValueLabel {

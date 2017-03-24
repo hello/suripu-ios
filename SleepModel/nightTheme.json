@@ -339,8 +339,13 @@
     },
     
     "#HEMSleepScoreGraphView" : {
+        "style.background.color" : "@color/grey.9",
         "style.border.color" : "@color/dark.separator",
         "style.background.highlighted.color" : "@color/grey.8"
+    },
+    
+    "#HEMMiniSleepScoreGraphView" : {
+        "style.group.parent" : "#HEMSleepScoreGraphView"
     },
     
     "#HEMSleepSegmentCollectionViewCell" : {
@@ -359,5 +364,29 @@
         "style.text.highlighted.color" : "@color/dark.primary.text",
         "style.tint.color" : "@color/white",
         "style.text.detail.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMBreakdownSummaryCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMBreakdownLineCell" : {
+        "style.title.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.transparent.overlay" : {
+        "style.background.color" : "@color/dark.transparent.overlay"
+    },
+    
+    "#HEMSleepHistoryViewController" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.primary.button.text.color" : "@color/white"
+    },
+    
+    "#HEMMiniGraphCollectionViewCell" : {
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.detail.color" : "@color/dark.primary.text"
     }
 }

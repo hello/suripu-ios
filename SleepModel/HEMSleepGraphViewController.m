@@ -528,7 +528,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
     Class titleClass = [HEMActionSheetTitleView class];
     UIColor* titleColor = [SenseStyle colorWithAClass:titleClass
-                                             property:ThemePropertyTitleColor];
+                                             property:ThemePropertyTextColor];
     if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
         [sheet addOptionWithTitle:approveTitle
                        titleColor:titleColor

@@ -524,14 +524,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     }
 }
 
-- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *const HEMAccessibleSegmentSummaryFormat = @"sleep-stat.accessibility.sleep-state.%@.format";
-    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    NSString* depthKey = [self localizationKeyForSleepState:segment.sleepState];
-    NSString* localizedKey = [NSString stringWithFormat:HEMAccessibleSegmentSummaryFormat, depthKey];
-    return [NSString stringWithFormat:NSLocalizedString(localizedKey, nil), (long)segment.duration / 60, (long)segment.sleepDepth];
-}
-
 - (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath)
         return nil;

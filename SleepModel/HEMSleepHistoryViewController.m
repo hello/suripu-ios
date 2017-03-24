@@ -5,7 +5,6 @@
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
-#import "SENSensorAccessibility.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
@@ -162,7 +161,6 @@ static NSUInteger const HEMSleepDataCapacity = 400;
                                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                                    animated:animated];
     }
-    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, [self.historyCollectionView cellForItemAtIndexPath:indexPath]);
 }
 
 - (void)updateForSelectedDate
@@ -347,11 +345,6 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:timeline.date] uppercaseString];
     cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
     cell.leftBorderView.hidden = indexPath.row == 1;
-    cell.isAccessibilityElement = YES;
-    cell.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"sleep-history.accessibility-value.timeline.format", nil),
-                                    [self.readerDateFormatter stringFromDate:timeline.date],
-                                    (long)score,
-                                    SENConditionReadableValue(timeline.scoreCondition)];
     [cell showLoadingActivity:!timeline.score];
 }
 

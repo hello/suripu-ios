@@ -190,8 +190,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     HEMBreakdownLineCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
                                                   forIndexPath:indexPath];
-    cell.isAccessibilityElement = NO;
-    cell.accessibilityElements = @[];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:0];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:1];
     return cell;

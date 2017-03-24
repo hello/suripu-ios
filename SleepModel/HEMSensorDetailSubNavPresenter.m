@@ -19,6 +19,7 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
 @property (nonatomic, weak) UINavigationBar* navBar;
+@property (nonatomic, strong) UIImage* navBackgroundImage;
 
 @end
 
@@ -41,6 +42,8 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {
+    [self setNavBackgroundImage:[navBar backgroundImageForBarMetrics:UIBarMetricsDefault]];
+    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[UIImage new]];
     [self setNavBar:navBar];
 }
@@ -94,6 +97,8 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 - (void)didDisappear {
     [super didDisappear];
     [[self navBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
+    [[self navBar] setBackgroundImage:[self navBackgroundImage]
+                        forBarMetrics:UIBarMetricsDefault];
 }
 
 @end

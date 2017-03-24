@@ -8,12 +8,17 @@ New:
 * Themed Timeline Summary
 * Themed Timeline history
 * Themed Action sheet
+* Themed time zone list
 
 Fixes:
 
 * Fixed issue with sign in not loading theme
 * Fixed issue where insight transition flashes white
 * Fixed issue where theme is messed up after re-installing
+* Fixed issue with accessibility
+* Fixed issue with sleep sounds status checks
+* Fixed issue with nav bar separator
+* Fixed issue with color difference when loading alarm clock picker
 
 ## 2.1.0.9
 

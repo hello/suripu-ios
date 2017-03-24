@@ -131,8 +131,6 @@ CGFloat const HEMEventTimestampMaximumHeight = 24.0f;
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
     [super setUserInteractionEnabled:userInteractionEnabled];
-    self.accessibilityHint = userInteractionEnabled ? NSLocalizedString(@"sleep-event.accessibility-hint", nil) : nil;
-    self.accessibilityTraits = userInteractionEnabled ? UIAccessibilityTraitButton : UIAccessibilityTraitNone;
     [self setShadowVisible:userInteractionEnabled];
 }
 

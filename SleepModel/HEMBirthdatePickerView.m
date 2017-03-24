@@ -29,8 +29,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
 @property (nonatomic, strong) NSDateFormatter* monthFormatter;
 @property (nonatomic, strong) NSMutableDictionary* daysInMonth;
 
-@property (nonatomic, strong) NSMutableArray* accessibleElements;
-
 // selection view components
 @property (nonatomic, strong) UIView* topTransparentView;
 @property (nonatomic, strong) UIView* botTransparentView;
@@ -193,38 +191,6 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     }
     return [days integerValue];
 }
-
-#pragma mark - Accessibility
-
-- (NSArray *)accessibleElements {
-    if ( _accessibleElements != nil ) {
-        return _accessibleElements;
-    }
-    _accessibleElements = [[NSMutableArray alloc] init];
-    
-    [_accessibleElements addObject:[self monthTableView]];
-    [_accessibleElements addObject:[self dayTableView]];
-    [_accessibleElements addObject:[self yearTableView]];
-    
-    return _accessibleElements;
-}
-
-- (BOOL)isAccessibilityElement {
-    return NO;
-}
-
-- (NSInteger)accessibilityElementCount {
-    return [[self accessibleElements] count];
-}
-
-- (id)accessibilityElementAtIndex:(NSInteger)index {
-    return [[self accessibleElements] objectAtIndex:index];
-}
-
-- (NSInteger)indexOfAccessibilityElement:(id)element {
-    return [[self accessibleElements] indexOfObject:element];
-}
-
 
 #pragma mark - TableView Helpers
 

@@ -232,11 +232,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     }];
 }
 
-- (BOOL)accessibilityPerformEscape {
-    [self hide];
-    return YES;
-}
-
 #pragma mark - Title
 
 - (UIView*)titleViewWithText:(NSString*)text {

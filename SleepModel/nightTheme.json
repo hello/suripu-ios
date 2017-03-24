@@ -388,5 +388,29 @@
     "#HEMMiniGraphCollectionViewCell" : {
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.detail.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMActionSheetTitleView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMActionSheetOptionCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.background.highlighted.color" : "@color/grey.8",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMEventAdjustConfirmationView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMActionSheetViewController" : {
+        "style.title.color" : "@color/dark.primary.text"
     }
 }

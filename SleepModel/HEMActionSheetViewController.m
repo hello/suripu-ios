@@ -7,7 +7,7 @@
 //
 
 #import "HEMActionSheetViewController.h"
-#import "HEMStyle.h"
+#import "Sense-Swift.h"
 #import "NSString+HEMUtils.h"
 #import "HEMActionSheetOptionCell.h"
 #import "HEMMainStoryboard.h"
@@ -69,8 +69,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [self setOptionTextAlignment:NSTextAlignmentLeft];
-    [[self optionTableView] setSeparatorColor:[UIColor separatorColor]];
-    [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }
 
 - (NSUInteger)numberOfOptions {
@@ -121,7 +119,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
         actionBlock = ^{};
     }
     
-    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [UIColor tintColor],
+    UIColor* optionColor = [SenseStyle colorWithAClass:[HEMActionSheetOptionCell class]
+                                              property:ThemePropertyTitleColor];
+    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: optionColor,
                                HEMActionSheetOptionDescription : description ?: @"",
                                HEMActionSheetOptionActionBlock : actionBlock,
                                HEMActionSheetOptionImage : imageName ?: @"" }
@@ -172,6 +172,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [super viewDidLoad];
     [self configureTableViewHeader];
     [self configureShadedOverlay];
+    [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
+    [[self optionTableView] applyFillStyle];
     [[self view] setBackgroundColor:[UIColor clearColor]];
 }
 
@@ -192,7 +194,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
     BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;
-    self.shadedOverlayView.accessibilityFrame = CGRectMake(0, 0, CGRectGetWidth(windowBounds), screenHeight - height);
     if (needsUpdateConstraints) {
         [[self oTVHeightConstraint] setConstant:height];
         [[self oTVBottomConstraint] setConstant:height];
@@ -206,9 +207,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                          if (needsUpdateConstraints)
                              [[self view] layoutIfNeeded];
                      }
-                     completion:^(BOOL finished) {
-                         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.shadedOverlayView);
-                     }];
+                     completion:nil];
 }
 
 - (void)hide:(void(^)(BOOL finished))completion {
@@ -222,7 +221,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                          [[self view] layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {
-                         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, NSLocalizedString(@"action-sheet.accessibility.did-disappear", nil));
                          if (completion)
                              completion(finished);
                      }];
@@ -255,8 +253,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     labelFrame.origin.x = HEMActionSheetTitleHorzMargin;
     
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
-    [label setFont:[UIFont h7Bold]];
-    [label setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
+    [label setFont:[SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont]];
+    [label setTextColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor]];
     [label setText:uppercaseTitle];
     [label setNumberOfLines:0];
     
@@ -272,10 +270,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)configureShadedOverlay {
-    self.shadedOverlayView.isAccessibilityElement = YES;
-    self.shadedOverlayView.accessibilityTraits = UIAccessibilityTraitButton;
-    self.shadedOverlayView.accessibilityValue = NSLocalizedString(@"actions.cancel", nil);
-    self.shadedOverlayView.backgroundColor = [UIColor seeThroughBackgroundColor];
+    self.shadedOverlayView.backgroundColor = [SenseStyle colorWithGroup:GroupTransparentOverlay
+                                                               property:ThemePropertyBackgroundColor];
 }
 
 - (void)configureTableViewHeader {
@@ -318,7 +314,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     
     [confirmationView setFrame:[bgView bounds]];
     
-    [bgView setBackgroundColor:[UIColor whiteColor]];
+    [bgView setBackgroundColor:[[self optionTableView] backgroundColor]];
     [bgView addSubview:confirmationView];
     
     [[self view] insertSubview:bgView belowSubview:[self optionTableView]];

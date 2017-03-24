@@ -517,7 +517,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     }
 
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    UIColor *optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString *approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
     NSString *negativeTitle = nil;
 
@@ -529,7 +528,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
     if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
         [sheet addOptionWithTitle:approveTitle
-                       titleColor:optionTitleColor
+                       titleColor:nil
                       description:nil
                         imageName:@"timeline_action_approve"
                            action:^{
@@ -540,7 +539,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 
     if ([segment canPerformAction:SENTimelineSegmentActionAdjustTime]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                       titleColor:optionTitleColor
+                       titleColor:nil
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
@@ -556,7 +555,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     if ([segment canPerformAction:SENTimelineSegmentActionRemove]
         || [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
         [sheet addOptionWithTitle:negativeTitle
-                       titleColor:optionTitleColor
+                       titleColor:nil
                       description:nil
                         imageName:@"timeline_action_delete"
                            action:^{

@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMActionSheetOptionCell.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "NSString+HEMUtils.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 
 static CGFloat const HEMActionSheetOptionLabelSpacing = 4.0f;
 static CGFloat const HEMActionSheetOptionVertMargin = 20.0f;
@@ -36,15 +35,16 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
                description:(NSString *)description
                   maxWidth:(CGFloat)width {
     
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
     CGFloat height = HEMActionSheetOptionVertMargin;
     CGFloat textWidth = width - (2 * HEMActionSheetOptionHorzMargin);
-    UIFont* titleFont = [UIFont h6];
+    
     height += [title heightBoundedByWidth:textWidth usingFont:titleFont];
     
     if ([description length] > 0) {
         height += HEMActionSheetOptionLabelSpacing;
         
-        UIFont* descFont = [UIFont body];
+        UIFont* descFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
         height += [description heightBoundedByWidth:textWidth usingFont:descFont];
     }
     
@@ -56,9 +56,18 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self optionTitleLabel] setFont:[UIFont body]];
-    [[self optionDescriptionLabel] setFont:[UIFont body]];
-    [[self optionDescriptionLabel] setTextColor:[UIColor grey5]];
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    [self setBackgroundColor:bgColor];
+    [[self optionTitleLabel] setFont:titleFont];
+    [[self optionTitleLabel] setTextColor:titleColor];
+    [[self optionDescriptionLabel] setFont:font];
+    [[self optionDescriptionLabel] setTextColor:color];
+    [[self optionDescriptionLabel] setBackgroundColor:bgColor];
+    [[self optionTitleLabel] setBackgroundColor:bgColor];
     [self configureSelectedBackground];
 }
 
@@ -122,7 +131,8 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 
 - (void)configureSelectedBackground {
     UIView* view = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
-    [view setBackgroundColor:[UIColor lightBackgroundColor]];
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundHighlightedColor];
+    [view setBackgroundColor:bgColor];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [self setSelectedBackgroundView:view];
 }

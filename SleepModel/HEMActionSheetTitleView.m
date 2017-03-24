@@ -5,10 +5,10 @@
 //  Created by Jimmy Lu on 7/1/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 #import "HEMActionSheetTitleView.h"
 #import "NSString+HEMUtils.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 static CGFloat HEMActionSheetTitleHorzPadding = 24.0f;
 static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
@@ -33,8 +33,10 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 }
 
 + (NSDictionary*)defaultDescriptionProperties {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor detailTextColor],
+    UIFont* bodyFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    return @{NSFontAttributeName : bodyFont,
+             NSForegroundColorAttributeName : color,
              NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
 }
 
@@ -59,6 +61,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     [[view textContainer] setLineFragmentPadding:0.0f];
     [view setDelegate:self];
     [view setSelectable:NO];
+    [view setBackgroundColor:[self backgroundColor]];
 
     CGRect textFrame = CGRectZero;
     textFrame.size.width = frameWidth;
@@ -90,6 +93,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     [label setTextColor:color];
     [label setText:text];
     [label setNumberOfLines:0];
+    [label setBackgroundColor:[self backgroundColor]];
     
     return label;
 }
@@ -98,10 +102,14 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     CGFloat maxY = HEMActionSheetTitleVertPadding;
     CGFloat spacing = 0.0f;
     
+    [self setBackgroundColor:[SenseStyle colorWithAClass:[self class]
+                                                property:ThemePropertyBackgroundColor]];
+    
     if (title) {
-        UIColor* titleColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+        UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+        UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
         UILabel* titleLabel = [self labelWithText:title
-                                          andFont:[UIFont h5]
+                                          andFont:font
                                          andColor:titleColor
                                         atYOrigin:maxY];
         [self addSubview:titleLabel];
@@ -125,11 +133,10 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     frame.size.height = maxY + HEMActionSheetTitleVertPadding;
     
     [self setFrame:frame];
-    [self setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)drawRect:(CGRect)rect {
-    UIColor* lineColor = [UIColor separatorColor];
+    UIColor* lineColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);

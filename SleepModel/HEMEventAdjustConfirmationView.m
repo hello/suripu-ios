@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "NSString+HEMUtils.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "HEMEventAdjustConfirmationView.h"
 
 static CGFloat const HEMAdjustConfirmIconSize = 40.0f;
@@ -43,7 +42,8 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 }
 
 - (void)configureView {
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setBackgroundColor:[SenseStyle colorWithAClass:[self class]
+                                                property:ThemePropertyBackgroundColor]];
     [self addIcon];
     [self addTitleLabel];
     [self addSubtitleLabel];
@@ -87,8 +87,10 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 
 - (void)addTitleLabel {
     CGFloat y = CGRectGetMaxY([[self iconView] frame]) + HEMAdjustConfirmImageSpacing;
-    UIFont* titleFont = [UIFont h6];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
     UILabel* titleLabel = [self textLabelWithYOrigin:y andText:[self title] withFont:titleFont];
+    [titleLabel setTextColor:titleColor];
     [self setTitleLabel:titleLabel];
     [self addSubview:titleLabel];
 }
@@ -96,9 +98,10 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 - (void)addSubtitleLabel {
     if ([self subtitle]) {
         CGFloat y = CGRectGetMaxY([[self titleLabel] frame]) + HEMAdjustConfirmTextSpacing;
-        UIFont* subtitleFont = [UIFont body];
+        UIFont* subtitleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+        UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
         UILabel* subtitleLabel = [self textLabelWithYOrigin:y andText:[self subtitle] withFont:subtitleFont];
-        [subtitleLabel setTextColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
+        [subtitleLabel setTextColor:color];
         [self setSubtitleLabel:subtitleLabel];
         [self addSubview:subtitleLabel];
     }

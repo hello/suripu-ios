@@ -1,6 +1,6 @@
 
 #import <SenseKit/SENTimeline.h>
-
+#import "Sense-Swift.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "UIColor+HEMStyle.h"
 
@@ -50,7 +50,8 @@
         CGFloat endYOffset = startYOffset + MAX(duration/self.secondsPerPoint, minMiniSleepHeight);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGFloat height = endYOffset - startYOffset;
-        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepState:segment.sleepState].CGColor);
+        UIColor* color = [SenseStyle colorWithSleepState:segment.sleepState useAlpha:YES];
+        CGContextSetFillColorWithColor(ctx, color.CGColor);
         CGRect fillRect = CGRectMake(0, startYOffset, endXOffset, height);
         CGContextFillRect(ctx, fillRect);
         startYOffset = endYOffset;

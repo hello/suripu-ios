@@ -1,5 +1,6 @@
 
 #import <SenseKit/SenseKit.h>
+#import "Sense-Swift.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
@@ -42,15 +43,10 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     self.historyCollectionView.delegate = nil;
     [self configureDateFormatters];
     [self configureCollectionView];
+    [self configureAppearance];
     [self loadData];
     self.historyCollectionView.delegate = self;
     [SENAnalytics track:HEMAnalyticsEventTimelineZoomOut];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self configureBackgroundColors];
 }
 
 - (void)viewDidLayoutSubviews
@@ -62,6 +58,14 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     }
 }
 
+- (void)configureAppearance {
+    self.timeFrameLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    self.timeFrameLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+    
+    UIColor* buttonColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyPrimaryButtonTextColor];
+    [self.lastNightButton setTitleColor:buttonColor forState:UIControlStateNormal];
+}
+
 - (void)configureCollectionView
 {
     UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
@@ -70,6 +74,8 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     CGFloat cellWidth = CGRectGetWidth(self.view.bounds) * HEMSleepHistoryCellWidthRatio;
     [self.historyCollectionView setContentInset: UIEdgeInsetsMake(0, cellWidth, 0, cellWidth)];
     layout.itemSize = CGSizeMake(cellWidth, cellHeight);
+    [self.historyCollectionView applyFillStyle];
+    self.view.backgroundColor = self.historyCollectionView.backgroundColor;
 }
 
 - (void)configureDateFormatters
@@ -85,15 +91,6 @@ static NSUInteger const HEMSleepDataCapacity = 400;
     self.monthYearFormatter.dateFormat = @"MMMM yyyy";
     self.readerDateFormatter = [NSDateFormatter new];
     self.readerDateFormatter.dateFormat = @"EEEE, d MMMM";
-}
-
-- (void)configureBackgroundColors
-{
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.view.bounds;
-    gradient.colors = @[(id)[UIColor whiteColor].CGColor,
-                        (id)[UIColor colorWithHue:0 saturation:0 brightness:0.94 alpha:1].CGColor];
-    [self.view.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)loadData
@@ -225,6 +222,7 @@ static NSUInteger const HEMSleepDataCapacity = 400;
 {
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
     cell.hidden = indexPath.row == 0;
+    [cell applyFillStyle];
     return cell;
 }
 
@@ -342,7 +340,8 @@ static NSUInteger const HEMSleepDataCapacity = 400;
         return;
     }
     NSInteger score = [timeline.score integerValue];
-    [cell.sleepScoreView setSleepScore:score color:[UIColor colorForCondition:[timeline scoreCondition]]];
+    UIColor* color = [SenseStyle colorWithCondition:[timeline scoreCondition] defaultColor:nil];
+    [cell.sleepScoreView setSleepScore:score color:color];
     [cell.graphView setSleepDataSegments:timeline.segments];
     cell.dayLabel.text = [self.dayFormatter stringFromDate:timeline.date];
     cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:timeline.date] uppercaseString];

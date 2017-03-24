@@ -339,6 +339,7 @@
     },
     
     "#HEMSleepScoreGraphView" : {
+        "style.background.color" : "@color/grey.9",
         "style.border.color" : "@color/dark.separator",
         "style.background.highlighted.color" : "@color/grey.8"
     },

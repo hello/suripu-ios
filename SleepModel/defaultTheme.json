@@ -612,5 +612,13 @@
     "#HEMTimelineFeedbackViewController" : {
         "style.title.font" : "@font/headline",
         "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "sense.timeline.error" : {
+        "style.background.color" : "@color/white",
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
     }
 }

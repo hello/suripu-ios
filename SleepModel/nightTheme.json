@@ -416,5 +416,11 @@
     
     "#HEMTimelineFeedbackViewController" : {
         "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.timeline.error" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
     }
 }

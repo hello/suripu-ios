@@ -131,25 +131,32 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 }
 
 - (void)configureErrorProperties {
-    [[self errorTitleLabel] setFont:[UIFont h5]];
-    [[self errorTitleLabel] setTextColor:[UIColor grey6]];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyBackgroundColor];
+    UIFont* titleFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTitleFont];
+    UIColor* titleColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTitleColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTextColor];
     
-    [[self errorMessageLabel] setFont:[UIFont body]];
-    [[self errorMessageLabel] setTextColor:[UIColor grey4]];
+    [[self errorViewsContainerView] setBackgroundColor:bgColor];
+    [[self errorTitleLabel] setFont:titleFont];
+    [[self errorTitleLabel] setTextColor:titleColor];
     
-    [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
-    [[self errorSupportButton] setBackgroundColor:[UIColor whiteColor]];
-    [[self errorSupportButton] setTitleColor:[UIColor tintColor]
-                                    forState:UIControlStateNormal];
+    [[self errorMessageLabel] setFont:textFont];
+    [[self errorMessageLabel] setTextColor:textColor];
+    
+    [[self errorSupportButton] applyStyle];
+    [[self errorSupportButton] setBackgroundColor:bgColor];
 }
 
 - (NSAttributedString*)attributedErrorMessage:(NSString*)message {
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTextColor];
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
     [style setParagraphSpacing:-5.0f];
     NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
-                                 NSFontAttributeName : [UIFont body],
-                                 NSForegroundColorAttributeName : [UIColor grey5]};
+                                 NSFontAttributeName : textFont,
+                                 NSForegroundColorAttributeName : textColor};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 

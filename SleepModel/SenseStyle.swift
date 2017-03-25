@@ -83,9 +83,12 @@ import UIKit
         case sleepDepthAlpha
         case trendsTitles
         case transparentOverlay
+        case timelineError
         
         var key: String {
             switch self {
+            case .timelineError:
+                return "sense.timeline.error"
             case .transparentOverlay:
                 return "sense.transparent.overlay"
             case .trendsTitles:

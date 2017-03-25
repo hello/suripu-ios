@@ -412,5 +412,9 @@
     
     "#HEMActionSheetViewController" : {
         "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMTimelineFeedbackViewController" : {
+        "style.title.color" : "@color/dark.primary.text"
     }
 }

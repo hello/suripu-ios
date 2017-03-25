@@ -607,5 +607,10 @@
     "#HEMActionSheetViewController" : {
         "style.title.font" : "@font/caption.2",
         "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMTimelineFeedbackViewController" : {
+        "style.title.font" : "@font/headline",
+        "style.title.color" : "@color/light.primary.text"
     }
 }

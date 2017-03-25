@@ -415,6 +415,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMActionSheetViewController* sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setCustomTitleView:[self configurationTitleView]];
     
+    Class titleClass = [HEMActionSheetTitleView class];
+    UIColor* titleColor = [SenseStyle colorWithAClass:titleClass
+                                             property:ThemePropertyTextColor];
+    
     __weak typeof (self) weakSelf = self;
     
     for (SENExpansionConfig* config in [self configs]) {
@@ -426,7 +430,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [sheet addOptionWithTitle:[config localizedName]
-                       titleColor:[UIColor grey5]
+                       titleColor:titleColor
                       description:nil
                         imageName:nil
                          selected:selected

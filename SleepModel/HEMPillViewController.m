@@ -121,10 +121,6 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [[self collectionView] applyFillStyle];
 }
 
-- (NSDictionary*)attributesForWarningMessages {
-    return @{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
-}
-
 - (NSAttributedString*)attributedLongLastSeenMessage {
     SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
@@ -135,7 +131,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSMutableAttributedString* attrWarning =
         [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:[self attributesForWarningMessages]
+    [attrWarning addAttributes:[HEMWarningCollectionViewCell messageAttributes]
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -143,7 +139,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSAttributedString*)attributedLowBatteryMessage {
     NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
-    NSDictionary* attributes = [self attributesForWarningMessages];
+    NSDictionary* attributes = [HEMWarningCollectionViewCell messageAttributes];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 

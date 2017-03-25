@@ -122,9 +122,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
              properties:@{
                  kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
              }];
-    if (![self showEventLoadAnimation]) {
-        [self prepareForInitialAnimation];
-    }
     
     [self setAudioService:[HEMAudioService new]];
 }
@@ -134,25 +131,32 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 }
 
 - (void)configureErrorProperties {
-    [[self errorTitleLabel] setFont:[UIFont h5]];
-    [[self errorTitleLabel] setTextColor:[UIColor grey6]];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyBackgroundColor];
+    UIFont* titleFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTitleFont];
+    UIColor* titleColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTitleColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTextColor];
     
-    [[self errorMessageLabel] setFont:[UIFont body]];
-    [[self errorMessageLabel] setTextColor:[UIColor grey4]];
+    [[self errorViewsContainerView] setBackgroundColor:bgColor];
+    [[self errorTitleLabel] setFont:titleFont];
+    [[self errorTitleLabel] setTextColor:titleColor];
     
-    [[[self errorSupportButton] titleLabel] setFont:[UIFont button]];
-    [[self errorSupportButton] setBackgroundColor:[UIColor whiteColor]];
-    [[self errorSupportButton] setTitleColor:[UIColor tintColor]
-                                    forState:UIControlStateNormal];
+    [[self errorMessageLabel] setFont:textFont];
+    [[self errorMessageLabel] setTextColor:textColor];
+    
+    [[self errorSupportButton] applyStyle];
+    [[self errorSupportButton] setBackgroundColor:bgColor];
 }
 
 - (NSAttributedString*)attributedErrorMessage:(NSString*)message {
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTextColor];
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
     [style setParagraphSpacing:-5.0f];
     NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,
-                                 NSFontAttributeName : [UIFont body],
-                                 NSForegroundColorAttributeName : [UIColor grey5]};
+                                 NSFontAttributeName : textFont,
+                                 NSForegroundColorAttributeName : textColor};
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -171,7 +175,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self setVisible:YES];
-    [self checkIfInitialAnimationNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -280,56 +283,7 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     return [[self parentViewController] view];
 }
 
-#pragma mark Initial load animation
-
-- (void)prepareForInitialAnimation {
-    self.collectionView.scrollEnabled = NO;
-}
-
-- (void)finishInitialAnimation {
-    [self setEventLoadAnimation:NO];
-    if ([self.dataSource hasTimelineData])
-        self.collectionView.scrollEnabled = YES;
-}
-
-- (void)performInitialAnimation {
-    if (![self showEventLoadAnimation]) {
-        return;
-    }
-    
-    [self setEventLoadAnimation:NO];
-    
-    CGFloat const eventAnimationDuration = 0.25f;
-    CGFloat const eventAnimationCrossfadeRatio = 0.9f;
-    NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
-        sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
-          return [@(obj1.item) compare:@(obj2.item)];
-        }];
-
-    int eventsFound = 0;
-    for (int i = 0; i < indexPaths.count; i++) {
-        NSIndexPath *indexPath = indexPaths[i];
-        if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
-            continue;
-        HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-        CGFloat delay = (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
-        if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-            eventsFound++;
-        }
-        [cell performEntryAnimationWithDuration:eventAnimationDuration delay:delay];
-    }
-    int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-      [weakSelf finishInitialAnimation];
-    });
-}
-
 #pragma mark HEMSleepGraphActionDelegate
-
-- (BOOL)shouldHideSegmentCellContents {
-    return [self showEventLoadAnimation];
-}
 
 - (void)toggleAudio:(UIButton *)button {
     if (button == self.playingButton) {
@@ -917,8 +871,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
     self.errorSupportButton.hidden = YES;
     if (hasTimelineData || [self.dataSource isLoading]) {
         [self setErrorViewsVisible:NO];
-        if ([self isVisible])
-            [self checkIfInitialAnimationNeeded];
         return;
     } else if (error) {
         self.errorTitleLabel.text = NSLocalizedString(@"sleep-data.error.title", nil);
@@ -972,25 +924,6 @@ static CGFloat const HEMTutorialMessageOffset = 49.0f;
         if (!updatedAtMidnight || [updatedAtMidnight compare:self.dateForNightOfSleep] == NSOrderedAscending) {
             [HEMAppUsage incrementUsageForIdentifier:HEMAppUsageTimelineShownWithData];
         }
-    }
-}
-
-- (void)checkIfInitialAnimationNeeded {
-    if ([self showEventLoadAnimation]) {
-        if (self.dataSource.sleepResult.score > 0) {
-            static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{
-              __weak typeof(self) weakSelf = self;
-              int64_t delay = (int64_t)(0.6f * NSEC_PER_SEC);
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-                [weakSelf performInitialAnimation];
-              });
-            });
-        } else {
-            [self finishInitialAnimation];
-        }
-    } else {
-        [self finishInitialAnimation];
     }
 }
 

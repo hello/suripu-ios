@@ -16,6 +16,16 @@ CGFloat const HEMWarningCellMessageHorzPadding = 24.0f;
 
 @implementation HEMWarningCollectionViewCell
 
++ (NSDictionary*)messageAttributes {
+    UIFont* messageFont = [SenseStyle fontWithGroup:GroupWarningView
+                                           property:ThemePropertyDetailFont];
+    UIColor* messageColor = [SenseStyle colorWithGroup:GroupWarningView
+                                              property:ThemePropertyDetailColor];
+    return @{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle(),
+             NSForegroundColorAttributeName : messageColor,
+             NSFontAttributeName : messageFont};
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self applyStyle];

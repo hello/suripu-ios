@@ -23,6 +23,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
+#import "HEMActionSheetTitleView.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMExpansionRowType) {
@@ -515,6 +516,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* titleFormat = NSLocalizedString(@"expansion.configuration.options.title.format", nil);
     [sheet setTitle:[[NSString stringWithFormat:titleFormat, configurationName] uppercaseString]];
     
+    Class titleClass = [HEMActionSheetTitleView class];
+    UIColor* titleColor = [SenseStyle colorWithAClass:titleClass
+                                             property:ThemePropertyTextColor];
+    
     __weak typeof (self) weakSelf = self;
     
     for (SENExpansionConfig* config in [self configurations]) {
@@ -525,7 +530,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             selected = YES;
         }
         [sheet addOptionWithTitle:[config localizedName]
-                       titleColor:[UIColor grey7]
+                       titleColor:titleColor
                       description:nil
                         imageName:nil
                          selected:selected

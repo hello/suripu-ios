@@ -83,9 +83,15 @@ import UIKit
         case sleepDepthAlpha
         case trendsTitles
         case transparentOverlay
+        case timelineError
+        case sleepScoreIcon
         
         var key: String {
             switch self {
+            case .sleepScoreIcon:
+                return "sense.sleep.score.icon"
+            case .timelineError:
+                return "sense.timeline.error"
             case .transparentOverlay:
                 return "sense.transparent.overlay"
             case .trendsTitles:
@@ -200,6 +206,24 @@ import UIKit
     
     @objc static func font(group: Group, propertyName: String) -> UIFont {
         return self.theme.value(group: group.key, key: propertyName) as? UIFont ?? SYSTEM_FONT
+    }
+    
+    //MARK: - Images
+    
+    @objc static func image(aClass: AnyClass, property: Theme.ThemeProperty) -> UIImage? {
+        return self.theme.value(aClass: aClass, key: property.key) as? UIImage
+    }
+    
+    @objc static func image(aClass: AnyClass, propertyName: String) -> UIImage? {
+        return self.theme.value(aClass: aClass, key: propertyName) as? UIImage
+    }
+    
+    @objc static func image(group: Group, property: Theme.ThemeProperty) -> UIImage? {
+        return self.value(group: group, property: property) as? UIImage
+    }
+    
+    @objc static func image(group: Group, propertyName: String) -> UIImage? {
+        return self.theme.value(group: group.key, key: propertyName) as? UIImage
     }
     
     //MARK: - Value

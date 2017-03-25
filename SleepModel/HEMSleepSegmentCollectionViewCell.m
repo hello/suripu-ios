@@ -46,14 +46,6 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [self setNeedsDisplay];
 }
 
-- (void)prepareForEntryAnimation {
-    self.waitingForAnimation = YES;
-}
-
-- (void)cancelEntryAnimation {
-    self.waitingForAnimation = NO;
-}
-
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
     self.waitingForAnimation = NO;
 }

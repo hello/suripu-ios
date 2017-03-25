@@ -31,7 +31,6 @@
     Scrollable
 >
 
-@property (nonatomic, weak) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView *activityIndicator;

@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
+#import "Sense-Swift.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMClockPickerView.h"
@@ -18,12 +19,15 @@ NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSu
 
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
+@property (weak, nonatomic) IBOutlet UIView *titleSeparatorView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
 @property (nonatomic, weak) IBOutlet UIView* titleContainerView;
 @property (nonatomic, weak) IBOutlet UIView *buttonContainerView;
+@property (weak, nonatomic) IBOutlet UIView *buttonDividerView;
 @property (nonatomic, weak) IBOutlet UIButton *cancelButton;
 @property (nonatomic, weak) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonSeparatorView;
 @property (nonatomic, strong) HEMTimelineService* timelineService;
 @property (nonatomic, strong) NSCalendar* calendar;
 @property (nonatomic, assign, getter=isConfigured) BOOL configured;
@@ -35,9 +39,9 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self applyStyle];
     self.timelineService = [HEMTimelineService new];
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
-    [self configureButtonContainer];
     [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
 }
 
@@ -49,11 +53,21 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     }
 }
 
-- (void)configureButtonContainer {
-    CALayer *layer = self.buttonContainerView.layer;
-    layer.shadowRadius = 2.f;
-    layer.shadowOffset = CGSizeMake(0, -2.f);
-    layer.shadowOpacity = 0.05f;
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [[SenseStyle theme] statusBarStyle];
+}
+
+- (void)applyStyle {
+    [self.titleContainerView applyFillStyle];
+    [self.buttonContainerView applyFillStyle];
+    [self.cancelButton applySecondaryStyle];
+    [self.saveButton applyStyle];
+    [self.titleLabel applyTitleStyle];
+    [self.titleLabel setFont:[SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont]];
+    [self.titleLabel setTextColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor]];
+    [self.titleSeparatorView applySeparatorStyle];
+    [self.buttonDividerView applySeparatorStyle];
+    [self.buttonSeparatorView applySeparatorStyle];
 }
 
 - (void)configureSegmentViews

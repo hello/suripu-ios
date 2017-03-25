@@ -44,9 +44,15 @@ import UIKit
         case backgroundDisabledColor
         case textDisabledColor
         case textHighlightedColor
+        case iconImage
+        case iconHighlightedImage
         
         var key: String {
             switch self {
+                case .iconImage:
+                    return "style.icon.image"
+                case .iconHighlightedImage:
+                    return "style.highlighted.image"
                 case .titleFont:
                     return "style.title.font"
                 case .titleColor:
@@ -123,6 +129,7 @@ import UIKit
     
     fileprivate static let refColor = "@color"
     fileprivate static let refFont = "@font"
+    fileprivate static let refImage = "@image"
     fileprivate static let refSeparator = "/"
     
     fileprivate var defaultProperties: [String: Any]!
@@ -168,6 +175,8 @@ import UIKit
             return self.color(value: valueString)
         } else if valueString.hasPrefix(Theme.refFont) == true {
             return self.font(value: valueString)
+        } else if valueString.hasPrefix(Theme.refImage) == true {
+            return self.image(value: valueString)
         } else {
             return valueString
         }
@@ -189,6 +198,15 @@ import UIKit
             font = Font.named(name: fontParts![1])
         }
         return font
+    }
+    
+    fileprivate func image(value: String?) -> UIImage? {
+        let imageParts = value?.components(separatedBy: Theme.refSeparator)
+        var image: UIImage? = nil
+        if imageParts?.count == 2 && imageParts![0] == Theme.refImage {
+            image = UIImage(named: imageParts![1])
+        }
+        return image
     }
     
     // MARK: - Apply

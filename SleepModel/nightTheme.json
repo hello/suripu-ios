@@ -256,7 +256,9 @@
     },
     
     "#HEMSleepSoundConfigurationCell" : {
-        "style.title.color" : "@font/dark.primary.text"
+        "style.title.color" : "@font/dark.primary.text",
+        "sense.sound.graph.left" : "@image/soundGraphLeftDark",
+        "sense.sound.graph.right" : "@image/soundGraphRightDark"
     },
     
     "#HEMQuestionCell" : {
@@ -412,5 +414,21 @@
     
     "#HEMActionSheetViewController" : {
         "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMTimelineFeedbackViewController" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.timeline.error" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.sleep.score.icon" : {
+        "style.background.highlighted.color" : "@color/blue.6",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/grey.9"
     }
 }

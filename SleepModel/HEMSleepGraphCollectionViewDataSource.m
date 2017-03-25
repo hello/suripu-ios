@@ -373,11 +373,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
-        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
-        if ([delegate shouldHideSegmentCellContents])
-            [cell prepareForEntryAnimation];
-    }
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / HEMTimelineMaxSleepDepth;
     CGFloat previousFillRatio = 0;
@@ -408,11 +403,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     
     NSUInteger sleepDepth = segment.sleepDepth;
-    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
-        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
-        if ([delegate shouldHideSegmentCellContents])
-            [cell prepareForEntryAnimation];
-    }
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.type]];
     NSAttributedString *timeText = nil;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {

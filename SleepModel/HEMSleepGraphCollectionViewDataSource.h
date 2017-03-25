@@ -10,8 +10,6 @@
 
 @required
 
-- (BOOL)shouldHideSegmentCellContents;
-
 - (void)toggleAudio:(UIButton*)button;
 
 - (void)shareTimeline:(id)sender;

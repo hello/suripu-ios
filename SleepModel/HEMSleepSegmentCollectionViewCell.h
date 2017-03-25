@@ -31,10 +31,6 @@ extern CGFloat const HEMSegmentPrefillTimeInset;
 
 - (UIImage *)lineBorderImageWithColor:(UIColor *)color;
 
-- (void)prepareForEntryAnimation;
-
-- (void)cancelEntryAnimation;
-
 /**
  *  Rect to fill with fill color
  */

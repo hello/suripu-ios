@@ -84,16 +84,6 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     [self.playButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
 }
 
-- (void)prepareForEntryAnimation {
-    [super prepareForEntryAnimation];
-    self.contentContainerView.alpha = 0;
-}
-
-- (void)cancelEntryAnimation {
-    [super cancelEntryAnimation];
-    self.contentContainerView.alpha = 1;
-}
-
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
     [super performEntryAnimationWithDuration:duration delay:delay];
     CGFloat alpha = [self alphaWithRatioFromCenter:self.cachedRatioFromCenter];

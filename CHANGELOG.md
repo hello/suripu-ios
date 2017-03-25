@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.0.11
+
+New:
+
+* Themed sleep sounds player
+* Themed timeline event edit screen
+* Themed timeline empty states
+* Complete theming action sheets
+
+Fixes:
+
+* Fixes timeline history sleep score in day mode
+* Fixes sense settings cutting off when pulling down
+* Fixes issue where timeline events are not displayed
+
 ## 2.1.0.10
 
 New:

@@ -217,10 +217,4 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
     return label;
 }
 
-- (void)applyStyle {
-    [super applyStyle];
-    [[self multiTitleView] applyFillStyle];
-    [[self barChartView] applyFillStyle];
-}
-
 @end

@@ -69,9 +69,4 @@ static CGFloat const HEMTrendsCalendarBotMargin = 18.0f;
     [[self calendarView] updateWithValues:scores titles:sectionTitles];
 }
 
-- (void)applyStyle {
-    [super applyStyle];
-    [[self calendarView] applyStyle];
-}
-
 @end

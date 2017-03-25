@@ -121,7 +121,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     if (sec < [[[self dataSource] deviceWarnings] count]) {
         HEMDeviceWarning* warning = [[self dataSource] deviceWarnings][sec];
         [HEMSupportUtil openHelpToPage:[warning supportPage] fromController:self];
-        
     } else if (sec > 0) { // 0 is the connected state
         switch ([indexPath row]) {
             default:

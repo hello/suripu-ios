@@ -21,4 +21,6 @@ extern CGFloat const HEMWarningCellMessageHorzPadding;
 @property (weak, nonatomic) IBOutlet HEMActionButton *actionButton;
 @property (weak, nonatomic) IBOutlet UIView *separator;
 
++ (NSDictionary*)messageAttributes;
+
 @end

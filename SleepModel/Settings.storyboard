@@ -1864,20 +1864,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k6g-yu-WXB">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qWb-So-94c" customClass="HEMExtendedHeaderCollectionViewLayout">
-                                    <size key="itemSize" width="600" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="itemSize" width="414" height="50"/>
+                                    <size key="headerReferenceSize" width="414" height="15"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="warning" id="DpL-nK-ncw" customClass="HEMWarningCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="170"/>
+                                        <rect key="frame" x="0.0" y="15" width="414" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="170"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="Yxh-H9-pN3">
@@ -1935,7 +1935,7 @@
                                             <constraint firstItem="Zi9-4j-h5a" firstAttribute="leading" secondItem="Yxh-H9-pN3" secondAttribute="trailing" constant="20" id="hPh-2b-Zvj"/>
                                             <constraint firstItem="drw-vZ-r4Z" firstAttribute="top" secondItem="KgH-NY-rcS" secondAttribute="bottom" constant="16" id="k7g-d5-omG"/>
                                         </constraints>
-                                        <size key="customSize" width="600" height="170"/>
+                                        <size key="customSize" width="414" height="170"/>
                                         <connections>
                                             <outlet property="actionButton" destination="NEk-Xp-yLW" id="pz3-BI-r29"/>
                                             <outlet property="iconImageView" destination="Yxh-H9-pN3" id="gw4-AC-kWI"/>
@@ -1945,10 +1945,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="action" id="fEA-62-u8E" customClass="HEMDeviceActionCell">
-                                        <rect key="frame" x="0.0" y="220" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="185" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pao-vD-qJj">
@@ -1993,7 +1993,7 @@
                                             <constraint firstAttribute="trailingMargin" secondItem="m1U-GD-vmb" secondAttribute="trailing" constant="-8" id="iMl-ke-hBs"/>
                                             <constraint firstItem="pao-vD-qJj" firstAttribute="leading" secondItem="fEA-62-u8E" secondAttribute="leadingMargin" constant="10" id="vzG-HX-mso"/>
                                         </constraints>
-                                        <size key="customSize" width="600" height="56"/>
+                                        <size key="customSize" width="414" height="56"/>
                                         <connections>
                                             <outlet property="iconView" destination="pao-vD-qJj" id="zla-hg-U1x"/>
                                             <outlet property="separatorView" destination="QfU-fK-c53" id="dac-AR-6rZ"/>
@@ -2002,10 +2002,10 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="connection" id="1km-7K-K2Z" customClass="HEMDeviceActionCell">
-                                        <rect key="frame" x="0.0" y="276" width="600" height="56"/>
+                                        <rect key="frame" x="0.0" y="241" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="27l-tf-XYe">
@@ -2050,7 +2050,7 @@
                                             <constraint firstItem="rG4-4l-f05" firstAttribute="top" secondItem="1km-7K-K2Z" secondAttribute="topMargin" constant="10" id="vjp-jJ-9KL"/>
                                             <constraint firstItem="27l-tf-XYe" firstAttribute="leading" secondItem="1km-7K-K2Z" secondAttribute="leadingMargin" constant="10" id="zhC-eC-1ur"/>
                                         </constraints>
-                                        <size key="customSize" width="600" height="56"/>
+                                        <size key="customSize" width="414" height="56"/>
                                         <connections>
                                             <outlet property="iconView" destination="27l-tf-XYe" id="BVc-ch-876"/>
                                             <outlet property="separatorView" destination="NOg-9z-4F9" id="5Qh-kx-Tew"/>
@@ -2060,7 +2060,7 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sectionHeader" id="e01-W8-8rB">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </collectionReusableView>
@@ -2068,8 +2068,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="R3T-c1-qZl" firstAttribute="top" secondItem="k6g-yu-WXB" secondAttribute="bottom" id="HUn-9R-7Vy"/>
-                            <constraint firstItem="k6g-yu-WXB" firstAttribute="top" secondItem="KCc-TE-eHi" secondAttribute="bottom" id="jWm-vC-eZk"/>
+                            <constraint firstItem="k6g-yu-WXB" firstAttribute="top" secondItem="EdC-6w-bg9" secondAttribute="topMargin" id="JHZ-WP-iOU"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="k6g-yu-WXB" secondAttribute="bottom" id="YAe-4B-4gX"/>
                             <constraint firstItem="k6g-yu-WXB" firstAttribute="leading" secondItem="EdC-6w-bg9" secondAttribute="leading" id="k1W-6H-fPh"/>
                             <constraint firstAttribute="trailing" secondItem="k6g-yu-WXB" secondAttribute="trailing" id="qGN-ND-8gW"/>
                         </constraints>

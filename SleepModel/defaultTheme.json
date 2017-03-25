@@ -523,6 +523,10 @@
         "style.background.highlighted.color" : "@color/blue.1"
     },
     
+    "#HEMMiniSleepScoreGraphView" : {
+        "style.group.parent" : "#HEMSleepScoreGraphView"
+    },
+    
     "#HEMSleepSegmentCollectionViewCell" : {
         "style.background.color" : "@color/blue.2",
         "style.text.hint.font" : "@font/caption.1",

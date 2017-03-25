@@ -256,7 +256,9 @@
     },
     
     "#HEMSleepSoundConfigurationCell" : {
-        "style.title.color" : "@font/dark.primary.text"
+        "style.title.color" : "@font/dark.primary.text",
+        "sense.sound.graph.left" : "@image/soundGraphLeftDark",
+        "sense.sound.graph.right" : "@image/soundGraphRightDark"
     },
     
     "#HEMQuestionCell" : {

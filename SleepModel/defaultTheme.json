@@ -383,7 +383,9 @@
     "#HEMSleepSoundConfigurationCell" : {
         "style.group.parent" : "sense.list.item",
         "style.title.font" : "@font/body.2",
-        "style.title.color" : "@color/light.primary.text"
+        "style.title.color" : "@color/light.primary.text",
+        "sense.sound.graph.left" : "@image/soundGraphLeft",
+        "sense.sound.graph.right" : "@image/soundGraphRight"
     },
     
     "#HEMQuestionCell" : {

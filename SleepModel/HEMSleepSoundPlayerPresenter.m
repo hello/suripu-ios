@@ -65,7 +65,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, assign, getter=isWaitingForOptionChange) BOOL waitingForOptionChange;
 @property (nonatomic, assign, getter=isSenseOffline) BOOL senseOffline;
 @property (nonatomic, assign, getter=isNotPairedToSense) BOOL notPairedToSense;
-@property (nonatomic, weak) UIView* bgView;
 
 @end
 
@@ -80,11 +79,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         _playerState = HEMSleepSoundPlayerStateWaiting;
     }
     return self;
-}
-
-- (void)bindWithBackgroundView:(UIView*)backgroundView {
-    [backgroundView setHidden:NO];
-    [self setBgView:backgroundView];
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
@@ -115,7 +109,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
-    [indicator setHidden:YES];
+    [indicator setHidden:NO];
+    [indicator start];
     [self setIndicator:indicator];
 }
 
@@ -332,9 +327,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[self indicator] setHidden:YES];
     [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
         [[self collectionView] setAlpha:1.0f];
-    } completion:^(BOOL finished) {
-        [[self bgView] setHidden:YES];
-    }];
+    } completion:nil];
 }
 
 - (void)reloadDataWithPlayerState:(HEMSleepSoundPlayerState)state {

@@ -49,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
                             deviceService:(nullable HEMDeviceService*)deviceService;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithActionButton:(UIButton*)button;
-- (void)bindWithBackgroundView:(UIView*)backgroundView;
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator;
 - (void)setSelectedSound:(SENSleepSound*)sound save:(BOOL)save;
 - (void)setSelectedDuration:(SENSleepSoundDuration*)duration save:(BOOL)save;

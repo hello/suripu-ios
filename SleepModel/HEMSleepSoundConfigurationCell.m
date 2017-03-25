@@ -27,10 +27,18 @@ static CGFloat const HEMSleepSoundGraphMinScale = 0.3f;
     [[self soundSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self durationSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     
+    static NSString* leftImageKey = @"sense.sound.graph.left";
+    static NSString* rightImageKey = @"sense.sound.graph.right";
+    UIImage* soundGraphLeft = [SenseStyle imageWithAClass:[self class]
+                                             propertyName:leftImageKey];
+    UIImage* soundGraphRight = [SenseStyle imageWithAClass:[self class]
+                                             propertyName:rightImageKey];
     UIImage* soundIcon = [[[self soundImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImage* durationIcon = [[[self durationImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImage* volumeIcon = [[[self volumeImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
+    [[self soundGraphLeftView] setImage:soundGraphLeft];
+    [[self soundGraphRightView] setImage:soundGraphRight];
     [[self soundImageView] setImage:soundIcon];
     [[self durationImageView] setImage:durationIcon];
     [[self volumeImageView] setImage:volumeIcon];

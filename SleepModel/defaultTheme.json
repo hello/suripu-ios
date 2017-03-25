@@ -620,5 +620,12 @@
         "style.title.color" : "@color/light.primary.text",
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.secondary.text"
+    },
+    
+    "sense.sleep.score.icon" : {
+        "style.background.highlighted.color" : "@color/blue.2",
+        "style.text.font" : "@font/tab.icon",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/blue.6"
     }
 }

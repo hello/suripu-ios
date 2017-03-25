@@ -84,9 +84,12 @@ import UIKit
         case trendsTitles
         case transparentOverlay
         case timelineError
+        case sleepScoreIcon
         
         var key: String {
             switch self {
+            case .sleepScoreIcon:
+                return "sense.sleep.score.icon"
             case .timelineError:
                 return "sense.timeline.error"
             case .transparentOverlay:

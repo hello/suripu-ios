@@ -107,4 +107,10 @@
         "style.font.weight" : "style.font.LIGHT"
     },
     
+    "tab.icon" : {
+        "style.font.name" : "style.font.SYSTEM",
+        "style.font.size" : 9.0,
+        "style.font.weight" : "style.font.REGULAR"
+    }
+    
 }

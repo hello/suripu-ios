@@ -30,10 +30,18 @@
     
     "#UITabBar" : {
         "style.bar.tint.color" : "@color/white",
-        "style.tint.color" : "@color/blue.6",
+        "style.tint.color" : "@color/light.icon.normal",
         "style.title.font" : "@font/caption.2",
         "style.title.color" : "@color/blue.6",
-        "style.translucent" : false
+        "style.translucent" : false,
+        "sense.trends.icon" : "@image/trendsTabBarIcon",
+        "sense.trends.highlighted.icon" : "@image/trendsTabBarIconHighlighted",
+        "sense.feed.icon" : "@image/feedTabBarIcon",
+        "sense.feed.highlighted.icon" : "@image/feedTabBarIconHighlighted",
+        "sense.sounds.icon" : "@image/soundsTabBarIcon",
+        "sense.sounds.highlighted.icon" : "@image/soundsTabBarIconHighlighted",
+        "sense.conditions.icon" : "@image/senseTabBarIcon",
+        "sense.conditions.highlighted.icon" : "@image/senseTabBarIconHighlighted"
     },
     
     "#UIToolbar" : {
@@ -628,6 +636,8 @@
         "style.background.highlighted.color" : "@color/blue.2",
         "style.text.font" : "@font/tab.icon",
         "style.text.color" : "@color/light.secondary.text",
-        "style.text.highlighted.color" : "@color/blue.6"
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.border.color" : "@color/light.secondary.text",
+        "style.border.highlighted.color" : "@color/blue.6"
     }
 }

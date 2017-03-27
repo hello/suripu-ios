@@ -21,6 +21,7 @@
     
     "light.icon.normal" : { "style.color.hex" : "000000", "style.color.alpha" : 0.54},
     "light.icon.disabled" : { "style.color.hex" : "000000", "style.color.alpha" : 0.26},
+    "dark.icon.normal" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.54},
     "dark.icon.disabled" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.5},
     
     "highlighted.separator" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.5},

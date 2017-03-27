@@ -636,7 +636,9 @@
         "style.background.highlighted.color" : "@color/blue.2",
         "style.text.font" : "@font/tab.icon",
         "style.text.color" : "@color/light.secondary.text",
-        "style.text.highlighted.color" : "@color/blue.6"
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.border.color" : "@color/light.secondary.text",
+        "style.border.highlighted.color" : "@color/blue.6"
     },
     
     "#HEMSenseRequiredCollectionViewCell" : {

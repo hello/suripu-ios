@@ -435,7 +435,7 @@
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.highlighted.color" : "@color/dark.secondary.text",
         "style.border.color" : "@color/dark.secondary.text",
-        "style.border.highlighted.color" : "@color/grey.9"
+        "style.border.highlighted.color" : "@color/blue.6"
     },
     
     "sense.tabs" : {

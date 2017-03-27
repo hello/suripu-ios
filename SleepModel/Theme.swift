@@ -38,6 +38,7 @@ import UIKit
         case secondaryButtonTextHighlightedColor
         case secondaryButtonTextDisabledColor
         case borderColor
+        case borderHighlightedColor
         case barTintColor
         case translucent
         case backgroundHighlightedColor
@@ -111,6 +112,8 @@ import UIKit
                     return "style.secondary.button.text.disabled.color"
                 case .borderColor:
                     return "style.border.color"
+                case .borderHighlightedColor:
+                    return "style.border.highlighted.color"
                 case .barTintColor:
                     return "style.bar.tint.color"
                 case .translucent:

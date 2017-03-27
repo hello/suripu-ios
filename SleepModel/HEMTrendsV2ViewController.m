@@ -24,8 +24,10 @@
 
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
-        _tabIcon = [UIImage imageNamed:@"trendsTabBarIcon"];
-        _tabIconHighlighted = [UIImage imageNamed:@"trendsTabBarIconHighlighted"];
+        static NSString* iconKey = @"sense.trends.icon";
+        static NSString* iconHighlightedKey = @"sense.trends.highlighted.icon";
+        _tabIcon = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconKey];
+        _tabIconHighlighted = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconHighlightedKey];
         _tabTitle = NSLocalizedString(@"trends.title", nil);
     }
     return self;

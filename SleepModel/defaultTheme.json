@@ -33,7 +33,15 @@
         "style.tint.color" : "@color/blue.6",
         "style.title.font" : "@font/caption.2",
         "style.title.color" : "@color/blue.6",
-        "style.translucent" : false
+        "style.translucent" : false,
+        "sense.trends.icon" : "@image/trendsTabBarIcon",
+        "sense.trends.highlighted.icon" : "@image/trendsTabBarIconHighlighted",
+        "sense.feed.icon" : "@image/feedTabBarIcon",
+        "sense.feed.highlighted.icon" : "@image/feedTabBarIconHighlighted",
+        "sense.sounds.icon" : "@image/soundsTabBarIcon",
+        "sense.sounds.highlighted.icon" : "@image/soundsTabBarIconHighlighted",
+        "sense.conditions.icon" : "@image/senseTabBarIcon",
+        "sense.conditions.highlighted.icon" : "@image/senseTabBarIconHighlighted"
     },
     
     "#UIToolbar" : {

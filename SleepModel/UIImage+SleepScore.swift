@@ -17,11 +17,13 @@ extension UIImage {
     @objc static func iconFromSleepScore(sleepScore: Int, highlighted: Bool) -> UIImage! {
         let scale = UIScreen.main.scale
         let size = CGSize(width: UIImage.iconSize, height: UIImage.iconSize)
-        var color: UIColor
+        let borderColor: UIColor
+        let color: UIColor
         if highlighted {
-            color = SenseStyle.color(group: .sleepScoreIcon,
-                                     property: .textHighlightedColor)
+            borderColor = SenseStyle.color(group: .sleepScoreIcon, property: .borderHighlightedColor)
+            color = SenseStyle.color(group: .sleepScoreIcon, property: .textHighlightedColor)
         } else {
+            borderColor = SenseStyle.color(group: .sleepScoreIcon, property: .borderColor)
             color = SenseStyle.color(group: .sleepScoreIcon, property: .textColor)
         }
         
@@ -35,14 +37,13 @@ extension UIImage {
         ctx.saveGState()
         
         if highlighted {
-            let fillColor = SenseStyle.color(group: .sleepScoreIcon,
-                                             property: .backgroundHighlightedColor)
+            let fillColor = SenseStyle.color(group: .sleepScoreIcon, property: .backgroundHighlightedColor)
             let circleRect = CGRect(origin: CGPoint.zero, size: size)
             ctx.setFillColor(fillColor.cgColor)
             ctx.fillEllipse(in: circleRect)
         }
         
-        ctx.setStrokeColor(color.cgColor)
+        ctx.setStrokeColor(borderColor.cgColor)
         ctx.setLineWidth(borderWidth)
         ctx.addArc(center: center, radius: radius, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: true)
         ctx.drawPath(using: CGPathDrawingMode.stroke)

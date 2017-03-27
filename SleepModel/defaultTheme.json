@@ -629,5 +629,10 @@
         "style.text.font" : "@font/tab.icon",
         "style.text.color" : "@color/light.secondary.text",
         "style.text.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "sense.warning.image" : "@image/noSense"
     }
 }

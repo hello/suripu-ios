@@ -430,5 +430,9 @@
         "style.background.highlighted.color" : "@color/blue.6",
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.highlighted.color" : "@color/grey.9"
+    },
+    
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "sense.warning.image" : "@image/noSenseDark"
     }
 }

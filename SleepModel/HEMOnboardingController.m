@@ -354,7 +354,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate {
     
-    [secondaryButton applyStyle];
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    [[secondaryButton titleLabel] setFont:font];
+    [secondaryButton setTitleColor:color forState:UIControlStateNormal];
 
     if (hasDelegate) {
         NSString* done = NSLocalizedString(@"status.success", nil);

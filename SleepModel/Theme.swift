@@ -47,9 +47,12 @@ import UIKit
         case textHighlightedColor
         case iconImage
         case iconHighlightedImage
+        case keyboardAppearance
         
         var key: String {
             switch self {
+                case .keyboardAppearance:
+                    return "style.keyboard.appearance"
                 case .iconImage:
                     return "style.icon.image"
                 case .iconHighlightedImage:
@@ -129,7 +132,6 @@ import UIKit
     fileprivate static let keyParent = "style.group.parent"
     fileprivate static let statusBarLight = "style.status.bar.LIGHT"
     fileprivate static let statusBarDark = "style.status.bar.DARK"
-    
     fileprivate static let refColor = "@color"
     fileprivate static let refFont = "@font"
     fileprivate static let refImage = "@image"

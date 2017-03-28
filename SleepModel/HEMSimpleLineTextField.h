@@ -18,5 +18,7 @@
 @property (nonatomic, strong) UIColor* placeholderColor;
 
 @property (nonatomic, weak) id<HEMTextFieldFocusDelegate> focusDelegate;
+    
+- (void)applyStyle;
 
 @end

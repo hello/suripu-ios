@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0.12
+
+New:
+
+* Themed toasts
+* Themed wifi picker
+* Themed wifi password
+* Themed tab bar icons
+* Themed pair sense cards
+* Themed smart alarm info card
+* Themed system alerts
+
 ## 2.1.0.11
 
 New:

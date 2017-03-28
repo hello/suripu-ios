@@ -11,6 +11,8 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENSensor.h>
 
+#import "Sense-Swift.h"
+
 #import "UIImage+HEMBlurTint.h"
 #import "NSDate+HEMRelative.h"
 #import "UIColor+HEMStyle.h"
@@ -59,10 +61,13 @@
 }
 
 + (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller {
+    static NSString* imageKey = @"sense.smart.alarm.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
+    
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarm-smart.title", nil)
                                          text:NSLocalizedString(@"tutorial.alarm-smart.message", nil)
-                                        image:[UIImage imageNamed:@"smart_alarm_dialog"]];
+                                        image:image];
     
     [self showTutorialWithContent:@[tutorial] from:controller];
 }

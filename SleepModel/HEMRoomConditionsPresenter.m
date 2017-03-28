@@ -623,6 +623,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
                               forControlEvents:UIControlEventTouchUpInside];
     [[pairSenseCell pairSenseButton] setTitle:[buttonTitle uppercaseString]
                                      forState:UIControlStateNormal];
+    [pairSenseCell applyStyle];
 }
 
 #pragma mark - Actions

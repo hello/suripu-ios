@@ -5,14 +5,15 @@
 //  Created by Jimmy Lu on 11/5/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "NSString+HEMUtils.h"
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMSenseRequiredCollectionViewCell.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
+static NSString* const kHEMNoSenseImageKey = @"sense.warning.image";
 static CGFloat const kHEMSenseRequiredTextVertPadding = 24.0f;
 static CGFloat const kHEMSenseRequiredTextHorzPadding = 40.0f;
 static CGFloat const kHEMSenseRequiredTextHorzPaddingSmall = 20.0f;
@@ -35,15 +36,17 @@ static CGFloat const kHEMSenseRequiredButtonBottomPadding = 8.0f;
 }
 
 + (NSDictionary*)descriptionAttributes {
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     [style setAlignment:NSTextAlignmentCenter];
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor detailTextColor],
+    return @{NSFontAttributeName : font,
+             NSForegroundColorAttributeName : color,
              NSParagraphStyleAttributeName : style};
 }
 
 + (CGFloat)heightWithDescription:(NSString*)description withCellWidth:(CGFloat)width {
-    UIImage* noSenseImage = [UIImage imageNamed:@"noSense"];
+    UIImage* noSenseImage = [SenseStyle imageWithAClass:[self class] propertyName:kHEMNoSenseImageKey];
     CGFloat maxTextWidth = width - ([self horizontalTextPadding] * 2);
     CGFloat textHeight = [description heightBoundedByWidth:maxTextWidth
                                                 attributes:[self descriptionAttributes]];
@@ -58,11 +61,11 @@ static CGFloat const kHEMSenseRequiredButtonBottomPadding = 8.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self illustrationView] setImage:[UIImage imageNamed:@"noSense"]];
-    
     CGFloat margin = [[self class] horizontalTextPadding];
     [[self trailingDescriptionConstraint] setConstant:margin];
     [[self leadingDescriptionConstraint] setConstant:margin];
+    
+    [self applyStyle];
 }
 
 - (void)setDescription:(NSString*)text {
@@ -70,6 +73,12 @@ static CGFloat const kHEMSenseRequiredButtonBottomPadding = 8.0f;
     NSAttributedString* aDescription = [[NSAttributedString alloc] initWithString:text
                                                                        attributes:attributes];
     [[self descriptionLabel] setAttributedText:aDescription];
+}
+    
+- (void)applyStyle {
+    [super applyStyle];
+    [[self illustrationView] setImage:[SenseStyle imageWithAClass:[self class]
+                                                     propertyName:kHEMNoSenseImageKey]];
 }
 
 @end

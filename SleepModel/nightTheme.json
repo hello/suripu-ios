@@ -21,7 +21,7 @@
     
     "#UITabBar" : {
         "style.bar.tint.color" : "@color/grey.9",
-        "style.tint.color" : "@color/dark.icon.normal",
+        "style.tint.color" : "@color/blue.6",
         "sense.trends.icon" : "@image/trendsTabBarIconDark",
         "sense.feed.icon" : "@image/feedTabBarIconDark",
         "sense.sounds.icon" : "@image/soundsTabBarIconDark",
@@ -438,7 +438,7 @@
         "style.border.highlighted.color" : "@color/blue.6"
     },
     
-    "sense.tabs" : {
-        "style.tint.color" : "@color/dark.icon.normal"
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "sense.warning.image" : "@image/noSenseDark"
     }
 }

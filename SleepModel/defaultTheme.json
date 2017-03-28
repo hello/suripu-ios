@@ -30,7 +30,7 @@
     
     "#UITabBar" : {
         "style.bar.tint.color" : "@color/white",
-        "style.tint.color" : "@color/light.icon.normal",
+        "style.tint.color" : "@color/blue.6",
         "style.title.font" : "@font/caption.2",
         "style.title.color" : "@color/blue.6",
         "style.translucent" : false,
@@ -639,5 +639,10 @@
         "style.text.highlighted.color" : "@color/blue.6",
         "style.border.color" : "@color/light.secondary.text",
         "style.border.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "sense.warning.image" : "@image/noSense"
     }
 }

@@ -127,6 +127,13 @@
         "style.text.color" : "@color/dark.primary.text"
     },
     
+    "#HEMSimpleLineTextField" : {
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/dark.separator",
+        "style.keyboard.appearance" : "sense.DARK"
+    },
+    
     "sense.attributed.string" : {
         "style.text.color" : "@color/dark.secondary.text"
     },
@@ -452,5 +459,10 @@
     "#HEMMacAddressHeaderView" : {
         "style.background.color" : "@color/grey.9",
         "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#UIPickerView" : {
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.primary.text"
     }
 }

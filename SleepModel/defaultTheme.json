@@ -166,7 +166,16 @@
     "#HEMTextFieldCollectionViewCell" : {
         "style.background.color" : "@color/white",
         "style.text.hint.color" : "@color/light.disabled.text",
-        "style.text.color" : "@color/light.primary.text"
+        "style.text.color" : "@color/light.primary.text",
+        "style.keyboard.appearance" : "sense.LIGHT"
+    },
+    
+    "#HEMSimpleLineTextField" : {
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.tint.highlighted.color" : "@color/blue.6",
+        "style.tint.color" : "@color/light.separator"
     },
     
     "#HEMTextCollectionViewCell" : {
@@ -662,4 +671,10 @@
         "style.title.font" : "@font/title.1",
         "style.title.color" : "@color/light.primary.text"
     },
+    
+    "#UIPickerView" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1"
+    }
 }

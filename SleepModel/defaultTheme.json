@@ -379,9 +379,11 @@
         "style.text.color" : "@color/light.primary.text",
         "style.text.detail.font" : "@font/body.1",
         "style.text.detail.color" : "@color/light.secondary.text",
+        "style.primary.button.text.color" : "@color/light.button.text",
         "style.background.color" : "@color/white",
         "sense.smart.alarm.image" : "@image/smartAlarmDialog",
-        "sense.expansion.image" : "@image/expInfoIllustration"
+        "sense.expansion.image" : "@image/expInfoIllustration",
+        "sense.pill.color.image" : "@image/pill_color_dialog"
     },
     
     "#HEMAudioButton" : {

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "edu-sleepPillColor.png",
+      "filename" : "edu-sleepPillColor_dark.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "edu-sleepPillColor@2x.png",
+      "filename" : "edu-sleepPillColor_dark@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "edu-sleepPillColor@3x.png",
+      "filename" : "edu-sleepPillColor_dark@3x.png",
       "scale" : "3x"
     }
   ],

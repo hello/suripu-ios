@@ -73,10 +73,13 @@
 }
 
 + (void)showTutorialForPillColor {
+    static NSString* imageKey = @"sense.pill.color.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
+    
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
-                                        image:[UIImage imageNamed:@"pill_color_dialog"]];
+                                        image:image];
     [self showTutorialWithContent:@[tutorial]];
 }
 

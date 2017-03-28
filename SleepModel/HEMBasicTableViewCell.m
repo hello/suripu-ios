@@ -40,6 +40,7 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
         separatorFrame.size.height = HEMBasicTableViewCellSeparatorHeight;
         separatorFrame.origin.y = y;
         UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
+        [separator applySeparatorStyle];
         [self setCustomSeparator:separator];
         [[self contentView] addSubview:separator];
     }

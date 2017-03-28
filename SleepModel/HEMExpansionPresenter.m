@@ -56,6 +56,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 @property (nonatomic, copy) NSString* configurationName;
 @property (nonatomic, assign, getter=isLoadingConfigs) BOOL loadingConfigs;
 @property (nonatomic, assign, getter=isSwitchEnabled) BOOL switchEnabled;
+@property (nonatomic, strong) UIImage* origNavBarBgImage;
 
 @end
 
@@ -123,6 +124,8 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {
+    [self setOrigNavBarBgImage:[navBar backgroundImageForBarMetrics:UIBarMetricsDefault]];
+    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[UIImage new]];
     [self setNavBar:navBar];
 }
@@ -172,6 +175,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 - (void)wasRemovedFromParent {
     [super wasRemovedFromParent];
     if (_navBar) {
+        [_navBar setBackgroundImage:_origNavBarBgImage forBarMetrics:UIBarMetricsDefault];
         [_navBar setShadowImage:[UIImage imageNamed:@"navBorder"]];
     }
 }

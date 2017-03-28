@@ -119,7 +119,6 @@
  * alpha to see through what is being displayed underneath the view
  */
 + (UIColor *)seeThroughBackgroundColor;
-+ (UIColor *)lightSeeThroughBackgroundColor;
 
 /**
  * Default background color for most views in view controllers

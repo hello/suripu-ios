@@ -685,5 +685,19 @@
         "style.background.color" : "@color/dark.disabled.overlay",
         "style.text.color" : "@color/white",
         "style.text.font" : "@color/body.2"
+    },
+    
+    "#HEMIntroMessageCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
+    },
+    
+    "sense.sleep.sounds.state" : {
+        "sense.update.image" : "@image/sleepSoundSenseNeedsUpdate",
+        "sense.downloading.image" : "@image/sleepSoundSenseDownloading",
+        "sense.offline.image" : "@image/sleepSoundSenseOffline"
     }
 }

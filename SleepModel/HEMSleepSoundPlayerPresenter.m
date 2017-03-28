@@ -441,14 +441,18 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 #pragma mark - Temporary Sleep Sounds State
 
 - (UIImage*)imageForState:(SENSleepSoundsFeatureState)state {
+    static NSString* offlineKey = @"sense.offline.image";
+    static NSString* updateKey = @"sense.update.image";
+    static NSString* downloadingKey = @"sense.downloading.image";
+    
     if ([self isSenseOffline]) {
-        return [UIImage imageNamed:@"sleepSoundSenseOffline"];
+        return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:offlineKey];
     } else {
         switch (state) {
             case SENSleepSoundsFeatureStateFWRequired:
-                return [UIImage imageNamed:@"sleepSoundSenseNeedsUpdate"];
+                return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:updateKey];
             case SENSleepSoundsFeatureStateNoSounds:
-                return [UIImage imageNamed:@"sleepSoundSenseDownloading"];
+                return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:downloadingKey];
             default:
                 return nil;
         }
@@ -476,8 +480,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return nil;
     }
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont bodyBold],
-                                 NSForegroundColorAttributeName : [UIColor grey5]};
+    NSDictionary* attributes = [HEMIntroMessageCell titleAttributes];
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
@@ -501,8 +504,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (!message) {
         return nil;
     }
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
-                                 NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
+    NSDictionary* attributes = [HEMIntroMessageCell messageAttributes];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 

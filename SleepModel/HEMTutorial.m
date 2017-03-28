@@ -29,8 +29,9 @@
 #pragma mark - Common
 
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTransparentOverlay property:ThemePropertyBackgroundColor];
     UIImage* snapshot = [[controller view] snapshot];
-    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor lightSeeThroughBackgroundColor]];
+    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:bgColor];
     
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
     [tutorialVC setTutorials:content];

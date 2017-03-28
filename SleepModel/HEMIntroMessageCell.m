@@ -17,6 +17,26 @@ static CGFloat const HEMIntroMessageCellTitleBotPadding = 4.0f;
 
 @implementation HEMIntroMessageCell
 
++ (NSDictionary*)titleAttributes {
+    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    [para setAlignment:NSTextAlignmentCenter];
+    return @{NSForegroundColorAttributeName : [SenseStyle colorWithAClass:[self class]
+                                                                 property:ThemePropertyTitleColor],
+             NSFontAttributeName : [SenseStyle fontWithAClass:[self class]
+                                                     property:ThemePropertyTitleFont],
+             NSParagraphStyleAttributeName : para};
+}
+    
++ (NSDictionary*)messageAttributes {
+    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    [para setAlignment:NSTextAlignmentCenter];
+    return @{NSForegroundColorAttributeName : [SenseStyle colorWithAClass:[self class]
+                                                                 property:ThemePropertyTextColor],
+             NSFontAttributeName : [SenseStyle fontWithAClass:[self class]
+                                                     property:ThemePropertyTextFont],
+             NSParagraphStyleAttributeName : para};
+}
+
 + (CGFloat)heightWithTitle:(NSAttributedString*)title
                    message:(NSAttributedString*)message
                  withWidth:(CGFloat)width {

@@ -467,5 +467,16 @@
     "#UIPickerView" : {
         "style.background.color" : "@color/black",
         "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMIntroMessageCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.sleep.sounds.state" : {
+        "sense.update.image" : "@image/sleepSoundSenseNeedsUpdateDark",
+        "sense.downloading.image" : "@image/sleepSoundSenseDownloadingDark",
+        "sense.offline.image" : "@image/sleepSoundSenseOfflineDark"
     }
 }

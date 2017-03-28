@@ -12,8 +12,8 @@
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENPairedDevices.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
+
 #import "HEMWifiPickerViewController.h"
 #import "HEMWiFiDataSource.h"
 #import "HEMOnboardingStoryboard.h"
@@ -58,7 +58,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self configurePicker];
     [self configureButtons];
     [self trackAnalyticsEvent:HEMAnalyticsEventWiFi];
@@ -92,10 +91,14 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configurePicker {
-    [[[self activityView] activityLabel] setFont:[UIFont body]];
+    UIFont* font = [SenseStyle fontWithAClass:[HEMOnboardingController class]
+                                     property:ThemePropertyDetailFont];
+    [[self activityView] setBackgroundColor:[[self view] backgroundColor]];
+    [[[self activityView] activityLabel] setFont:font];
     
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
+    [[self wifiPickerTableView] applyFillStyle];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
 
@@ -104,21 +107,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
     if ([self showMacAddress]) {
         HEMMacAddressHeaderView* headerView = (id)[[self wifiPickerTableView] tableHeaderView];
-        SENSense* sense = [[self manager] sense];
-        
-        [[headerView titleLabel] setFont:[UIFont h6]];
-        [[headerView titleLabel] setTextColor:[UIColor grey6]];
-        
-        [[headerView macAddressLabel] setFont:[UIFont body]];
-        [[headerView macAddressLabel] setTextColor:[UIColor grey4]];
-        [[headerView macAddressLabel] setText:[sense macAddress]];
-        
-        [[[headerView actionButton] titleLabel] setFont:[UIFont button]];
-        [[headerView actionButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
         [[headerView actionButton] addTarget:self
                                       action:@selector(copyMacAddress:)
                             forControlEvents:UIControlEventTouchUpInside];
-        
         [[headerView separator] setBackgroundColor:[[self wifiPickerTableView] separatorColor]];
         [headerView setHidden:YES];
     } else {
@@ -134,7 +125,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
         [self scanWithActivity];
         [self setScanned:YES];
     }
-    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -170,7 +160,12 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 #pragma mark - UITableViewDelegate
 
 - (UIView*)wifiAccessoryView {
+    UIColor* tintColor = [SenseStyle colorWithAClass:[UIImage class]
+                                            property:ThemePropertyTintColor];
+    
     UIImage* lockIcon = [UIImage imageNamed:@"lockIcon"];
+    lockIcon = [lockIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
     UIImage* wifiIcon = [HEMWifiUtils wifiIconForRssi:-1]; // make sure to use a strong signal icon to start
     
     CGRect lockFrame = CGRectZero;
@@ -178,14 +173,17 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     lockFrame.origin.x = HEMWiFiPickerLockLeftPadding;
     UIImageView* lockView = [[UIImageView alloc] initWithImage:lockIcon];
     [lockView setFrame:lockFrame];
+    [lockView setTintColor:tintColor];
     [lockView setBackgroundColor:[UIColor clearColor]];
     [lockView setTag:kHEMWifiPickerTagLock];
     
+
     CGRect wifiFrame = CGRectZero;
     wifiFrame.size = wifiIcon.size;
     wifiFrame.origin.x = HEMWifiPickerLockRightPadding + CGRectGetMaxX(lockFrame);
     UIImageView* wifiView = [[UIImageView alloc] initWithImage:wifiIcon];
     [wifiView setFrame:wifiFrame];
+    [wifiView setTintColor:tintColor];
     [wifiView setBackgroundColor:[UIColor clearColor]];
     [wifiView setTag:kHEMWifiPickerTagWifi];
     
@@ -231,9 +229,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView* wifiView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagWifi];
     [wifiView setHidden:!showWifiIcon];
     [wifiView setImage:[HEMWifiUtils wifiIconForRssi:[endpoint rssi]]];
-    
-    [[cell textLabel] setFont:[UIFont body]];
+
     [[cell textLabel] setText:ssid];
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

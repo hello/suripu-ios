@@ -7,13 +7,13 @@
 //
 #import <SenseKit/BLE.h>
 
+#import "Sense-Swift.h"
 #import "HEMPairSensePresenter.h"
 #import "HEMAlertViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMDeviceService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMPairSenseDescTopMarginAdjustment = 10.0f;
 static CGFloat const HEMPairSenseIllustrationHeightAdjustment = 40.0f;
@@ -65,10 +65,13 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
 }
 
 - (void)bindWithNotGlowingButton:(UIButton*)button {
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    [[button titleLabel] setFont:font];
+    [button setTitleColor:color forState:UIControlStateNormal];
     [button setTitle:NSLocalizedString(@"onboarding.pair-sense.not-glowing", nil)
             forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont button]];
     [button addTarget:self action:@selector(showWhyNotGlowing) forControlEvents:UIControlEventTouchUpInside];
 }
 

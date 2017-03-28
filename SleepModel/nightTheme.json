@@ -174,7 +174,8 @@
     "#HEMOnboardingController" : {
         "style.background.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.primary.text",
-        "style.text.detail.color" : "@color/dark.secondary.text"
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.secondary.button.text.color" : "@color/white"
     },
     
     "sense.warning.view" : {
@@ -446,5 +447,10 @@
     "#HEMActionView" : {
         "style.title.color" : "@color/dark.primary.text",
         "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMMacAddressHeaderView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text"
     }
 }

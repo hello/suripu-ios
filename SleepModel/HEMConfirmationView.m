@@ -5,9 +5,8 @@
 //  Created by Jimmy Lu on 6/22/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMConfirmationView.h"
-#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 #import "NSString+HEMUtils.h"
 
@@ -42,7 +41,10 @@ static CGFloat const HEMConfirmDisplayDuration = 2.0f;
         _text = [text copy];
         _layout = layout;
         
-        [self setBackgroundColor:[[UIColor grey7] colorWithAlphaComponent:0.8f]];
+        UIColor* color = [SenseStyle colorWithGroup:GroupTransparentOverlay
+                                           property:ThemePropertyBackgroundColor];
+        [self setBackgroundColor:color];
+        [self applyDisabledOverlayStyle];
         [[self layer] setCornerRadius:HEMConfirmCornerRadius];
         
         [self addCheckImage];

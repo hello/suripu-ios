@@ -103,10 +103,12 @@
 }
 
 + (void)showExpansionInfoWithText:(NSString*)text fromController:(UIViewController*)controller {
+    static NSString* imageKey = @"sense.expansion.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"expansion.info.title", nil)
                                          text:text
-                                        image:[UIImage imageNamed:@"expInfoIllustration"]];
+                                        image:image];
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 

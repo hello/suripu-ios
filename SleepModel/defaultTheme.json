@@ -380,7 +380,8 @@
         "style.text.detail.font" : "@font/body.1",
         "style.text.detail.color" : "@color/light.secondary.text",
         "style.background.color" : "@color/white",
-        "sense.smart.alarm.image" : "@image/smartAlarmDialog"
+        "sense.smart.alarm.image" : "@image/smartAlarmDialog",
+        "sense.expansion.image" : "@image/expInfoIllustration"
     },
     
     "#HEMAudioButton" : {

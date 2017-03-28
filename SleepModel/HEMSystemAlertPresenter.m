@@ -133,14 +133,7 @@ static CGFloat const HEMSystemAlertActivitySuccessDelay = 1.5f;
                             cancelButtonTitle:(NSString*)cancelTitle
                                fixButtonTitle:(NSString*)fixTitle {
     
-    NSMutableParagraphStyle* messageStyle = DefaultBodyParagraphStyle();
-    [messageStyle setAlignment:NSTextAlignmentCenter];
-
-    NSDictionary* messageAttributes = @{
-                                        NSFontAttributeName : [UIFont body],
-                                        NSForegroundColorAttributeName : [UIColor textColor],
-                                        NSParagraphStyleAttributeName : messageStyle};
-    
+    NSDictionary* messageAttributes = [HEMActionView messageAttributes];
     NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
                                                                       attributes:messageAttributes];
     HEMActionView* alert = [[HEMActionView alloc] initWithTitle:title message:attrMessage];

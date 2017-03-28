@@ -16,6 +16,13 @@
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, assign) NSInteger subtype;
 @property (nonatomic, assign, getter=isShowingTabBar) BOOL showingTabBar;
+    
+/**
+ * Suggested message attributes that is themed enabled
+ *
+ * @return themed message attributes
+ */
++ (NSDictionary*)messageAttributes;
 
 /**
  * Initialize the instance with a title and message to display

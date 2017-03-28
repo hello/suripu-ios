@@ -5,9 +5,8 @@
 //  Created by Jimmy Lu on 12/1/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMActionView.h"
-#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 
 static CGFloat const HEMActionViewHorzPadding = 30.0f;
@@ -36,6 +35,14 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 @end
 
 @implementation HEMActionView
+    
++ (NSDictionary*)messageAttributes {
+    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    [para setAlignment:NSTextAlignmentCenter];
+    return @{NSParagraphStyleAttributeName : para,
+             NSFontAttributeName : [SenseStyle fontWithAClass:self property:ThemePropertyTextFont],
+             NSForegroundColorAttributeName : [SenseStyle colorWithAClass:self property:ThemePropertyTextColor]};
+}
 
 + (CGRect)defaultFrame {
     return (CGRect){
@@ -71,13 +78,13 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
                                      HEMActionViewBotPadding,
                                      HEMActionViewHorzPadding)];
     
-    [self setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.97f]];
-    
     NSShadow* shadow = [NSShadow shadowForActionView];
     [[self layer] setShadowColor:[[shadow shadowColor] CGColor]];
     [[self layer] setShadowOffset:[shadow shadowOffset]];
     [[self layer] setShadowRadius:[shadow shadowBlurRadius]];
     [[self layer] setShadowOpacity:1.0f];
+    
+    [self applyStyle];
 }
 
 - (void)setupWithTitle:(NSString*)title andMessage:(NSAttributedString*)message {
@@ -121,8 +128,8 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 - (void)addTitleLabelWithText:(NSString*)title {
     UILabel* label = [[UILabel alloc] initWithFrame:[self titleFrame]];
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setTextColor:[UIColor grey6]];
-    [label setFont:[UIFont h5]];
+    [label setTextColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor]];
+    [label setFont:[SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
@@ -171,26 +178,23 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     [container setTranslatesAutoresizingMaskIntoConstraints:YES];
     
     NSString* cancelText = [NSLocalizedString(@"actions.skip", nil) uppercaseString];
-    UIColor * cancelColor = [UIColor grey4];
-    UIButton* cancelButton = [self actionButtonWithText:cancelText color:cancelColor andXOrigin:0.0f];
+    UIButton* cancelButton = [self actionButtonWithText:cancelText andXOrigin:0.0f];
+    [cancelButton applySecondaryStyle];
     [container addSubview:cancelButton];
     
     NSString* okText = [NSLocalizedString(@"actions.ok", nil) uppercaseString];
-    UIColor* okColor = [UIColor tintColor];
     CGFloat x = CGRectGetMaxX([cancelButton frame])+HEMActionButtonDividerWidth;
-    UIButton* okButton = [self actionButtonWithText:okText color:okColor andXOrigin:x];
+    UIButton* okButton = [self actionButtonWithText:okText andXOrigin:x];
+    [okButton applyStyle];
     [container addSubview:okButton];
     
     [self addSubview:container];
     [self setCancelButton:cancelButton];
     [self setOkButton:okButton];
     [self setButtonContainer:container];
-    
 }
 
-- (UIButton*)actionButtonWithText:(NSString*)text
-                            color:(UIColor*)color
-                       andXOrigin:(CGFloat)x {
+- (UIButton*)actionButtonWithText:(NSString*)text andXOrigin:(CGFloat)x {
     CGRect frame = {
         x,
         0.0f,
@@ -198,9 +202,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
         HEMActionButtonHeight
     };
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [[button titleLabel] setFont:[UIFont button]];
     [button setTitle:text forState:UIControlStateNormal];
-    [button setTitleColor:color forState:UIControlStateNormal];
     [button setBackgroundColor:[UIColor clearColor]];
     [button setFrame:frame];
     return button;
@@ -208,9 +210,11 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 
 - (void)drawRect:(CGRect)rect {
     if (![[self okButton] isHidden]) {
+        UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor];
+        
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
-        CGContextSetStrokeColorWithColor(context, [[UIColor separatorColor] CGColor]);
+        CGContextSetStrokeColorWithColor(context, [color CGColor]);
         CGContextSetLineWidth(context, HEMActionButtonDividerWidth);
         
         // add a line at the middle of the view, at the bottom where the button container is
@@ -308,6 +312,10 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
                          [self setTopView:nil];
                          if (completion) completion ();
                      }];
+}
+    
+- (void)applyStyle {
+    [self applyFillStyle];
 }
 
 @end

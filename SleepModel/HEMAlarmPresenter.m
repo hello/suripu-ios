@@ -31,7 +31,6 @@ static CGFloat const HEMAlarmConfigCellHeight = 66.0f;
 static CGFloat const HEMAlarmTimePickerMinHeight = 287.0f;
 static CGFloat const HEMAlarmConfigCellLightAccessoryPadding = 12.0f;
 static NSInteger const HEMAlarmConfigCellExpansionMaskTag = 11;
-static CGFloat const HEMAlarmConfigCellMaskAlpha = 0.7f;
 
 @interface HEMAlarmPresenter() <
     UITableViewDataSource,

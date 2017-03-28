@@ -51,6 +51,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
               forCollectionView:(UICollectionView*)collectionView {
     self = [super init];
     if (self) {
+        [collectionView applyFillStyle];
         _content = content;
         _collectionView = collectionView;
         [self registerCells];

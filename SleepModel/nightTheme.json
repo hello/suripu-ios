@@ -478,5 +478,9 @@
         "sense.update.image" : "@image/sleepSoundSenseNeedsUpdateDark",
         "sense.downloading.image" : "@image/sleepSoundSenseDownloadingDark",
         "sense.offline.image" : "@image/sleepSoundSenseOfflineDark"
+    },
+    
+    "sense.pairing" : {
+        "sense.background.image" : "@image/senseBackgroundDark"
     }
 }

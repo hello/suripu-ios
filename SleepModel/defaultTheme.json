@@ -699,5 +699,10 @@
         "sense.update.image" : "@image/sleepSoundSenseNeedsUpdate",
         "sense.downloading.image" : "@image/sleepSoundSenseDownloading",
         "sense.offline.image" : "@image/sleepSoundSenseOffline"
+    },
+    
+    "sense.pairing" : {
+        "sense.background.image" : "@image/senseBackground",
+        "sense.image" : "@image/senseBlue"
     }
 }

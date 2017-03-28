@@ -86,9 +86,12 @@ import UIKit
         case timelineError
         case sleepScoreIcon
         case sleepSoundsState
+        case sensePairing
         
         var key: String {
             switch self {
+            case .sensePairing:
+                return "sense.pairing"
             case .sleepSoundsState:
                 return "sense.sleep.sounds.state"
             case .sleepScoreIcon:

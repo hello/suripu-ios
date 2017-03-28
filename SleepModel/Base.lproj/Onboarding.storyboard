@@ -3264,8 +3264,10 @@ what's the temperature?"</string>
                     <navigationItem key="navigationItem" id="MWW-Jm-AdT"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="backgroundIllustration" destination="qgY-WF-PLN" id="YbS-no-g7V"/>
                         <outlet property="descriptionLabel" destination="mFI-cr-rhB" id="06H-pA-6mf"/>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
+                        <outlet property="illustration" destination="ahI-Ri-OCe" id="4BB-KK-72M"/>
                         <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Iu5-EF-hLO"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="senseIconHeightConstraint" destination="KfE-AJ-gGk" id="xjh-y3-ptH"/>

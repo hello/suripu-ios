@@ -676,5 +676,11 @@
         "style.background.color" : "@color/white",
         "style.text.color" : "@color/light.primary.text",
         "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMConfirmationView" : {
+        "style.background.color" : "@color/dark.disabled.overlay",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@color/body.2"
     }
 }

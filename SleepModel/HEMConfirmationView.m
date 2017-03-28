@@ -40,11 +40,9 @@ static CGFloat const HEMConfirmDisplayDuration = 2.0f;
     if (self) {
         _text = [text copy];
         _layout = layout;
-        
-        UIColor* color = [SenseStyle colorWithGroup:GroupTransparentOverlay
-                                           property:ThemePropertyBackgroundColor];
+        UIColor* color = [SenseStyle colorWithAClass:[self class]
+                                              property:ThemePropertyBackgroundColor];
         [self setBackgroundColor:color];
-        [self applyDisabledOverlayStyle];
         [[self layer] setCornerRadius:HEMConfirmCornerRadius];
         
         [self addCheckImage];
@@ -74,9 +72,13 @@ static CGFloat const HEMConfirmDisplayDuration = 2.0f;
 }
 
 - (void)addTextLabel {
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:[self class]
+                                     property:ThemePropertyTextFont];
     UILabel* label = [UILabel new];
-    [label setTextColor:[UIColor whiteColor]];
-    [label setFont:[UIFont bodyBold]];
+    [label setTextColor:textColor];
+    [label setFont:font];
     [label setText:[self text]];
     [label setContentMode:UIViewContentModeCenter];
     

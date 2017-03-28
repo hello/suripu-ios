@@ -714,7 +714,7 @@
         "style.text.color" : "@color/light.secondary.text",
         "style.text.highlighted.color" : "@color/light.primary.text",
         "style.secondary.button.text.font" : "@font/button",
-        "style.secondary.button.text.color" : "color/blue.6"
+        "style.secondary.button.text.color" : "@color/blue.6"
     },
     
     "#HEMAlertTextView" : {

@@ -41,6 +41,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self configureContentView];
+    [self applyStyle];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -101,7 +102,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
     [[self separator] applySeparatorStyle];
     [self setBackgroundColor:bgColor];
     [[self contentView] setBackgroundColor:bgColor];
-    [[[self contentView] layer] setBorderColor:[borderColor CGColor]];
+    [[self layer] setBorderColor:[borderColor CGColor]];
 }
 
 @end

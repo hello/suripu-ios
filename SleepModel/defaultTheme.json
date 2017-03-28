@@ -680,7 +680,7 @@
     
     "#HEMConfirmationView" : {
         "style.background.color" : "@color/dark.disabled.overlay",
-        "style.text.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/white",
         "style.text.font" : "@color/body.2"
     }
 }

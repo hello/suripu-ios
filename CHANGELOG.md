@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.1.0.13
+
+New:
+
+* Themed info cards for expansions
+* Themed info card for pill color
+* Themed sleep sound, sense states
+* Themed alerts
+* Themed pair sense screen
+
+Fixes:
+
+* Fixed issue with trends tab icon, in normal mode
+* Fixed issue with no connection / error cards having bold, black border in normal mode
+* Fixed issue with info cards having a blue background
+* Fixed issue where expansion list not showing a divider on first load
+
 ## 2.1.0.12
 
 New:

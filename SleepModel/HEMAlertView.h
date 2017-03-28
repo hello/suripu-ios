@@ -18,12 +18,26 @@ typedef NS_ENUM(NSUInteger, HEMAlertViewType) {
 
 typedef NS_ENUM(NSUInteger, HEMAlertViewButtonStyle) {
     HEMAlertViewButtonStyleRoundRect,
-    HEMAlertViewButtonStyleBlueText,
-    HEMAlertViewButtonStyleBlueBoldText,
-    HEMAlertViewButtonStyleGrayText,
+    HEMAlertViewButtonStyleBlueText
 };
 
 @interface HEMAlertView : UIView
+
+/**
+ * Suggested, themed, bold, text attributes for the body of the alert
+ *
+ * @return a dictionary of attributes to be used for the body content of the
+ *         alert in the form of an attributed string
+ */
++ (NSDictionary*)boldMessageAttributes;
+    
+/**
+ * Suggested, themed, text attributes for the body of the alert
+ *
+ * @return a dictionary of attributes to be used for the body content of the
+ *         alert in the form of an attributed string
+ */
++ (NSDictionary*)messageAttributes;
 
 /**
  * Initialize the dialog with an image that sits

@@ -35,7 +35,7 @@
 }
 
 + (NSAttributedString *)attributedMessageText:(NSString *)text {
-    NSDictionary *attributes = [HEMMarkdown attributesForAlertMessageText][@(PARA)];
+    NSDictionary *attributes = [HEMAlertView messageAttributes];
     NSAttributedString* attributedMessage = nil;
     if (text.length > 0)
         attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
@@ -64,25 +64,6 @@
     [alert addButtonWithTitle:yesTitle style:HEMAlertViewButtonStyleRoundRect action:action];
     [alert addButtonWithTitle:noTitle style:HEMAlertViewButtonStyleBlueText action:nil];
     return alert;
-}
-
-- (instancetype)initBooleanDialogWithTitle:(NSString *)title
-                                   message:(NSString *)message
-                             defaultsToYes:(BOOL)defaultsToYes
-                                    action:(void (^)())action {
-    if (self = [super init]) {
-        self.title = title;
-        _type = HEMAlertViewTypeBoolean;
-        _attributedMessage = [[self class] attributedMessageText:message];
-        [self addButtonWithTitle:[NSLocalizedString(@"actions.yes", nil) uppercaseString]
-                           style:defaultsToYes ? HEMAlertViewButtonStyleBlueBoldText : HEMAlertViewButtonStyleGrayText
-                          action:action];
-        [self addButtonWithTitle:[NSLocalizedString(@"actions.no", nil) uppercaseString]
-                           style:defaultsToYes ? HEMAlertViewButtonStyleGrayText : HEMAlertViewButtonStyleBlueBoldText
-                          action:nil];
-        [self setDefaults];
-    }
-    return self;
 }
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {

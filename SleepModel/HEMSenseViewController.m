@@ -30,7 +30,7 @@
 #import "HEMActionSheetViewController.h"
 #import "HEMSenseSettingsDataSource+HEMCollectionView.h"
 #import "HEMDeviceWarning.h"
-#import "HEMStyle.h"
+#import "HEMAlertView.h"
 
 @interface HEMSenseViewController() <UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
@@ -146,14 +146,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 
 #pragma mark - Actions
 
-- (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
-    return @{NSFontAttributeName : font,
-             NSForegroundColorAttributeName : [UIColor grey5],
-             NSParagraphStyleAttributeName : style};
-}
-
 - (void)showConfirmation:(NSString*)title message:(NSAttributedString*)message action:(void(^)(void))action {
     NSString* yes = NSLocalizedString(@"actions.yes", nil);
     NSString* no = NSLocalizedString(@"actions.no", nil);
@@ -263,24 +255,16 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 - (void)replaceSense {
-    UIColor* baseColor = [UIColor grey5];
-    
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
     NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
     NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
-    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
-                                                      attributes:[self dialogMessageAttributes:YES]]];
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink]];
     
     NSMutableAttributedString* message =
         [[NSMutableAttributedString alloc] initWithFormat:questionFormat
                                                      args:args
-                                                baseColor:baseColor
-                                                 baseFont:[UIFont body]];
-    
-    [message addAttribute:NSParagraphStyleAttributeName
-                    value:DefaultBodyParagraphStyle()
-                    range:NSMakeRange(0, [message length])];
+                                               attributes:[HEMAlertView messageAttributes]];
     
     [self showConfirmation:title message:message action:^{
         [self unlinkSense];
@@ -293,17 +277,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
     NSString* messageFormat = NSLocalizedString(@"timezone.alert.message.use-local.format", nil);
     NSArray* args = @[[[NSAttributedString alloc] initWithString:[NSTimeZone localTimeZoneMappedName]
-                                                      attributes:[self dialogMessageAttributes:YES]]];
+                                                      attributes:[HEMAlertView boldMessageAttributes]]];
     
     NSMutableAttributedString* message =
         [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                      args:args
-                                                baseColor:[UIColor grey5]
-                                                 baseFont:[UIFont body]];
-    
-    [message addAttribute:NSParagraphStyleAttributeName
-                    value:DefaultBodyParagraphStyle()
-                    range:NSMakeRange(0, [message length])];
+                                               attributes:[HEMAlertView messageAttributes]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
@@ -344,18 +323,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSString* msgFormat = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message.format", nil);
     NSString* guideLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
-    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
-                                                      attributes:[self dialogMessageAttributes:YES]]];
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink]];
     
     NSMutableAttributedString* message =
         [[NSMutableAttributedString alloc] initWithFormat:msgFormat
                                                      args:args
-                                                baseColor:[UIColor grey5]
-                                                 baseFont:[UIFont body]];
-    
-    [message addAttribute:NSParagraphStyleAttributeName
-                    value:DefaultBodyParagraphStyle()
-                    range:NSMakeRange(0, [message length])];
+                                               attributes:[HEMAlertView messageAttributes]];
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:message action:^{
@@ -394,8 +367,8 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 - (void)factoryReset {
     NSString* title = NSLocalizedString(@"settings.device.dialog.factory-restore-title", nil);
     NSString* message = NSLocalizedString(@"settings.device.dialog.factory-restore-message", nil);
-    NSAttributedString* attributedMessage =
-        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
+    NSAttributedString* attributedMessage = [[NSAttributedString alloc] initWithString:message
+                                                                            attributes:[HEMAlertView messageAttributes]];
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:attributedMessage action:^{

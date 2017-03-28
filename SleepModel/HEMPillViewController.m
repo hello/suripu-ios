@@ -27,7 +27,6 @@
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMSleepPillDfuViewController.h"
-#import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMSleepPillDFUDelegate.h"
 #import "HEMPillDFUStoryboard.h"
@@ -387,16 +386,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSString* noTitle = NSLocalizedString(@"actions.no", nil);
     NSString* helpLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
-    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
-                                                      attributes:[self dialogMessageAttributes:YES]]];
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink]];
     
     NSMutableAttributedString* message =
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
-                                            baseColor:[UIColor grey5]
-                                             baseFont:[UIFont body]];
-    NSRange fullRange = NSMakeRange(0, [message length]);
-    [message addAttributes:@{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()} range:fullRange];
+                                           attributes:[HEMAlertView messageAttributes]];
     
     __weak typeof(self) weakSelf = self;
     void(^unpair)(void) = ^{

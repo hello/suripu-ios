@@ -260,8 +260,10 @@
         "style.text.color" : "@color/dark.primary.text",
         "style.text.detail.color" : "@color/dark.secondary.text",
         "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.color" : "@color/dark.button.text",
         "sense.smart.alarm.image" : "@image/smartAlarmDialogDark",
-        "sense.expansion.image" : "@image/expInfoIllustrationDark"
+        "sense.expansion.image" : "@image/expInfoIllustrationDark",
+        "sense.pill.color.image" : "@image/pillColorDialogDark"
     },
     
     "#HEMAudioButton" : {

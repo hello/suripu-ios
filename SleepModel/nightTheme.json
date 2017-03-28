@@ -440,5 +440,10 @@
     
     "#HEMSenseRequiredCollectionViewCell" : {
         "sense.warning.image" : "@image/noSenseDark"
+    },
+    
+    "#HEMActionView" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
     }
 }

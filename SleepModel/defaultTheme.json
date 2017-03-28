@@ -644,5 +644,13 @@
     "#HEMSenseRequiredCollectionViewCell" : {
         "style.group.parent" : "#HEMCardCollectionViewCell",
         "sense.warning.image" : "@image/noSense"
+    },
+    
+    "#HEMActionView" : {
+        "style.group.parent" : "#UIView",
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
     }
 }

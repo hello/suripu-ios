@@ -104,8 +104,18 @@ typedef NS_ENUM(NSInteger, HEMPairSenseState) {
     }
 }
 
-- (void)bindWithIllustrationView:(__unused UIImageView*)illustrationView
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView
+                  backgroundView:(UIImageView*)backgroundView
              andHeightConstraint:(NSLayoutConstraint*)heightConstraint {
+    static NSString* imageKey = @"sense.image";
+    static NSString* backgroundKey = @"sense.background.image";
+    UIImage* bgImage = [SenseStyle imageWithGroup:GroupSensePairing propertyName:backgroundKey];
+    UIImage* image = [SenseStyle imageWithGroup:GroupSensePairing propertyName:imageKey];
+    
+    [illustrationView setImage:image];
+    [backgroundView setImage:bgImage];
+    [backgroundView setBackgroundColor:[UIColor clearColor]];
+    
     if (HEMIsIPhone4Family()) {
         CGFloat constant = [heightConstraint constant];
         [heightConstraint setConstant:constant + HEMPairSenseIllustrationHeightAdjustment];

@@ -101,7 +101,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMSleepSegmentPopupAnimationDuration = 0.5f;
 static CGFloat const HEMPopupAnimationDistance = 8.0f;
 static CGFloat const HEMPopupAnimationDisplayInterval = 2.0f;
-static CGFloat const HEMTutorialMessageOffset = 49.0f;
+static CGFloat const HEMTutorialMessageOffset = 0.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

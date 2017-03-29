@@ -335,7 +335,6 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
             id sensorObj = [self groupedSensors][[indexPath row]];
             if ([sensorObj isKindOfClass:[NSArray class]]) {
                 CGFloat cellWidth = itemSize.width;
-                UIFont* textFont = [UIFont body];
                 NSString* worstConditionString = nil;
                 SENCondition worstCondition = SENConditionIncomplete;
                 for (SENSensor* sensor in sensorObj) {
@@ -346,7 +345,6 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
                 }
                 itemSize.height = [HEMSensorGroupCollectionViewCell heightWithNumberOfMembers:[sensorObj count]
                                                                                 conditionText:worstConditionString
-                                                                                conditionFont:textFont
                                                                                     cellWidth:cellWidth];
             } else {
                 SENSensor* sensor = sensorObj;
@@ -532,7 +530,6 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         [[memberView tap] addTarget:self action:@selector(didTapOnGroupMember:)];
     }
     [[groupCell groupMessageLabel] setText:worstConditionString];
-    [[groupCell groupMessageLabel] setFont:[UIFont body]];
     [groupCell applyStyle];
 }
 

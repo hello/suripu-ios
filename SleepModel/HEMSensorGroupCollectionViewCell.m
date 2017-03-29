@@ -27,10 +27,11 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
 
 + (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount
                        conditionText:(NSString*)conditionText
-                       conditionFont:(UIFont*)conditionFont
                            cellWidth:(CGFloat)cellWidth {
+    Class aClass = [HEMCardCollectionViewCell class];
+    UIFont* textFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
     CGFloat maxLabelWidth = cellWidth - (2 * HEMSensorGroupLabelMargin);
-    CGFloat conditionHeight = [conditionText heightBoundedByWidth:maxLabelWidth usingFont:conditionFont];
+    CGFloat conditionHeight = [conditionText heightBoundedByWidth:maxLabelWidth usingFont:textFont];
     return HEMSensorGroupCellBaseHeight + conditionHeight + (HEMSensorGroupMemberHeight * memberCount);
 }
 

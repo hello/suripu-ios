@@ -484,6 +484,11 @@
         "sense.background.image" : "@image/senseBackgroundDark"
     },
     
+    "sense.pill.pairing" : {
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill_dark",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair.dark"
+    },
+    
     "#HEMAlertView" : {
         "style.background.color" : "@color/grey.9",
         "style.title.color" : "@color/dark.primary.text",

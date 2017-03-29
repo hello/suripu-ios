@@ -87,9 +87,12 @@ import UIKit
         case sleepScoreIcon
         case sleepSoundsState
         case sensePairing
+        case pillPairing
         
         var key: String {
             switch self {
+            case .pillPairing:
+                return "sense.pill.pairing"
             case .sensePairing:
                 return "sense.pairing"
             case .sleepSoundsState:

@@ -68,6 +68,9 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
         [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
         [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
         [[self activityView] hidesWhenStopped];
+        
+        static NSString* activityKey = @"sense.activity.color";
+        [[self activityView] setColor:[SenseStyle colorWithAClass:[self class] propertyName:activityKey]];
         [self addSubview:[self activityView]];
     }
     

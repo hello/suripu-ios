@@ -19,7 +19,6 @@
 
 + (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount
                        conditionText:(NSString*)conditionText
-                       conditionFont:(UIFont*)conditionFont
                            cellWidth:(CGFloat)cellWidth;
 - (HEMSensorGroupMemberView*)addSensorWithName:(NSString*)name
                                          value:(NSString*)valueText

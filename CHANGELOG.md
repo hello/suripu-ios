@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0.14
+
+Fixes:
+
+* Fixed issue where timeline gesture tutorial would sit 40+ pixels above tab bar
+* Fixed issue where grouped sensor card would have incorrect padding when message is longer than 1 line on 4s, 5/5s
+* Fixed issue where there were two spinners in the insights tab
+
 ## 2.1.0.13
 
 New:

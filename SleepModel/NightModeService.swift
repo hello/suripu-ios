@@ -114,32 +114,30 @@ class NightModeService: SENService {
         
         // Solar calculates time for next day's sunrise + sunset so must grab yesterday's
         // calculation and compare that to today
-        guard let tonightSolar = Solar.init(for: NSDate().previousDay(),
-                                            latitude: latitude.doubleValue,
-                                            longitude: longitude.doubleValue) else {
+        guard let solar = Solar.init(latitude: latitude.doubleValue,
+                                     longitude: longitude.doubleValue) else {
             return false
         }
         
-        guard let tomorrowSolar = Solar.init(for: NSDate().nextDay(),
-                                             latitude: latitude.doubleValue,
-                                             longitude: longitude.doubleValue) else {
+        guard let sunset = solar.sunset else {
             return false
         }
         
-        guard let sunset = tonightSolar.sunset else {
-            return false
-        }
-        
-        guard let sunrise = tomorrowSolar.sunrise else {
+        guard let sunrise = solar.sunrise else {
             return false
         }
     
-        let startOfDay = sunrise.timeIntervalSince1970
-        let endOfDay = sunset.timeIntervalSince1970
-        let currentTime = Date().timeIntervalSince1970
-        let isBeforeSunrise = currentTime < startOfDay
-        let isAfterSunset = currentTime >= endOfDay
-        return isAfterSunset && isBeforeSunrise
+        let components: Set<Calendar.Component> = [.hour, .minute, .second]
+        let calendar = Calendar.autoupdatingCurrent
+
+        let todayTime = calendar.dateComponents(components, from: Date())
+        let sunsetTime = calendar.dateComponents(components, from: sunset)
+        let sunriseTime = calendar.dateComponents(components, from: sunrise)
+
+        return (todayTime.hour! >= sunsetTime.hour!
+            && todayTime.minute! >= sunsetTime.minute!)
+            || (todayTime.hour! <= sunriseTime.hour!
+            && todayTime.minute! <= sunriseTime.minute!)
     }
     
     func scheduleForSunset(latitude: Double, longitude: Double) {

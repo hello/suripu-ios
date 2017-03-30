@@ -15,6 +15,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     fileprivate weak var nightModeService: NightModeService!
     fileprivate weak var locationService: HEMLocationService!
     fileprivate var footer: UIView?
+    fileprivate var waitingOnPermission: Bool
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
         let optionsTitle = NSLocalizedString("settings.night-mode.options.title", comment: "table options title")
@@ -22,7 +23,10 @@ class NightModeSettingsPresenter: HEMListPresenter {
         let items = NightModeService.Option.all().map{ $0.localizedDescription() }
         self.nightModeService = nightModeService
         self.locationService = locationService
-        super.init(title: optionsTitle, items: items, selectedItemNames: [selectedOption.localizedDescription()])
+        self.waitingOnPermission = false
+        super.init(title: optionsTitle,
+                   items: items,
+                   selectedItemNames: [selectedOption.localizedDescription()])
     }
     
     override func bind(with tableView: UITableView, bottomConstraint: NSLayoutConstraint) {
@@ -45,7 +49,9 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     override func didComeBackFromBackground() {
         super.didComeBackFromBackground()
-        self.tableView?.reloadData()
+        if (self.waitingOnPermission == false) {
+            self.tableView?.reloadData()
+        }
     }
     
     //MARK: - Footer
@@ -144,11 +150,15 @@ class NightModeSettingsPresenter: HEMListPresenter {
         switch option {
             case .sunsetToSunrise:
                 if self.locationService.requiresPermission() == true {
+                    self.waitingOnPermission = true
                     self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
+                        self.waitingOnPermission = false
                         switch status {
                         case .notEnabled:
                             fallthrough
                         case .denied:
+                            let off = NightModeService.Option.off
+                            self.selectedItemNames = [off.localizedDescription()]
                             self.tableView?.reloadData() // to disable the schedule cell
                         default:
                             self.scheduleNightModeFromLocation()
@@ -156,31 +166,19 @@ class NightModeSettingsPresenter: HEMListPresenter {
                     })
                 } else {
                     self.scheduleNightModeFromLocation()
-            }
+                }
             default:
                 self.nightModeService.save(option: option)
         }
     }
     
-    fileprivate func off() {
-        let offOption = NightModeService.Option.off
-        let index = self.indexOfItem(withName: offOption.localizedDescription())
-        let path = IndexPath(item: index, section: 0)
-        self.tableView?.selectRow(at: path, animated: true, scrollPosition: UITableViewScrollPosition.top)
-    }
-    
-    fileprivate func failScheduling() {
-        self.off()
-        // show some alert?
-    }
-    
     fileprivate func failScheduling(errorMessage: String) {
-        self.failScheduling()
+        // show an error message?
         SENAnalytics.trackWarning(withMessage: errorMessage)
     }
     
     fileprivate func failScheduling(error: Error) {
-        self.failScheduling()
+        // show an error message?
         SENAnalytics.trackError(error)
     }
     
@@ -198,7 +196,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
                 self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
                                                          longitude: Double(loc!.lon))
             } else if err != nil {
-                self?.failScheduling()
+                self?.failScheduling(error: err!)
             } else {
                 self?.failScheduling(errorMessage: "no location was determined!")
             }
@@ -206,7 +204,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
         })
         
         if error != nil {
-            self.failScheduling()
+            self.failScheduling(error: error!)
         }
     }
     

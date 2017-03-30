@@ -24,6 +24,8 @@ extension HEMBasicTableViewCell {
         self.customTitleLabel?.font = textFont
         self.customDetailLabel?.textColor = detailColor
         self.customDetailLabel?.font = detailFont
+        self.customDetailLabel?.backgroundColor = bgColor
+        self.customTitleLabel?.backgroundColor = bgColor
         self.customSeparator?.backgroundColor = separatorColor
         self.remoteImageView?.backgroundColor = bgColor
     }

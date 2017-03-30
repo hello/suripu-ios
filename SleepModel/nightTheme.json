@@ -518,5 +518,9 @@
     
     "#HEMSenseUpgradedViewController" : {
         "sense.illustration" : "@image/senseUpgradedDark"
+    },
+    
+    "#HEMPillSetupViewController" : {
+        "sense.first.frame" : "@image/pillSetup"
     }
 }

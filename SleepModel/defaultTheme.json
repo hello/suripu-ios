@@ -747,5 +747,9 @@
     
     "#HEMSenseUpgradedViewController" : {
         "sense.illustration" : "@image/senseUpgraded"
+    },
+    
+    "#HEMPillSetupViewController" : {
+        "sense.illustration" : "@image/pillSetup"
     }
 }

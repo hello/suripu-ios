@@ -259,6 +259,7 @@
 "debug.option.debug.info" = "Debug info";
 "debug.option.force.appreview" = "Force app review";
 "debug.option.room-check.title" = "Show Room Check";
+"debug.option.pill-clip.title" = "Show Pill Clipping";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
 "debug.option.clear-alarms" = "Remove all alarms";

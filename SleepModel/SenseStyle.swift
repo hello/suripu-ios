@@ -92,9 +92,12 @@ import UIKit
         case settingsFooter
         case voiceTutorial
         case factoryReset
+        case pillDfu
         
         var key: String {
             switch self {
+            case .pillDfu:
+                return "sense.pill.dfu"
             case .factoryReset:
                 return "sense.factory.reset"
             case .voiceTutorial:

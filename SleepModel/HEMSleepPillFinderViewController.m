@@ -52,6 +52,7 @@
                             andIndicator:[self activityView]];
     [finderPresenter bindWithCancelButton:[self cancelButton] helpButton:[self helpButton]];
     [finderPresenter bindWithRetryButton:[self retryButton]];
+    [finderPresenter bindWithMainView:[self view]];
     [finderPresenter setFinderDelegate:self];
     [finderPresenter setErrorDelegate:self];
     

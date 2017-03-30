@@ -57,6 +57,10 @@ class NightModeService: SENService {
         return Option(rawValue: selected) ?? Option.off
     }
     
+    @objc func isScheduled() -> Bool {
+        return self.savedOption() == .sunsetToSunrise
+    }
+    
     func save(option: Option) {
         guard option != self.savedOption() else {
             return
@@ -129,24 +133,29 @@ class NightModeService: SENService {
     
         let components: Set<Calendar.Component> = [.hour, .minute, .second]
         let calendar = Calendar.autoupdatingCurrent
-
         let todayTime = calendar.dateComponents(components, from: Date())
         let sunsetTime = calendar.dateComponents(components, from: sunset)
         let sunriseTime = calendar.dateComponents(components, from: sunrise)
-
-        return (todayTime.hour! >= sunsetTime.hour!
-            && todayTime.minute! >= sunsetTime.minute!)
-            || (todayTime.hour! <= sunriseTime.hour!
-            && todayTime.minute! <= sunriseTime.minute!)
+        let today = calendar.date(from: todayTime)
+        let todaySunset = calendar.date(from: sunsetTime)
+        let todaySunrise = calendar.date(from: sunriseTime)
+        let afterSunset = today!.compare(todaySunset!) == .orderedDescending
+        let beforeSunrise = today!.compare(todaySunrise!) == .orderedAscending
+        
+        return afterSunset || beforeSunrise
     }
     
     func scheduleForSunset(latitude: Double, longitude: Double) {
+        self.updateLocation(latitude: latitude, longitude: longitude)
+        self.save(option: .sunsetToSunrise)
+    }
+    
+    @objc func updateLocation(latitude: Double, longitude: Double) {
         let latKey = NightModeService.settingsLatKey
         let lonKey = NightModeService.settingsLongKey
         let preferences = SENLocalPreferences.shared()!
         preferences.setUserPreference(NSNumber(floatLiteral: latitude), forKey: latKey)
         preferences.setUserPreference(NSNumber(floatLiteral: longitude), forKey: lonKey)
-        self.save(option: .sunsetToSunrise)
     }
     
 }

@@ -29,6 +29,7 @@
 
 @property (nonatomic, strong) PushNotificationService* pushService;
 @property (nonatomic, strong) NightModeService* nightModeService;
+@property (nonatomic, strong) HEMLocationService* locationService;
 
 @end
 
@@ -122,8 +123,37 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     if (![self nightModeService]) {
         [self setNightModeService:[NightModeService new]];
     }
-    BOOL override = [[self mainViewController] showingMainTabs];
-    [[self nightModeService] loadThemeWithOverride:override];
+    
+    if ([[self nightModeService] isScheduled]) {
+        BOOL override = [[self mainViewController] showingMainTabs];
+        [[self nightModeService] loadThemeWithOverride:override];
+        // update lat / long
+        if (![self locationService]) {
+            [self setLocationService:[HEMLocationService new]];
+        }
+        switch ([[self locationService] authorizationStatus]) {
+            case HEMLocationAuthStatusAuthorized: {
+                __block BOOL updated = NO;
+                __weak typeof(self) weakSelf = self;
+                [[self locationService] quickLocation:^(HEMLocation* location, NSError * error) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    if (updated) {
+                        return;
+                    }
+                    
+                    updated = YES;
+                    
+                    if (location) {
+                        [[strongSelf nightModeService] updateLocationWithLatitude:location.lat
+                                                                        longitude:location.lon];
+                    }
+                }];
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
 - (void)configureProperties {

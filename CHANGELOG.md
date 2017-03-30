@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0.15
+
+New;
+
+* Themed pill pairing screen
+* Added scheduled night mode functionality
+* Hooked up location service to grab lat+long for sunset time calculation
+
 ## 2.1.0.14
 
 Fixes:

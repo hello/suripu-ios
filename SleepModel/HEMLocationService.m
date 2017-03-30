@@ -70,6 +70,7 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 @property (nonatomic, strong) CLLocationManager* locationManager;
 @property (nonatomic, strong) NSMutableArray<HEMLocationActivity*>* activities;
 @property (nonatomic, copy) HEMLocationAuthorizationHandler permissionHandler;
+@property (nonatomic, strong) NSMutableArray<HEMLocationActivity*>* quickActivities;
 
 @end
 
@@ -79,6 +80,7 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
     self = [super init];
     if (self) {
         _activities = [NSMutableArray array];
+        _quickActivities = [NSMutableArray array];
         _locationManager = [CLLocationManager new];
         [_locationManager setDelegate:self];
     }
@@ -146,6 +148,22 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
         authHandler (status);
     }
 }
+    
+- (NSError*)quickLocation:(HEMLocationHandler)completion {
+    NSError* initialError = [self errorFromStartingLocation];
+    if (initialError) {
+        [SENAnalytics trackError:initialError withEventName:kHEMAnalyticsEventWarning];
+        return initialError;
+    }
+    
+    HEMLocationActivity* activity = [HEMLocationActivity new];
+    [activity setCallback:completion];
+    
+    [[self locationManager] startUpdatingLocation];
+    [[self quickActivities] addObject:activity];
+    
+    return nil;
+}
 
 - (HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update error:(NSError**)error {
     NSError* initialError = [self errorFromStartingLocation];
@@ -172,14 +190,16 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 - (void)stopLocationActivity:(HEMLocationActivity*)activity {
     if (activity) {
         [[self activities] removeObject:activity];
-        if ([[self activities] count] == 0) {
+        if ([[self activities] count] == 0
+            && [[self quickActivities] count] == 0) {
             [[self locationManager] stopUpdatingLocation];
         }
     }
 }
 
 - (void)callActivitiesWithLocation:(HEMLocation*)location error:(NSError*)error {
-    if ([[self activities] count] == 0) {
+    if ([[self activities] count] == 0 && [[self quickActivities] count] == 0) {
+        [[self locationManager] stopUpdatingLocation];
         return;
     }
     
@@ -189,6 +209,12 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
         for (HEMLocationActivity* activity in [strongSelf activities]) {
             [activity callback] (location, error);
         }
+        
+        NSMutableArray* mutableActivities = [[strongSelf quickActivities] mutableCopy];
+        for (HEMLocationActivity* activity in mutableActivities) {
+            [activity callback] (location, error);
+        }
+        [[strongSelf quickActivities] removeAllObjects];
     });
 }
 
@@ -205,17 +231,15 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     CLLocation* coreLocation = [locations lastObject];
-    if (coreLocation && [[self activities] count] > 0) {
+    if (coreLocation) {
         HEMLocation* location = [[HEMLocation alloc] initWithLocation:coreLocation];
         [self callActivitiesWithLocation:location error:nil];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    if ([[self activities] count] > 0) {
-        [SENAnalytics trackError:error];
-        [self callActivitiesWithLocation:nil error:error];
-    }
+    [SENAnalytics trackError:error];
+    [self callActivitiesWithLocation:nil error:error];
 }
 
 #pragma mark - Clean up

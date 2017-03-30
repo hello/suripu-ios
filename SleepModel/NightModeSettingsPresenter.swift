@@ -14,7 +14,6 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     fileprivate weak var nightModeService: NightModeService!
     fileprivate weak var locationService: HEMLocationService!
-    fileprivate var locationActivity: HEMLocationActivity?
     fileprivate var footer: UIView?
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
@@ -172,12 +171,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     fileprivate func failScheduling() {
         self.off()
-        
-        // show some alert
-        
-        if self.locationActivity != nil {
-            self.locationService.stop(self.locationActivity!)
-        }
+        // show some alert?
     }
     
     fileprivate func failScheduling(errorMessage: String) {
@@ -191,33 +185,28 @@ class NightModeSettingsPresenter: HEMListPresenter {
     }
     
     fileprivate func scheduleNightModeFromLocation() {
-        do  {
-            try self.locationActivity = self.locationService.startLocationActivity({[weak self] (location: HEMLocation?, error: Error?) in
-                if location != nil {
-                    self?.nightModeService.scheduleForSunset(latitude: Double(location!.lat),
-                                                             longitude: Double(location!.lon))
-                    if self?.locationActivity != nil {
-                        self?.locationService.stop((self?.locationActivity!)!)
-                    }
-                } else if error != nil {
-                    self?.failScheduling()
-                } else {
-                    self?.failScheduling(errorMessage: "no location was determined!")
-                }
-            })
-        } catch _ {
-            // called if an error occurred trying to start the location service
-            if self.locationActivity != nil {
-                self.locationService.stop(self.locationActivity!)
+        var scheduled = false
+        let service = self.locationService
+        let error = service?.quickLocation({[weak self] (loc: HEMLocation?, err: Error?) in
+            guard scheduled == false else {
+                return
             }
-            self.off()
-            SENAnalytics.trackWarning(withMessage: "failed to determine location for night mode")
-        }
-    }
-    
-    deinit {
-        if self.locationActivity != nil && self.locationService != nil {
-            self.locationService.stop(self.locationActivity!)
+            
+            scheduled = true
+            
+            if loc != nil {
+                self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
+                                                         longitude: Double(loc!.lon))
+            } else if err != nil {
+                self?.failScheduling()
+            } else {
+                self?.failScheduling(errorMessage: "no location was determined!")
+            }
+            
+        })
+        
+        if error != nil {
+            self.failScheduling()
         }
     }
     

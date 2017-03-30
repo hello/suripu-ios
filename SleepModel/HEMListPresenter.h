@@ -110,6 +110,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @discussion
+ * Subclasses should override if interested in knowing that the delegate callback
+ * regarding a selection has just been made.  Only for single selection support
+ */
+- (void)didNotifyDelegateOfSelection;
+
+/**
+ * @discussion
  * Subclasses should implement this to return detail for the list item, if any.
  * By default, this returns nil
  *
@@ -117,6 +124,21 @@ NS_ASSUME_NONNULL_BEGIN
  * @return the detail string to display, if any
  */
 - (nullable NSString*)detailForItem:(id)item;
+
+/**
+ * @discussion
+ * Subclasses should override this to return a custom footer, or nil, if not desired
+ *
+ * @param section: section of the table view
+ * @return footer
+ */
+- (nullable UIView*)viewForFooterInSection:(NSInteger)section;
+
+/**
+ * @param section: section of the table view
+ * @return height for the footer
+ */
+- (CGFloat)heightForFooterInSection:(NSInteger)section;
 
 @end
 

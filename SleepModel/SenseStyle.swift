@@ -17,6 +17,7 @@ import UIKit
     static let theme = Theme()
     static let SYSTEM_FONT = UIFont.systemFont(ofSize: UIFont.systemFontSize)
     static var SYSTEM_COLOR = UIColor.black
+    static var currentTheme: SupportedTheme?
     
     @objc enum SupportedTheme: Int {
         case day = 0
@@ -87,9 +88,15 @@ import UIKit
         case sleepScoreIcon
         case sleepSoundsState
         case sensePairing
+        case pillPairing
+        case settingsFooter
         
         var key: String {
             switch self {
+            case .settingsFooter:
+                return "sense.settings.footer"
+            case .pillPairing:
+                return "sense.pill.pairing"
             case .sensePairing:
                 return "sense.pairing"
             case .sleepSoundsState:
@@ -151,31 +158,43 @@ import UIKit
         }
     }
     
-    @objc static func loadSavedTheme() {
+    fileprivate static func loadDayThemeIfNotLoaded(auto: Bool) {
+        if currentTheme != .day {
+            currentTheme = .day
+            theme.apply(auto: auto)
+        }
+    }
+    
+    @objc static func loadSavedTheme(auto: Bool) {
         guard HEMOnboardingService.shared().hasFinishedOnboarding() == true else {
-            return theme.apply() // apply default
+            return self.loadDayThemeIfNotLoaded(auto: auto)
         }
         
         let preferences = SENLocalPreferences.shared()
         guard let themeValue = preferences!.userPreference(forKey: themeKey) as? NSNumber else {
-            return theme.apply() // apply default
+            return self.loadDayThemeIfNotLoaded(auto: auto)
         }
 
         guard let supportedTheme = SupportedTheme(rawValue: themeValue.intValue) else {
-            return theme.apply() // apply default
+            return self.loadDayThemeIfNotLoaded(auto: auto)
+        }
+        
+        guard currentTheme != supportedTheme else {
+            return // theme already loaded
         }
         
         if supportedTheme == .night {
             SYSTEM_COLOR = UIColor.white
         }
         
-        theme.load(name: supportedTheme.name)
+        currentTheme = supportedTheme
+        theme.load(name: supportedTheme.name, auto: auto)
     }
     
-    @objc static func saveTheme(theme: SupportedTheme) {
-        let preferences = SENLocalPreferences.shared()
-        preferences!.setUserPreference(theme.hashValue, forKey: themeKey)
-        self.loadSavedTheme()
+    @objc static func saveTheme(theme: SupportedTheme, auto: Bool) {
+        let preferences = SENLocalPreferences.shared()!
+        preferences.setUserPreference(theme.hashValue, forKey: themeKey)
+        self.loadSavedTheme(auto: auto)
     }
     
     //MARK: - Colors

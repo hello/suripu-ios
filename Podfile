@@ -25,6 +25,7 @@ abstract_target 'SenseApp' do
         pod 'Charts/Core', '3.0.1'
         pod 'iOSDFULibrary', '2.1.6'
         pod 'Analytics', '3.0.7'
+        pod 'Solar'
     end
     
     # Room Conditions extension

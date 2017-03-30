@@ -164,8 +164,8 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 #pragma mark - Presenter Events
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self tableView] applyStyle];
     [[self tableView] reloadData];
 }
@@ -196,7 +196,16 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     }
 }
 
+- (CGFloat)heightForFooterInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeightWithTitle;
+}
+    
+- (UIView*)viewForFooterInSection:(NSInteger)section {
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+}
+
 - (void)willNotifyDelegateOfSelection {}
+- (void)didNotifyDelegateOfSelection {}
 
 #pragma mark - Nav Item
 
@@ -245,6 +254,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if ([[strongSelf delegate] respondsToSelector:@selector(didSelectItem:atIndex:from:)]) {
                 [[strongSelf delegate] didSelectItem:item atIndex:index from:strongSelf];
             }
+            [strongSelf didNotifyDelegateOfSelection];
         });
     }
 }
@@ -285,6 +295,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self items] count];
 }
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return [self heightForFooterInSection:section];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return HEMSettingsHeaderFooterHeightWithTitle;
@@ -297,7 +311,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    return [self viewForFooterInSection:section];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

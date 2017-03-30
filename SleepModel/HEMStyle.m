@@ -20,20 +20,6 @@ CGFloat const HEMStyleThickBorder = 1.0f;
 
 static CGFloat const HEMStyleDefaultLineHeight = 24.0f;
 
-void ApplyHelloStyles (void) {
-    NSDictionary* barButtonAttrs = @{NSFontAttributeName : [UIFont button],
-                                     NSForegroundColorAttributeName : [UIColor tintColor]};
-    // hide the back button text, since we never show it
-    UIOffset backButtonOffset = UIOffsetMake(-HEMStyleDefaultNavBarButtonItemWidth, 0.0f);
-    
-    id barButtonItemAppearance = [UIBarButtonItem appearance];
-    [barButtonItemAppearance setTitleTextAttributes:barButtonAttrs forState:UIControlStateNormal];
-    [barButtonItemAppearance setBackButtonTitlePositionAdjustment:backButtonOffset
-                                                    forBarMetrics:UIBarMetricsDefault];
-    
-    [UIColor applyDefaultColorAppearances];
-}
-
 NSDictionary* NavTitleAttributes(void) {
     return @{NSForegroundColorAttributeName : [UIColor grey6],
              NSFontAttributeName : [UIFont h6]};

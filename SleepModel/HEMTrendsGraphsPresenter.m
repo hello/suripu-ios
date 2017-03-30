@@ -100,8 +100,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self refreshTrends];
 }
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self collectionView] applyStyle];
     [[self collectionView] reloadData];
 }

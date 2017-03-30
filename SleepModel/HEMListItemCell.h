@@ -13,5 +13,7 @@
 @property (weak, nonatomic, nullable) IBOutlet UIImageView* selectionImageView;
 @property (weak, nonatomic, nullable) IBOutlet UILabel* itemLabel;
 @property (weak, nonatomic, nullable) IBOutlet UILabel *descriptionLabel;
+    
+- (void)enable:(BOOL)enable;
 
 @end

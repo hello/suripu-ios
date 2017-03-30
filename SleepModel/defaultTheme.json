@@ -78,7 +78,8 @@
         "style.text.color" : "@color/white",
         "style.text.disabled.color" : "@color/dark.disabled.text",
         "style.text.highlighted.color" : "@color/white",
-        "style.text.font" : "@font/button"
+        "style.text.font" : "@font/button",
+        "sense.activity.color" : "@color/blue.6"
     },
     
     "#UICollectionView" : {
@@ -706,6 +707,11 @@
         "sense.image" : "@image/senseBlue"
     },
     
+    "sense.pill.pairing" : {
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair"
+    },
+    
     "#HEMAlertView" : {
         "style.background.color" : "@color/white",
         "style.title.font" : "@font/title.2",
@@ -722,5 +728,11 @@
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.secondary.text",
         "style.text.highlighted.color" : "@color/light.primary.text"
+    },
+
+    "sense.settings.footer" : {
+        "style.text.font" : "@font/body.small",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.link.color" : "@color/blue.6"
     }
 }

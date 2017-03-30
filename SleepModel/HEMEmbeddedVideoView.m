@@ -18,6 +18,8 @@ static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 static NSString* const HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath = @"playbackLikelyToKeepUp";
 static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBufferFull";
 static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
+static CGFloat const HEMEmbeddedVideoDarkGradientAlpha = 1.0f;
+static CGFloat const HEMEmbeddedVideoLightGradientAlpha = 0.05f;
 
 @interface HEMEmbeddedVideoView()
 
@@ -185,6 +187,10 @@ static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
         [[self topGradient] removeFromSuperlayer];
         [[self botGradient] removeFromSuperlayer];
         
+        UIColor* darkGradient = [[self backgroundColor] colorWithAlphaComponent:HEMEmbeddedVideoDarkGradientAlpha];
+        UIColor* lightGradient = [[self backgroundColor] colorWithAlphaComponent:HEMEmbeddedVideoLightGradientAlpha];
+        NSArray* colors = @[(id) [darkGradient CGColor], (id) [lightGradient CGColor]];
+        
         CGFloat gradientHeight = ceilCGFloat(videoHeight) / HEMEmbeddedVideoGradientPercentage;
         CGFloat fullWidth = CGRectGetWidth([self bounds]);
         CGFloat videoTopY = (CGRectGetHeight([self bounds]) - videoHeight) / 2.0f;
@@ -195,14 +201,14 @@ static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
         
         CAGradientLayer* layer = [CAGradientLayer layer];
         [layer setFrame:gradientFrame];
-        [layer setColors:[[HEMGradient topVideoGradient] colorRefs]];
+        [layer setColors:colors];
         [[self layer] addSublayer:layer];
         [self setTopGradient:layer];
         
         gradientFrame.origin.y = videoTopY + videoHeight - gradientHeight;
         layer = [CAGradientLayer layer];
         [layer setFrame:gradientFrame]; 
-        [layer setColors:[[HEMGradient bottomVideoGradient] colorRefs]];
+        [layer setColors:[[colors reverseObjectEnumerator] allObjects]];
         [[self layer] addSublayer:layer];
         [self setBotGradient:layer];
     }

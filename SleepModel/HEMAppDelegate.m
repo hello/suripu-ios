@@ -28,6 +28,8 @@
 @interface HEMAppDelegate()
 
 @property (nonatomic, strong) PushNotificationService* pushService;
+@property (nonatomic, strong) NightModeService* nightModeService;
+@property (nonatomic, strong) HEMLocationService* locationService;
 
 @end
 
@@ -48,14 +50,13 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [self configureAPI];
     [self configureCrashReport];
     
-    [SenseStyle loadSavedTheme];
+    [self loadTheme];
     
     [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
 
     [self deauthorizeIfNeeded];
-    [self configureAppearance];
     [self renewPushNotificationToken];
     [self listenForAuthorizationChanges];
     [self createAndShowWindow];
@@ -110,8 +111,49 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
     [application clearBadgeFromNotification];
-    [self deauthorizeIfNeeded];
-    [self syncData];
+    if (![self deauthorizeIfNeeded]) {
+        [self loadTheme];
+        [self syncData];
+    }
+}
+    
+- (void)loadTheme {
+    [SenseStyle loadSavedThemeWithAuto:YES]; // load whatever first, then override as needed
+    
+    if (![self nightModeService]) {
+        [self setNightModeService:[NightModeService new]];
+    }
+    
+    if ([[self nightModeService] isScheduled]) {
+        BOOL override = [[self mainViewController] showingMainTabs];
+        [[self nightModeService] loadThemeWithOverride:override];
+        // update lat / long
+        if (![self locationService]) {
+            [self setLocationService:[HEMLocationService new]];
+        }
+        switch ([[self locationService] authorizationStatus]) {
+            case HEMLocationAuthStatusAuthorized: {
+                __block BOOL updated = NO;
+                __weak typeof(self) weakSelf = self;
+                [[self locationService] quickLocation:^(HEMLocation* location, NSError * error) {
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    if (updated) {
+                        return;
+                    }
+                    
+                    updated = YES;
+                    
+                    if (location) {
+                        [[strongSelf nightModeService] updateLocationWithLatitude:location.lat
+                                                                        longitude:location.lon];
+                    }
+                }];
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
 - (void)configureProperties {
@@ -164,10 +206,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         return YES;
     }
     return NO;
-}
-
-- (void)configureAppearance {
-    ApplyHelloStyles(); //TODO: REMOVE THIS!
 }
 
 - (void)createAndShowWindow {
@@ -291,7 +329,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 }
 
 - (void)didSignIn {
-    [SenseStyle loadSavedTheme];
+    [self loadTheme];
     
     if ([[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
         [self renewPushNotificationToken];
@@ -305,7 +343,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
-    [[SenseStyle theme] unload];
+    [[SenseStyle theme] unloadWithAuto:YES];
 }
 
 @end

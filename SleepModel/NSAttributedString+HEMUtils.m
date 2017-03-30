@@ -24,18 +24,19 @@
 }
 
 - (NSAttributedString *)hyperlink:(NSString *)url {
-    return [self hyperlink:url font:[UIFont settingsHelpFont]];
+    return [self hyperlink:url font:[UIFont settingsHelpFont] color:[UIColor tintColor]];
 }
 
 - (NSAttributedString*)hyperlink:(NSString *)url font:(UIFont*)font {
+    return [self hyperlink:url font:font color:[UIColor tintColor]];
+}
+    
+- (NSAttributedString*)hyperlink:(NSString *)url font:(UIFont*)font color:(UIColor*)color {
     NSMutableAttributedString *hyperlink = [self mutableCopy];
-    
-    [hyperlink addAttributes:@{
-        NSLinkAttributeName : url,
-        NSFontAttributeName : font,
-        NSForegroundColorAttributeName : [UIColor tintColor]
-    } range:NSMakeRange(0, [hyperlink length])];
-    
+    [hyperlink addAttributes:@{NSLinkAttributeName : url,
+                               NSFontAttributeName : font,
+                               NSForegroundColorAttributeName : color}
+                       range:NSMakeRange(0, [hyperlink length])];
     return hyperlink;
 }
 

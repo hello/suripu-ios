@@ -2453,6 +2453,7 @@ what's the temperature?"</string>
                         <outlet property="continueButton" destination="5d5-Gw-aSY" id="Tr1-hy-xGd"/>
                         <outlet property="descriptionLabel" destination="y1L-J7-SAd" id="SIa-NZ-CiA"/>
                         <outlet property="descriptionTopConstraint" destination="vDS-iV-1Zv" id="Dk2-Qu-4Yb"/>
+                        <outlet property="illustrationView" destination="G1S-ig-3QH" id="sdv-d2-j2D"/>
                         <outlet property="laterButton" destination="bNv-Hf-8QW" id="5L9-Ck-O3a"/>
                         <outlet property="statusLabel" destination="ziC-3H-Rps" id="PVg-ax-AII"/>
                         <outlet property="titleHeightConstraint" destination="Axj-t1-8Xk" id="6i4-CJ-mUX"/>

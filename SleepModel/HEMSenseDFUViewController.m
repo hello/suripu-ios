@@ -16,6 +16,7 @@
 
 @interface HEMSenseDFUViewController () <HEMSenseDFUDelegate, HEMPresenterErrorDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

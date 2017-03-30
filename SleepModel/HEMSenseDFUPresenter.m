@@ -7,7 +7,7 @@
 //
 
 #import <SenseKit/SENDFUStatus.h>
-
+#import "Sense-Swift.h"
 #import "HEMSenseDFUPresenter.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMActivityCoverView.h"
@@ -72,6 +72,12 @@ static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 }
 
 - (void)bindWithLaterButton:(UIButton*)laterButton {
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    
+    [[laterButton titleLabel] setFont:font];
+    [laterButton setTitleColor:color forState:UIControlStateNormal];
     [laterButton setHidden:YES];
     [laterButton addTarget:self
                     action:@selector(updateLater)

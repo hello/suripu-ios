@@ -8,9 +8,10 @@
 
 #import "UIBarButtonItem+HEMNav.h"
 
+#import "Sense-Swift.h"
+
 #import "HEMResetSensePresenter.h"
 #import "HEMActivityCoverView.h"
-#import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMActivityIndicatorView.h"
 
@@ -74,6 +75,12 @@ static CGFloat const HEMResetSenseFinishDelay = 2.0f;
                                                                       action:@selector(cancel)];
         [navItem setLeftBarButtonItem:cancelButton];
     }
+}
+
+- (void)bindWithIllustrationView:(UIImageView*)illustrationView {
+    static NSString* imageKey = @"sense.illustration";
+    UIImage* image = [SenseStyle imageWithGroup:GroupFactoryReset propertyName:imageKey];
+    [illustrationView setImage:image];
 }
 
 #pragma mark - Actions

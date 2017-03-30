@@ -21,4 +21,17 @@ extension HEMOnboardingController {
         self.descriptionLabel?.font = SenseStyle.font(aClass: aClass, property: .detailFont)
     }
     
+    @objc func titleAttributes() -> [String : Any] {
+        let aClass = HEMOnboardingController.self
+        return [NSFontAttributeName : SenseStyle.font(aClass: aClass, property: .textFont),
+                NSForegroundColorAttributeName : SenseStyle.color(aClass: aClass, property: .textColor)]
+    }
+    
+    @objc func descriptionAttributes() -> [String : Any] {
+        let aClass = HEMOnboardingController.self
+        return [NSFontAttributeName : SenseStyle.font(aClass: aClass, property: .detailFont),
+                NSForegroundColorAttributeName : SenseStyle.color(aClass: aClass, property: .detailColor),
+                NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+    }
+    
 }

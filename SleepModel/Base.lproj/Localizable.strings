@@ -259,6 +259,8 @@
 "debug.option.debug.info" = "Debug info";
 "debug.option.force.appreview" = "Force app review";
 "debug.option.room-check.title" = "Show Room Check";
+"debug.option.force-ota.title" = "Show Force OTA";
+"debug.option.pill-clip.title" = "Show Pill Clipping";
 "debug.option.reset-tutorials" = "Reset tutorials";
 "debug.option.force-whats-new" = "Force What's New";
 "debug.option.clear-alarms" = "Remove all alarms";
@@ -850,6 +852,7 @@
 "video.url.onboarding.pill-pair.dark" = "https://hellocdn.net/mobile/sense/onboarding/pairing_your_sleep_pill@2x_dark.mp4";
 "video.url.alarm" = "https://hellocdn.net/mobile/sense/alarm/smart_alarm_dialog@2x.mp4";
 "video.url.onboarding.pill-setup" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill@2x.mp4";
+"video.url.onboarding.pill-setup.dark" = "https://hellocdn.net/mobile/sense/onboarding/attach_sleep_pill_dark.mp4";
 "video.url.onboarding.alarm" = "https://hellocdn.net/mobile/sense/onboarding/smart_alarm_onboarding@2x.mp4";
 "video.url.onboarding.bedroom-condition" = "https://hellocdn.net/mobile/sense/onboarding/bedroom_condition@2x.mp4";
 

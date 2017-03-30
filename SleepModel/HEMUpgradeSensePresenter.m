@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "UIBarButtonItem+HEMNav.h"
-
+#import "Sense-Swift.h"
 #import "HEMUpgradeSensePresenter.h"
 #import "HEMBluetoothUtils.h"
 
@@ -49,7 +49,10 @@
 
 - (void)bindWithIllustrationView:(UIImageView *)illustrationView {
     [super bindWithIllustrationView:illustrationView];
-    [illustrationView setImage:[UIImage imageNamed:@"sensePlacement"]];
+    
+    static NSString* illustrationKey = @"sense.illustration";
+    UIImage* image = [SenseStyle imageWithAClass:[self class] propertyName:illustrationKey];
+    [illustrationView setImage:image];
     [illustrationView setContentMode:UIViewContentModeScaleAspectFit];
 }
 

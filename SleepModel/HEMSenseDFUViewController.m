@@ -16,6 +16,7 @@
 
 @interface HEMSenseDFUViewController () <HEMSenseDFUDelegate, HEMPresenterErrorDelegate>
 
+@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
@@ -30,6 +31,14 @@
     [self configureHelpButton];
     [self configurePresenter];
     [self trackAnalyticsEvent:HEMAnalyticsEventSenseDFU];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([self isCancellable]) {
+        [self showCancelButtonWithSelector:@selector(dismiss)];
+    }
 }
 
 - (void)trackAnalyticsEvent:(NSString *)event {
@@ -56,6 +65,12 @@
     [presenter setDfuDelegate:self];
     [presenter setOnboarding:![self flow]];
     [self addPresenter:presenter];
+}
+
+#pragma mark - Actions
+
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - DFU Delegate

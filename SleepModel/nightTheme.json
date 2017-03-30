@@ -506,5 +506,35 @@
     
     "sense.settings.footer" : {
         "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMNoBLEViewController" : {
+        "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMUpgradeSensePresenter" : {
+        "sense.illustration" : "@image/sensePlacementDark"
+    },
+    
+    "#HEMSenseUpgradedViewController" : {
+        "sense.illustration" : "@image/senseUpgradedDark"
+    },
+    
+    "#HEMPillSetupViewController" : {
+        "sense.first.frame" : "@image/pillSetupDark",
+        "sense.pill.clipping.url" : "video.url.onboarding.pill-setup.dark"
+    },
+    
+    "#HEMSetupDoneViewController" : {
+        "sense.illustration" : "@image/sensePlacementDark"
+    },
+    
+    "sense.factory.reset" : {
+        "sense.illustration" : "@image/originalSenseDark"
+    },
+    
+    "sense.voice.tutorial" : {
+        "sense.table.image" : "@image/senseTableDark",
+        "sense.command.text.color" : "@color/dark.primary.text",
     }
 }

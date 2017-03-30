@@ -15,6 +15,9 @@ extension UITableViewCell {
         self.contentView.backgroundColor = self.backgroundColor
         self.textLabel?.textColor = SenseStyle.color(group: .listItem, property: .textColor)
         self.textLabel?.font = SenseStyle.font(group: .listItem, property: .textFont)
+        self.textLabel?.backgroundColor = self.backgroundColor
+        self.detailTextLabel?.backgroundColor = self.backgroundColor
+        self.imageView?.backgroundColor = self.backgroundColor
         self.detailTextLabel?.textColor = SenseStyle.color(group: .listItem, property: .detailColor)
         self.detailTextLabel?.font = SenseStyle.font(group: .listItem, property: .detailFont)
         self.imageView?.tintColor = SenseStyle.color(group: .listItem, property: .tintColor)

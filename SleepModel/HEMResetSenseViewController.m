@@ -38,6 +38,7 @@
                                                                          senseId:[self senseId]]];
     }
     
+    [[self presenter] bindWithIllustrationView:[self illustrationView]];
     [[self presenter] bindWithTitleLabel:[self titleLabel] descriptionLabel:[self descriptionLabel]];
     [[self presenter] bindWithLaterButton:[self laterButton]];
     [[self presenter] bindWithActivityContainerView:[[self navigationController] view]];

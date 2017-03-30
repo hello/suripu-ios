@@ -19,7 +19,7 @@ static NSString* const HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath = @"playbackL
 static NSString* const HEMEmbeddedVideoPlayerBufferFullKeyPath = @"playbackBufferFull";
 static CGFloat const HEMEmbeddedVideoGradientPercentage = 10.0f;
 static CGFloat const HEMEmbeddedVideoDarkGradientAlpha = 1.0f;
-static CGFloat const HEMEmbeddedVideoLightGradientAlpha = 0.05f;
+static CGFloat const HEMEmbeddedVideoLightGradientAlpha = 0.0f;
 
 @interface HEMEmbeddedVideoView()
 

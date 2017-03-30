@@ -551,6 +551,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     HEMSettingsHeaderFooterView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [footer setAttributedTitle:[self enhancedAudioNote]];
+    [footer setBackgroundColor:[tableView backgroundColor]];
     [footer setTitleInsets:UIEdgeInsetsMake(HEMAccountAudioNoteVertMargin,
                                             HEMAccountAudioNoteHorzMargin,
                                             HEMAccountAudioNoteVertMargin,

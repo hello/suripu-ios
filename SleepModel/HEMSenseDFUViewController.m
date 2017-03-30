@@ -33,6 +33,14 @@
     [self trackAnalyticsEvent:HEMAnalyticsEventSenseDFU];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([self isCancellable]) {
+        [self showCancelButtonWithSelector:@selector(dismiss)];
+    }
+}
+
 - (void)trackAnalyticsEvent:(NSString *)event {
     if ([self flow]) {
         [SENAnalytics track:event];
@@ -57,6 +65,12 @@
     [presenter setDfuDelegate:self];
     [presenter setOnboarding:![self flow]];
     [self addPresenter:presenter];
+}
+
+#pragma mark - Actions
+
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - DFU Delegate

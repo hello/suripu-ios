@@ -2209,7 +2209,7 @@ what's the temperature?"</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="senseAllSet" translatesAutoresizingMaskIntoConstraints="NO" id="Sef-ar-nxu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="sensePlacement" translatesAutoresizingMaskIntoConstraints="NO" id="Sef-ar-nxu">
                                 <rect key="frame" x="0.0" y="104" width="414" height="558"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-8C-09t" customClass="HEMActionButton">
@@ -3537,7 +3537,6 @@ Turn Bluetooth on</string>
         <image name="radioSelected" width="24" height="24"/>
         <image name="sampleNotification" width="375" height="181"/>
         <image name="sense" width="186" height="183"/>
-        <image name="senseAllSet" width="375" height="233"/>
         <image name="senseAppIcon" width="32" height="32"/>
         <image name="senseBackground" width="320" height="210"/>
         <image name="senseBlue" width="187" height="184"/>
@@ -3555,14 +3554,14 @@ Turn Bluetooth on</string>
     <inferredMetricsTieBreakers>
         <segue reference="d9a-nc-483"/>
         <segue reference="6ED-su-wCY"/>
-        <segue reference="pzU-cR-vI1"/>
+        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="Dzn-yM-CjI"/>
         <segue reference="v6v-Rh-oSf"/>
         <segue reference="l0v-WX-q0S"/>
         <segue reference="2bN-N8-HGp"/>
         <segue reference="wdw-bO-x3J"/>
-        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="gUR-KW-V2G"/>
         <segue reference="tkT-Pb-lgk"/>
-        <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

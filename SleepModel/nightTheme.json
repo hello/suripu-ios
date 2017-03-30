@@ -522,5 +522,9 @@
     
     "#HEMPillSetupViewController" : {
         "sense.first.frame" : "@image/pillSetup"
+    },
+    
+    "#HEMSetupDoneViewController" : {
+        "sense.illustration" : "@image/sensePlacementDark"
     }
 }

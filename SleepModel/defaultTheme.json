@@ -751,5 +751,9 @@
     
     "#HEMPillSetupViewController" : {
         "sense.illustration" : "@image/pillSetup"
+    },
+    
+    "#HEMSetupDoneViewController" : {
+        "sense.illustration" : "@image/sensePlacement"
     }
 }

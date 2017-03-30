@@ -191,8 +191,12 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
                 = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                             forIndexPath:indexPath];
             
-            UIImage* firstFrame = [UIImage imageNamed:@"pillSetup"];
-            NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-setup", nil);
+            static NSString* videoKey = @"sense.pill.clipping.url";
+            static NSString* imageKey = @"sense.first.frame";
+            UIImage* firstFrame = [SenseStyle imageWithAClass:[self class] propertyName:imageKey];
+            NSString* stringKey = [[SenseStyle theme] valueWithAClass:[self class] key:videoKey];
+            NSString* videoPath = NSLocalizedString(stringKey, nil);
+            [videoCell applyFillStyle];
             [[videoCell videoView] setFirstFrame:firstFrame videoPath:videoPath];
             [videoCell applyFillStyle];
             

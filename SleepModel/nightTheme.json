@@ -521,7 +521,8 @@
     },
     
     "#HEMPillSetupViewController" : {
-        "sense.first.frame" : "@image/pillSetup"
+        "sense.first.frame" : "@image/pillSetupDark",
+        "sense.pill.clipping.url" : "video.url.onboarding.pill-setup.dark"
     },
     
     "#HEMSetupDoneViewController" : {

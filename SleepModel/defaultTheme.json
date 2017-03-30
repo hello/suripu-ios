@@ -750,7 +750,8 @@
     },
     
     "#HEMPillSetupViewController" : {
-        "sense.illustration" : "@image/pillSetup"
+        "sense.illustration" : "@image/pillSetup",
+        "sense.pill.clipping.url" : "video.url.onboarding.pill-setup"
     },
     
     "#HEMSetupDoneViewController" : {

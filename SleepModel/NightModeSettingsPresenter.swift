@@ -172,14 +172,8 @@ class NightModeSettingsPresenter: HEMListPresenter {
         }
     }
     
-    fileprivate func failScheduling(errorMessage: String) {
-        // show an error message?
-        SENAnalytics.trackWarning(withMessage: errorMessage)
-    }
-    
-    fileprivate func failScheduling(error: Error) {
-        // show an error message?
-        SENAnalytics.trackError(error)
+    fileprivate func showLocationError() {
+        // TODO: throw an alert
     }
     
     fileprivate func scheduleNightModeFromLocation() {
@@ -195,16 +189,14 @@ class NightModeSettingsPresenter: HEMListPresenter {
             if loc != nil {
                 self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
                                                          longitude: Double(loc!.lon))
-            } else if err != nil {
-                self?.failScheduling(error: err!)
             } else {
-                self?.failScheduling(errorMessage: "no location was determined!")
+                self?.showLocationError()
             }
             
         })
         
         if error != nil {
-            self.failScheduling(error: error!)
+            self.showLocationError()
         }
     }
     

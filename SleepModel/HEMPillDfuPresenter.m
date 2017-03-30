@@ -122,7 +122,7 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
     [progressView setHidden:[self pillToDfu] == nil];
     [progressView setProgress:0.0f];
     [progressView setProgressTintColor:tintColor];
-    [progressView setTrackTintColor:[color colorWithAlphaComponent:0.5f]];
+    [progressView setTrackTintColor:[color colorWithAlphaComponent:0.2f]];
     [statusLabel setHidden:[self pillToDfu] == nil];
     [statusLabel setTextColor:color];
     [statusLabel setFont:font];

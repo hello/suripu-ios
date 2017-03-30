@@ -734,5 +734,10 @@
         "style.text.font" : "@font/body.small",
         "style.text.color" : "@color/light.disabled.text",
         "style.link.color" : "@color/blue.6"
+    },
+    
+    "#HEMNoBLEViewController" : {
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.primary.text"
     }
 }

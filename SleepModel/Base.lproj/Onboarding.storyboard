@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KoM-KU-kaf">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1227,11 +1227,11 @@
                                         <rect key="frame" x="0.0" y="66" width="390" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w2R-Q9-Bmm" id="39f-cF-XX7">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EmK-D8-elU">
-                                                    <rect key="frame" x="15" y="0.0" width="360" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="360" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2692,7 +2692,7 @@ what's the temperature?"</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M2D-6d-Myd" id="UMP-Br-DLT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="NyY-R5-7gz" customClass="HEMURLImageView">
@@ -3419,6 +3419,7 @@ Turn Bluetooth on</string>
                         <outlet property="descriptionLabel" destination="9T9-rd-lkX" id="xRc-FO-iNd"/>
                         <outlet property="descriptionTopConstraint" destination="mFY-aP-Tsd" id="Ggl-B5-VlJ"/>
                         <outlet property="instructionView" destination="IN1-JN-WIg" id="YeI-Mw-OoU"/>
+                        <outlet property="instructionsContainer" destination="FNl-Bv-4se" id="ot3-ot-FWV"/>
                         <outlet property="step1DescLabel" destination="g4c-af-MzQ" id="0W3-qe-GVx"/>
                         <outlet property="step1Label" destination="IN1-JN-WIg" id="G7u-fy-X2j"/>
                         <outlet property="step2DescLabel" destination="9L6-H0-aYi" id="JwP-hi-QOF"/>
@@ -3551,16 +3552,16 @@ Turn Bluetooth on</string>
         <image name="sleepPill" width="320" height="130"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="JsS-bV-f7k"/>
-        <segue reference="Sda-jg-aqk"/>
+        <segue reference="d9a-nc-483"/>
         <segue reference="6ED-su-wCY"/>
-        <segue reference="0DP-Ib-Jz4"/>
-        <segue reference="3DQ-Vg-FaT"/>
+        <segue reference="pzU-cR-vI1"/>
         <segue reference="v6v-Rh-oSf"/>
+        <segue reference="JsS-bV-f7k"/>
         <segue reference="2bN-N8-HGp"/>
         <segue reference="wdw-bO-x3J"/>
+        <segue reference="7LA-fg-2Jb"/>
         <segue reference="tkT-Pb-lgk"/>
+        <segue reference="3DQ-Vg-FaT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

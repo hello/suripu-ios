@@ -33,5 +33,6 @@
 - (void)bindWithVideoView:(HEMEmbeddedVideoView*)videoView;
 - (void)bindWithCancelButton:(UIButton*)cancelButton helpButton:(UIButton*)helpButton;
 - (void)bindWithRetryButton:(HEMActionButton*)retryButton;
+- (void)bindWithMainView:(UIView*)mainView;
 
 @end

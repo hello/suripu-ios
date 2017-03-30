@@ -536,5 +536,11 @@
     "sense.voice.tutorial" : {
         "sense.table.image" : "@image/senseTableDark",
         "sense.command.text.color" : "@color/dark.primary.text",
+    },
+    
+    "sense.pill.dfu" : {
+        "sense.illustration" : "@image/sleepPillDFUDark",
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill_dark",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair.dark"
     }
 }

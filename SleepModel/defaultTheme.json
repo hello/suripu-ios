@@ -768,5 +768,13 @@
         "sense.command.text.font" : "@font/headline",
         "sense.command.text.small.font" : "@font/title.2",
         "sense.command.text.color" : "@color/light.primary.text",
+    },
+    
+    "sense.pill.dfu" : {
+        "style.group.parent" : "#HEMOnboardingController",
+        "style.tint.color" : "@color/blue.6",
+        "sense.illustration" : "@image/sleepPillDFU",
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair"
     }
 }

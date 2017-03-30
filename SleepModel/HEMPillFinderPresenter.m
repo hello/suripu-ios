@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <SenseKit/SENSleepPill.h>
-
+#import "Sense-Swift.h"
 #import "HEMPillFinderPresenter.h"
 #import "HEMDeviceService.h"
 #import "HEMActivityIndicatorView.h"
@@ -49,15 +49,20 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
-    [titleLabel setFont:[UIFont h5]];
-    [titleLabel setTextColor:[UIColor grey6]];
-
+    UIFont* font = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyTextColor];
+    [titleLabel setFont:font];
+    [titleLabel setTextColor:color];
+    
+    UIFont* descFont = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
+    UIColor* descColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
+    
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     NSString* description = [descriptionLabel text];
     NSAttributedString* attributedDescription =
     [[NSAttributedString alloc] initWithString:description
-                                    attributes:@{NSForegroundColorAttributeName : [UIColor grey5],
-                                                 NSFontAttributeName : [UIFont body],
+                                    attributes:@{NSForegroundColorAttributeName : descColor,
+                                                 NSFontAttributeName : descFont,
                                                  NSParagraphStyleAttributeName : style}];
     [descriptionLabel setAttributedText:attributedDescription];
     
@@ -65,16 +70,31 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
     [self setDescriptionLabel:descriptionLabel];
 }
 
+- (void)bindWithMainView:(UIView*)mainView {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyBackgroundColor];
+    [mainView setBackgroundColor:bgColor];
+}
+
 - (void)bindWithStatusLabel:(UILabel*)statusLabel andIndicator:(HEMActivityIndicatorView*)indicatorView {
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
+    
     [indicatorView start];
+    [statusLabel setTextColor:textColor];
+    [statusLabel setFont:textFont];
     [self setStatusLabel:statusLabel];
     [self setIndicatorView:indicatorView];
 }
 
 - (void)bindWithVideoView:(HEMEmbeddedVideoView*)videoView {
-    UIImage* image = [UIImage imageNamed:@"pairing_your_sleep_pill"];
-    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
+    static NSString* firstFrameKey = @"sense.shake.pill.image";
+    static NSString* videoKey = @"sense.shake.pill.video.key";
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyBackgroundColor];
+    UIImage* image = [SenseStyle imageWithGroup:GroupPillDfu propertyName:firstFrameKey];
+    NSString* stringsKey = [SenseStyle valueWithGroup:GroupPillDfu propertyName:videoKey];
+    NSString* videoPath = NSLocalizedString(stringsKey, nil);
     [videoView setFirstFrame:image videoPath:videoPath];
+    [videoView setBackgroundColor:bgColor];
     [self setVideoView:videoView];
 }
 
@@ -87,10 +107,12 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
 }
 
 - (void)bindWithCancelButton:(UIButton*)cancelButton helpButton:(UIButton*)helpButton {
+    UIImage* image = [helpButton imageForState:UIControlStateNormal];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [helpButton setImage:image forState:UIControlStateNormal];
     [helpButton addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
     [helpButton setHidden:YES];
-    [[cancelButton titleLabel] setFont:[UIFont body]];
-    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [cancelButton applySecondaryStyle];
     [cancelButton setHidden:YES];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [self setHelpButton:helpButton];

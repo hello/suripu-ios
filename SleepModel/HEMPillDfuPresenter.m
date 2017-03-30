@@ -11,10 +11,10 @@
 #import <SenseKit/SENSleepPillManager.h>
 
 #import "UIDevice+HEMUtils.h"
+#import "Sense-Swift.h"
 
 #import "HEMPillDfuPresenter.h"
 #import "HEMDeviceService.h"
-#import "HEMStyle.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
@@ -69,16 +69,22 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
 }
 
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel {
-    [titleLabel setFont:[UIFont h5]];
-    [titleLabel setTextColor:[UIColor grey6]];
+    UIFont* font = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyTextColor];
+    [titleLabel setFont:font];
+    [titleLabel setTextColor:color];
+
+    UIFont* descFont = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
+    UIColor* descColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
     
     NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
     NSString* description = [descriptionLabel text];
     NSAttributedString* attributedDescription =
         [[NSAttributedString alloc] initWithString:description
-                                        attributes:@{NSForegroundColorAttributeName : [UIColor grey5],
-                                                     NSFontAttributeName : [UIFont body],
+                                        attributes:@{NSForegroundColorAttributeName : descColor,
+                                                     NSFontAttributeName : descFont,
                                                      NSParagraphStyleAttributeName : style}];
+    
     [descriptionLabel setAttributedText:attributedDescription];
     
     [self setTitleLabel:titleLabel];
@@ -101,17 +107,25 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
     if (HEMIsIPhone4Family()) {
         [bottomConstraint setConstant:0.0f];
     }
+    static NSString* imageKey = @"sense.illustration";
+    UIImage* image = [SenseStyle imageWithGroup:GroupPillDfu propertyName:imageKey];
+    [illustrationView setImage:image];
     [self setIllustrationView:illustrationView];
 }
 
 - (void)bindWithProgressView:(UIProgressView*)progressView
                  statusLabel:(UILabel*)statusLabel
       statusBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    UIColor* tintColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyTintColor];
+    UIFont* font = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
+    UIColor* color = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
     [progressView setHidden:[self pillToDfu] == nil];
     [progressView setProgress:0.0f];
-    [progressView setProgressTintColor:[UIColor tintColor]];
-    [progressView setTrackTintColor:[[UIColor grey3] colorWithAlphaComponent:0.5f]];
+    [progressView setProgressTintColor:tintColor];
+    [progressView setTrackTintColor:[color colorWithAlphaComponent:0.5f]];
     [statusLabel setHidden:[self pillToDfu] == nil];
+    [statusLabel setTextColor:color];
+    [statusLabel setFont:font];
     [statusLabel setText:[self statusForState:HEMDeviceDfuStateNotStarted]];
     
     if (HEMIsIPhone4Family()) {
@@ -123,15 +137,22 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
     [self setStatusBottomConstraint:bottomConstraint];
 }
 
+- (void)bindWithMainView:(UIView*)mainView {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyBackgroundColor];
+    [mainView setBackgroundColor:bgColor];
+}
+
 - (void)bindWithCancelButton:(UIButton*)cancelButton {
-    [[cancelButton titleLabel] setFont:[UIFont body]];
-    [cancelButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
+    [cancelButton applySecondaryStyle];
     [cancelButton setHidden:[self pillToDfu] != nil];
     [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [self setCancelButton:cancelButton];
 }
 
 - (void)bindWithHelpButton:(UIButton*)helpButton {
+    UIImage* image = [helpButton imageForState:UIControlStateNormal];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [helpButton setImage:image forState:UIControlStateNormal];
     [helpButton setHidden:[self pillToDfu] != nil];
     [helpButton addTarget:self action:@selector(help) forControlEvents:UIControlEventTouchUpInside];
     [self setHelpButton:helpButton];
@@ -155,8 +176,9 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
 
 - (CALayer*)waveLayer {
     if (!_waveLayer) {
+        UIColor* tintColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyTintColor];
         CALayer* layer = [CALayer layer];
-        [layer setBackgroundColor:[[UIColor tintColor] CGColor]];
+        [layer setBackgroundColor:[tintColor CGColor]];
         [layer setAnchorPoint:CGPointMake(1.0f, 0.5f)];
         [layer setCornerRadius:CGRectGetWidth([[self illustrationView] bounds]) / 4.0f];
         _waveLayer = layer;

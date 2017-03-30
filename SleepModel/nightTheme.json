@@ -526,5 +526,14 @@
     
     "#HEMSetupDoneViewController" : {
         "sense.illustration" : "@image/sensePlacementDark"
+    },
+    
+    "sense.factory.reset" : {
+        "sense.illustration" : "@image/originalSenseDark"
+    },
+    
+    "sense.voice.tutorial" : {
+        "sense.table.image" : "@image/senseTableDark",
+        "sense.command.text.color" : "@color/dark.primary.text",
     }
 }

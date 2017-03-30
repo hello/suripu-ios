@@ -90,9 +90,15 @@ import UIKit
         case sensePairing
         case pillPairing
         case settingsFooter
+        case voiceTutorial
+        case factoryReset
         
         var key: String {
             switch self {
+            case .factoryReset:
+                return "sense.factory.reset"
+            case .voiceTutorial:
+                return "sense.voice.tutorial"
             case .settingsFooter:
                 return "sense.settings.footer"
             case .pillPairing:

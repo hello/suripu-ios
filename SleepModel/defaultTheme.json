@@ -755,5 +755,17 @@
     
     "#HEMSetupDoneViewController" : {
         "sense.illustration" : "@image/sensePlacement"
+    },
+    
+    "sense.factory.reset" : {
+        "sense.illustration" : "@image/originalSense"
+    },
+    
+    "sense.voice.tutorial" : {
+        "style.group.parent" : "#HEMOnboardingController",
+        "sense.table.image" : "@image/senseTable",
+        "sense.command.text.font" : "@font/headline",
+        "sense.command.text.small.font" : "@font/title.2",
+        "sense.command.text.color" : "@color/light.primary.text",
     }
 }

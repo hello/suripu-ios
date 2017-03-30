@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.16
+
+Fixes:
+
+* Fix crasher with unsafe pointer
+
 ## 2.1.0.15
 
 New;

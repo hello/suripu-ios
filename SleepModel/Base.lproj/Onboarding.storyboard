@@ -1568,7 +1568,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="LzU-Ad-7EV"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1631,6 +1631,7 @@
                     <connections>
                         <outlet property="descriptionLabel" destination="bhx-eT-uQJ" id="fyE-kP-MSD"/>
                         <outlet property="descriptionTopConstraint" destination="Hsw-kT-A0b" id="yMR-AP-f2X"/>
+                        <outlet property="illustrationView" destination="IKV-ei-EsM" id="5so-Tb-FCc"/>
                         <outlet property="titleHeightConstraint" destination="LzU-Ad-7EV" id="HrW-mP-7vn"/>
                         <outlet property="titleLabel" destination="SVR-wV-eCB" id="nAG-0a-Xhx"/>
                         <segue destination="58j-vj-AB8" kind="show" identifier="pairPill" id="l0v-WX-q0S"/>
@@ -3556,7 +3557,7 @@ Turn Bluetooth on</string>
         <segue reference="6ED-su-wCY"/>
         <segue reference="pzU-cR-vI1"/>
         <segue reference="v6v-Rh-oSf"/>
-        <segue reference="JsS-bV-f7k"/>
+        <segue reference="l0v-WX-q0S"/>
         <segue reference="2bN-N8-HGp"/>
         <segue reference="wdw-bO-x3J"/>
         <segue reference="7LA-fg-2Jb"/>

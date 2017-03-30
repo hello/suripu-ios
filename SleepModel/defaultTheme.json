@@ -739,5 +739,13 @@
     "#HEMNoBLEViewController" : {
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMUpgradeSensePresenter" : {
+        "sense.illustration" : "@image/sensePlacement"
+    },
+    
+    "#HEMSenseUpgradedViewController" : {
+        "sense.illustration" : "@image/senseUpgraded"
     }
 }

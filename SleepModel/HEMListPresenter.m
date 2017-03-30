@@ -196,6 +196,14 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
     }
 }
 
+- (CGFloat)heightForFooterInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeightWithTitle;
+}
+    
+- (UIView*)viewForFooterInSection:(NSInteger)section {
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+}
+
 - (void)willNotifyDelegateOfSelection {}
 - (void)didNotifyDelegateOfSelection {}
 
@@ -287,6 +295,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self items] count];
 }
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return [self heightForFooterInSection:section];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return HEMSettingsHeaderFooterHeightWithTitle;
@@ -299,7 +311,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+    return [self viewForFooterInSection:section];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

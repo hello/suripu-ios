@@ -728,5 +728,11 @@
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.secondary.text",
         "style.text.highlighted.color" : "@color/light.primary.text"
+    },
+
+    "sense.settings.footer" : {
+        "style.text.font" : "@font/body.small",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.link.color" : "@color/blue.6"
     }
 }

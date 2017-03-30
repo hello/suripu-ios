@@ -15,6 +15,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     fileprivate weak var nightModeService: NightModeService!
     fileprivate weak var locationService: HEMLocationService!
     fileprivate var locationActivity: HEMLocationActivity?
+    fileprivate var footer: UIView?
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
         let optionsTitle = NSLocalizedString("settings.night-mode.options.title", comment: "table options title")
@@ -25,12 +26,74 @@ class NightModeSettingsPresenter: HEMListPresenter {
         super.init(title: optionsTitle, items: items, selectedItemNames: [selectedOption.localizedDescription()])
     }
     
+    override func bind(with tableView: UITableView, bottomConstraint: NSLayoutConstraint) {
+        super.bind(with: tableView, bottomConstraint: bottomConstraint)
+        self.footer = self.locationFooter()
+    }
+    
     override func bind(with navItem: UINavigationItem) {
         super.bind(with: navItem)
         navItem.title = NSLocalizedString("settings.night-mode", comment: "night mode")
     }
     
-    //MARK: List Presenter configuration
+    // MARK: - Presenter events
+    
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
+        self.footer = self.locationFooter() // recreate it
+        self.tableView?.reloadData()
+    }
+    
+    override func didComeBackFromBackground() {
+        super.didComeBackFromBackground()
+        self.tableView?.reloadData()
+    }
+    
+    //MARK: - Footer
+    
+    fileprivate func locationFooter() -> UIView {
+        let font = SenseStyle.font(group: .settingsFooter, property: .textFont)
+        let color = SenseStyle.color(group: .settingsFooter, property: .textColor)
+        let linkColor = SenseStyle.color(group: .settingsFooter, property: .linkColor)
+        let attributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : color]
+        let textFormat = NSLocalizedString("settings.night-mode.no-location.message.format", comment: "message format")
+        
+        let linkText = NSLocalizedString("settings.night-mode.location.service", comment: "location service")
+        let attributedLink = NSAttributedString(string: linkText).hyperlink(UIApplicationOpenSettingsURLString)!
+        let text = NSMutableAttributedString(format: textFormat, args: [attributedLink], attributes: attributes)
+        let textView = UITextView()
+        textView.attributedText = text
+        textView.isEditable = false
+        textView.linkTextAttributes = [NSForegroundColorAttributeName : linkColor, NSFontAttributeName : font]
+        textView.isScrollEnabled = false
+        textView.backgroundColor = self.tableView!.backgroundColor
+        
+        let footer = UIView()
+        footer.addSubview(textView)
+        footer.isHidden = self.locationService.hasDeniedPermission() == false
+        
+        return footer
+    }
+    
+    //MARK: - List Presenter configuration
+    
+    override func heightForFooter(inSection section: Int) -> CGFloat {
+        guard let textView = self.footer?.subviews.first as? UITextView else {
+            return 0.0
+        }
+        
+        let horzMargins = CGFloat(24)
+        let origin = CGPoint(x: horzMargins, y: 0.0)
+        let maxWidth = self.tableView!.bounds.size.width - (2*horzMargins)
+        var size = CGSize(width: maxWidth, height: CGFloat(MAXFLOAT))
+        size.height = textView.sizeThatFits(size).height
+        textView.frame = CGRect(origin: origin, size: size)
+        return textView.sizeThatFits(size).height
+    }
+    
+    override func viewForFooter(inSection section: Int) -> UIView? {
+        return self.footer
+    }
     
     override func detail(forItem item: Any) -> String? {
         guard let description = item as? String else {
@@ -60,11 +123,16 @@ class NightModeSettingsPresenter: HEMListPresenter {
         let description = item as! String
         let option = NightModeService.Option.fromDescription(description: description)
         let selectedOption = self.nightModeService.savedOption()
-        let disableCell = option == .sunsetToSunrise && self.locationService.hasDeniedPermission()
         cell.itemLabel?.text = option?.localizedDescription()
         cell.isSelected = selectedOption == option
         cell.descriptionLabel?.text = self.detail(forItem: item)
-        cell.enable(disableCell == false)
+        
+        if option == .sunsetToSunrise {
+            self.footer?.isHidden = self.locationService.hasDeniedPermission() == false
+            cell.enable(self.footer?.isHidden == true)
+        } else {
+            cell.enable(true)
+        }
     }
     
     override func didNotifyDelegateOfSelection() {

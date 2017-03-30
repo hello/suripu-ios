@@ -189,7 +189,9 @@
 "settings.night-mode.option.off" = "Off";
 "settings.night-mode.option.always-on" = "Always on";
 "settings.night-mode.option.scheduled" = "Scheduled";
-"settings.night-mode.option.scheduled.description" = "Turns on from sunset to sunrise.";
+"settings.night-mode.option.scheduled.description" = "Automatic from sunset to sunrise.";
+"settings.night-mode.no-location.message.format" = "%@ must be enabled for Sense to know local sunset and sunrise times.";
+"settings.night-mode.location.service" = "Location Services";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
 "settings.tell-a-friend" = "Tell a friend about Sense";

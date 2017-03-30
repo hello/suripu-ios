@@ -10,7 +10,7 @@
 
 @interface HEMListItemCell()
     
-@property (nonatomic, weak) UIView* disableOverlay;
+@property (nonatomic, strong) UIView* disableOverlay;
     
 @end
 
@@ -28,10 +28,14 @@
 }
     
 - (void)enable:(BOOL)enable {
-    if (!enable && [self disableOverlay] == nil) {
-        UIView* view = [[UIView alloc] initWithFrame:[self bounds]];
-        [view applyDisabledOverlayStyle];
-        [[self contentView] addSubview:view];
+    [self setUserInteractionEnabled:enable];
+    
+    if (!enable) {
+        if (![self disableOverlay]) {
+            [self setDisableOverlay:[[UIView alloc] initWithFrame:[self bounds]]];
+        }
+        [[self disableOverlay] applyDisabledOverlayStyle];
+        [self addSubview:[self disableOverlay]];
     } else {
         [[self disableOverlay] removeFromSuperview];
     }

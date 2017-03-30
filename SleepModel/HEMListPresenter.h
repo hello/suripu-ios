@@ -125,6 +125,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable NSString*)detailForItem:(id)item;
 
+/**
+ * @discussion
+ * Subclasses should override this to return a custom footer, or nil, if not desired
+ *
+ * @param section: section of the table view
+ * @return footer
+ */
+- (nullable UIView*)viewForFooterInSection:(NSInteger)section;
+
+/**
+ * @param section: section of the table view
+ * @return height for the footer
+ */
+- (CGFloat)heightForFooterInSection:(NSInteger)section;
+
 @end
 
 NS_ASSUME_NONNULL_END

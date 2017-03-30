@@ -502,5 +502,9 @@
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/dark.secondary.text",
         "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.settings.footer" : {
+        "style.text.color" : "@color/dark.disabled.text"
     }
 }

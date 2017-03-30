@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0.17
+
+New:
+
+* Themed entire upgrade path
+* Themed voice tutorial
+* Themed entire pill dfu flow 
+
 ## 2.1.0.16
 
 Fixes:

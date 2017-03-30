@@ -100,6 +100,14 @@ NSString* const HEMLocationErrorDomain = @"is.hello.location";
             return HEMLocationAuthStatusAuthorized;
     }
 }
+    
+- (BOOL)hasDeniedPermission {
+    return [self authorizationStatus] == HEMLocationAuthStatusDenied;
+}
+    
+- (BOOL)requiresPermission {
+    return [self authorizationStatus] == HEMLocationAuthStatusUnknown;
+}
 
 - (NSError*)errorWithCode:(HEMLocationErrorCode)code {
     NSDictionary* info = nil;

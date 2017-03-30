@@ -16,7 +16,7 @@ import UIKit
         
         - Parameter theme: the current Theme selected
      */
-    func didChange(theme: Theme)
+    func didChange(theme: Theme, auto: Bool)
 }
 
 extension Themed where Self: UIViewController {}

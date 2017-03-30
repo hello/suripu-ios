@@ -44,10 +44,11 @@
 
 #pragma mark - Themed
 
-- (void)didChangeWithTheme:(Theme *)theme {
+- (void)didChangeWithTheme:(Theme *)theme auto:(BOOL)auto_ {
     [self setNeedsStatusBarAppearanceUpdate];
-    [[self presenters] makeObjectsPerformSelector:@selector(didChangeTheme:)
-                                       withObject:theme];
+    for (HEMPresenter* presenter in [self presenters]) {
+        [presenter didChangeTheme:theme auto:auto_];
+    }
 }
 
 #pragma mark - View Controller Lifecycle Events

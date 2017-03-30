@@ -28,6 +28,7 @@
 @interface HEMAppDelegate()
 
 @property (nonatomic, strong) PushNotificationService* pushService;
+@property (nonatomic, strong) NightModeService* nightModeService;
 
 @end
 
@@ -48,14 +49,13 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
     [self configureAPI];
     [self configureCrashReport];
     
-    [SenseStyle loadSavedTheme];
+    [self loadTheme];
     
     [HEMDebugController disableDebugMenuIfNeeded];
     [HEMLogUtils enableLogger];
     [SENAnalytics enableAnalytics];
 
     [self deauthorizeIfNeeded];
-    [self configureAppearance];
     [self renewPushNotificationToken];
     [self listenForAuthorizationChanges];
     [self createAndShowWindow];
@@ -110,8 +110,20 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
     [application clearBadgeFromNotification];
-    [self deauthorizeIfNeeded];
-    [self syncData];
+    if (![self deauthorizeIfNeeded]) {
+        [self loadTheme];
+        [self syncData];
+    }
+}
+    
+- (void)loadTheme {
+    [SenseStyle loadSavedThemeWithAuto:YES]; // load whatever first, then override as needed
+    
+    if (![self nightModeService]) {
+        [self setNightModeService:[NightModeService new]];
+    }
+    BOOL override = [[self mainViewController] showingMainTabs];
+    [[self nightModeService] loadThemeWithOverride:override];
 }
 
 - (void)configureProperties {
@@ -164,10 +176,6 @@ static NSString* const HEMShortcutTypeEditAlarms = @"is.hello.sense.shortcut.edi
         return YES;
     }
     return NO;
-}
-
-- (void)configureAppearance {
-    ApplyHelloStyles(); //TODO: REMOVE THIS!
 }
 
 - (void)createAndShowWindow {
@@ -291,7 +299,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
 }
 
 - (void)didSignIn {
-    [SenseStyle loadSavedTheme];
+    [self loadTheme];
     
     if ([[HEMOnboardingService sharedService] hasFinishedOnboarding]) {
         [self renewPushNotificationToken];
@@ -305,7 +313,7 @@ fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHand
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [[HEMOnboardingService sharedService] reset];
     [[SENServiceDevice sharedService] reset];
-    [[SenseStyle theme] unload];
+    [[SenseStyle theme] unloadWithAuto:YES];
 }
 
 @end

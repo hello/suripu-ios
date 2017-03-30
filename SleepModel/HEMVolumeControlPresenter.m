@@ -126,8 +126,8 @@ static CGFloat const kHEMVolumeSavedMessageDuration = 2.0f;
     }
 }
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [self applyStyle];
 }
 

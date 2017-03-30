@@ -99,8 +99,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
     [self refreshSections];
 }
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self tableView] applyStyle];
     [[self tableView] reloadData];
 }

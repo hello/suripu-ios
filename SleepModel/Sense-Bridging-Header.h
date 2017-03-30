@@ -36,6 +36,7 @@
 #import "HEMVoiceService.h"
 #import "HEMAccountService.h"
 #import "HEMUnreadAlertService.h"
+#import "HEMLocationService.h"
 
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"

@@ -23,6 +23,7 @@
 @property (strong, nonatomic) HEMExpansionService* expansionService;
 @property (strong, nonatomic) HEMDeviceService* deviceService;
 @property (weak, nonatomic) HEMBreadcrumbService* breadService;
+@property (strong, nonatomic) HEMLocationService* locationService;
 @property (strong, nonatomic) NightModeService* nightModeService;
 
 @end
@@ -98,7 +99,14 @@
     if (![self nightModeService]) {
         [self setNightModeService:[NightModeService new]];
     }
-    NightModeSettingsPresenter* presenter = [[NightModeSettingsPresenter alloc] initWithNightModeService:[self nightModeService]];
+    
+    if (![self locationService]) {
+        [self setLocationService:[HEMLocationService new]];
+    }
+    
+    NightModeSettingsPresenter* presenter =
+        [[NightModeSettingsPresenter alloc] initWithNightModeService:[self nightModeService]
+                                                     locationService:[self locationService]];
     HEMListItemSelectionViewController* listVC = [HEMMainStoryboard instantiateListItemViewController];
     [listVC setListPresenter:presenter];
     [[self navigationController] pushViewController:listVC animated:YES];

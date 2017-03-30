@@ -96,8 +96,8 @@ class TabPresenter: HEMPresenter {
     
     // MARK: - Presenter Events
     
-    override func didChange(_ theme: Theme) {
-        super.didChange(theme)
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
         self.reloadStyledIcons()
     }
     

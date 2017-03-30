@@ -70,8 +70,8 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 
 #pragma mark - Presenter events
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self collectionView] applyStyle];
     [[self collectionView] reloadData];
 }

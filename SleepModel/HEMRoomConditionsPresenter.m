@@ -161,8 +161,8 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
     [self startPolling];
 }
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self collectionView] applyStyle];
     [[self collectionView] reloadData];
 }

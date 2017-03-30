@@ -148,7 +148,7 @@ import UIKit
     convenience init(name: String!) {
         self.init()
         self.loadDefault()
-        self.load(name: name)
+        self.load(name: name, auto: true)
     }
     
     // MARK: - Load
@@ -216,11 +216,11 @@ import UIKit
     
     // MARK: - Apply
     
-    func apply() {
+    func apply(auto: Bool) {
         let app = UIApplication.shared
         let keyWindow = app.delegate?.window
         let rootVC = keyWindow??.rootViewController
-        self.apply(viewController: rootVC)
+        self.apply(viewController: rootVC, auto: auto)
         self.applyApearances()
     }
     
@@ -293,20 +293,20 @@ import UIKit
         switchControl.onTintColor = self.value(aClass: UISwitch.self, property: .tintHighlightedColor) as? UIColor
     }
     
-    fileprivate func apply(viewController: UIViewController?) {
+    fileprivate func apply(viewController: UIViewController?, auto: Bool) {
         guard let controller = viewController else {
             return
         }
         
         if let navVC = controller as? UINavigationController {
             navVC.viewControllers.forEach({ (controllerInStack: UIViewController) in
-                self.apply(viewController: controllerInStack)
+                self.apply(viewController: controllerInStack, auto: auto)
             })
         }
         
         if let tabVC = controller as? UITabBarController {
             tabVC.viewControllers?.forEach({ (tabController: UIViewController) in
-                self.apply(viewController: tabController)
+                self.apply(viewController: tabController, auto: auto)
             })
         }
         
@@ -314,9 +314,9 @@ import UIKit
             return
         }
         
-        themedVC.didChange(theme: self)
+        themedVC.didChange(theme: self, auto: auto)
         controller.childViewControllers.forEach { (child: UIViewController) in
-            self.apply(viewController: child)
+            self.apply(viewController: child, auto: auto)
         }
     }
     
@@ -330,18 +330,18 @@ import UIKit
      
         - Parameter name: the name of the theme that matches the configuration file name
      */
-    @objc func load(name: String?) {
+    @objc func load(name: String?, auto: Bool) {
         self.themeProperties = self.loadProperties(name: name)
-        self.apply()
+        self.apply(auto: auto)
     }
     
     /**
         Unloads the custom theme that is applied, if applied.  This is useful
         if the user signs out or changes context that should not support theme
     */
-    @objc func unload() {
+    @objc func unload(auto: Bool) {
         self.themeProperties = nil
-        self.apply()
+        self.apply(auto: auto)
     }
     
     /**

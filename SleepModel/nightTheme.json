@@ -443,9 +443,9 @@
     },
     
     "sense.sleep.score.icon" : {
-        "style.background.highlighted.color" : "@color/blue.6",
+        "style.background.highlighted.color" : "@color/grey.9",
         "style.text.color" : "@color/dark.secondary.text",
-        "style.text.highlighted.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/blue.6",
         "style.border.color" : "@color/dark.secondary.text",
         "style.border.highlighted.color" : "@color/blue.6"
     },

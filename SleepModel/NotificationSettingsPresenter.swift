@@ -62,8 +62,8 @@ import SenseKit
     
     // MARK: Presenter overrides
     
-    override func didChange(_ theme: Theme) {
-        super.didChange(theme)
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
         self.tableView.applyStyle()
         self.tableView.reloadData()
     }

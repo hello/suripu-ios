@@ -164,8 +164,8 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 #pragma mark - Presenter Events
 
-- (void)didChangeTheme:(Theme *)theme {
-    [super didChangeTheme:theme];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
     [[self tableView] applyStyle];
     [[self tableView] reloadData];
 }
@@ -197,6 +197,7 @@ static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 }
 
 - (void)willNotifyDelegateOfSelection {}
+- (void)didNotifyDelegateOfSelection {}
 
 #pragma mark - Nav Item
 
@@ -245,6 +246,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if ([[strongSelf delegate] respondsToSelector:@selector(didSelectItem:atIndex:from:)]) {
                 [[strongSelf delegate] didSelectItem:item atIndex:index from:strongSelf];
             }
+            [strongSelf didNotifyDelegateOfSelection];
         });
     }
 }

@@ -182,8 +182,9 @@ NS_ASSUME_NONNULL_BEGIN
  * Called when the theme has changed.  Subclasses should call super on this method
  *
  * @param theme: the current Theme to display / update with
+ * @param automatically: YES if not from a direct action of user.  NO otherwise
  */
-- (void)didChangeTheme:(Theme*)theme;
+- (void)didChangeTheme:(Theme*)theme auto:(BOOL)automatically;
 
 @end
 

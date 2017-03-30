@@ -110,6 +110,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @discussion
+ * Subclasses should override if interested in knowing that the delegate callback
+ * regarding a selection has just been made.  Only for single selection support
+ */
+- (void)didNotifyDelegateOfSelection;
+
+/**
+ * @discussion
  * Subclasses should implement this to return detail for the list item, if any.
  * By default, this returns nil
  *

@@ -206,6 +206,11 @@ import UIKit
         self.loadSavedTheme(auto: auto)
     }
     
+    @objc static func reset() {
+        theme.unload(auto: true)
+        currentTheme = nil
+    }
+    
     //MARK: - Colors
     
     @objc static func color(aClass: AnyClass, property: Theme.ThemeProperty) -> UIColor {

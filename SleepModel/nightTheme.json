@@ -546,5 +546,9 @@
     
     "#HEMProfileImageView" : {
         "style.background.color" : "@color/grey.9"
+    },
+    
+    "#HEMSensorGroupMemberView" : {
+        "style.text.color" : "@color/dark.primary.text"
     }
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMProfileImageView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 
@@ -39,6 +39,9 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 }
 
 - (void)configureDefaults {
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class]
+                                          property:ThemePropertyBackgroundColor];
+    [self setBackgroundColor:bgColor];
     [self setClipsToBounds:YES];
     [self setIndicateActivity:YES];
 }

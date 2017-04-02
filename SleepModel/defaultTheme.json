@@ -776,5 +776,9 @@
         "sense.illustration" : "@image/sleepPillDFU",
         "sense.shake.pill.image" : "@image/pairing_your_sleep_pill",
         "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair"
+    },
+    
+    "#HEMProfileImageView" : {
+        "style.background.color" : "@color/white"
     }
 }

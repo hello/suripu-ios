@@ -164,11 +164,15 @@ typedef NS_ENUM(NSUInteger, HEMNewAccountButtonType) {
     NSString* messageFormat = NSLocalizedString(@"account.facebook.info.message.format", nil);
     NSString* learnMore = NSLocalizedString(@"account.facebook.info.learn-more", nil);
     NSString* supportSlug = NSLocalizedString(@"help.url.slug.facebook-import", nil);
+    NSDictionary* attributes = [HEMActionSheetTitleView defaultDescriptionProperties];
     NSAttributedString* attrArg = [[NSAttributedString alloc] initWithString:learnMore];
-    NSArray* args = @[[attrArg hyperlink:supportSlug]];
-    NSMutableAttributedString* attrMessage = [[NSMutableAttributedString alloc] initWithFormat:messageFormat args:args];
-    [attrMessage addAttributes:[HEMActionSheetTitleView defaultDescriptionProperties]
-                         range:NSMakeRange(0, [attrMessage length])];
+    UIFont* font = attributes[NSFontAttributeName];
+    NSArray* args = @[[attrArg hyperlink:supportSlug font:font]];
+    NSMutableAttributedString* attrMessage =
+        [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                     args:args
+                                               attributes:attributes];
+
     HEMActionSheetTitleView* titleView = [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrMessage];
     
     __weak typeof(self) weakSelf = self;

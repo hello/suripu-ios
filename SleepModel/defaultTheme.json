@@ -149,7 +149,8 @@
     
     "#UITextView" : {
         "style.text.color" : "@color/light.secondary.text",
-        "style.text.font" : "@font/body.1"
+        "style.text.font" : "@font/body.1",
+        "style.link.color" : "@color/blue.6"
     },
     
     "sense.attributed.string" : {
@@ -611,7 +612,8 @@
         "style.title.font" : "@font/title.2",
         "style.text.font" : "@color/body.1",
         "style.text.color" : "@color/light.secondary.text",
-        "style.separator.color" : "@color/light.separator"
+        "style.separator.color" : "@color/light.separator",
+        "style.link.color" : "@color/blue.6"
     },
     
     "#HEMActionSheetOptionCell" : {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0.19
+
+Fixes:
+
+* Themed add button icon on profile image
+* Second sleep pill link color is now properly themed, under the device settings
+* Text inside the calibrating sensors in room check is now more readable
+* Alarm selection color is now a darker color, in night mode
+
 ## 2.1.0.18
 
 Fixes:

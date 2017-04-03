@@ -548,6 +548,10 @@
         "style.background.color" : "@color/grey.9"
     },
     
+    "#HEMPhotoHeaderView" : {
+        "style.icon.image" : "@image/addIconDark"
+    },
+    
     "#HEMSensorGroupMemberView" : {
         "style.text.color" : "@color/dark.primary.text"
     }

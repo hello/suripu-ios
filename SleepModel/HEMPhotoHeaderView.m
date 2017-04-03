@@ -33,11 +33,9 @@
 - (void)applyStyle {
     [self setBackgroundColor:[SenseStyle colorWithGroup:GroupListItem property:ThemePropertyBackgroundColor]];
     [[self imageView] setBackgroundColor:[self backgroundColor]];
-    
-    UIImage* addIcon = [UIImage imageNamed:@"addIconSmall"];
-    addIcon = [addIcon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    UIImage* addIcon = [SenseStyle imageWithAClass:[self class] property:ThemePropertyIconImage];
     [[self addButton] setImage:addIcon forState:UIControlStateNormal];
-    [[self addButton] setTintColor:[SenseStyle colorWithGroup:GroupAction property:ThemePropertyTintColor]];
 }
 
 @end

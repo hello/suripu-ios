@@ -16,7 +16,6 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsStoryboard.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMConfigurationSaveDelay = 1.0f;
 static CGFloat const kHEMConfigurationAccessoryMargin = 14.0f;
@@ -162,7 +161,12 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
         
         [[cell accessoryView] setHidden:![config isEqual:[self selectedConfig]]];
     } else {
-        UIImage* warningImage = [UIImage imageNamed:@"noConfigIcon"];
+        UIImage* warningImage = [SenseStyle imageWithGroup:GroupWarningIcon
+                                                  property:ThemePropertyIconImage];
+        UIColor* warningTint = [SenseStyle colorWithGroup:GroupWarningIcon
+                                                 property:ThemePropertyTintColor];
+        warningImage = [warningImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        
         NSString* textFormat = NSLocalizedString(@"expansion.config.no-cnfig.format", nil);
         NSString* text = [NSString stringWithFormat:textFormat, [[self configurationName] lowercaseString]];
         
@@ -178,6 +182,7 @@ static CGFloat const kHEMConfigurationNoConfigSeparatorHeight = 1.0f;
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         [[cell textLabel] setText:text];
         [cell setAccessoryView:[self accessoryViewWithImage:warningImage withHeight:cellHeight]];
+        [[cell accessoryView] setTintColor:warningTint];
         [[cell contentView] addSubview:separator];
     }
     

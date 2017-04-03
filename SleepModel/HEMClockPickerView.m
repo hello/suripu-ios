@@ -153,7 +153,7 @@ static NSUInteger const HEMClock12HourCount = 12;
     _colonLabel = [UILabel new];
     _colonLabel.text = NSLocalizedString(@"alarm.clock.divider", nil);
     _colonLabel.font = [self font];
-    _colonLabel.textColor = [self color];
+    _colonLabel.textColor = [self selectedColor];
     _colonLabel.textAlignment = NSTextAlignmentCenter;
     [self insertSubview:_colonLabel atIndex:0];
 }

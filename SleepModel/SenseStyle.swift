@@ -93,9 +93,12 @@ import UIKit
         case voiceTutorial
         case factoryReset
         case pillDfu
+        case warningIcon
         
         var key: String {
             switch self {
+            case .warningIcon:
+                return "sense.warning.icon"
             case .pillDfu:
                 return "sense.pill.dfu"
             case .factoryReset:
@@ -204,6 +207,11 @@ import UIKit
         let preferences = SENLocalPreferences.shared()!
         preferences.setUserPreference(theme.hashValue, forKey: themeKey)
         self.loadSavedTheme(auto: auto)
+    }
+    
+    @objc static func reset() {
+        theme.unload(auto: true)
+        currentTheme = nil
     }
     
     //MARK: - Colors

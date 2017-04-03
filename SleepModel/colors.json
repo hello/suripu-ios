@@ -15,7 +15,7 @@
     "dark.secondary.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.70},
     "dark.disabled.text" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.50},
     "dark.separator" : { "style.color.hex" : "FFFFFF", "style.color.alpha" : 0.12},
-    "dark.disabled.overlay" : { "style.color.hex" : "000000", "style.color.alpha" : 0.7},
+    "dark.disabled.overlay" : { "style.color.hex" : "000000", "style.color.alpha" : 0.5},
     
     "disabled.button" : { "style.color.hex" : "009AFF", "style.color.alpha" : 0.4},
     

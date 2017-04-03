@@ -33,5 +33,10 @@ extension UITextView {
         
         mutableText.applyAttributes(attributes)
         self.attributedText = mutableText
+        
+        let linkColor = SenseStyle.color(aClass: aClass, property: .linkColor)
+        self.linkTextAttributes = [NSFontAttributeName : font,
+                                   NSForegroundColorAttributeName : linkColor]
+        
     }
 }

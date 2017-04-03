@@ -28,6 +28,14 @@ import Foundation
 
 extension WarningView {
     
+    static func messageAttributes() -> [String : Any] {
+        let detailFont = SenseStyle.font(group: .warningView, property: .detailFont)
+        let detailColor = SenseStyle.color(group: .warningView, property: .detailColor)
+        return [NSFontAttributeName : detailFont,
+                NSForegroundColorAttributeName : detailColor,
+                NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+    }
+    
     func applyStyle() {
         let separatorColor = SenseStyle.color(group: .warningView, property: .separatorColor)
         let bgColor = SenseStyle.color(group: .warningView, property: .backgroundColor)

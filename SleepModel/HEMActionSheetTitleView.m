@@ -62,6 +62,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     [view setDelegate:self];
     [view setSelectable:NO];
     [view setBackgroundColor:[self backgroundColor]];
+    [view applyStyle];
 
     CGRect textFrame = CGRectZero;
     textFrame.size.width = frameWidth;

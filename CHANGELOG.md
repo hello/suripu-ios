@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.0.18
+
+Fixes:
+
+* Design review tweaks, or 1/3 of the changes
+* Fixed issue where theme not applied after signing out, then back in during same session
+* Fixed profile image not masked inside a circle during onboarding
+* Fixed learn more text color in facebook info alert
+
 ## 2.1.0.17
 
 New:

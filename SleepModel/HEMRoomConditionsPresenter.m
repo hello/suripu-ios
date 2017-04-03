@@ -499,7 +499,7 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
 - (void)configureGroupSensorCell:(HEMSensorGroupCollectionViewCell*)groupCell
                       forSensors:(NSArray<SENSensor*>*)sensors {
     NSString* groupTitle = NSLocalizedString(@"room-conditions.air-quality", nil);
-    [[groupCell groupNameLabel] setText:[groupTitle uppercaseString]];
+    [[groupCell groupNameLabel] setText:groupTitle];
     
     SENCondition worstCondition = SENConditionIncomplete;
     NSString* worstConditionString = nil;
@@ -514,7 +514,8 @@ willDisplaySupplementaryView:(UICollectionReusableView *)view
         [[self formatter] setDecimalPlaces:NSNotFound];
         [[self formatter] setSensorUnit:[sensor unit]];
         [[self formatter] setIncludeUnitSymbol:YES];
-        UIColor* conditionColor = [SenseStyle colorWithCondition:[sensor condition] defaultColor:nil];
+        UIColor* conditionColor = [SenseStyle colorWithCondition:[sensor condition]
+                                                    defaultColor:nil];
         NSString* valueText = nil;
         if ([sensor condition] != SENConditionCalibrating) {
             valueText = [[self formatter] stringFromSensor:sensor];

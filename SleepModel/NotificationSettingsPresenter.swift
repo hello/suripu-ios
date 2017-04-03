@@ -112,9 +112,7 @@ import SenseKit
     fileprivate func attributedWarningMessage() -> NSAttributedString {
         let message = NSLocalizedString("settings.notification.warning.message.not-enabled",
                                         comment: "enable notification message")
-        let attributes: [String: Any] = [NSFontAttributeName : UIFont.body(),
-                                         NSForegroundColorAttributeName : UIColor.grey5(),
-                                         NSParagraphStyleAttributeName: DefaultBodyParagraphStyle()]
+        let attributes = WarningView.messageAttributes()
         return NSAttributedString(string: message, attributes: attributes)
     }
     

@@ -26,6 +26,10 @@ static CGFloat const kHEMAlarmCellFadeDuration = 0.5f;
     [[self errorIcon] setTintColor:warningTint];
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"settingsLoader"]];
+    
+    [self setSelectionStyle:UITableViewCellSelectionStyleDefault];
+    [self setSelectedBackgroundView:[UIView new]];
+    [self applyStyle];
 }
 
 - (void)showActivity:(BOOL)show {

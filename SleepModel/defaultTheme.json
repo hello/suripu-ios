@@ -136,6 +136,7 @@
     },
     
     "#HEMTextFooterCollectionReusableView" : {
+        "style.group.parent" : "#UITextView",
         "style.text.color" : "@color/light.disabled.text",
         "style.text.font" : "@font/body.1"
     },

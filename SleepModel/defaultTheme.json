@@ -785,6 +785,10 @@
         "style.background.color" : "@color/white"
     },
     
+    "#HEMPhotoHeaderView" : {
+        "style.icon.image" : "@image/addIconLight"
+    },
+    
     "#HEMSensorGroupMemberView" : {
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.primary.text"

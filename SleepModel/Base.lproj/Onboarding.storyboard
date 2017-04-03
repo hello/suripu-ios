@@ -550,7 +550,7 @@
                                                         <constraint firstAttribute="height" constant="104" id="BZe-rj-WBC"/>
                                                         <constraint firstAttribute="width" constant="104" id="wlq-7o-myu"/>
                                                     </constraints>
-                                                    <state key="normal" image="addIconSmall"/>
+                                                    <state key="normal" image="addIconLight"/>
                                                 </button>
                                             </subviews>
                                         </view>
@@ -1227,11 +1227,11 @@
                                         <rect key="frame" x="0.0" y="66" width="390" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w2R-Q9-Bmm" id="39f-cF-XX7">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EmK-D8-elU">
-                                                    <rect key="frame" x="15" y="0.0" width="360" height="43.666666666666664"/>
+                                                    <rect key="frame" x="15" y="0.0" width="360" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2694,7 +2694,7 @@ what's the temperature?"</string>
                                         <rect key="frame" x="0.0" y="28" width="414" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M2D-6d-Myd" id="UMP-Br-DLT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radio" highlightedImage="radioSelected" translatesAutoresizingMaskIntoConstraints="NO" id="NyY-R5-7gz" customClass="HEMURLImageView">
@@ -3524,7 +3524,7 @@ Turn Bluetooth on</string>
     </scenes>
     <resources>
         <image name="accessory" width="8" height="14"/>
-        <image name="addIconSmall" width="24" height="24"/>
+        <image name="addIconLight" width="28" height="28"/>
         <image name="bluetooth" width="32" height="32"/>
         <image name="defaultAvatar" width="104" height="104"/>
         <image name="fbIcon" width="20" height="20"/>

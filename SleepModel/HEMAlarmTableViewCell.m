@@ -18,6 +18,12 @@ static CGFloat const kHEMAlarmCellFadeDuration = 0.5f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    UIImage* warningImage = [SenseStyle imageWithGroup:GroupWarningIcon
+                                              property:ThemePropertyIconImage];
+    UIColor* warningTint = [SenseStyle colorWithGroup:GroupWarningIcon
+                                             property:ThemePropertyTintColor];
+    [[self errorIcon] setImage:[warningImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [[self errorIcon] setTintColor:warningTint];
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"settingsLoader"]];
 }

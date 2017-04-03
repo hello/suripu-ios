@@ -93,9 +93,12 @@ import UIKit
         case voiceTutorial
         case factoryReset
         case pillDfu
+        case warningIcon
         
         var key: String {
             switch self {
+            case .warningIcon:
+                return "sense.warning.icon"
             case .pillDfu:
                 return "sense.pill.dfu"
             case .factoryReset:

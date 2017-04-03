@@ -787,5 +787,10 @@
     "#HEMSensorGroupMemberView" : {
         "style.text.font" : "@font/body.1",
         "style.text.color" : "@color/light.primary.text"
+    },
+    
+    "sense.warning.icon" : {
+        "style.icon.image" : "@image/warningIcon",
+        "style.tint.color" : "@color/red.6"
     }
 }

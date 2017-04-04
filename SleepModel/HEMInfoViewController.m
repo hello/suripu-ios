@@ -62,12 +62,9 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:[[self infoSource] infoTitleForIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell detailTextLabel] setText:[[self infoSource] infoValueForIndexPath:indexPath]];
-    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell applyStyle];
 }
 
 #pragma mark - Actions

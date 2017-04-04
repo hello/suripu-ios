@@ -2,6 +2,8 @@
 //  UIColor+HEMStyle.h
 //  Sense
 //
+//  Deprecated: Use SenseStyle instead
+//
 //  Created by Delisa Mason on 12/15/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
@@ -11,10 +13,6 @@
 #import <SenseKit/SENTimelineSegment.h>
 
 @interface UIColor (HEMStyle)
-
-#pragma mark - Appearances
-
-+ (void)applyDefaultColorAppearances;
 
 #pragma mark - Standard Hello Colors from Style Guide
 
@@ -96,11 +94,6 @@
 + (UIColor *)colorForCondition:(SENCondition)condition;
 
 /**
- *  Color used for a state of sleep, such as awake, sound, or light
- */
-+ (UIColor *)colorForSleepState:(SENTimelineSegmentSleepState)state;
-
-/**
  *  Creates a UIColor instance from a hex value, such as 0xFF0000 (red)
  *
  *  @param hexValue value of the color to create
@@ -110,26 +103,13 @@
  */
 + (UIColor *)colorWithHex:(uint)hexValue alpha:(float)alpha;
 + (UIColor *)timelineBackgroundColor;
-+ (NSArray *)timelineSelectedGradientColorRefs;
 
 #pragma mark - Background Colors
-
-/**
- * Action sheet and alert background color.  Anything we want to have a slight
- * alpha to see through what is being displayed underneath the view
- */
-+ (UIColor *)seeThroughBackgroundColor;
 
 /**
  * Default background color for most views in view controllers
  */
 + (UIColor *)backgroundColor;
-+ (UIColor *)lightBackgroundColor;
-
-#pragma mark - Card colors
-
-+ (UIColor *)cardBorderColor;
-+ (UIColor *)cardTitleColor;
 
 #pragma mark - Common colors
 
@@ -148,8 +128,6 @@
  * Default text color
  */
 + (UIColor *)textColor;
-+ (UIColor *)settingsTextColor;
-+ (UIColor *)settingsDetailTextColor;
 
 /**
  * Text color for detail / value text, typically within a list / table view
@@ -165,7 +143,6 @@
 + (UIColor *)subNavInactiveTitleColor;
 + (UIColor *)separatorColor;
 + (UIColor *)borderColor;
-+ (UIColor *)touchIndicatorColor;;
 + (NSArray*)loadingIndicatorColorRefs;
 
 

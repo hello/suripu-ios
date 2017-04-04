@@ -377,7 +377,6 @@
 		BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */; };
 		BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */; };
 		BF9450AA1BC316CE00BA0023 /* HEMUnreadAlertService.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */; };
-		BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */; };
 		BF96A56D1E57BB60007C2CBA /* GenderOptions.strings in Resources */ = {isa = PBXBuildFile; fileRef = BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */; };
 		BF96A5711E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A5701E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift */; };
 		BF9826641D3ECDB7009518CA /* HEMSenseDFUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9826631D3ECDB7009518CA /* HEMSenseDFUViewController.m */; };
@@ -1195,7 +1194,6 @@
 		BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextCollectionViewCell.m; sourceTree = "<group>"; };
 		BF9450A81BC316CE00BA0023 /* HEMUnreadAlertService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnreadAlertService.h; sourceTree = "<group>"; };
 		BF9450A91BC316CE00BA0023 /* HEMUnreadAlertService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnreadAlertService.m; sourceTree = "<group>"; };
-		BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SystemAlerts.xcassets; sourceTree = "<group>"; };
 		BF96A56C1E57BB60007C2CBA /* GenderOptions.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = GenderOptions.strings; sourceTree = "<group>"; };
 		BF96A5701E5D0DE4007C2CBA /* OtherGenderOptionsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherGenderOptionsPresenter.swift; sourceTree = "<group>"; };
 		BF9826621D3ECDB7009518CA /* HEMSenseDFUViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseDFUViewController.h; sourceTree = "<group>"; };
@@ -3721,7 +3719,6 @@
 		BFF03EC71A536D0C00BD65D4 /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				BF9450AC1BC3541E00BA0023 /* SystemAlerts.xcassets */,
 				BFA884A71C19FAC900613069 /* Controllers */,
 				BFA884B11C1A0C4200613069 /* Presenters */,
 				BF539CBB1C0D03BC000F77AA /* Services */,
@@ -3960,7 +3957,6 @@
 				BF238E001D1E009D00F6E62C /* AmazonReviews.plist in Resources */,
 				BF5BACA01C920336001E77F6 /* SleepSounds.xcassets in Resources */,
 				BF88EA7B1DBEF8EE00BCE15E /* AmazonReviewsForVoice.plist in Resources */,
-				BF9450AD1BC3541E00BA0023 /* SystemAlerts.xcassets in Resources */,
 				BF0B15E71DF1072400DF2373 /* Main.xcassets in Resources */,
 				8AD3313A1BB090DA00DFF95A /* Tutorial.xcassets in Resources */,
 				BFF364731D62702E008D4DF8 /* Upgrade.xcassets in Resources */,

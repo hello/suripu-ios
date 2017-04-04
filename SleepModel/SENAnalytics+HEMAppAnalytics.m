@@ -291,6 +291,14 @@ NSString* const HEMAnalyticsEventUpgradeSwapRequest = @"Upgrade Swap Accounts Re
 NSString* const HEMAnalyticsEventUpgradeSwapped = @"Upgrade Account Swapped";
 NSString* const HEMAnalyticsEventUpgradeReset = @"Upgrade Factory Reset";
 
+// night mode
+static NSString* const kHEMAnalyticsEventNightModeChanged = @"Changed Night Mode";
+static NSString* const kHEMAnalyticsEventPropSetting = @"setting";
+static NSString* const kHEMAnalyticsTraitNightMode = @"Night Mode";
+NSString* const kHEMAnalyticsPropNightModeValueOn = @"on";
+NSString* const kHEMAnalyticsPropNightModeValueOff = @"off";
+NSString* const kHEMAnalyticsPropNightModeValueAuto = @"auto";
+
 // push notifications
 static NSString* const kHEMAnalyticsEventOpenFromPushNotification = @"Open Notification";
 static NSString* const kHEMAnalyticsEventNotificationType = @"type";
@@ -360,6 +368,22 @@ static NSString* const HEMAnalyticsSettingsSegment = @"is.hello.analytics.segmen
     
     [self setGlobalEventProperties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
                                      HEMAnalyticsEventPropName : [account fullName] ?: @""}];
+}
+
++ (void)trackUserProperty:(NSString*)name value:(NSString*)value {
+    if ([[SENAuthorizationService accountIdOfAuthorizedUser] length] > 0
+        && [name length] > 0
+        && [value length] > 0) {
+        
+        NSDictionary* properties = @{name : value};
+        [self setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:properties];
+        [self setGlobalEventProperties:properties];
+    }
+}
+
++ (void)trackNightModeChangeWithSetting:(NSString*)settingValue {
+    [self trackUserProperty:kHEMAnalyticsTraitNightMode value:settingValue];
+    [self track:kHEMAnalyticsEventNightModeChanged properties:@{kHEMAnalyticsEventPropSetting : settingValue ?: @"unknown"}];
 }
 
 + (void)trackErrorWithMessage:(NSString*)message {

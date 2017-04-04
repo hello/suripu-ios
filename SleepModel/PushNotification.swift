@@ -69,7 +69,7 @@ import Foundation
             }
         }
     }
-    
+
     /// convenience constant for objective-c code to use namespacing
     @objc public static let sleepScore: PushType = .sleepScore
     @objc public static let system: PushType = .system

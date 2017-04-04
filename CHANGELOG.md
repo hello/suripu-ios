@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.20
+
+New:
+
+* Added analytics for night mode
+
 ## 2.1.0.19
 
 Fixes:

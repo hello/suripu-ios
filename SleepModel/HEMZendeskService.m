@@ -15,12 +15,12 @@
 #import <ZendeskSDK/ZendeskSDK.h>
 
 #import "UIDevice+HEMUtils.h"
+#import "Sense-Swift.h"
 
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"
 #import "HEMConfig.h"
 #import "HEMAccountService.h"
-#import "HEMStyle.h"
 
 // the following are values found in the Zendesk admin interface that maps
 // to the custom fields created

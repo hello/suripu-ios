@@ -17,7 +17,6 @@
 #import "HEMURLImageView.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMExpansionListImageBorder = 0.5f;
 static CGFloat const kHEMExpansionListCellSize = 72.0f;

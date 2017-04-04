@@ -33,7 +33,7 @@ static CGFloat const HEMInsightCellShareButtonHeight = 46.0f;
     UIColor* color = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
     UIColor* boldColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
     UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     [style setLineBreakMode:NSLineBreakByWordWrapping];
     return @{@(EMPH) : @{NSFontAttributeName : font,
                          NSParagraphStyleAttributeName : style,

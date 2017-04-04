@@ -13,6 +13,7 @@
 #import "UIImagePickerController+HEMProfilePhoto.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
+#import "Sense-Swift.h"
 
 #import "HEMNewAccountPresenter.h"
 #import "HEMPresenter+HEMPhoto.h"
@@ -29,7 +30,6 @@
 #import "HEMSimpleLineTextField.h"
 #import "HEMActionSheetTitleView.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 #import "HEMAlertViewController.h"
 
 static CGFloat const HEMNewAccountPresenterPhotoHeight = 226.0f;

@@ -10,7 +10,6 @@
 #import "Sense-Swift.h"
 
 #import "HEMTextCollectionViewCell.h"
-#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 #import "NSAttributedString+HEMUtils.h"
 

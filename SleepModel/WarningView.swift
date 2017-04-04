@@ -33,7 +33,7 @@ extension WarningView {
         let detailColor = SenseStyle.color(group: .warningView, property: .detailColor)
         return [NSFontAttributeName : detailFont,
                 NSForegroundColorAttributeName : detailColor,
-                NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+                NSParagraphStyleAttributeName : NSMutableParagraphStyle.senseStyle()]
     }
     
     func applyStyle() {

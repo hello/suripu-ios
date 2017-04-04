@@ -32,7 +32,7 @@ extension HEMExpansionHeaderView {
             let mutableBody = attributedBody.mutableCopy() as! NSMutableAttributedString
             let attributes = [NSForegroundColorAttributeName : detailColor,
                               NSFontAttributeName : detailFont,
-                              NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+                              NSParagraphStyleAttributeName : NSMutableParagraphStyle.senseStyle()]
             mutableBody.applyAttributes(attributes)
             self.descriptionLabel.attributedText = mutableBody
         }

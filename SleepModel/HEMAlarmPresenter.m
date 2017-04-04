@@ -14,7 +14,6 @@
 
 #import "HEMAlarmPresenter.h"
 #import "HEMAlarmService.h"
-#import "HEMStyle.h"
 #import "HEMAlarmCache.h"
 #import "HEMTutorial.h"
 #import "HEMClockPickerView.h"

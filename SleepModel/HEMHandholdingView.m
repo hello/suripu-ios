@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 #import "NSString+HEMUtils.h"
-
+#import "Sense-Swift.h"
 #import "HEMHandholdingView.h"
 #import "HEMHintGestureView.h"
 #import "HEMHintMessageView.h"
-#import "HEMStyle.h"
 
 CGFloat const HEMHandholdingGestureSize = 50.0f;
 static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
@@ -108,7 +107,7 @@ static CGFloat const HEMHandholdingMessageOvalMargins = 24.0f;
                                                                 usingFont:messageFont];
             break;
         case HEMHHMessageStyleOval: {
-            NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+            NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
             [style setAlignment:NSTextAlignmentCenter];
             
             NSDictionary* attributes = @{NSFontAttributeName : messageFont,

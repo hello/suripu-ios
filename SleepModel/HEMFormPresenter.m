@@ -15,7 +15,6 @@
 #import "HEMSettingsStoryboard.h"
 #import "HEMTitledTextField.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMFormCellHeight = 72.0f;
 static CGFloat const HEMFormCellSideMargins = 24.0f;

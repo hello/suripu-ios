@@ -24,7 +24,6 @@
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionSheetTitleView.h"
-#import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMExpansionRowType) {
     HEMExpansionRowTypePermissions = 0,

@@ -5,9 +5,9 @@
 //  Created by Jimmy Lu on 10/13/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 #import "HEMMeetSenseView.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 @interface HEMMeetSenseView()
 
@@ -68,7 +68,7 @@
 }
 
 - (NSDictionary*)descriptionAttributes {
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     [style setAlignment:NSTextAlignmentCenter];
     
     return @{NSFontAttributeName : [UIFont body],

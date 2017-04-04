@@ -129,7 +129,7 @@ import Foundation
             return CGRect.zero
         }
         
-        let paragraphStyle = DefaultBodyParagraphStyle()!
+        let paragraphStyle = NSMutableParagraphStyle.senseStyle()
         paragraphStyle.alignment = NSTextAlignment.center
         let messageAttributes: [String : Any] = [NSFontAttributeName : UIFont.body(),
                                                 NSForegroundColorAttributeName : UIColor.grey5(),

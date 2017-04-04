@@ -12,7 +12,6 @@
 
 #import "HEMVolumeControlPresenter.h"
 #import "HEMVoiceService.h"
-#import "HEMStyle.h"
 #import "HEMActionButton.h"
 #import "HEMVolumeSlider.h"
 #import "HEMScreenUtils.h"

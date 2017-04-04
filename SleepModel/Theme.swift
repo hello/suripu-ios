@@ -48,9 +48,27 @@ import UIKit
         case iconImage
         case iconHighlightedImage
         case keyboardAppearance
+        case sizeWidth
+        case sizeHeight
+        case marginTop
+        case marginBottom
+        case marginLeft
+        case marginRight
         
         var key: String {
             switch self {
+                case .marginTop:
+                    return "style.margin.top"
+                case .marginBottom:
+                    return "style.margin.bottom"
+                case .marginLeft:
+                    return "style.margin.left"
+                case .marginRight:
+                    return "style.margin.right"
+                case .sizeHeight:
+                    return "style.size.height"
+                case .sizeWidth:
+                    return "style.size.width"
                 case .keyboardAppearance:
                     return "style.keyboard.appearance"
                 case .iconImage:
@@ -125,8 +143,9 @@ import UIKit
         }
     }
  
+    static let appGroup = "style.app"
+    
     fileprivate static let defaultThemeFile = "defaultTheme"
-    fileprivate static let appGroup = "style.app"
 
     fileprivate static let classPrefix = "#"
     fileprivate static let keyParent = "style.group.parent"
@@ -222,75 +241,6 @@ import UIKit
         let rootVC = keyWindow??.rootViewController
         self.apply(viewController: rootVC, auto: auto)
         self.applyApearances()
-    }
-    
-    fileprivate func applyApearances() {
-        self.applyNavigationBarApperance()
-        self.applyToolbarAppearance()
-        self.applyTabBarAppearance()
-        self.applyBarButtonItemAppearance()
-        self.applySwitchAppearance()
-        
-        let windows = UIApplication.shared.windows
-        windows.forEach { (window: UIWindow) in
-            window.subviews.forEach({ (view: UIView) in
-                view.removeFromSuperview()
-                window.addSubview(view)
-            })
-        }
-    }
-    
-    fileprivate func applyTabBarAppearance() {
-        let tabBar = UITabBar.appearance()
-        let translucent = self.value(aClass: UITabBar.self, property: .translucent) as? NSNumber
-        tabBar.isTranslucent = translucent?.boolValue ?? false
-        tabBar.barTintColor = self.value(aClass: UITabBar.self, property: .barTintColor) as? UIColor
-        tabBar.tintColor = self.value(aClass: UITabBar.self, property: .tintColor) as? UIColor
-    }
-    
-    fileprivate func applyNavigationBarApperance() {
-        let aClass = UINavigationBar.self
-        let translucent = self.value(aClass: aClass, property: .translucent) as? NSNumber
-        let shadow = self.value(aClass: aClass, property: .includeShadow) as? NSNumber
-        let navigationBar = UINavigationBar.appearance()
-        navigationBar.barTintColor = self.value(aClass: aClass, property: .barTintColor) as? UIColor
-        navigationBar.tintColor = self.value(aClass: aClass, property: .tintColor) as? UIColor
-        navigationBar.isTranslucent = translucent?.boolValue ?? false
-        
-        if shadow?.boolValue == false {
-            navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-            navigationBar.shadowImage = UIImage()
-        }
-        
-        var navTitleAttributes: [String: Any] = [:]
-        if let navTitleColor = self.value(aClass: aClass, property: .textColor) as? UIColor {
-            navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
-        }
-        if let navTitleFont = self.value(aClass: aClass, property:. textFont) as? UIFont {
-            navTitleAttributes[NSFontAttributeName] = navTitleFont
-        }
-        navigationBar.titleTextAttributes = navTitleAttributes
-    }
-    
-    fileprivate func applyToolbarAppearance() {
-        let toolbar = UIToolbar.appearance()
-        let translucent = self.value(aClass: UIToolbar.self, property: .translucent) as? NSNumber
-        toolbar.isTranslucent = translucent?.boolValue ?? false
-        toolbar.barTintColor = self.value(aClass: UIToolbar.self, property: .barTintColor) as? UIColor
-        toolbar.tintColor = self.value(aClass: UIToolbar.self, property: .tintColor) as? UIColor
-    }
-    
-    fileprivate func applyBarButtonItemAppearance() {
-        let barButtonItem = UIBarButtonItem.appearance()
-        barButtonItem.tintColor = self.value(aClass: UIBarButtonItem.self, property: .tintColor) as? UIColor
-        
-        let button = UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
-        button.tintColor = barButtonItem.tintColor
-    }
-    
-    fileprivate func applySwitchAppearance() {
-        let switchControl = UISwitch.appearance()
-        switchControl.onTintColor = self.value(aClass: UISwitch.self, property: .tintHighlightedColor) as? UIColor
     }
     
     fileprivate func apply(viewController: UIViewController?, auto: Bool) {
@@ -431,4 +381,77 @@ import UIKit
         return self.value(group: group, key: property.key)
     }
 
+}
+
+fileprivate extension Theme {
+    
+    fileprivate func applyApearances() {
+        self.applyNavigationBarApperance()
+        self.applyToolbarAppearance()
+        self.applyTabBarAppearance()
+        self.applyBarButtonItemAppearance()
+        self.applySwitchAppearance()
+        
+        let windows = UIApplication.shared.windows
+        windows.forEach { (window: UIWindow) in
+            window.subviews.forEach({ (view: UIView) in
+                view.removeFromSuperview()
+                window.addSubview(view)
+            })
+        }
+    }
+    
+    fileprivate func applyTabBarAppearance() {
+        let tabBar = UITabBar.appearance()
+        let translucent = self.value(aClass: UITabBar.self, property: .translucent) as? NSNumber
+        tabBar.isTranslucent = translucent?.boolValue ?? false
+        tabBar.barTintColor = self.value(aClass: UITabBar.self, property: .barTintColor) as? UIColor
+        tabBar.tintColor = self.value(aClass: UITabBar.self, property: .tintColor) as? UIColor
+    }
+    
+    fileprivate func applyNavigationBarApperance() {
+        let aClass = UINavigationBar.self
+        let translucent = self.value(aClass: aClass, property: .translucent) as? NSNumber
+        let shadow = self.value(aClass: aClass, property: .includeShadow) as? NSNumber
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.barTintColor = self.value(aClass: aClass, property: .barTintColor) as? UIColor
+        navigationBar.tintColor = self.value(aClass: aClass, property: .tintColor) as? UIColor
+        navigationBar.isTranslucent = translucent?.boolValue ?? false
+        
+        if shadow?.boolValue == false {
+            navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            navigationBar.shadowImage = UIImage()
+        }
+        
+        var navTitleAttributes: [String: Any] = [:]
+        if let navTitleColor = self.value(aClass: aClass, property: .textColor) as? UIColor {
+            navTitleAttributes[NSForegroundColorAttributeName] = navTitleColor
+        }
+        if let navTitleFont = self.value(aClass: aClass, property:. textFont) as? UIFont {
+            navTitleAttributes[NSFontAttributeName] = navTitleFont
+        }
+        navigationBar.titleTextAttributes = navTitleAttributes
+    }
+    
+    fileprivate func applyToolbarAppearance() {
+        let toolbar = UIToolbar.appearance()
+        let translucent = self.value(aClass: UIToolbar.self, property: .translucent) as? NSNumber
+        toolbar.isTranslucent = translucent?.boolValue ?? false
+        toolbar.barTintColor = self.value(aClass: UIToolbar.self, property: .barTintColor) as? UIColor
+        toolbar.tintColor = self.value(aClass: UIToolbar.self, property: .tintColor) as? UIColor
+    }
+    
+    fileprivate func applyBarButtonItemAppearance() {
+        let barButtonItem = UIBarButtonItem.appearance()
+        barButtonItem.tintColor = self.value(aClass: UIBarButtonItem.self, property: .tintColor) as? UIColor
+        
+        let button = UIButton.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
+        button.tintColor = barButtonItem.tintColor
+    }
+    
+    fileprivate func applySwitchAppearance() {
+        let switchControl = UISwitch.appearance()
+        switchControl.onTintColor = self.value(aClass: UISwitch.self, property: .tintHighlightedColor) as? UIColor
+    }
+    
 }

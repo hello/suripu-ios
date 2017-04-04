@@ -6,8 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMNavigationShadowView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
 
@@ -60,8 +60,9 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
     [shadowView setFrame:[self bounds]];
     [shadowView setAlpha:0.0f];
     
+    CGFloat topMargin = [SenseStyle floatWithGroup:GroupMargins property:ThemePropertyMarginTop];
     [self addSubview:shadowView];
-    [self setTopOffset:HEMStyleSectionTopMargin];
+    [self setTopOffset:topMargin];
     [self setShadowImageView:shadowView];
     [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 }

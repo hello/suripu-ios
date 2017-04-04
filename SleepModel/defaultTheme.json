@@ -3,6 +3,21 @@
         "style.status.bar.style" : "style.status.bar.LIGHT"
     },
     
+    "sense.margins" : {
+        "style.margin.top" : 12.0
+    },
+    
+    "sense.errors" : {
+        "style.margin.left" : 16.0,
+        "style.margin.top" : 26.0,
+        "style.margin.right" : 16.0,
+        "style.margin.bottom" : 26.0
+    },
+    
+    "#NSMutableParagraphStyle" : {
+        "sense.paragraph.line.height" : 24.0
+    },
+    
     "#UIView" : {
         "sense.background.fill.color" : "@color/white",
         "sense.disabled.overlay.color" : "@color/light.disabled.overlay",
@@ -18,7 +33,9 @@
     },
     
     "#UIBarButtonItem" : {
-        "style.tint.color" : "@color/black"
+        "style.tint.color" : "@color/black",
+        "style.size.width" : 50.0,
+        "style.size.height" : 44.0
     },
     
     "#UILabel" : {
@@ -68,7 +85,8 @@
         "style.text.font" : "@font/title.1",
         "style.separator.color" : "@color/light.separator",
         "style.include.shadow" : false,
-        "style.translucent" : false
+        "style.translucent" : false,
+        "sense.back.image" : "@image/backIcon"
     },
     
     "#HEMActionButton" :  {

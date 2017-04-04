@@ -5,7 +5,6 @@
 #import "Sense-Swift.h"
 
 #import "HEMAppDelegate.h"
-#import "HEMStyle.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMAlarmListViewController.h"
 #import "HEMStyledNavigationViewController.h"

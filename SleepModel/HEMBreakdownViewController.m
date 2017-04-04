@@ -343,7 +343,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
     UIColor* textColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
     UIColor* boldColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     style.alignment = NSTextAlignmentLeft;
     return @{@(PLAIN) : @{ NSFontAttributeName : font,
                            NSForegroundColorAttributeName : textColor,

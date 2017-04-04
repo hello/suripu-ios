@@ -24,7 +24,7 @@ static CGFloat const kHEMSensorAboutCellHorzPadding = 24.0f;
                                           property:ThemePropertyDetailFont];
     
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:3];
-    attributes[NSParagraphStyleAttributeName] = DefaultBodyParagraphStyle();
+    attributes[NSParagraphStyleAttributeName] = [NSMutableParagraphStyle senseStyle];
     if (aboutFont) {
         attributes[NSFontAttributeName] = aboutFont;
     }

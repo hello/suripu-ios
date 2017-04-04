@@ -6,8 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "NSBundle+HEMUtils.h"
-
-#import "HEMStyle.h"
+#import "Sense-Swift.h"
 #import "HEMSensorScaleView.h"
 
 CGFloat const kHEMSensorScaleHeight = 56.0f;
@@ -28,8 +27,8 @@ CGFloat const kHEMSensorScaleHeight = 56.0f;
     
     CGFloat conditionSize = CGRectGetWidth([[self conditionView] bounds]);
     [[[self conditionView] layer] setCornerRadius:conditionSize / 2.0f];
-    
-    [[self separatorView] setBackgroundColor:[UIColor separatorColor]];
+
+    [[self separatorView] applySeparatorStyle];
 }
 
 @end

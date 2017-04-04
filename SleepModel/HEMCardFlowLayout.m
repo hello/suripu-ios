@@ -5,10 +5,9 @@
 //  Created by Delisa Mason on 12/15/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 @interface HEMCardFlowLayout ()
 
@@ -36,8 +35,9 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 
 - (void)configureDefaultAttributes {
     CGRect bounds = HEMKeyWindowBounds();
+    CGFloat topMargin = [SenseStyle floatWithGroup:GroupMargins property:ThemePropertyMarginTop];
     self.itemSize = CGSizeMake(CGRectGetWidth(bounds) - HEMCardCardMargin * 2, HEMCardDefaultItemHeight);
-    self.sectionInset = UIEdgeInsetsMake(HEMStyleSectionTopMargin, 0, HEMStyleSectionTopMargin, 0);
+    self.sectionInset = UIEdgeInsetsMake(topMargin, 0, topMargin, 0);
     self.minimumInteritemSpacing = HEMCardCardMargin;
     self.minimumLineSpacing = HEMCardCardMargin;
     self.scrollDirection = UICollectionViewScrollDirectionVertical;

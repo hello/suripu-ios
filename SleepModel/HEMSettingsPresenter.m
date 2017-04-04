@@ -18,7 +18,6 @@
 #import "HEMSettingsStoryboard.h"
 #import "HEMTellAFriendItemProvider.h"
 #import "HEMSettingsHeaderFooterView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMSettingsBottomMargin = 12.0f;
 static CGFloat const HEMSettingsRowHeight = 56.0f;

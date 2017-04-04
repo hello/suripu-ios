@@ -168,7 +168,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     UIFont* font = bold ? [UIFont bodyBold] : [UIFont body];
     return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+             NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle]};
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -266,11 +266,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
                   layout:(UICollectionViewLayout*)collectionViewLayout
 referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size = [[collectionView superview] bounds].size;
-    if (section == 0) {
-        size.height = HEMStyleDeviceSectionTopMargin;
-    } else {
-        size.height = HEMStyleSectionTopMargin;
-    }
+    size.height = [SenseStyle floatWithGroup:GroupMargins property:ThemePropertyMarginTop];
     return size;
 }
 

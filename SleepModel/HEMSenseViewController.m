@@ -102,11 +102,7 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
 referenceSizeForHeaderInSection:(NSInteger)section {
     CGSize size = [[collectionView superview] bounds].size;
-    if (section == 0) {
-        size.height = HEMStyleDeviceSectionTopMargin;
-    } else {
-        size.height = HEMStyleSectionTopMargin;
-    }
+    size.height = [SenseStyle floatWithGroup:GroupMargins property:ThemePropertyMarginTop];
     return size;
 }
 

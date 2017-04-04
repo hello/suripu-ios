@@ -1,6 +1,5 @@
 #import "Sense-Swift.h"
 #import "HEMMiniSleepScoreGraphView.h"
-#import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
 
 @interface HEMMiniSleepScoreGraphView()

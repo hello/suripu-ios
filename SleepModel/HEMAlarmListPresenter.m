@@ -560,9 +560,13 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     } else if ([self loadError]) {
         UIFont* font = [HEMAlarmExpansionListCell detailFont];
         NSString *text = NSLocalizedString(@"alarms.no-data", nil);
-        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
+        CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+        CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+        CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+        CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+        CGFloat maxWidth = width - leftMargin - rightMargin;
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
-        CGFloat cardHeight = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+        CGFloat cardHeight = textHeight + topMargin + botMargin;
         return CGSizeMake(width, cardHeight);
     } else if ([[[self alarmService] alarms] count] > 0) {
         SENAlarm* alarm = [[self alarmService] alarms][[indexPath row]];

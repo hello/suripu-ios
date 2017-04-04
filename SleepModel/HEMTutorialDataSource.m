@@ -14,7 +14,6 @@
 #import "HEMVideoCollectionViewCell.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMURLImageView.h"
-#import "HEMStyle.h"
 
 static NSString* const HEMTutorialCellReuseIdImage = @"image";
 static NSString* const HEMTutorialCellReuseIdVideo = @"video";
@@ -76,7 +75,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
         UIFont* font = [SenseStyle fontWithGroup:GroupInfo property:ThemePropertyDetailFont];
         NSDictionary* attributes = @{NSFontAttributeName : font,
                                      NSForegroundColorAttributeName : color,
-                                     NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+                                     NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle]};
         _attributedBody = [[NSAttributedString alloc] initWithString:[[self content] text]
                                                           attributes:attributes];
     }

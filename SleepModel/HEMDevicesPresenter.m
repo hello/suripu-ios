@@ -16,7 +16,6 @@
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
 
-#import "HEMStyle.h"
 #import "HEMDevicesPresenter.h"
 #import "HEMOnboardingService.h"
 #import "HEMDeviceService.h"
@@ -159,7 +158,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
         NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithFormat:textFormat args:args];
         
         [attributedText addAttribute:NSParagraphStyleAttributeName
-                                      value:DefaultBodyParagraphStyle()
+                                      value:[NSMutableParagraphStyle senseStyle]
                                       range:NSMakeRange(0, [attributedText length])];
         
         _attributedFooterText = attributedText;
@@ -278,7 +277,7 @@ typedef NS_ENUM(NSInteger, HEMDevicesSection) {
                                                 baseColor:nil
                                                  baseFont:[UIFont body]];
         
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+        NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
         style.paragraphSpacing = 10.0f;
         [attributedText addAttribute:NSParagraphStyleAttributeName
                                value:style

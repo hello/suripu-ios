@@ -12,7 +12,6 @@
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {

@@ -16,7 +16,6 @@
 #import "HEMRoomCheckView.h"
 #import "HEMSensorService.h"
 #import "HEMSensorValueFormatter.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -66,7 +65,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self roomCheckView] setDelegate:self];
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
     
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     [style setAlignment:NSTextAlignmentCenter];
     NSString* resultsDescription = [[self resultsDescriptionLabel] text];
     NSAttributedString* attributedDescription = [[NSAttributedString alloc] initWithString:resultsDescription

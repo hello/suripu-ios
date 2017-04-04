@@ -5,12 +5,11 @@
 //  Created by Jimmy Lu on 6/7/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMLocationRequestPresenter.h"
 #import "HEMLocationService.h"
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 @interface HEMLocationRequestPresenter()
 

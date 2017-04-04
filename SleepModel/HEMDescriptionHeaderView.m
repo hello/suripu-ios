@@ -11,7 +11,6 @@
 #import "Sense-Swift.h"
 
 #import "HEMDescriptionHeaderView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMDescriptionHeaderBaseImageHeight = 182.0f;
 static CGFloat const HEMDescriptionHeaderTitleTopMargin = 13.0f;
@@ -39,7 +38,7 @@ static CGFloat const HEMDescriptionHeaderDescBotMargin = 32.0f;
     UIColor* color = [SenseStyle colorWithAClass:self property:colorProp];
     UIFont* font = [SenseStyle fontWithAClass:self property:fontProp];
     
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     [style setAlignment:NSTextAlignmentCenter];
     
     NSMutableDictionary* attrs = [NSMutableDictionary dictionaryWithCapacity:3];

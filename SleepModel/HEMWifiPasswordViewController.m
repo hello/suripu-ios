@@ -11,8 +11,8 @@
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENSenseWiFiStatus.h>
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
+
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -246,7 +246,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     UIPickerView* securityPicker = [[UIPickerView alloc] initWithFrame:pickerFrame];
     [securityPicker setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [securityPicker setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [securityPicker setBackgroundColor:[UIColor whiteColor]];
+    [securityPicker applyStyle];
     [securityPicker setDelegate:self];
     [securityPicker setDataSource:self];
 
@@ -301,8 +301,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         labelFrame.size.height = CGRectGetHeight([[self securityField] bounds]);
         labelFrame.size.width = kHEMWifiSecurityLabelDefaultWidth;
         selectedTypeLabel = [[UILabel alloc] initWithFrame:labelFrame];
-        [selectedTypeLabel setFont:[UIFont bodyBold]];
-        [selectedTypeLabel setTextColor:[UIColor blackColor]];
+        [selectedTypeLabel applyTitleStyle];
         [[self securityField] setRightView:selectedTypeLabel];
         [[self securityField] setRightViewMode:UITextFieldViewModeAlways];
     }
@@ -325,8 +324,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    UIFont* font = [SenseStyle fontWithAClass:[UIPickerView class]
+                                     property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[UIPickerView class]
+                                        property:ThemePropertyTextColor];
     NSString* securityType = [self securityTypeTextForPickerRow:row];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h6Bold]};
+    NSDictionary* attributes = @{NSFontAttributeName : font,
+                                 NSForegroundColorAttributeName : color};
     NSAttributedString* attrSecurity = [[NSAttributedString alloc] initWithString:securityType attributes:attributes];
     return attrSecurity;
 }

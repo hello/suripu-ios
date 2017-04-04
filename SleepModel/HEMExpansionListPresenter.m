@@ -8,6 +8,7 @@
 #import <SenseKit/SENExpansion.h>
 
 #import "SENRemoteImage+HEMDeviceSpecific.h"
+#import "Sense-Swift.h"
 
 #import "HEMExpansionListPresenter.h"
 #import "HEMExpansionService.h"
@@ -22,7 +23,6 @@ static CGFloat const kHEMExpansionListImageBorder = 0.5f;
 static CGFloat const kHEMExpansionListCellSize = 72.0f;
 static CGFloat const kHEMExpansionListImageCornerRadius = 5.0f;
 static NSInteger const kHEMExpansionListCellMaskTag = 10;
-static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 
 @interface HEMExpansionListPresenter() <UITableViewDelegate, UITableViewDataSource>
 
@@ -52,6 +52,7 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView applyStyle];
     
     [self setTableView:tableView];
 }
@@ -104,6 +105,12 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 
 #pragma mark - Presenter Events
 
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self tableView] applyStyle];
+    [[self tableView] reloadData];
+}
+
 - (void)didAppear {
     [super didAppear];
     [self refresh];
@@ -153,9 +160,8 @@ static CGFloat const kHEMExpansionListCellMaskAlpha = 0.7f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self loadError]) {
         [[cell textLabel] setText:NSLocalizedString(@"expansion.error.empty-list", nil)];
-        [[cell textLabel] setFont:[UIFont body]];
-        [[cell textLabel] setTextColor:[UIColor grey4]];
         [[cell textLabel] setNumberOfLines:0];
+        [cell applyStyle];
         [cell sizeToFit];
     } else {
         NSInteger row = [indexPath row];
@@ -166,19 +172,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         HEMBasicTableViewCell* basicCell = (id) cell;
         
         [[basicCell customTitleLabel] setText:[expansion deviceName]];
-        [[basicCell customTitleLabel] setFont:[UIFont body]];
-        [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
-        
-        [[basicCell customDetailLabel] setTextColor:[UIColor grey3]];
-        [[basicCell customDetailLabel] setFont:[UIFont body]];
         [[basicCell customDetailLabel] setText:stateString];
         
         [[[basicCell remoteImageView] layer] setCornerRadius:kHEMExpansionListImageCornerRadius];
         [[[basicCell remoteImageView] layer] setBorderWidth:kHEMExpansionListImageBorder];
-        [[[basicCell remoteImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
         [[basicCell remoteImageView] setClipsToBounds:YES];
         [[basicCell remoteImageView] setContentMode:UIViewContentModeScaleAspectFit];
-        [[basicCell remoteImageView] setBackgroundColor:[UIColor grey3]];
         
         __weak typeof(self) weakSelf = self;
         __weak typeof([basicCell remoteImageView]) weakImageView = [basicCell remoteImageView];
@@ -190,13 +189,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
         }];
         
+        [basicCell applyStyle];
         [basicCell showSeparator:!lastRow];
         
         UIView* maskView = [basicCell viewWithTag:kHEMExpansionListCellMaskTag];
         if ([expansion state] == SENExpansionStateNotAvailable) {
             if (!maskView) {
                 maskView = [[UIView alloc] initWithFrame:[basicCell bounds]];
-                [maskView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:kHEMExpansionListCellMaskAlpha]];
+                [maskView applyDisabledOverlayStyle];
                 [maskView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
                 [maskView setTag:kHEMExpansionListCellMaskTag];
             }

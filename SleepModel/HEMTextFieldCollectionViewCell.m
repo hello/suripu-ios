@@ -15,8 +15,6 @@
 
 @interface HEMTextFieldCollectionViewCell()
 
-@property (nonatomic, weak) IBOutlet HEMTitledTextField* titledTextField;
-
 @end
 
 @implementation HEMTextFieldCollectionViewCell

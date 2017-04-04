@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMCardCollectionViewCell.h"
 
 @interface HEMTextCollectionViewCell : UICollectionViewCell
 
@@ -15,8 +16,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textBottomConstraint;
 
++ (UIFont*)defaultTextFont;
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width;
 + (CGFloat)heightWithAttributedText:(NSAttributedString*)text cellWidth:(CGFloat)width;
 - (void)displayAsACard:(BOOL)card;
+- (void)applyStyle;
 
 @end

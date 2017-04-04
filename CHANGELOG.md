@@ -1,5 +1,217 @@
 # Changelog
 
+## 2.1.0.20
+
+New:
+
+* Added analytics for night mode
+
+## 2.1.0.19
+
+Fixes:
+
+* Themed add button icon on profile image
+* Second sleep pill link color is now properly themed, under the device settings
+* Text inside the calibrating sensors in room check is now more readable
+* Alarm selection color is now a darker color, in night mode
+
+## 2.1.0.18
+
+Fixes:
+
+* Design review tweaks, or 1/3 of the changes
+* Fixed issue where theme not applied after signing out, then back in during same session
+* Fixed profile image not masked inside a circle during onboarding
+* Fixed learn more text color in facebook info alert
+
+## 2.1.0.17
+
+New:
+
+* Themed entire upgrade path
+* Themed voice tutorial
+* Themed entire pill dfu flow 
+
+## 2.1.0.16
+
+Fixes:
+
+* Fix crasher with unsafe pointer
+
+## 2.1.0.15
+
+New;
+
+* Themed pill pairing screen
+* Added scheduled night mode functionality
+* Hooked up location service to grab lat+long for sunset time calculation
+
+## 2.1.0.14
+
+Fixes:
+
+* Fixed issue where timeline gesture tutorial would sit 40+ pixels above tab bar
+* Fixed issue where grouped sensor card would have incorrect padding when message is longer than 1 line on 4s, 5/5s
+* Fixed issue where there were two spinners in the insights tab
+
+## 2.1.0.13
+
+New:
+
+* Themed info cards for expansions
+* Themed info card for pill color
+* Themed sleep sound, sense states
+* Themed alerts
+* Themed pair sense screen
+
+Fixes:
+
+* Fixed issue with trends tab icon, in normal mode
+* Fixed issue with no connection / error cards having bold, black border in normal mode
+* Fixed issue with info cards having a blue background
+* Fixed issue where expansion list not showing a divider on first load
+
+## 2.1.0.12
+
+New:
+
+* Themed toasts
+* Themed wifi picker
+* Themed wifi password
+* Themed tab bar icons
+* Themed pair sense cards
+* Themed smart alarm info card
+* Themed system alerts
+
+## 2.1.0.11
+
+New:
+
+* Themed sleep sounds player
+* Themed timeline event edit screen
+* Themed timeline empty states
+* Complete theming action sheets
+
+Fixes:
+
+* Fixes timeline history sleep score in day mode
+* Fixes sense settings cutting off when pulling down
+* Fixes issue where timeline events are not displayed
+
+## 2.1.0.10
+
+New:
+
+* Themed Timeline
+* Themed Timeline Summary
+* Themed Timeline history
+* Themed Action sheet
+* Themed time zone list
+
+Fixes:
+
+* Fixed issue with sign in not loading theme
+* Fixed issue where insight transition flashes white
+* Fixed issue where theme is messed up after re-installing
+* Fixed issue with accessibility
+* Fixed issue with sleep sounds status checks
+* Fixed issue with nav bar separator
+* Fixed issue with color difference when loading alarm clock picker
+
+## 2.1.0.9
+
+New:
+
+* Themed Trends
+* Themed Voice feed
+* Themed Voice examples
+* Themed Insights feed
+* Themed Questions
+* Themed Insight
+
+Fixes:
+
+* Fixed Voice example scroll issue
+
+## 2.1.0.8
+
+New:
+
+* Themed alarm edit screen
+* Themed alarm sound screen
+* Themed alarm days screen
+* Themed alarm + hue setup screen
+* Themed alarm + nest setup screen
+* Themed no alarm state
+* Themed sleep sounds details screens
+
+## 2.1.0.7
+
+New:
+
+* Themed alarm list
+
+## 2.1.0.6
+
+New:
+
+* Themed room conditions
+* Themed sensor detail
+
+Fixes:
+
+* Fixed crasher on sign in
+* Fixed gender seach text color
+* Fixed birthday overscroll color
+
+## 2.1.0.5
+
+New:
+
+* Themed Name, Password, Email change screen
+* Themed Units and time screen
+* Themed Height picker screen
+* Themed Weight picker screen
+* Themed birthday screen
+* Themed gender screen
+* Themed gender options screen
+
+## 2.1.0.4
+
+New:
+
+* Themed account settings
+* Themed device settings
+* Themed Sense settings
+* Themed Sleep Pill settings
+* Themed support screens
+
+## 2.1.0.3
+
+New:
+
+* Themed expansion web view container
+* Themed expansion configuration screen
+
+## 2.1.0.2
+
+New:
+
+* Themed voice, volume control
+* Themed Expansion list
+* Themed Expansion detail view, minus dependent components
+
+## 2.1.0.1
+
+New:
+
+* Created custom theme framework, configured through json files
+* Added night mode settings (minus Scheduled functionality)
+* Themed night mode settings
+* Themed main settings
+* Themed notifications detail settings
+* Themed voice settings (minus voice control)
+
 ## 2.0.4.4
 
 New:

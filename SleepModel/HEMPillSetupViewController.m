@@ -9,8 +9,9 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMPillSetupViewController.h"
-#import "HEMStyle.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingStoryboard.h"
@@ -49,6 +50,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self collectionView] applyFillStyle];
     [self configureButtonContainerShadow];
     [self configureButtons];
     [self trackAnalyticsEvent:HEMAnalyticsEventPillPlacement];
@@ -67,6 +69,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     [containerLayer setShadowOffset:[shadow shadowOffset]];
     [containerLayer setShadowRadius:[shadow shadowBlurRadius]];
     [containerLayer setShadowOpacity:1.0f];
+    [[self buttonContainer] setBackgroundColor:[[self view] backgroundColor]];
 }
 
 - (void)calculateHeights {
@@ -84,7 +87,8 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         + [self descriptionHeight]
         + HEMPillSetupLayoutMinLineSpacing;
     
-    UIImage* image = [UIImage imageNamed:@"pillSetup"];
+    static NSString* imageKey = @"sense.first.frame";
+    UIImage* image = [SenseStyle imageWithAClass:[self class] propertyName:imageKey];
     CGFloat imageHeight = CGRectGetHeight([[self collectionView] bounds]) - contentHeight;
     [self setVideoHeight:MAX(image.size.height, imageHeight)];
 }
@@ -99,20 +103,16 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     if (_attributedTitle == nil) {
         _attributedTitle =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.title", nil)
-                                            attributes:@{NSFontAttributeName : [UIFont h5],
-                                                         NSForegroundColorAttributeName : [UIColor boldTextColor]}];
+                                            attributes:[self titleAttributes]];
     }
     return _attributedTitle;
 }
 
 - (NSAttributedString*)attributedDecription {
     if (_attributedDescription == nil) {
-        NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
         _attributedDescription =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
-                                            attributes:@{NSFontAttributeName : [UIFont body],
-                                                         NSForegroundColorAttributeName : [UIColor grey5],
-                                                         NSParagraphStyleAttributeName : style}];
+                                            attributes:[self descriptionAttributes]];
     }
     return _attributedDescription;
 }
@@ -139,6 +139,9 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         [videoView setReady:YES];
     } else {
         [videoView playVideoWhenReady];
+    }
+    if ([self isCancellable]) {
+        [self showCancelButtonWithSelector:@selector(dismiss)];
     }
 }
 
@@ -188,9 +191,14 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
                 = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                             forIndexPath:indexPath];
             
-            UIImage* firstFrame = [UIImage imageNamed:@"pillSetup"];
-            NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-setup", nil);
+            static NSString* videoKey = @"sense.pill.clipping.url";
+            static NSString* imageKey = @"sense.first.frame";
+            UIImage* firstFrame = [SenseStyle imageWithAClass:[self class] propertyName:imageKey];
+            NSString* stringKey = [[SenseStyle theme] valueWithAClass:[self class] key:videoKey];
+            NSString* videoPath = NSLocalizedString(stringKey, nil);
+            [videoCell applyFillStyle];
             [[videoCell videoView] setFirstFrame:firstFrame videoPath:videoPath];
+            [videoCell applyFillStyle];
             
             [self setVideoCell:videoCell];
             cell = videoCell;
@@ -235,6 +243,10 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSetupToColorsSegueIdentifier]
                                   sender:self];
     }
+}
+
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

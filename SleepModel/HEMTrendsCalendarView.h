@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, HEMTrendsCalendarType) {
 - (void)updateWithValues:(NSArray<NSArray<HEMTrendsDisplayPoint*>*>*)values
                   titles:(NSArray<NSAttributedString*>*)attributedTitles;
 
+- (void)applyStyle;
+
 @end
 
 NS_ASSUME_NONNULL_END

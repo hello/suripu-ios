@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMStyledNavigationViewController.h"
 #import "HEMScreenUtils.h"
 #import "HEMStyle.h"
@@ -18,19 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationBar] setTintColor:[UIColor tintColor]];
-    UIFont* titleFont = HEMIsIPhone4Family()
-        ? [UIFont h6]
-        : [UIFont h5];
-    [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor grey6],
-        NSFontAttributeName : titleFont
-    }];
-    
     // required since we are adding custom back button
     __weak typeof(self) weakSelf = self;
     self.interactivePopGestureRecognizer.delegate = weakSelf;
     self.delegate = weakSelf;
+    [self applyStyle];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [[SenseStyle theme] statusBarStyle];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

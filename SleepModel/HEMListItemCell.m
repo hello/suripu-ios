@@ -5,11 +5,14 @@
 //  Created by Jimmy Lu on 3/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMListItemCell.h"
-#import "HEMStyle.h"
 
-static CGFloat const HEMListItemTouchAnimDuration = 0.2f;
+@interface HEMListItemCell()
+    
+@property (nonatomic, strong) UIView* disableOverlay;
+    
+@end
 
 @implementation HEMListItemCell
 
@@ -18,28 +21,24 @@ static CGFloat const HEMListItemTouchAnimDuration = 0.2f;
     
     [[self selectionImageView] setUserInteractionEnabled:NO];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    UIView* touchView = [[UIView alloc] initWithFrame:[self bounds]];
-    [touchView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [touchView setBackgroundColor:[UIColor touchIndicatorColor]];
-    [touchView setHidden:YES];
-    [touchView setAlpha:0.0f];
-    [self setBackgroundView:touchView];
 }
 
 - (void)setSelected:(BOOL)selected {
     [[self selectionImageView] setHighlighted:selected];
-    [[self backgroundView] setHidden:NO];
 }
-
-- (void)flashTouchIndicator {
-    [UIView animateWithDuration:HEMListItemTouchAnimDuration animations:^{
-        [[self backgroundView] setAlpha:1.0f];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:HEMListItemTouchAnimDuration animations:^{
-            [[self backgroundView] setAlpha:0.0f];
-        }];
-    }];
+    
+- (void)enable:(BOOL)enable {
+    [self setUserInteractionEnabled:enable];
+    
+    if (!enable) {
+        if (![self disableOverlay]) {
+            [self setDisableOverlay:[[UIView alloc] initWithFrame:[self bounds]]];
+        }
+        [[self disableOverlay] applyDisabledOverlayStyle];
+        [self addSubview:[self disableOverlay]];
+    } else {
+        [[self disableOverlay] removeFromSuperview];
+    }
 }
 
 @end

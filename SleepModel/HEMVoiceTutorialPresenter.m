@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENSpeechResult.h>
 
+#import "Sense-Swift.h"
+
 #import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMVoiceTutorialPresenter.h"
@@ -16,7 +18,6 @@
 #import "HEMActionSheetTitleView.h"
 #import "HEMAlertViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMVoiceTutorialInitialSenseScale = 0.6f;
 static CGFloat const HEMVoiceTutorialAnimeDuration = 0.3f;
@@ -89,6 +90,10 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 }
 
 - (void)bindWithTryNowLabel:(UILabel*)tryNowLabel {
+    UIFont* font = [SenseStyle fontWithGroup:GroupVoiceTutorial property:ThemePropertyDetailFont];
+    UIColor* color = [SenseStyle colorWithGroup:GroupVoiceTutorial property:ThemePropertyTextColor]; // use regular color
+    [tryNowLabel setFont:font];
+    [tryNowLabel setTextColor:color];
     [tryNowLabel setHidden:YES]; // initially, until user continues
     [self setTryNowLabel:tryNowLabel];
 }
@@ -104,15 +109,19 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
              commandBottomConstraint:(NSLayoutConstraint*)commandBottomConstraint
                           errorLabel:(UILabel*)errorLabel
                errorBottomConstraint:(NSLayoutConstraint*)errorBottomConstraint {
-    UIFont* commandFont = [UIFont h4];
+    static NSString* commandColorKey = @"sense.command.text.color";
+    NSString* commandFontKey = @"sense.command.text.font";
     if (HEMIsIPhone4Family() || HEMIsIPhone5Family()) {
-        commandFont = [UIFont h5];
+        commandFontKey = @"sense.command.text.small.font";
     }
     
-    [commandLabel setFont:commandFont];
-    [commandLabel setTextColor:[UIColor grey6]];
-    [errorLabel setFont:commandFont];
-    [errorLabel setTextColor:[UIColor grey6]];
+    UIFont* font = [SenseStyle fontWithGroup:GroupVoiceTutorial propertyName:commandFontKey];
+    UIColor* color = [SenseStyle colorWithGroup:GroupVoiceTutorial propertyName:commandColorKey];
+    
+    [commandLabel setFont:font];
+    [commandLabel setTextColor:color];
+    [errorLabel setFont:font];
+    [errorLabel setTextColor:color];
     [speechCommandContainer setHidden:YES];
     
     [self setSpeechLabelContainer:speechCommandContainer];
@@ -157,6 +166,9 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 
 - (void)bindWithTableImageView:(UIImageView*)tableImageView
           withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    static NSString* imageKey = @"sense.table.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupVoiceTutorial propertyName:imageKey];
+    [tableImageView setImage:image];
     [self setOrigTableBottomMargin:[bottomConstraint constant]];
     [self setTableImageView:tableImageView];
     [self setTableBottomConstraint:bottomConstraint];
@@ -164,11 +176,13 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
 
 - (void)bindWithLaterButton:(UIButton*)laterButton
        withBottomConstraint:(NSLayoutConstraint*)bottomConstraint {
+    UIColor* color = [SenseStyle colorWithGroup:GroupVoiceTutorial property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithGroup:GroupVoiceTutorial property:ThemePropertySecondaryButtonTextFont];
+    [[laterButton titleLabel] setFont:font];
+    [laterButton setTitleColor:color forState:UIControlStateNormal];
     [laterButton addTarget:self
                     action:@selector(later)
           forControlEvents:UIControlEventTouchUpInside];
-    [laterButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[laterButton titleLabel] setFont:[UIFont buttonSmall]];
     [self setOrigLaterBottomMargin:[bottomConstraint constant]];
     [self setLaterButton:laterButton];
     [self setLaterButtonBottomConstraint:bottomConstraint];
@@ -306,9 +320,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
     // title view
     NSString* title = NSLocalizedString(@"onboarding.voice.info.title", nil);
     NSString* message = NSLocalizedString(@"onboarding.voice.info.message", nil);
-    NSDictionary* messageAttributes = @{NSFontAttributeName : [UIFont body],
-                                        NSForegroundColorAttributeName : [UIColor grey5]};
-    NSMutableAttributedString* attrMessage = [[NSMutableAttributedString alloc] initWithString:message attributes:messageAttributes];
+    NSAttributedString* attrMessage = [HEMActionSheetTitleView attributedDescriptionFromText:message];
     HEMActionSheetTitleView* titleView = [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:attrMessage];
     
     [sheet setCustomTitleView:titleView];
@@ -322,7 +334,7 @@ static CGFloat const HEMVoiceTutorialMinContentTopSpacing4s = 64.0f;
         [strongSelf restartListeningForResponse];
     }];
     [sheet addOptionWithTitle:cancelOption
-                   titleColor:[UIColor tintColor]
+                   titleColor:nil
                   description:nil
                     imageName:nil
                        action:^{

@@ -6,6 +6,7 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMSimpleModalTransitionDelegate.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"
@@ -138,13 +139,13 @@ static CGFloat HEMSimpleModalDismissMessageEndDelay = 0.8f;
 }
 
 - (void)showEndMessageIn:(UIView*)fromView completion:(void(^)(void))completion {
-    UIView* whiteBg = [[UIView alloc] initWithFrame:[fromView bounds]];
-    [whiteBg setBackgroundColor:[UIColor whiteColor]];
+    UIView* bgView = [[UIView alloc] initWithFrame:[fromView bounds]];
+    [bgView setBackgroundColor:[fromView backgroundColor]];
     
     UIView* snapshot = [fromView snapshotViewAfterScreenUpdates:NO];
     
-    [whiteBg addSubview:snapshot];
-    [fromView addSubview:whiteBg];
+    [bgView addSubview:snapshot];
+    [fromView addSubview:bgView];
     
     [UIView animateWithDuration:[self duration]
                      animations:^{
@@ -153,10 +154,10 @@ static CGFloat HEMSimpleModalDismissMessageEndDelay = 0.8f;
                          [[snapshot layer] setOpacity:0.0f];
                      }
                      completion:^(BOOL finished) {
-                         HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] initWithFrame:[whiteBg bounds]];
+                         HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] initWithFrame:[bgView bounds]];
                          [[activityView activityLabel] setText:[self dismissMessage]];
                          [[activityView indicator] setHidden:YES];
-                         [whiteBg addSubview:activityView];
+                         [bgView addSubview:activityView];
                          
                          [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
                              int64_t delayInSeconds = (int64_t) (HEMSimpleModalDismissMessageEndDelay * NSEC_PER_SEC);

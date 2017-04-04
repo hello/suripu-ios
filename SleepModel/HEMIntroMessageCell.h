@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
++ (NSDictionary*)titleAttributes;
++ (NSDictionary*)messageAttributes;
 + (CGFloat)heightWithTitle:(NSAttributedString*)title
                    message:(NSAttributedString*)message
                  withWidth:(CGFloat)width;

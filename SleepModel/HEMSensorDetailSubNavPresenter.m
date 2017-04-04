@@ -19,6 +19,7 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 @property (nonatomic, weak) HEMSensorService* sensorService;
 @property (nonatomic, weak) HEMSubNavigationView* subNav;
 @property (nonatomic, weak) UINavigationBar* navBar;
+@property (nonatomic, strong) UIImage* navBackgroundImage;
 
 @end
 
@@ -35,11 +36,14 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 - (void)bindWithSubNavigationView:(HEMSubNavigationView*)subNav {
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeDay]];
     [subNav addControl:[self scopeButtonForTimeScope:HEMSensorServiceScopeWeek]];
+    [subNav applyStyle];
     [self setSubNav:subNav];
     [self bindWithShadowView:[subNav shadowView]];
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {
+    [self setNavBackgroundImage:[navBar backgroundImageForBarMetrics:UIBarMetricsDefault]];
+    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[UIImage new]];
     [self setNavBar:navBar];
 }
@@ -80,6 +84,11 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 }
 #pragma mark - Presenter Events
 
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self subNav] applyStyle];
+}
+
 - (void)didRelayout {
     [super didRelayout];
     [[self subNav] setNeedsLayout];
@@ -88,6 +97,8 @@ static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 - (void)didDisappear {
     [super didDisappear];
     [[self navBar] setShadowImage:[UIImage imageNamed:@"navBorder"]];
+    [[self navBar] setBackgroundImage:[self navBackgroundImage]
+                        forBarMetrics:UIBarMetricsDefault];
 }
 
 @end

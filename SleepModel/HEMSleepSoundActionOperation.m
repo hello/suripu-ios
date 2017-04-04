@@ -56,8 +56,10 @@ static CGFloat const HEMSleepSoundActionRequestBackoff = 2.0f;
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf resultCompletionBlock] ([strongSelf isCancelled],
-                                                [strongSelf actionError]);
+            if ([strongSelf resultCompletionBlock]) {
+                [strongSelf resultCompletionBlock] ([strongSelf isCancelled],
+                                                    [strongSelf actionError]);
+            }
             [strongSelf didChangeValueForKey:@"isFinished"];
         });
     } else {

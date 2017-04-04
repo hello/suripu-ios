@@ -24,8 +24,10 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _tabIcon = [UIImage imageNamed:@"feedTabBarIcon"];
-        _tabIconHighlighted = [UIImage imageNamed:@"feedTabBarIconHighlighted"];
+        static NSString* iconKey = @"sense.feed.icon";
+        static NSString* iconHighlightedKey = @"sense.feed.highlighted.icon";
+        _tabIcon = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconKey];
+        _tabIconHighlighted = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconHighlightedKey];
         _tabTitle = NSLocalizedString(@"voice.title", nil);
     }
     return self;

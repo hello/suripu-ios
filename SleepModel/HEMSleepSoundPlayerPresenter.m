@@ -12,6 +12,8 @@
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENSleepSoundsState.h>
 
+#import "Sense-Swift.h"
+
 #import "NSString+HEMUtils.h"
 
 #import "HEMSleepSoundPlayerPresenter.h"
@@ -63,7 +65,6 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 @property (nonatomic, assign, getter=isWaitingForOptionChange) BOOL waitingForOptionChange;
 @property (nonatomic, assign, getter=isSenseOffline) BOOL senseOffline;
 @property (nonatomic, assign, getter=isNotPairedToSense) BOOL notPairedToSense;
-@property (nonatomic, weak) UIView* bgView;
 
 @end
 
@@ -80,18 +81,12 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     return self;
 }
 
-- (void)bindWithBackgroundView:(UIView*)backgroundView {
-    [backgroundView setHidden:NO];
-    [self setBgView:backgroundView];
-}
-
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [collectionView setAlpha:0.0f];
     [collectionView setAlwaysBounceVertical:YES];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
-    [[collectionView superview] setBackgroundColor:[UIColor backgroundColor]];
+    [collectionView applyStyle];
     [self setCollectionView:collectionView];
 }
 
@@ -114,7 +109,8 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 }
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicator {
-    [indicator setHidden:YES];
+    [indicator setHidden:NO];
+    [indicator start];
     [self setIndicator:indicator];
 }
 
@@ -331,9 +327,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[self indicator] setHidden:YES];
     [UIView animateWithDuration:HEMSleepSoundPlayerLoadAnimeDuration animations:^{
         [[self collectionView] setAlpha:1.0f];
-    } completion:^(BOOL finished) {
-        [[self bgView] setHidden:YES];
-    }];
+    } completion:nil];
 }
 
 - (void)reloadDataWithPlayerState:(HEMSleepSoundPlayerState)state {
@@ -447,14 +441,18 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
 #pragma mark - Temporary Sleep Sounds State
 
 - (UIImage*)imageForState:(SENSleepSoundsFeatureState)state {
+    static NSString* offlineKey = @"sense.offline.image";
+    static NSString* updateKey = @"sense.update.image";
+    static NSString* downloadingKey = @"sense.downloading.image";
+    
     if ([self isSenseOffline]) {
-        return [UIImage imageNamed:@"sleepSoundSenseOffline"];
+        return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:offlineKey];
     } else {
         switch (state) {
             case SENSleepSoundsFeatureStateFWRequired:
-                return [UIImage imageNamed:@"sleepSoundSenseNeedsUpdate"];
+                return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:updateKey];
             case SENSleepSoundsFeatureStateNoSounds:
-                return [UIImage imageNamed:@"sleepSoundSenseDownloading"];
+                return [SenseStyle imageWithGroup:GroupSleepSoundsState propertyName:downloadingKey];
             default:
                 return nil;
         }
@@ -482,8 +480,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         return nil;
     }
     
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont bodyBold],
-                                 NSForegroundColorAttributeName : [UIColor grey5]};
+    NSDictionary* attributes = [HEMIntroMessageCell titleAttributes];
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
@@ -507,8 +504,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     if (!message) {
         return nil;
     }
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont body],
-                                 NSForegroundColorAttributeName : [UIColor lowImportanceTextColor]};
+    NSDictionary* attributes = [HEMIntroMessageCell messageAttributes];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -538,7 +534,19 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
             reuseId = [HEMMainStoryboard settingsReuseIdentifier];
             break;
     }
-    return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId forIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMSleepSoundConfigurationCell class]]) {
+        [self configureSleepSoundConfigurationCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        [self configureErrorCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMIntroMessageCell class]]) {
+        [self configureIntroMessageCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
+        [self configurePairSenseCell:(id)cell];
+    }
+    
+    return cell;
 }
 
 #pragma mark - UICollectionView Layout Delegate
@@ -587,42 +595,26 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[introCell titleLabel] setAttributedText:[self attributedInfoTitleForState:state]];
     [[introCell messageLabel] setAttributedText:[self attributedInfoMessageForState:state]];
     [[introCell imageView] setImage:[self imageForState:state]];
+    [introCell applyStyle];
 }
 
 - (void)configureSleepSoundConfigurationCell:(HEMSleepSoundConfigurationCell*)cell {
-    UIColor* titleColor = [UIColor cardTitleColor];
-    UIColor* typeColor = [UIColor cardTitleColor];
-    UIColor* valueColor = [UIColor detailTextColor];
-    
-    [[cell titleLabel] setTextColor:titleColor];
-    [[cell titleLabel] setFont:[UIFont body]];
     [[cell titleLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.stopped", nil)];
     [[cell playingLabel] setText:NSLocalizedString(@"sleep-sounds.title.state.playing", nil)];
-    [[cell playingLabel] setTextColor:titleColor];
-    
-    [[cell soundLabel] setTextColor:typeColor];
-    [[cell soundLabel] setFont:[UIFont body]];
     [[cell soundValueLabel] setText:[[self selectedSound] localizedName]];
-    [[cell soundValueLabel] setTextColor:valueColor];
     [[cell soundSelectorButton] addTarget:self
                                    action:@selector(changeSound:)
                          forControlEvents:UIControlEventTouchUpInside];
-    
-    [[cell durationLabel] setTextColor:typeColor];
-    [[cell durationLabel] setFont:[UIFont body]];
     [[cell durationValueLabel] setText:[[self selectedDuration] localizedName]];
-    [[cell durationValueLabel] setTextColor:valueColor];
     [[cell durationSelectorButton] addTarget:self
                                       action:@selector(changeDuration:)
                             forControlEvents:UIControlEventTouchUpInside];
-    
-    [[cell volumeLabel] setTextColor:typeColor];
-    [[cell volumeLabel] setFont:[UIFont body]];
     [[cell volumeValueLabel] setText:[[self selectedVolume] localizedName]];
-    [[cell volumeValueLabel] setTextColor:valueColor];
     [[cell volumeSelectorButton] addTarget:self
                                     action:@selector(changeVolume:)
                           forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell applyStyle];
     
     [self setConfigCell:cell];
 }
@@ -631,6 +623,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
     [[errorCell textLabel] setText:NSLocalizedString(@"sleep-sounds.error.message", nil)];
     [[errorCell textLabel] setFont:[UIFont body]];
     [errorCell displayAsACard:YES];
+    [errorCell applyStyle];
     [self setConfigCell:nil];
 }
 
@@ -643,20 +636,7 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
                      forControlEvents:UIControlEventTouchUpInside];
     [[cell pairSenseButton] setTitle:[buttonTitle uppercaseString]
                             forState:UIControlStateNormal];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-       willDisplayCell:(UICollectionViewCell *)cell
-    forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([cell isKindOfClass:[HEMSleepSoundConfigurationCell class]]) {
-        [self configureSleepSoundConfigurationCell:(id)cell];
-    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
-        [self configureErrorCell:(id)cell];
-    } else if ([cell isKindOfClass:[HEMIntroMessageCell class]]) {
-        [self configureIntroMessageCell:(id)cell];
-    } else if ([cell isKindOfClass:[HEMSenseRequiredCollectionViewCell class]]) {
-        [self configurePairSenseCell:(id)cell];
-    }
+    [cell applyStyle];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

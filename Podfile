@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 abstract_target 'SenseApp' do
@@ -25,6 +25,7 @@ abstract_target 'SenseApp' do
         pod 'Charts/Core', '3.0.1'
         pod 'iOSDFULibrary', '2.1.6'
         pod 'Analytics', '3.0.7'
+        pod 'Solar'
     end
     
     # Room Conditions extension
@@ -36,6 +37,7 @@ abstract_target 'SenseApp' do
     target 'Tests' do
         pod 'Kiwi'
         pod 'Nocilla'
+        pod 'Charts/Core', '3.0.1'
     end
     
 end

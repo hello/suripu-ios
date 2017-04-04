@@ -7,8 +7,8 @@
 //
 #import <SenseKit/SENPreference.h>
 #import <NAPickerView/NAPickerView.h>
+#import "Sense-Swift.h"
 #import "HEMClockPickerView.h"
-#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 
 typedef NS_ENUM(NSUInteger, HEMClockIndex) {
@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
     HEMClockIndexMeridiem = 3,
 };
 
-@interface HEMClockPickerView ()
+@interface HEMClockPickerView ()    
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* separatorHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIView* topGradientView;
 @property (nonatomic, weak) IBOutlet UIView* botGradientView;
@@ -32,22 +32,31 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 
 @property (nonatomic, readwrite) NSUInteger hour;
 @property (nonatomic, readwrite) NSUInteger minute;
+
+@property (nonatomic, strong) UIFont* selectedFont;
+@property (nonatomic, strong) UIColor* selectedColor;
+@property (nonatomic, strong) UIFont* font;
+@property (nonatomic, strong) UIColor* color;
+
 @end
 
 @implementation HEMClockPickerView
+
+static CGFloat const HEMClockPickerDarkGradient = 0.8f;
+static CGFloat const HEMClockPickerLightGradient = 0.05f;
 
 static CGFloat const HEMClockPickerSeparatorHeight = 0.5f;
 static CGFloat const HEMClockPickerHourWidth = 90.f;
 static CGFloat const HEMClockPickerMinuteWidth = 90.f;
 static CGFloat const HEMClockPickerDividerWidth = 40.f;
 static CGFloat const HEMClockPickerMeridiemWidth = 80.f;
-static CGFloat const HEMClockPickerUnderlayHeight = 96.0f;
 
 static NSUInteger const HEMClockMinuteCount = 60;
 static NSUInteger const HEMClock12HourCount = 12;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        [self configureStyles];
         [self initializeComponents];
         [self display];
     }
@@ -56,13 +65,24 @@ static NSUInteger const HEMClock12HourCount = 12;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        [self configureStyles];
         [self initializeComponents];
         [self display];
     }
     return self;
 }
 
+- (void)configureStyles {
+    [self setSelectedColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyTextHighlightedColor]];
+    [self setSelectedFont:[SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont]];
+    [self setColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor]];
+    [self setFont:[SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont]];
+}
+
 - (void)initializeComponents {
+    [self setBackgroundColor:[SenseStyle colorWithAClass:[self class]
+                                                property:ThemePropertyBackgroundColor]];
+    
     _minuteIncrement = 1;
     _use12Hour = [SENPreference timeFormat] == SENTimeFormat12Hour;
     [self initializeHourPicker];
@@ -82,6 +102,9 @@ static NSUInteger const HEMClock12HourCount = 12;
         NSInteger hour = [self shouldUse12Hour] ? i + 1 : i;
         [hourItems addObject:[NSString stringWithFormat:format, hour]];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    
     _hourPickerView =
         [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, HEMClockPickerHourWidth, CGRectGetHeight(self.bounds))
                                    andItems:hourItems
@@ -90,33 +113,35 @@ static NSUInteger const HEMClock12HourCount = 12;
     _hourPickerView.backgroundColor = [UIColor clearColor];
     _hourPickerView.overlayColor = [UIColor clearColor];
     _hourPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
-      cell.textView.font = [UIFont alarmSelectedNumberFont];
-      cell.textView.textColor = [UIColor textColor];
-      cell.textView.textAlignment = NSTextAlignmentCenter;
-      cell.textView.backgroundColor = [UIColor clearColor];
-      cell.textView.text = item;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        cell.textView.font = [strongSelf font];
+        cell.textView.textColor = [strongSelf color];
+        cell.textView.textAlignment = NSTextAlignmentCenter;
+        cell.textView.backgroundColor = [UIColor clearColor];
+        cell.textView.text = item;
     };
-    __weak typeof(self) weakSelf = self;
+    
     _hourPickerView.highlightBlock = ^(NALabelCell *cell) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf updateHour:[cell.textView.text integerValue]];
         [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
         cell.textView.transform = CGAffineTransformMakeScale(0.5, 0.5);
-        cell.textView.font = [UIFont alarmSelectedNumberFont];
+        cell.textView.font = [strongSelf selectedFont];
         [UIView animateWithDuration:0.2f
                          animations:^{
-                             cell.textView.textColor = [UIColor tintColor];
+                             cell.textView.textColor = [strongSelf selectedColor];
                              cell.textView.transform = CGAffineTransformIdentity;
                          }];
     };
     _hourPickerView.unhighlightBlock = ^(NALabelCell *cell) {
        if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
-           cell.textView.font = [UIFont alarmNumberFont];
+           __strong typeof(weakSelf) strongSelf = weakSelf;
+           cell.textView.font = [strongSelf font];
            cell.textView.transform = CGAffineTransformMakeScale(2, 2);
            [UIView animateWithDuration:0.2f
                             animations:^{
                                 cell.textView.transform = CGAffineTransformIdentity;
-                                cell.textView.textColor = [UIColor grey4];
+                                cell.textView.textColor = [strongSelf color];
                             }];
        }
     };
@@ -127,8 +152,8 @@ static NSUInteger const HEMClock12HourCount = 12;
 - (void)initializeDivider {
     _colonLabel = [UILabel new];
     _colonLabel.text = NSLocalizedString(@"alarm.clock.divider", nil);
-    _colonLabel.font = [UIFont alarmSelectedNumberFont];
-    _colonLabel.textColor = [UIColor tintColor];
+    _colonLabel.font = [self font];
+    _colonLabel.textColor = [self selectedColor];
     _colonLabel.textAlignment = NSTextAlignmentCenter;
     [self insertSubview:_colonLabel atIndex:0];
 }
@@ -139,6 +164,9 @@ static NSUInteger const HEMClock12HourCount = 12;
         NSString *format = i < 10 ? @"0%ld" : @"%ld";
         [items addObject:[NSString stringWithFormat:format, i]];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    
     _minutePickerView =
         [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, HEMClockPickerMinuteWidth, CGRectGetHeight(self.bounds))
                                    andItems:items
@@ -147,33 +175,35 @@ static NSUInteger const HEMClock12HourCount = 12;
     _minutePickerView.backgroundColor = [UIColor clearColor];
     _minutePickerView.overlayColor = [UIColor clearColor];
     _minutePickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
-      cell.textView.font = [UIFont alarmSelectedNumberFont];
-      cell.textView.textColor = [UIColor textColor];
-      cell.textView.textAlignment = NSTextAlignmentCenter;
-      cell.textView.backgroundColor = [UIColor clearColor];
-      cell.textView.text = item;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        cell.textView.font = [strongSelf font];
+        cell.textView.textColor = [strongSelf color];
+        cell.textView.textAlignment = NSTextAlignmentCenter;
+        cell.textView.backgroundColor = [UIColor clearColor];
+        cell.textView.text = item;
     };
-    __weak typeof(self) weakSelf = self;
+
     _minutePickerView.highlightBlock = ^(NALabelCell *cell) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
       strongSelf.minute = [cell.textView.text integerValue];
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
       cell.textView.transform = CGAffineTransformMakeScale(0.5, 0.5);
-      cell.textView.font = [UIFont alarmSelectedNumberFont];
+      cell.textView.font = [strongSelf selectedFont];
       [UIView animateWithDuration:0.2f
                        animations:^{
-                         cell.textView.textColor = [UIColor tintColor];
+                         cell.textView.textColor = [strongSelf selectedColor];
                          cell.textView.transform = CGAffineTransformIdentity;
                        }];
     };
     _minutePickerView.unhighlightBlock = ^(NALabelCell *cell) {
       if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
-          cell.textView.font = [UIFont alarmNumberFont];
+          __strong typeof(weakSelf) strongSelf = weakSelf;
+          cell.textView.font = [strongSelf font];
           cell.textView.transform = CGAffineTransformMakeScale(2, 2);
           [UIView animateWithDuration:0.2f
                            animations:^{
                              cell.textView.transform = CGAffineTransformIdentity;
-                             cell.textView.textColor = [UIColor grey4];
+                             cell.textView.textColor = [strongSelf color];
                            }];
       }
     };
@@ -186,6 +216,11 @@ static NSUInteger const HEMClock12HourCount = 12;
         [NSLocalizedString(@"alarms.alarm.meridiem.am", nil) uppercaseString],
         [NSLocalizedString(@"alarms.alarm.meridiem.pm", nil) uppercaseString]
     ];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyHintFont];
+    
     _meridiemPickerView =
         [[NAPickerView alloc] initWithFrame:CGRectMake(0, 0, HEMClockPickerMeridiemWidth, CGRectGetHeight(self.bounds))
                                    andItems:items
@@ -194,22 +229,23 @@ static NSUInteger const HEMClock12HourCount = 12;
     _meridiemPickerView.backgroundColor = [UIColor clearColor];
     _meridiemPickerView.overlayColor = [UIColor clearColor];
     _meridiemPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
-      cell.textView.font = [UIFont alarmMeridiemFont];
-      cell.textView.textColor = [UIColor grey4];
-      cell.textView.textAlignment = NSTextAlignmentCenter;
-      cell.textView.backgroundColor = [UIColor clearColor];
-      cell.textView.text = item;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        cell.textView.font = font;
+        cell.textView.textColor = [strongSelf color];
+        cell.textView.textAlignment = NSTextAlignmentCenter;
+        cell.textView.backgroundColor = [UIColor clearColor];
+        cell.textView.text = item;
     };
-    __weak typeof(self) weakSelf = self;
     _meridiemPickerView.highlightBlock = ^(NALabelCell *cell) {
-      __strong typeof(weakSelf) strongSelf = weakSelf;
-      cell.textView.textColor = [UIColor tintColor];
-      strongSelf.selectedMeridiemText = cell.textView.text;
-      [strongSelf updateHour:strongSelf.hour];
-      [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        cell.textView.textColor = [strongSelf selectedColor];
+        strongSelf.selectedMeridiemText = cell.textView.text;
+        [strongSelf updateHour:strongSelf.hour];
+        [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
     };
     _meridiemPickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      cell.textView.textColor = [UIColor grey4];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        cell.textView.textColor = [strongSelf color];
     };
     [_meridiemPickerView setIndex:0];
     [self insertSubview:_meridiemPickerView atIndex:0];
@@ -220,13 +256,13 @@ static NSUInteger const HEMClock12HourCount = 12;
     [self layoutPickerViews];
 }
 
-- (void)addGradient:(HEMGradient*)gradient toView:(UIView*)view {
-    if (view && gradient) {
+- (void)addGradient:(NSArray*)colors toView:(UIView*)view {
+    if (view && colors) {
         [[[view layer] sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         
         CAGradientLayer* layer = [CAGradientLayer layer];
         [layer setFrame:[view bounds]];
-        [layer setColors:[gradient colorRefs]];
+        [layer setColors:colors];
         [[view layer] addSublayer:layer];
         [view setBackgroundColor:[UIColor clearColor]];
         [view setUserInteractionEnabled:NO];
@@ -234,11 +270,15 @@ static NSUInteger const HEMClock12HourCount = 12;
 }
 
 - (void)configureGradientViews {
-    [[self separator] setBackgroundColor:[UIColor separatorColor]];
-    [self addGradient:[HEMGradient topGradientForTimePicker]
+    UIColor* darkGradient = [[self backgroundColor] colorWithAlphaComponent:HEMClockPickerDarkGradient];
+    UIColor* lightGradient = [[self backgroundColor] colorWithAlphaComponent:HEMClockPickerLightGradient];
+    NSArray* colors = @[(id)[darkGradient CGColor], (id)[lightGradient CGColor]];
+    
+    [[self separator] setBackgroundColor:[SenseStyle colorWithAClass:[self class] property:ThemePropertySeparatorColor]];
+    [self addGradient:colors
                toView:[self topGradientView]];
     
-    [self addGradient:[HEMGradient bottomGradientForTimePicker]
+    [self addGradient:[[colors reverseObjectEnumerator] allObjects]
                toView:[self botGradientView]];
 }
 
@@ -253,30 +293,6 @@ static NSUInteger const HEMClock12HourCount = 12;
                        self.alpha = 1;
                      }
                      completion:NULL];
-}
-
-- (void)setShowSelectionUnderlay:(BOOL)showSelectionUnderlay {
-    if (_showSelectionUnderlay == showSelectionUnderlay) {
-        return;
-    }
-    
-    if (showSelectionUnderlay) {
-        CGRect underlayFrame = CGRectZero;
-        underlayFrame.size.width = CGRectGetWidth([self bounds]);
-        underlayFrame.size.height = HEMClockPickerUnderlayHeight;
-        
-        UIView* underlayView = [[UIView alloc] initWithFrame:underlayFrame];
-        [underlayView setBackgroundColor:[UIColor whiteColor]];
-        [[underlayView layer] setBorderWidth:0.5f];
-        [[underlayView layer] setBorderColor:[[UIColor separatorColor] CGColor]];
-        [underlayView setClipsToBounds:YES];
-        
-        [self setSelectionUnderlay:underlayView];
-        [self insertSubview:underlayView atIndex:0];
-    } else {
-        [[self selectionUnderlay] removeFromSuperview];
-        [self setSelectionUnderlay:nil];
-    }
 }
 
 - (void)layoutSubviews {

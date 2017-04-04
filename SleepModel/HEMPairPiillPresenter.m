@@ -9,13 +9,14 @@
 
 #import "UIBarButtonItem+HEMNav.h"
 
+#import "Sense-Swift.h"
+
 #import "HEMPairPiillPresenter.h"
 #import "HEMOnboardingService.h"
 #import "HEMEmbeddedVideoView.h"
 #import "HEMActivityCoverView.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 static NSInteger const kHEMPairPillAttemptsBeforeSkip = 2;
 static CGFloat const kHEMPairPillAnimDuration = 0.5f;
@@ -61,7 +62,9 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 }
 
 - (void)bindWithStatusLabel:(UILabel*)statusLabel {
-    [statusLabel setTextColor:[UIColor tintColor]];
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertyDetailColor];
+    [statusLabel setTextColor:color];
     [statusLabel setText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
     [statusLabel setAlpha:0.0f];
     [self setStatusLabel:statusLabel];
@@ -79,8 +82,12 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 }
 
 - (void)bindWithSkipButton:(UIButton*)skipButton {
-    [skipButton setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [[skipButton titleLabel] setFont:[UIFont button]];
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    
+    [skipButton setTitleColor:color forState:UIControlStateNormal];
+    [[skipButton titleLabel] setFont:font];
     [skipButton addTarget:self
                    action:@selector(skip)
          forControlEvents:UIControlEventTouchUpInside];
@@ -88,15 +95,20 @@ static CGFloat const kHEMPairPillAnimDuration = 0.5f;
 }
 
 - (void)bindWithEmbeddedVideoView:(HEMEmbeddedVideoView*)embeddedView {
-    UIImage* image = [UIImage imageNamed:@"pairing_your_sleep_pill"];
-    NSString* videoPath = NSLocalizedString(@"video.url.onboarding.pill-pair", nil);
+    static NSString* imageKey = @"sense.shake.pill.image";
+    static NSString* videoKey = @"sense.shake.pill.video.key";
+    UIImage* image = [SenseStyle imageWithGroup:GroupPillPairing propertyName:imageKey];
+    NSString* videoStringKey = (id) [SenseStyle valueWithGroup:GroupPillPairing propertyName:videoKey];
+    NSString* videoPath = NSLocalizedString(videoStringKey, nil);
     [embeddedView setFirstFrame:image videoPath:videoPath];
+    [embeddedView applyFillStyle];
     [self setVideoView:embeddedView];
 }
 
 - (void)bindWithActivityView:(HEMActivityCoverView*)activityView {
     NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
     [[activityView activityLabel] setText:text];
+    [activityView applyFillStyle];
     [self setActivityView:activityView];
 }
 

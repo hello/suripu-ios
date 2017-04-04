@@ -5,6 +5,9 @@
 //  Created by Jimmy Lu on 10/14/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+
+#import "Sense-Swift.h"
+
 #import "HEMActivityCoverView.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -37,8 +40,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     activityFrame.size = image.size;
     
     HEMActivityIndicatorView* indicator =
-        [[HEMActivityIndicatorView alloc] initWithImage:image
-                                               andFrame:activityFrame];
+        [[HEMActivityIndicatorView alloc] initWithImage:image andFrame:activityFrame];
     HEMActivityCoverView* cover = [[HEMActivityCoverView alloc] initWithActivityIndicator:indicator];
     [cover setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.2f]];
     
@@ -75,19 +77,17 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 }
 
 - (void)setup {
-    [self setBackgroundColor:[UIColor whiteColor]];
     if (![self indicator]) {
         [self addActivityIndicator];
     } else {
         [self addSubview:[self indicator]];
     }
     [self addLabel];
+    [self applyStyle];
 }
 
 - (void)addLabel {
     [self setActivityLabel:[[UILabel alloc] init]];
-    [[self activityLabel] setFont:[UIFont h4]];
-    [[self activityLabel] setTextColor:[UIColor grey6]];
     [[self activityLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self activityLabel] setNumberOfLines:0];
     
@@ -96,6 +96,8 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 - (void)addActivityIndicator {
     UIImage* checkImage = [UIImage imageNamed:@"check"];
+    checkImage = [checkImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
     CGRect indicatorFrame = CGRectZero;
     indicatorFrame.size = checkImage.size;
     

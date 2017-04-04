@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "NSString+HEMUtils.h"
-
+#import "Sense-Swift.h"
 #import "HEMTrendsBarGraphCell.h"
 #import "HEMMultiTitleView.h"
 #import "HEMBarChartView.h"
@@ -162,8 +162,6 @@ static CGFloat const HEMTrendsBarDashLineYOffset = 2.0f;
     [[self highlightLabels] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [[self barChartView] setMaxValue:[self maxValue]];
     [[self barChartView] setMinValue:[self minValue]];
-    [[self barChartView] setHighlightedBarColor:[self highlightedBarColor]];
-    [[self barChartView] setNormalBarColor:[self normalBarColor]];
     [[self barChartView] setBarSpacing:[self barSpacing]];
     [[self barChartView] setBarWidth:[self barWidth]];
     [[self barChartView] updateBarChartWith:[self combinedPoints] completion:^(NSInteger minIndex, NSInteger maxIndex) {

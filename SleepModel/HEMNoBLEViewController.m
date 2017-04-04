@@ -8,7 +8,7 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
-#import "UIFont+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMNoBLEViewController.h"
 #import "HEMSensePairViewController.h"
@@ -21,6 +21,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 
 @interface HEMNoBLEViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *instructionsContainer;
 @property (weak, nonatomic) IBOutlet UILabel *instructionView;
 @property (weak, nonatomic) IBOutlet UILabel *step1Label;
 @property (weak, nonatomic) IBOutlet UILabel *step1DescLabel;
@@ -45,13 +46,22 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 }
 
 - (void)configureSteps {
-    UIFont* font = [UIFont body];
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class]
+                                        property:ThemePropertyTextColor];
+    [[self instructionsContainer] setBackgroundColor:[[self view] backgroundColor]];
     [[self step1Label] setFont:font];
     [[self step1DescLabel] setFont:font];
     [[self step2Label] setFont:font];
     [[self step2DescLabel] setFont:font];
     [[self step3Label] setFont:font];
     [[self step3DescLabel] setFont:font];
+    [[self step1Label] setTextColor:color];
+    [[self step1DescLabel] setTextColor:color];
+    [[self step2Label] setTextColor:color];
+    [[self step2DescLabel] setTextColor:color];
+    [[self step3Label] setTextColor:color];
+    [[self step3DescLabel] setTextColor:color];
 }
 
 - (void)viewDidBecomeActive {

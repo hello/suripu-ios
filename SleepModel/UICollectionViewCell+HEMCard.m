@@ -14,23 +14,18 @@
 - (void)displayAsACard:(BOOL)card {
     if (card) {
         NSShadow* shadow = [NSShadow shadowForBackViewCards];
-        
-        self.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor whiteColor];
-        
-        self.contentView.layer.cornerRadius = 3.f;
-        self.contentView.layer.borderColor = [[UIColor cardBorderColor] CGColor];
-        self.contentView.layer.borderWidth = 1.f;
-        self.contentView.layer.shadowOffset = [shadow shadowOffset];
-        self.contentView.layer.shadowColor = [[shadow shadowColor] CGColor];
-        self.contentView.layer.shadowRadius = [shadow shadowBlurRadius];
-        self.contentView.layer.shadowOpacity = 1.f;
-        self.contentView.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 3.f;
+        self.layer.borderWidth = 1.f;
+        self.layer.shadowOffset = [shadow shadowOffset];
+        self.layer.shadowColor = [[shadow shadowColor] CGColor];
+        self.layer.shadowRadius = [shadow shadowBlurRadius];
+        self.layer.shadowOpacity = 1.f;
+        self.layer.masksToBounds = YES;
     } else {
-        self.contentView.layer.cornerRadius = 0.0f;
-        self.contentView.layer.borderWidth = 0.0f;
-        self.contentView.layer.shadowOpacity = 0.0f;
-        self.contentView.layer.masksToBounds = NO;
+        self.layer.cornerRadius = 0.0f;
+        self.layer.borderWidth = 0.0f;
+        self.layer.shadowOpacity = 0.0f;
+        self.layer.masksToBounds = NO;
     }
 }
 

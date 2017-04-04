@@ -45,7 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithTitleLabel:(UILabel*)titleLabel
           descriptionLabel:(UILabel*)descriptionLabel
   descriptionTopConstraint:(NSLayoutConstraint*)topConstraint;
-- (void)bindWithIllustrationView:(nullable UIImageView*)illustrationView
+- (void)bindWithIllustrationView:(__unused UIImageView*)illustrationView
+                  backgroundView:(UIImageView*)backgroundView
              andHeightConstraint:(NSLayoutConstraint*)heightConstraint;
 - (void)trackEvent:(NSString*)event properties:(NSDictionary*)props;
 - (void)help;

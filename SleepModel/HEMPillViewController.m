@@ -10,6 +10,8 @@
 #import <SenseKit/SENPairedDevices.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "Sense-Swift.h"
+
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -25,7 +27,6 @@
 #import "HEMActionButton.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMSleepPillDfuViewController.h"
-#import "HEMStyle.h"
 #import "HEMDeviceService.h"
 #import "HEMSleepPillDFUDelegate.h"
 #import "HEMPillDFUStoryboard.h"
@@ -116,12 +117,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [[self collectionView] setDataSource:self];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
-}
-
-- (NSDictionary*)attributesForWarningMessages {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+    [[self collectionView] applyFillStyle];
 }
 
 - (NSAttributedString*)attributedLongLastSeenMessage {
@@ -134,7 +130,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     
     NSMutableAttributedString* attrWarning =
         [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:[self attributesForWarningMessages]
+    [attrWarning addAttributes:[HEMWarningCollectionViewCell messageAttributes]
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -142,7 +138,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 
 - (NSAttributedString*)attributedLowBatteryMessage {
     NSString* message = NSLocalizedString(@"settings.pill.warning.low-battery", nil);
-    NSDictionary* attributes = [self attributesForWarningMessages];
+    NSDictionary* attributes = [HEMWarningCollectionViewCell messageAttributes];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -230,8 +226,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
                 break;
         }
         
-        [[actionCell textLabel] setTextColor:[UIColor grey6]];
-        [[actionCell textLabel] setFont:[UIFont body]];
+        icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [[actionCell textLabel] setText:text];
         [[actionCell iconView] setImage:icon];
         [[actionCell separatorView] setHidden:!showSeparator];
@@ -260,7 +255,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:HEMPillHeaderReuseId
                                                                                forIndexPath:indexPath];
-    [view setBackgroundColor:[UIColor backgroundColor]];
+    [view applyHeaderFooterStyle];
     return view;
     
 }
@@ -391,16 +386,12 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     NSString* noTitle = NSLocalizedString(@"actions.no", nil);
     NSString* helpLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
-    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
-                                                      attributes:[self dialogMessageAttributes:YES]]];
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink]];
     
     NSMutableAttributedString* message =
     [[NSMutableAttributedString alloc] initWithFormat:messageFormat
                                                  args:args
-                                            baseColor:[UIColor grey5]
-                                             baseFont:[UIFont body]];
-    NSRange fullRange = NSMakeRange(0, [message length]);
-    [message addAttributes:@{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()} range:fullRange];
+                                           attributes:[HEMAlertView messageAttributes]];
     
     __weak typeof(self) weakSelf = self;
     void(^unpair)(void) = ^{

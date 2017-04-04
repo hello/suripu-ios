@@ -6,9 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMSensorScaleCollectionViewCell.h"
 #import "HEMSensorScaleView.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
 
@@ -27,10 +27,7 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [[self titleLabel] setFont:[UIFont h6Bold]];
-    [[self titleLabel] setTextColor:[UIColor grey6]];
-    [[self measurementLabel] setFont:[UIFont h7]];
-    [[self measurementLabel] setTextColor:[UIColor grey3]];
+    [self applyStyle];
     [[self scaleContainerView] setClipsToBounds:NO];
 }
 
@@ -54,6 +51,10 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
     if ([self nextScaleIndex] < [existingViews count]) {
         scaleView = existingViews[[self nextScaleIndex]];
     } else {
+        UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+        UIFont* detailFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+        UIColor* detailColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
+        
         scaleView = [HEMSensorScaleView scaleView];
         CGRect scaleFrame = CGRectZero;
         scaleFrame.size.width = CGRectGetWidth([[self scaleContainerView] bounds]);
@@ -61,6 +62,11 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
         scaleFrame.origin.y = [self nextScaleIndex] * kHEMSensorScaleHeight;
         [scaleView setFrame:scaleFrame];
         [scaleView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        [[scaleView separatorView] applySeparatorStyle];
+        [[scaleView nameLabel] setFont:detailFont];
+        [[scaleView nameLabel] setTextColor:titleColor];
+        [[scaleView rangeLabel] setFont:detailFont];
+        [[scaleView rangeLabel] setTextColor:detailColor];
         [[self scaleContainerView] addSubview:scaleView];
     }
     
@@ -68,6 +74,21 @@ static CGFloat const kHEMSensorScaleCellBaseHeight = 42.0f;
     [[scaleView rangeLabel] setText:range];
     [[scaleView conditionView] setBackgroundColor:color];
     [self setNextScaleIndex:[self nextScaleIndex] + 1];
+}
+
+- (void)applyStyle {
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* hintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyHintColor];
+    UIFont* hintFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyHintFont];
+    
+    [[self titleLabel] setFont:titleFont];
+    [[self titleLabel] setTextColor:titleColor];
+    [self setBackgroundColor:bgColor];
+    [[self scaleContainerView] setBackgroundColor:bgColor];
+    [[self measurementLabel] setFont:hintFont];
+    [[self measurementLabel] setTextColor:hintColor];
 }
 
 @end

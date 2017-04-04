@@ -1,0 +1,558 @@
+{
+    "style.app" : {
+        "style.status.bar.style" : "style.status.bar.DARK"
+    },
+    
+    "#UIView" : {
+        "sense.background.fill.color" : "@color/grey.9",
+        "sense.disabled.overlay.color" : "@color/dark.disabled.overlay",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#UILabel" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.text.hint.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMTextFooterCollectionReusableView" : {
+        "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#UITabBar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/blue.6",
+        "sense.trends.icon" : "@image/trendsTabBarIconDark",
+        "sense.feed.icon" : "@image/feedTabBarIconDark",
+        "sense.sounds.icon" : "@image/soundsTabBarIconDark",
+        "sense.conditions.icon" : "@image/senseTabBarIconDark",
+    },
+    
+    "#UIToolbar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
+    "#UIBarButtonItem" : {
+        "style.tint.color" : "@color/white"
+    },
+    
+    "#UIButton" : {
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.primary.button.text.disabled.color" : "@color/dark.button.disabled.text",
+        "style.secondary.button.text.color" : "@color/dark.button.text",
+        "style.secondary.button.text.disabled.color" : "@color/dark.button.disabled.text"
+    },
+    
+    "#UICollectionView" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#UIScrollView" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#HEMCardCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.border.color" : "@color/dark.separator",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMAlarmListCell" : {
+        "style.text.disabled.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMAlarmExpansionListCell" : {
+        "sense.expansion.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMTextCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMDescriptionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMDeviceCollectionViewCell" : {
+        "style.tint.color" : "@color/white",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UINavigationBar" : {
+        "style.bar.tint.color" : "@color/grey.9",
+        "style.tint.color" : "@color/white",
+        "style.text.color" : "@color/white",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMExpansionHeaderView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UIImage" : {
+        "style.tint.color" : "@color/white",
+        "style.tint.disabled.color" : "@color/dark.icon.disabled"
+    },
+    
+    "#Sense.CollapsableActionCell" : {
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.tint.color" : "@color/white"
+    },
+    
+    "sense.sleep.depth.alpha" : {
+        "sense.light" : "@color/night.timeline.sleep.depth.light",
+        "sense.medium" : "@color/night.timeline.sleep.depth.medium",
+        "sense.deep" : "@color/night.timeline.sleep.depth.deep"
+    },
+    
+    "#UITextView" : {
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMDeviceActionCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white"
+    },
+    
+    "#HEMTextFieldCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMSimpleLineTextField" : {
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/dark.separator",
+        "style.keyboard.appearance" : "sense.DARK"
+    },
+    
+    "sense.attributed.string" : {
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.collectionview.fill" : {
+        "style.group.parent" : "#UICollectionView",
+        "style.background.color" : "@color/grey.9"
+    },
+    
+    "sense.header.or.footer" : {
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "sense.tableview" : {
+        "style.background.color" : "@color/black",
+        "style.separator.color" : "@color/dark.separator",
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.tint.color" : "@color/dark.disabled.text"
+    },
+    
+    "sense.tableview.fill" : {
+        "style.group.parent" : "sense.tableview",
+        "style.background.color" : "@color/grey.9"
+    },
+    
+    "sense.list.item" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator",
+        "style.link.color" : "@color/blue.6",
+        "style.tint.color" : "@color/white",
+        "style.background.highlighted.color" : "@color/grey.8"
+    },
+    
+    "sense.list.item.selection" : {
+        "style.tint.color" : "@color/white"
+    },
+    
+    "#UIViewController" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#HEMOnboardingController" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.secondary.button.text.color" : "@color/white"
+    },
+    
+    "sense.warning.view" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.separator.color" : "@color/dark.separator",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.activity.cover.view" : {
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white"
+    },
+    
+    "sense.volume.control" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.secondary.button.text.color" : "@color/white",
+        "style.bar.tint.color" : "@color/black",
+        "sense.volume.bar.color" : "@color/white"
+    },
+    
+    "sense.sensor.card" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.text.hint.color" : "@color/dark.disabled.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "sense.chart.gradient" : {
+        "sense.use.sensor.color" : false,
+        "sense.gradient.color" : "@color/white",
+        "sense.top.alpha": 0.5,
+    },
+    
+    "sense.sub.navigation" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white"
+    },
+    
+    "#Sense.SlidingNavigationTitleView" : {
+        "style.text.highlighted.color" : "@color/white"
+    },
+    
+    "#HEMSensorValueCollectionViewCell" : {
+        "style.text.color" : "@color/white"
+    },
+    
+    "#HEMSensorScaleCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.text.hint.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSensorAboutCollectionViewCell" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#UISwitch" : {
+        "style.background.color" : "@color/grey.9",
+        "style.tint.color" : "@color/white"
+    },
+    
+    "#HEMClockPickerView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.separator.color" : "@color/dark.separator",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.info" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.color" : "@color/dark.button.text",
+        "sense.smart.alarm.image" : "@image/smartAlarmDialogDark",
+        "sense.expansion.image" : "@image/expInfoIllustrationDark",
+        "sense.pill.color.image" : "@image/pillColorDialogDark"
+    },
+    
+    "#HEMAudioButton" : {
+        "style.tint.color" : "@color/white",
+        "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSleepSoundConfigurationCell" : {
+        "style.title.color" : "@font/dark.primary.text",
+        "sense.sound.graph.left" : "@image/soundGraphLeftDark",
+        "sense.sound.graph.right" : "@image/soundGraphRightDark"
+    },
+    
+    "#HEMQuestionCell" : {
+        "style.title.color" : "@color/dark.secondary.text",
+        "style.text.color" : "@color/dark.primary.text",
+        "style.secondary.button.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMInsightCollectionViewCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.disabled.text",
+        "style.primary.button.text.color" : "@color/dark.button.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "sense.insight" : {
+        "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.disabled.color" : "@color/dark.button.disabled.text",
+        "style.secondary.button.text.color" : "@color/dark.button.text",
+        "style.separator.color" : "@color/dark.separator",
+        "style.border.color" : "@color/dark.separator"
+    },
+    
+    "sense.question" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMVoiceExampleView" : {
+        "style.text.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMVoiceGroupHeaderCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMTrendsBaseCell" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.trends.titles" : {
+        "style.text.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMBarChartView" : {
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMTrendsAverageView" : {
+        "style.title.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMTrendsScoreLabel" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/dark.separator"
+    },
+    
+    "sense.condition" : {
+        "sense.default" : "@color/dark.separator"
+    },
+    
+    "#Sense.StatusMessageCell" : {
+        "style.background.color" : "@color/black",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMSleepSummaryCollectionViewCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.primary.button.text.color" : "@color/dark.secondary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.text.detail.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMSleepScoreGraphView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.border.color" : "@color/dark.separator",
+        "style.background.highlighted.color" : "@color/grey.8"
+    },
+    
+    "#HEMMiniSleepScoreGraphView" : {
+        "style.group.parent" : "#HEMSleepScoreGraphView"
+    },
+    
+    "#HEMSleepSegmentCollectionViewCell" : {
+        "style.background.color" : "@color/black",
+        "style.text.hint.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMTimelineFooterCollectionReusableView" : {
+        "style.background.color" : "@color/black"
+    },
+    
+    "#HEMEventBubbleView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.background.highlighted.color" : "@color/dark.event.pressed.state",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.tint.color" : "@color/white",
+        "style.text.detail.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMBreakdownSummaryCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMBreakdownLineCell" : {
+        "style.title.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.transparent.overlay" : {
+        "style.background.color" : "@color/dark.transparent.overlay"
+    },
+    
+    "#HEMSleepHistoryViewController" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.primary.button.text.color" : "@color/white"
+    },
+    
+    "#HEMMiniGraphCollectionViewCell" : {
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.detail.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMActionSheetTitleView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMActionSheetOptionCell" : {
+        "style.background.color" : "@color/grey.9",
+        "style.background.highlighted.color" : "@color/grey.8",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.separator.color" : "@color/dark.separator"
+    },
+    
+    "#HEMEventAdjustConfirmationView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.text.detail.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMActionSheetViewController" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMTimelineFeedbackViewController" : {
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.timeline.error" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.sleep.score.icon" : {
+        "style.background.highlighted.color" : "@color/grey.9",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.border.color" : "@color/dark.secondary.text",
+        "style.border.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "sense.warning.image" : "@image/noSenseDark"
+    },
+    
+    "#HEMActionView" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "#HEMMacAddressHeaderView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text"
+    },
+    
+    "#UIPickerView" : {
+        "style.background.color" : "@color/black",
+        "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMIntroMessageCell" : {
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text"
+    },
+    
+    "sense.sleep.sounds.state" : {
+        "sense.update.image" : "@image/sleepSoundSenseNeedsUpdateDark",
+        "sense.downloading.image" : "@image/sleepSoundSenseDownloadingDark",
+        "sense.offline.image" : "@image/sleepSoundSenseOfflineDark"
+    },
+    
+    "sense.pairing" : {
+        "sense.background.image" : "@image/senseBackgroundDark"
+    },
+    
+    "sense.pill.pairing" : {
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill_dark",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair.dark"
+    },
+    
+    "#HEMAlertView" : {
+        "style.background.color" : "@color/grey.9",
+        "style.title.color" : "@color/dark.primary.text",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text",
+        "style.secondary.button.text.color" : "color/dark.button.text"
+    },
+    
+    "#HEMAlertTextView" : {
+        "style.link.color" : "@color/blue.6",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/dark.secondary.text",
+        "style.text.highlighted.color" : "@color/dark.primary.text"
+    },
+    
+    "sense.settings.footer" : {
+        "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMNoBLEViewController" : {
+        "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMUpgradeSensePresenter" : {
+        "sense.illustration" : "@image/sensePlacementDark"
+    },
+    
+    "#HEMSenseUpgradedViewController" : {
+        "sense.illustration" : "@image/senseUpgradedDark"
+    },
+    
+    "#HEMPillSetupViewController" : {
+        "sense.first.frame" : "@image/pillSetupDark",
+        "sense.pill.clipping.url" : "video.url.onboarding.pill-setup.dark"
+    },
+    
+    "#HEMSetupDoneViewController" : {
+        "sense.illustration" : "@image/sensePlacementDark"
+    },
+    
+    "sense.factory.reset" : {
+        "sense.illustration" : "@image/originalSenseDark"
+    },
+    
+    "sense.voice.tutorial" : {
+        "sense.table.image" : "@image/senseTableDark",
+        "sense.command.text.color" : "@color/dark.primary.text",
+    },
+    
+    "sense.pill.dfu" : {
+        "sense.illustration" : "@image/sleepPillDFUDark",
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill_dark",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair.dark"
+    },
+    
+    "#HEMProfileImageView" : {
+        "style.background.color" : "@color/grey.9"
+    },
+    
+    "#HEMPhotoHeaderView" : {
+        "style.icon.image" : "@image/addIconDark"
+    },
+    
+    "#HEMSensorGroupMemberView" : {
+        "style.text.color" : "@color/dark.primary.text"
+    }
+}

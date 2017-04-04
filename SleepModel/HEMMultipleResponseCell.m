@@ -5,10 +5,8 @@
 //  Created by Jimmy Lu on 12/11/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMMultipleResponseCell.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 @interface HEMMultipleResponseCell()
 
@@ -21,11 +19,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    UIView* selectedView = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
-    [selectedView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [selectedView setBackgroundColor:[UIColor whiteColor]];
-    [self setSelectedBackgroundView:selectedView];
+    [self applyStyle];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 
 - (void)setSelected:(BOOL)selected {

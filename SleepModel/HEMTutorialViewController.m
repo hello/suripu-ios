@@ -29,6 +29,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 @property (weak, nonatomic) IBOutlet UIImageView *fakeBackgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonHeightConstraint;
 
 @property (strong, nonatomic) NSMutableArray* tutorialScreens;
 // hold on to data sources as they are weak when assigned to collection views
@@ -50,6 +51,16 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 }
 
 - (void)configureControls {
+    UIImage* image = [[UIImage imageNamed:@"closeXIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    // use text color as the icon tint
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupInfo property:ThemePropertyPrimaryButtonTextColor];
+    UIColor* buttonBgColor = [SenseStyle colorWithGroup:GroupInfo property:ThemePropertyBackgroundColor];
+    CGFloat height = [[self closeButtonHeightConstraint] constant];
+    [[self closeButton] setBackgroundColor:buttonBgColor];
+    [[[self closeButton] layer] setCornerRadius:height / 2.0f];
+    [[self closeButton] setTintColor:textColor];
+    [[self closeButton] setImage:image forState:UIControlStateNormal];
+    
     [self setCloseButtonInitialButtonConstraint:[[self closeButtonBottomConstraint] constant]];
     
     NSInteger tutorialCount = [[self tutorials] count];
@@ -163,11 +174,10 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
     UICollectionView* screen = [[UICollectionView alloc] initWithFrame:frame
                                                   collectionViewLayout:layout];
     
-    [screen setBackgroundColor:[UIColor whiteColor]];
     [screen setDelegate:self];
     [screen setTag:tag];
     [[screen layer] setCornerRadius:HEMTutorialContentCornerRadius];
-    
+    [screen applyStyle];
     return screen;
 }
 

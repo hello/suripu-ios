@@ -5,10 +5,8 @@
 //  Created by Jimmy Lu on 12/2/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMSingleResponseCell.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 
 @implementation HEMSingleResponseCell
 
@@ -17,8 +15,8 @@
     
     UIView* selectedView = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
     [selectedView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [selectedView setBackgroundColor:[UIColor blue2]];
     [self setSelectedBackgroundView:selectedView];
+    [self applyStyle];
 }
 
 @end

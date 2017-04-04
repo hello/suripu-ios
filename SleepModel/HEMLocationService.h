@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
-#import "SENService.h"
+#import <SenseKit/SENService.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,6 +44,9 @@ typedef void(^HEMLocationHandler)(HEMLocation* _Nullable mostRecentLocation, NSE
 @interface HEMLocationService : SENService
 
 - (HEMLocationAuthStatus)authorizationStatus;
+- (BOOL)requiresPermission;
+- (BOOL)hasDeniedPermission;
+- (NSError*)quickLocation:(HEMLocationHandler)completion;
 - (void)requestPermission:(HEMLocationAuthorizationHandler)authHandler;
 - (nullable HEMLocationActivity*)startLocationActivity:(HEMLocationHandler)update
                                                  error:(NSError**)error;

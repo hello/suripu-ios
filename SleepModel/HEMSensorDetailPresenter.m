@@ -105,9 +105,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
-    [collectionView setBackgroundColor:[UIColor whiteColor]];
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
+    [collectionView applyFillStyle];
     [self setCollectionView:collectionView];
 }
 
@@ -150,33 +150,28 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 }
 
 - (NSAttributedString*)attributedAboutForSensorType:(NSString*)sensorType {
+    NSDictionary* attributes = [HEMSensorAboutCollectionViewCell aboutAttributes];
     NSString* aboutKey = [NSString stringWithFormat:@"sensor.section.about.%@", sensorType];
     NSString* about = NSLocalizedString(aboutKey, nil);
     if ([about isEqualToString:aboutKey]) {
         return nil;
     }
-    return [[NSAttributedString alloc] initWithString:about attributes:[self aboutAttributes]];
-}
-
-- (NSDictionary*)aboutAttributes {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+    return [[NSAttributedString alloc] initWithString:about attributes:attributes];
 }
 
 - (NSAttributedString*)attributedNote {
     NSString* note = NSLocalizedString(@"sensor.about.note", nil);
-    NSDictionary* attributes = @{NSForegroundColorAttributeName: [UIColor grey7],
-                                 NSFontAttributeName: [UIFont body]};
+    NSDictionary* attributes = [HEMSensorAboutCollectionViewCell boldAboutAttributes];
     return [[NSAttributedString alloc] initWithString:note attributes:attributes];
 }
 
 - (NSAttributedString*)attributedC02About {
+    NSDictionary* attributes = [HEMSensorAboutCollectionViewCell aboutAttributes];
     NSString* format = NSLocalizedString(@"sensor.section.about.co2.format", nil);
     NSArray* args = @[[self attributedNote]];
     return [[NSMutableAttributedString alloc] initWithFormat:format
                                                         args:args
-                                                  attributes:[self aboutAttributes]];
+                                                  attributes:attributes];
 }
 
 #pragma mark - Presenter events
@@ -206,30 +201,30 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
                                      SENSensorStatus* status,
                                      SENSensorDataCollection* data,
                                      NSError* error) {
-                        
+
                             __strong typeof(weakSelf) strongSelf = weakSelf;
                             
                             if ([strongSelf scopeSelected] != scope) {
                                 return; // ignore
                             }
-                        
+                            
                             [strongSelf setPollError:error];
                             if (!error) {
                                 BOOL needsUIUpdate = ![strongSelf status]
                                     || ![status isEqual:[strongSelf status]];
                                 [strongSelf setStatus:status];
                                 [strongSelf updateSensorFromStatus];
-                            
+                                
                                 SENSensorDataCollection* sensorData = data;
                                 if (sensorData && ![[strongSelf sensorData] isEqual:sensorData]) {
                                     [strongSelf setSensorData:data];
                                     needsUIUpdate = needsUIUpdate || YES;
                                 }
-                            
+                                
                                 if (needsUIUpdate) {
                                     [strongSelf prepareChartDataAndReload];
                                 }
-                            
+
                             } else {
                                 [strongSelf setSensor:nil];
                                 [strongSelf clearData];
@@ -434,14 +429,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     switch ([contentType unsignedIntegerValue]) {
         default:
         case HEMSensorDetailContentValue:
-            height = CGRectGetHeight([collectionView bounds])
-                        - cellSpacing
-                        - topSpacing
-                        - chartHeight;
-            break;
+        height = CGRectGetHeight([collectionView bounds])
+        - cellSpacing
+        - topSpacing
+        - chartHeight;
+        break;
         case HEMSensorDetailContentChart:
-            height = chartHeight;
-            break;
+        height = chartHeight;
+        break;
         case HEMSensorDetailContentScale: {
             NSUInteger count = [[[self sensor] scales] count];
             height = [HEMSensorScaleCollectionViewCell heightWithNumberOfScales:count];
@@ -455,7 +450,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             break;
         }
     }
-
+    
     return CGSizeMake(widthBounds, height);
 }
 
@@ -528,7 +523,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     LineChartDataSet* dataSet = [[LineChartDataSet alloc] initWithData:[[self chartData] copy]
-                                                                  color:sensorColor];
+                                                                 color:sensorColor];
 
     [lineChartView setData:[[LineChartData alloc] initWithDataSet:dataSet]];
     [lineChartView setGridBackgroundColor:sensorColor];
@@ -547,6 +542,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     if (condition == SENConditionCalibrating) {
         valueReplacementImage = [UIImage imageNamed:@"sensorCalibrating"];
     } else {
+        UIFont* valueFont = [HEMSensorValueCollectionViewCell valueFont];
+        
         if ([[self sensor] type] == SENSensorTypeTemp) {
             NSString* valueString = nil;
             if (value) {
@@ -558,11 +555,13 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
             }
             [[valueCell valueLabel] setTextColor:conditionColor];
             [[valueCell valueLabel] setText:valueString];
-            [[valueCell valueLabel] setFont:[UIFont h1]];
+            [[valueCell valueLabel] setFont:valueFont];
         } else {
-            NSDictionary* valueAttributes = @{NSFontAttributeName : [UIFont h1],
+            UIFont* unitFont = [HEMSensorValueCollectionViewCell smallValueUnitFont];
+            UIFont* defaultFont = [[valueCell valueLabel] font];
+            NSDictionary* valueAttributes = @{NSFontAttributeName : valueFont ?: defaultFont,
                                               NSForegroundColorAttributeName : conditionColor};
-            NSDictionary* unitAttributes = @{NSFontAttributeName : [UIFont h4],
+            NSDictionary* unitAttributes = @{NSFontAttributeName : unitFont ?: defaultFont,
                                              NSForegroundColorAttributeName : conditionColor,
                                              NSBaselineOffsetAttributeName : @(12.0f)};
             
@@ -576,8 +575,7 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     
     [valueCell replaceValueWithImage:valueReplacementImage];
     [[valueCell messageLabel] setText:message];
-    [[valueCell messageLabel] setTextColor:[UIColor grey5]];
-    [[valueCell messageLabel] setFont:[UIFont body]];
+    [valueCell applyStyle];
 }
 
 - (void)configureValueCell:(HEMSensorValueCollectionViewCell*)valueCell {
@@ -597,7 +595,9 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
 - (void)configureChartCell:(HEMSensorChartCollectionViewCell*)chartCell {
     LineChartView* chartView = nil;
     HEMSensorChartContainer* chartContainer = [chartCell chartContentView];
-    [chartContainer setScrubberColor:[UIColor colorForCondition:[[self sensor] condition]]];
+    SENCondition condition = [[self sensor] condition];
+    UIColor* sensorColor = [SenseStyle colorWithCondition:condition defaultColor:nil];
+    [chartContainer setScrubberColor:sensorColor];
     [chartContainer setDelegate:self];
     [chartCell setXAxisLabels:[self xLabelData]];
     
@@ -639,6 +639,8 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         }
     }
     
+    [chartCell applyStyle];
+    
     [self setChartView:chartView];
     [self showScrubbingTutorialIfNeeded];
 }
@@ -664,8 +666,6 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
     }
     
     [scaleCell setNumberOfScales:count];
-    [[scaleCell titleLabel] setFont:[UIFont h6Bold]];
-    [[scaleCell titleLabel] setTextColor:[UIColor grey6]];
     [[scaleCell titleLabel] setText:NSLocalizedString(@"sensor.section.scale.title", nil)];
     
     NSString* rangeFormat = nil;
@@ -688,18 +688,14 @@ typedef NS_ENUM(NSUInteger, HEMSensorDetailContent) {
         } else {
             rangeString = NSLocalizedString(@"empty-data", nil);
         }
-
-        [scaleCell addScaleWithName:[scale localizedName]
-                              range:rangeString
-                     conditionColor:[UIColor colorForCondition:[scale condition]]];
+        UIColor* scaleCondition = [SenseStyle colorWithCondition:[scale condition] defaultColor:nil];
+        [scaleCell addScaleWithName:[scale localizedName] range:rangeString conditionColor:scaleCondition];
     }
 }
 
 - (void)configureAboutCell:(HEMSensorAboutCollectionViewCell*)aboutCell {
     NSString* title = NSLocalizedString(@"sensor.section.about.title", nil);
     [[aboutCell titleLabel] setText:title];
-    [[aboutCell titleLabel] setFont:[UIFont h6Bold]];
-    [[aboutCell titleLabel] setTextColor:[UIColor grey6]];
     [[aboutCell aboutLabel] setAttributedText:[self aboutDetail]];
 }
 

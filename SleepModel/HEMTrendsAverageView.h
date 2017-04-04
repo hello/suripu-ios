@@ -18,4 +18,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* average2ValueLabel;
 @property (nonatomic, weak) IBOutlet UILabel* average3ValueLabel;
 
+- (void)applyStyle;
+
 @end

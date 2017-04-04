@@ -12,10 +12,13 @@
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENPillMetadata.h>
 
+#import "Sense-Swift.h"
+
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
 
 #import "HEMSenseSettingsDataSource.h"
+#import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceWarning.h"
 #import "HEMStyle.h"
 
@@ -204,12 +207,6 @@
 
 #pragma mark - Warnings
 
-- (NSDictionary*)attributesForWarningMessages {
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName: [UIColor grey5],
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
-}
-
 - (nonnull NSOrderedSet*)deviceWarnings {
     return [self warnings];
 }
@@ -223,7 +220,7 @@
     
     NSMutableAttributedString* attrWarning =
     [[NSMutableAttributedString alloc] initWithFormat:format args:@[attrLastSeen]];
-    [attrWarning addAttributes:[self attributesForWarningMessages]
+    [attrWarning addAttributes:[HEMWarningCollectionViewCell messageAttributes]
                          range:NSMakeRange(0, [attrWarning length])];
     
     return attrWarning;
@@ -231,7 +228,7 @@
 
 - (NSAttributedString*)attributedWarningForMessage:(NSString*)message {
     NSMutableAttributedString* attrWarning = [[NSMutableAttributedString alloc] initWithString:message];
-    [attrWarning addAttributes:[self attributesForWarningMessages]
+    [attrWarning addAttributes:[HEMWarningCollectionViewCell messageAttributes]
                          range:NSMakeRange(0, [attrWarning length])];
     return attrWarning;
 }

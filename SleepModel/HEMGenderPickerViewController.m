@@ -25,6 +25,11 @@
     [self configurePresenter]; // need to go before viewDidLoad
     
     [super viewDidLoad];
+    // styling of the buttons should be done in the presenter, but since this is
+    // an onboarding controller, the styling is done at the controller level
+    [self stylePrimaryButton:[self doneButton]
+             secondaryButton:[self skipButton]
+                withDelegate:[self delegate] != nil];
     [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];
 }
@@ -74,8 +79,7 @@
                         from:(GenderSelectorPresenter *)presenter {
     HEMListItemSelectionViewController* listVC = (id)[HEMMainStoryboard instantiateListItemViewController];
     [listVC setListPresenter:optionsPresenter];
-
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:listVC];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:listVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

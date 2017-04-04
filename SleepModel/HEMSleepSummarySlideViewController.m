@@ -13,7 +13,6 @@
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
 #import "NSDate+HEMRelative.h"
-#import "UIView+HEMMotionEffects.h"
 
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
@@ -58,7 +57,6 @@
     _lastNightSleepScore = -1; // initialize to -1 to make update take affect for 0
     
     HEMSleepGraphViewController* timelineVC = (id) [self timelineControllerForDate:date];
-    [timelineVC setEventLoadAnimation:YES];
     
     SENTimeline* timeline = [SENTimeline timelineForDate:[NSDate timelineInitialDate]];
     [self updateLastNightSleepScore:[[timeline score] integerValue]];
@@ -110,9 +108,6 @@
                                                                               action:@selector(didPan)];
     recognizer.delegate = self;
     [self.view addGestureRecognizer:recognizer];
-    
-    static CGFloat parallaxDepth = 4.0f;
-    [self.view add3DEffectWithBorder:parallaxDepth direction:HEMMotionEffectsDirectionVertical];
 }
 
 - (void)reloadData {

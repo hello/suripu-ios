@@ -13,7 +13,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMBreakdownViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMMarkdown.h"
 #import "HEMSplitTextFormatter.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
@@ -48,8 +47,8 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         // use same tint as the tutorial dialogs
-        _backgroundImage = [[RootViewController currentRootViewController]
-                                .view blurredSnapshotWithTint:[UIColor lightSeeThroughBackgroundColor]];
+        UIColor* color = [SenseStyle colorWithGroup:GroupTransparentOverlay property:ThemePropertyBackgroundColor];
+        _backgroundImage = [[RootViewController currentRootViewController].view blurredSnapshotWithTint:color];
     }
     return self;
 }
@@ -77,6 +76,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     self.contentViewWidth.constant = CGRectGetWidth(windowBounds);
     self.collectionView.alpha = 0;
     self.collectionView.scrollEnabled = NO;
+    [self.collectionView applyFillStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -178,10 +178,10 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     HEMBreakdownSummaryCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard summaryViewCellReuseIdentifier]
                                                   forIndexPath:indexPath];
-    NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
-    cell.titleLabel.textColor = [UIColor grey6];
-    cell.titleLabel.font = [UIFont h5];
-    cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
+    [cell applyStyle];
+    
+    NSDictionary* attributes = [HEMBreakdownSummaryCell summaryAttributes];
+    cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attributes) trim];
     return cell;
 }
 
@@ -190,8 +190,6 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     HEMBreakdownLineCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
                                                   forIndexPath:indexPath];
-    cell.isAccessibilityElement = NO;
-    cell.accessibilityElements = @[];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:0];
     [self collectionView:collectionView updateMetricInCell:cell atIndexPath:indexPath inPosition:1];
     return cell;
@@ -219,7 +217,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     }
     if (rawTitle) {
         return [[NSAttributedString alloc] initWithString:[rawTitle uppercaseString]
-                                               attributes:[HEMMarkdown attributesForTimelineBreakdownTitle][@(PARA)]];
+                                               attributes:[HEMBreakdownLineCell titleAttributes]];
     }
     return nil;
 }
@@ -236,13 +234,10 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 
 - (NSAttributedString *)valueTextWithValue:(HEMSplitTextObject *)value condition:(SENCondition)condition {
     if (!value) {
-        NSDictionary *attributes =
-            [HEMMarkdown attributesForTimelineBreakdownValueWithColor:
-                             [UIColor colorForCondition:SENConditionUnknown]][@(PARA)];
+        NSDictionary *attributes = [HEMBreakdownLineCell valueAttributesWithCondition:SENConditionUnknown];
         return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:attributes];
     }
-    NSDictionary *attributes = [HEMMarkdown
-        attributesForTimelineBreakdownValueWithColor:[UIColor colorForCondition:condition]][@(PARA)];
+    NSDictionary *attributes = [HEMBreakdownLineCell valueAttributesWithCondition:condition];
     return [self.valueFormatter attributedStringForObjectValue:value withDefaultAttributes:attributes];
 }
 
@@ -330,7 +325,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     if (indexPath.section == 0) {
         CGFloat const BreakdownSummaryHInset = 40.f;
         CGRect windowBounds = HEMKeyWindowBounds();
-        NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
+        NSDictionary *attrs = [HEMBreakdownSummaryCell summaryAttributes];
         NSAttributedString *text = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
         height = [text sizeWithWidth:CGRectGetWidth(windowBounds) - BreakdownSummaryHInset].height
                  + BreakdownCellSummaryBaseHeight;
@@ -344,8 +339,53 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 
 @implementation HEMBreakdownSummaryCell
 
++ (NSDictionary*)summaryAttributes {
+    UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
+    UIColor* boldColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
+    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    style.alignment = NSTextAlignmentLeft;
+    return @{@(PLAIN) : @{ NSFontAttributeName : font,
+                           NSForegroundColorAttributeName : textColor,
+                           NSParagraphStyleAttributeName : style},
+             @(PARA) : @{ NSFontAttributeName : font,
+                          NSForegroundColorAttributeName : textColor,
+                          NSParagraphStyleAttributeName : style},
+             @(EMPH) : @{NSFontAttributeName : font,
+                         NSForegroundColorAttributeName : boldColor,
+                         NSParagraphStyleAttributeName : style},
+             @(STRONG) : @{NSFontAttributeName : font,
+                           NSForegroundColorAttributeName : boldColor,
+                           NSParagraphStyleAttributeName : style}};
+}
+
+- (void)applyStyle {
+    self.titleLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    self.titleLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+}
+
 @end
 
 @implementation HEMBreakdownLineCell
+
++ (NSDictionary*)titleAttributes {
+    UIColor* color = [SenseStyle colorWithAClass:self property:ThemePropertyTitleColor];
+    UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTitleFont];
+    return @{ NSFontAttributeName : font,
+              NSForegroundColorAttributeName : color,
+              NSKernAttributeName : @1 };
+}
+
++ (NSDictionary*)valueAttributesWithCondition:(SENCondition)condition {
+    UIColor* color = [SenseStyle colorWithCondition:condition defaultColor:nil];
+    UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
+    return @{ NSFontAttributeName : font, NSForegroundColorAttributeName : color };
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self.verticalBorder applySeparatorStyle];
+    [self.horizontalBorder applySeparatorStyle];
+}
 
 @end

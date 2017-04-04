@@ -42,8 +42,10 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _tabIcon = [UIImage imageNamed:@"soundsTabBarIcon"];
-        _tabIconHighlighted = [UIImage imageNamed:@"soundsTabBarIconHighlighted"];
+        static NSString* iconKey = @"sense.sounds.icon";
+        static NSString* iconHighlightedKey = @"sense.sounds.highlighted.icon";
+        _tabIcon = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconKey];
+        _tabIconHighlighted = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconHighlightedKey];
         _tabTitle = NSLocalizedString(@"alarms.title", nil);
     }
     return self;

@@ -7,9 +7,8 @@
 //
 
 #import <AttributedMarkdown/markdown_peg.h>
+#import "Sense-Swift.h"
 #import "UIView+HEMSnapshot.h"
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMAlertViewController.h"
 #import "HEMAlertView.h"
 #import "HEMSupportUtil.h"
@@ -36,7 +35,7 @@
 }
 
 + (NSAttributedString *)attributedMessageText:(NSString *)text {
-    NSDictionary *attributes = [HEMMarkdown attributesForAlertMessageText][@(PARA)];
+    NSDictionary *attributes = [HEMAlertView messageAttributes];
     NSAttributedString* attributedMessage = nil;
     if (text.length > 0)
         attributedMessage = [[NSAttributedString alloc] initWithString:text attributes:attributes];
@@ -67,25 +66,6 @@
     return alert;
 }
 
-- (instancetype)initBooleanDialogWithTitle:(NSString *)title
-                                   message:(NSString *)message
-                             defaultsToYes:(BOOL)defaultsToYes
-                                    action:(void (^)())action {
-    if (self = [super init]) {
-        self.title = title;
-        _type = HEMAlertViewTypeBoolean;
-        _attributedMessage = [[self class] attributedMessageText:message];
-        [self addButtonWithTitle:[NSLocalizedString(@"actions.yes", nil) uppercaseString]
-                           style:defaultsToYes ? HEMAlertViewButtonStyleBlueBoldText : HEMAlertViewButtonStyleGrayText
-                          action:action];
-        [self addButtonWithTitle:[NSLocalizedString(@"actions.no", nil) uppercaseString]
-                           style:defaultsToYes ? HEMAlertViewButtonStyleGrayText : HEMAlertViewButtonStyleBlueBoldText
-                          action:nil];
-        [self setDefaults];
-    }
-    return self;
-}
-
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message {
     if (self = [super init]) {
         self.title = title;
@@ -113,7 +93,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[UIColor seeThroughBackgroundColor]];
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTransparentOverlay
+                                         property:ThemePropertyBackgroundColor];
+    [[self view] setBackgroundColor:bgColor];
     [self configureGestures];
 }
 

@@ -45,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString* title;
 @property (nonatomic, copy, nullable) NSArray* selectedItemNames;
 @property (nonatomic, copy, nullable) NSArray* items;
-@property (nonatomic, assign) BOOL hideExtraNavigationBar; // defaults to YES
 @property (nonatomic, weak, readonly) UINavigationItem* mainNavItem;
 @property (nonatomic, weak, readonly) NSLayoutConstraint* tableViewBottomConstraint;
 
@@ -58,9 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar;
 
 - (void)bindWithActivityIndicator:(HEMActivityIndicatorView*)indicatorView;
-
-- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
-            withTopConstraint:(NSLayoutConstraint*)topConstraint;
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem;
 
@@ -111,6 +107,38 @@ NS_ASSUME_NONNULL_BEGIN
  * regarding a selection has been made.  Only for single selection support
  */
 - (void)willNotifyDelegateOfSelection;
+
+/**
+ * @discussion
+ * Subclasses should override if interested in knowing that the delegate callback
+ * regarding a selection has just been made.  Only for single selection support
+ */
+- (void)didNotifyDelegateOfSelection;
+
+/**
+ * @discussion
+ * Subclasses should implement this to return detail for the list item, if any.
+ * By default, this returns nil
+ *
+ * @param item: the item to check if there is any detail for
+ * @return the detail string to display, if any
+ */
+- (nullable NSString*)detailForItem:(id)item;
+
+/**
+ * @discussion
+ * Subclasses should override this to return a custom footer, or nil, if not desired
+ *
+ * @param section: section of the table view
+ * @return footer
+ */
+- (nullable UIView*)viewForFooterInSection:(NSInteger)section;
+
+/**
+ * @param section: section of the table view
+ * @return height for the footer
+ */
+- (CGFloat)heightForFooterInSection:(NSInteger)section;
 
 @end
 

@@ -31,18 +31,6 @@ static CGFloat const kHEMSensorChartScrubberInnerCircleSize = 4.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    UIColor* lineColor = [[UIColor grey3] colorWithAlphaComponent:0.2f];
-    [[self topLimitLabel] setTextColor:[UIColor grey4]];
-    [[self botLimitLabel] setTextColor:[UIColor grey4]];
-    
-    [[self topLimitLabel] setFont:[UIFont h8]];
-    [[self botLimitLabel] setFont:[UIFont h8]];
-    
-    [[self topLimitLine] setBackgroundColor:lineColor];
-    [[self botLimitLine] setBackgroundColor:lineColor];
-    
-    [[self noDataLabel] setFont:[UIFont body]];
-    [[self noDataLabel] setTextColor:[UIColor grey5]];
     [[self noDataLabel] setUserInteractionEnabled:NO];
     [[self noDataLabel] setHidden:YES];
     

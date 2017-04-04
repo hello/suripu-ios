@@ -31,6 +31,7 @@ import SenseKit
     fileprivate var voiceService: HEMVoiceService!
     fileprivate var unreadService: HEMUnreadAlertService!
     fileprivate weak var shortcutHandler: ShortcutHandler?
+    fileprivate weak var tabBarPresenter: TabBarPresenter?
     
     override var prefersStatusBarHidden: Bool {
         return false
@@ -109,16 +110,60 @@ import SenseKit
     
     // MARK: - Tab Configuration
     
-    fileprivate func configureTabs() {
+    @objc func showingMainTabs() -> Bool {
+        guard let viewControllers = self.viewControllers else {
+            return false
+        }
+        
+        var mainTabsOnly = true
+        
+        for vc in viewControllers {
+            if let nav = vc as? UINavigationController {
+                if nav.viewControllers.count > 1 {
+                    mainTabsOnly = false
+                    break
+                }
+            }
+            
+            if vc.presentedViewController != nil {
+                mainTabsOnly = false
+                break
+            }
+        }
+        
+        return mainTabsOnly
+    }
+    
+    fileprivate func reloadTabs(except index: Int) {
+        let timelineVC = index == 0 && self.selectedViewController != nil ? self.selectedViewController : HEMSleepSummarySlideViewController()
+        let trendsVC = index == 1 && self.selectedViewController != nil ? self.selectedViewController : self.trendsController()!
+        let feedVC = index == 2 && self.selectedViewController != nil ? self.selectedViewController : self.feedController()!
+        let soundsVC = index == 3 && self.selectedViewController != nil ? self.selectedViewController : self.soundController()!
+        let conditionsVC = index == 4 && self.selectedViewController != nil ? self.selectedViewController : HEMMainStoryboard.instantiateCurrentNavController() as? UIViewController
+        self.viewControllers = [timelineVC!, trendsVC!, feedVC!, soundsVC!, conditionsVC!];
+        self.tabBarPresenter?.adjustInsets()
+    }
+    
+    fileprivate func tabControllers() -> [UIViewController] {
         let timelineVC = HEMSleepSummarySlideViewController()
         let trendsVC = self.trendsController()!
         let feedVC = self.feedController()!
         let soundsVC = self.soundController()!
         let conditionsVC = HEMMainStoryboard.instantiateCurrentNavController() as! UIViewController
-        self.viewControllers = [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC];
-        
+        return [timelineVC, trendsVC, feedVC, soundsVC, conditionsVC]
+    }
+    
+    fileprivate func reloadAllTabs() {
+        self.viewControllers = self.tabControllers()
+        self.tabBarPresenter?.adjustInsets()
+    }
+    
+    fileprivate func configureTabs() {
+        self.viewControllers = self.tabControllers()
+
         let presenter = TabBarPresenter()
         presenter.bind(with: self.tabBar)
+        self.tabBarPresenter = presenter
         self.presenters.append(presenter)
     }
     
@@ -312,6 +357,18 @@ extension MainViewController: ShortcutHandler {
     func takeAction(action: HEMShortcutAction, data: Any?) {
         self.shortcutHandler?.takeAction(action: action, data: data)
         self.shortcutHandler = nil
+    }
+    
+}
+
+extension MainViewController: Themed {
+    
+    func didChange(theme: Theme, auto: Bool) {
+        if auto == true {
+            self.reloadAllTabs()
+        } else {
+            self.reloadTabs(except: self.selectedIndex)
+        }
     }
     
 }

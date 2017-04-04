@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIView* customAccessoryView;
 @property (weak, nonatomic) IBOutlet HEMActivityIndicatorView* activityView;
 
+@property (strong, nonatomic) UIView* customSeparator;
 @property (assign, nonatomic, getter=isLoading) BOOL loading;
 
 - (void)showSeparator:(BOOL)show;

@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SENSleepPill* pillToDfu;
 
 - (instancetype)initWithDeviceService:(HEMDeviceService*)deviceService;
+- (void)bindWithMainView:(UIView*)mainView;
 - (void)bindWithTitleLabel:(UILabel*)titleLabel descriptionLabel:(UILabel*)descriptionLabel;
 - (void)bindWithActionButton:(UIButton*)actionButton;
 - (void)bindWithProgressView:(UIProgressView*)progressView

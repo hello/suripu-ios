@@ -23,10 +23,10 @@ static CGFloat const HEMPillCollectionViewWithUpdateHeight = 304.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self firmwareLabel] setFont:[UIFont body]];
-    [[self firmwareLabel] setTextColor:[UIColor grey5]];
-    [[self firmwareValueLabel] setFont:[UIFont body]];
-    [[self firmwareValueLabel] setTextColor:[UIColor grey6]];
+    [[self firmwareLabel] setFont:[[self lastSeenLabel] font]];
+    [[self firmwareLabel] setTextColor:[[self lastSeenLabel] textColor]];
+    [[self firmwareValueLabel] setFont:[[self lastSeenValueLabel] font]];
+    [[self firmwareValueLabel] setTextColor:[[self lastSeenValueLabel] textColor]];
 }
 
 @end

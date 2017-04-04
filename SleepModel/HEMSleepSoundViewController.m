@@ -31,7 +31,6 @@
     Scrollable
 >
 
-@property (nonatomic, weak) IBOutlet UIImageView *bgLaunchImageView;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView *activityIndicator;
@@ -47,8 +46,10 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _tabIcon = [UIImage imageNamed:@"soundsTabBarIcon"];
-        _tabIconHighlighted = [UIImage imageNamed:@"soundsTabBarIconHighlighted"];
+        static NSString* iconKey = @"sense.sounds.icon";
+        static NSString* iconHighlightedKey = @"sense.sounds.highlighted.icon";
+        _tabIcon = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconKey];
+        _tabIconHighlighted = [SenseStyle imageWithAClass:[UITabBar class] propertyName:iconHighlightedKey];
         _tabTitle = NSLocalizedString(@"sleep-sounds.title", nil);
     }
     return self;

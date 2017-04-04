@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMVideoCollectionViewCell.h"
 #import "HEMEmbeddedVideoView.h"
 
@@ -47,6 +48,11 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     [[self videoView] stop];
+}
+
+- (void)applyFillStyle {
+    [super applyFillStyle];
+    [[self videoView] setBackgroundColor:[self backgroundColor]];
 }
 
 @end

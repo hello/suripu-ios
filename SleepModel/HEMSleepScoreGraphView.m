@@ -1,7 +1,7 @@
 
 #import <UICountingLabel/UICountingLabel.h>
+#import "Sense-Swift.h"
 #import "HEMSleepScoreGraphView.h"
-#import "SENSensorAccessibility.h"
 #import "HEMStyle.h"
 
 @interface HEMSleepScoreGraphView ()
@@ -32,6 +32,8 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)configureLayers {
+    UIColor* borderColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
     self.scoreLayer = [CAShapeLayer layer];
     self.backgroundLayer = [CAShapeLayer layer];
     self.loadingLayer = [CAShapeLayer layer];
@@ -48,23 +50,25 @@ CGFloat const arcOffsetY = 80.f;
                                                         clockwise:YES];
     self.backgroundLayer.path = arcPath.CGPath;
     self.backgroundLayer.fillColor = fillColor.CGColor;
-    self.backgroundLayer.strokeColor = [UIColor borderColor].CGColor;
+    self.backgroundLayer.strokeColor = borderColor.CGColor;
     self.backgroundLayer.lineWidth = 1.f;
     self.backgroundLayer.frame = self.bounds;
     self.loadingLayer.fillColor = fillColor.CGColor;
     self.loadingLayer.path = arcPath.CGPath;
-    self.loadingLayer.strokeColor = [UIColor tintColor].CGColor;
+    self.loadingLayer.strokeColor = tintColor.CGColor;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
+    self.backgroundColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
 }
 
 - (void)configureScoreValueLabel {
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
     self.scoreValueLabel.animationDuration = HEMSleepScoreAnimationDuration;
     self.scoreValueLabel.formatBlock = ^NSString *(float value) { return [NSString stringWithFormat:@"%0.f", value]; };
     self.scoreValueLabel.alpha = 0;
     self.scoreValueLabel.method = UILabelCountingMethodEaseInOut;
-    self.scoreValueLabel.font = [UIFont h1];
+    self.scoreValueLabel.font = font;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -75,9 +79,12 @@ CGFloat const arcOffsetY = 80.f;
             mask.frame = self.backgroundLayer.bounds;
             mask.path = self.backgroundLayer.path;
             
+            UIColor* highlightedColor = [SenseStyle colorWithAClass:[self class]
+                                                           property:ThemePropertyBackgroundHighlightedColor];
+            NSArray* colors = @[(id)highlightedColor.CGColor, (id)self.backgroundColor.CGColor];
             CAGradientLayer* gradientLayer = [CAGradientLayer layer];
             gradientLayer.frame = self.backgroundLayer.bounds;
-            gradientLayer.colors = [UIColor timelineSelectedGradientColorRefs];
+            gradientLayer.colors = colors;
             gradientLayer.mask = mask;
             
             self.highlightedLayer = gradientLayer;
@@ -186,7 +193,6 @@ CGFloat const arcOffsetY = 80.f;
     _sleepScore = sleepScore;
     if (animated)
         [self animateScoreTo:sleepScore];
-    self.accessibilityValue = [NSString stringWithFormat:NSLocalizedString(@"timeline.accessibility-value.summary-score.format", nil), (long)self.sleepScore, SENConditionReadableValue(self.condition)];
 }
 
 #pragma mark - Loading

@@ -293,10 +293,6 @@
     return [UIColor colorWithHex:0x596980 alpha:0.9];
 }
 
-+ (UIColor *)lightSeeThroughBackgroundColor {
-    return [[self grey6] colorWithAlphaComponent:0.6f];
-}
-
 #pragma mark - Text colors
 
 + (UIColor *)settingsTextColor {

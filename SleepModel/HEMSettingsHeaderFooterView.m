@@ -5,9 +5,8 @@
 //  Created by Jimmy Lu on 11/16/15.
 //  Copyright © 2015 Hello. All rights reserved.
 //
-#import "UIColor+HEMStyle.h"
-#import "UIFont+HEMStyle.h"
 
+#import "Sense-Swift.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 CGFloat const HEMSettingsHeaderFooterHeight = 8.0f;
@@ -43,8 +42,8 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
     borderFrame.origin.y = yOrigin;
     borderFrame.size.height = HEMSettingsHeaderFooterBorderHeight;
     UIView* border = [[UIView alloc] initWithFrame:borderFrame];
-    [border setBackgroundColor:[UIColor separatorColor]];
     [border setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [border applySeparatorStyle];
     return border;
 }
      

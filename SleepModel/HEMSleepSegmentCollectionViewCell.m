@@ -1,6 +1,5 @@
-
+#import "Sense-Swift.h"
 #import "HEMSleepSegmentCollectionViewCell.h"
-#import "HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 
 CGFloat const HEMLinedCollectionViewCellLineOffset = 65.f;
@@ -28,9 +27,11 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
-    self.backgroundColor = [UIColor timelineBackgroundColor];
+    self.backgroundColor = [SenseStyle colorWithAClass:[HEMSleepSegmentCollectionViewCell class]
+                                              property:ThemePropertyBackgroundColor];
     self.barLineGradient = [HEMGradient gradientForTimelineSleepSegment];
 }
 
@@ -43,14 +44,6 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
 - (void)setNeedsLayout {
     [super setNeedsLayout];
     [self setNeedsDisplay];
-}
-
-- (void)prepareForEntryAnimation {
-    self.waitingForAnimation = YES;
-}
-
-- (void)cancelEntryAnimation {
-    self.waitingForAnimation = NO;
 }
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
@@ -77,15 +70,18 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     CGSize size = [text sizeWithHeight:HEMSegmentTimeLabelHeight];
     CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - size.width - HEMTimeLabelLineTrailing, labelYOffset,
                                   size.width, HEMSegmentTimeLabelHeight);
+    
+    UIColor* timeColor = [SenseStyle colorWithAClass:[HEMSleepSegmentCollectionViewCell class]
+                                            property:ThemePropertyHintColor];
+    
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
-    timeLabel.textColor = [UIColor tintColor];
-    timeLabel.isAccessibilityElement = NO;
+    timeLabel.textColor = timeColor;
     [[self contentView] addSubview:timeLabel];
     CGRect lineRect
         = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset, HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
-    lineView.image = [self lineBorderImageWithColor:[[UIColor tintColor] colorWithAlphaComponent:0.25f]];
+    lineView.image = [self lineBorderImageWithColor:[timeColor colorWithAlphaComponent:0.25f]];
     [[self contentView] insertSubview:lineView atIndex:0];
     [self.timeViews addObject:lineView];
     [self.timeViews addObject:timeLabel];
@@ -137,18 +133,6 @@ CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     CGContextFillRect(ctx, fillRect);
     [self.preFillColor setFill];
     CGContextFillRect(ctx, preRect);
-
-    CGGradientRef gradient = [self.barLineGradient gradientRef];
-    CGContextSaveGState(ctx);
-    CGContextAddRect(ctx, fillRect);
-    CGContextClip(ctx);
-    CGContextDrawLinearGradient(ctx, gradient, CGPointZero, CGPointMake(CGRectGetMaxX(fillRect), 0), 0);
-    CGContextRestoreGState(ctx);
-    CGContextSaveGState(ctx);
-    CGContextAddRect(ctx, preRect);
-    CGContextClip(ctx);
-    CGContextDrawLinearGradient(ctx, gradient, CGPointZero, CGPointMake(CGRectGetMaxX(preRect), 0), 0);
-    CGContextRestoreGState(ctx);
 }
 
 @end

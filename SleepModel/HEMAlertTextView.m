@@ -6,9 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMAlertTextView.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 @implementation HEMAlertTextView
 
@@ -34,12 +33,15 @@
 }
 
 - (void)configureDefaults {
+    UIColor* linkColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyLinkColor];
+    UIFont* linkFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    
     self.editable = NO;
     self.scrollEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
     self.dataDetectorTypes = UIDataDetectorTypeLink | UIDataDetectorTypeAddress;
-    self.linkTextAttributes = @{NSForegroundColorAttributeName : [UIColor tintColor],
-                                NSFontAttributeName : [UIFont bodyBold]};
+    self.linkTextAttributes = @{NSForegroundColorAttributeName : linkColor,
+                                NSFontAttributeName : linkFont};
     self.textContainerInset = UIEdgeInsetsZero;
     self.textContainer.lineFragmentPadding = 0;
 }

@@ -41,15 +41,16 @@
 - (void)configureTableView {
     [self setDataSource:[[HEMSupportTopicDataSource alloc] init]];
     [[self tableView] setDataSource:[self dataSource]];
-    [[self tableView] setSeparatorColor:[UIColor separatorColor]];
 
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [header setHidden:YES];
     [[self tableView] setTableHeaderView:header];
     
-    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [footer setHidden:YES];
     [[self tableView] setTableFooterView:footer];
+    
+    [[self tableView] applyStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -118,10 +119,9 @@
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell textLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor textColor]];
     [cell showStyledAccessoryViewIfNone];
+    [cell applyStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

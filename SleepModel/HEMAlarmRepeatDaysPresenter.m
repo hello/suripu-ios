@@ -55,8 +55,8 @@
 
 - (void)bindWithTableView:(UITableView*)tableView
          bottomConstraint:(NSLayoutConstraint *)bottomConstraint{
+    [tableView setAllowsMultipleSelection:YES]; // must come befor super
     [super bindWithTableView:tableView bottomConstraint:bottomConstraint];
-    [tableView setAllowsMultipleSelection:YES];
 }
 
 - (void)configureSelectedItems {
@@ -82,12 +82,6 @@
 }
 
 #pragma mark - Overrides
-
-- (BOOL)hideExtraNavigationBar {
-    return YES;
-}
-
-#pragma mark -
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {
     NSInteger index = -1;

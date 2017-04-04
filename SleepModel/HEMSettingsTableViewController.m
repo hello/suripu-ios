@@ -1,9 +1,12 @@
 #import <MessageUI/MessageUI.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMSettingsTableViewController.h"
 #import "HEMVoiceSettingsViewController.h"
 #import "HEMSettingsStoryboard.h"
 #import "HEMTellAFriendItemProvider.h"
+#import "HEMListItemSelectionViewController.h"
 
 #import "HEMSettingsPresenter.h"
 #import "HEMBreadcrumbService.h"
@@ -20,6 +23,8 @@
 @property (strong, nonatomic) HEMExpansionService* expansionService;
 @property (strong, nonatomic) HEMDeviceService* deviceService;
 @property (weak, nonatomic) HEMBreadcrumbService* breadService;
+@property (strong, nonatomic) HEMLocationService* locationService;
+@property (strong, nonatomic) NightModeService* nightModeService;
 
 @end
 
@@ -90,6 +95,23 @@
     }
 }
 
+- (void)showNightModeSettings {
+    if (![self nightModeService]) {
+        [self setNightModeService:[NightModeService new]];
+    }
+    
+    if (![self locationService]) {
+        [self setLocationService:[HEMLocationService new]];
+    }
+    
+    NightModeSettingsPresenter* presenter =
+        [[NightModeSettingsPresenter alloc] initWithNightModeService:[self nightModeService]
+                                                     locationService:[self locationService]];
+    HEMListItemSelectionViewController* listVC = [HEMMainStoryboard instantiateListItemViewController];
+    [listVC setListPresenter:presenter];
+    [[self navigationController] pushViewController:listVC animated:YES];
+}
+
 #pragma mark - Shortcuts
 
 - (void)showCategory:(HEMSettingsCategory)category {
@@ -103,7 +125,13 @@
 
 - (void)didSelectSettingsCategory:(HEMSettingsCategory)category
                     fromPresenter:(HEMSettingsPresenter*)presenter {
-    [self showCategory:category];
+    switch (category) {
+        case HEMSettingsCategoryNightMode:
+            [self showNightModeSettings];
+            break;
+        default:
+            [self showCategory:category];
+    }
 }
 
 - (void)showController:(UIViewController*)controller

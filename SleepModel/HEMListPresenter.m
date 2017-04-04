@@ -5,6 +5,9 @@
 //  Created by Jimmy Lu on 3/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
+
+#import "NSString+HEMUtils.h"
 
 #import "HEMListPresenter.h"
 #import "HEMStyle.h"
@@ -15,6 +18,10 @@
 #import "HEMActivityIndicatorView.h"
 
 static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
+static CGFloat const HEMListItemBaseHeight = 56.0f;
+static CGFloat const HEMListItemDetailLeftMargin = 66.0f;
+static CGFloat const HEMListItemDetailRightMargin = 20.0f;
+static CGFloat const HEMListItemDetailTextSpacing = 5.0f;
 
 @interface HEMListPresenter()
 
@@ -39,7 +46,6 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
             selectedItemNames:(NSArray*)selectedItemNames {
     self = [super init];
     if (self) {
-        _hideExtraNavigationBar = YES;
         _title = [title copy];
         _items = [items copy];
         _mutableSelectedNames = [selectedItemNames mutableCopy];
@@ -49,27 +55,6 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 - (void)bindWithDefaultNavigationBar:(UINavigationBar*)navigationBar {
     [self setMainNavBar:navigationBar];
-}
-
-- (void)bindWithNavigationBar:(UINavigationBar*)navigationBar
-            withTopConstraint:(NSLayoutConstraint*)topConstraint {
-    
-    if ([self hideExtraNavigationBar]) {
-        CGFloat height = CGRectGetHeight([navigationBar bounds]);
-        [topConstraint setConstant:-height];
-        [navigationBar setHidden:YES];
-    } else {
-        UINavigationItem* topItem = [navigationBar topItem];
-        UIBarButtonItem* backButton = [topItem leftBarButtonItem];
-        [backButton setTarget:self];
-        [backButton setAction:@selector(back:)];
-        
-        HEMNavigationShadowView* shadowView =
-            [[HEMNavigationShadowView alloc] initWithNavigationBar:navigationBar];
-        [shadowView showSeparator:YES];
-        [navigationBar addSubview:shadowView];
-        [self bindWithShadowView:shadowView];
-    }
 }
 
 - (void)bindWithNavigationItem:(UINavigationItem*)navItem {
@@ -86,6 +71,8 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView bottomConstraint:(NSLayoutConstraint *)bottomConstraint {
+    [self setDefaultSelectionImages:[tableView allowsMultipleSelection]];
+    
     UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
                                                                bottomBorder:NO];
     UIView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO
@@ -95,13 +82,13 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
-    [tableView setSeparatorColor:[UIColor separatorColor]];
+    [tableView applyStyle];
     
     [self setTableView:tableView];
     [self setTableViewBottomConstraint:bottomConstraint];
 }
 
-- (void)setDefaultSelectionImages {
+- (void)setDefaultSelectionImages:(BOOL)allowMultiple {
     if (![self selectedImage]) {
         UIImage* image = [UIImage imageNamed:@"radio"];
         image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -110,8 +97,9 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     
     if (![self highlightedSelectionImage]) {
         UIImage* image = nil;
-        if ([[self tableView] allowsMultipleSelection]) {
+        if (allowMultiple) {
             image = [UIImage imageNamed:@"settingsToggleIconActive"];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         } else {
             image = [UIImage imageNamed:@"radioSelected"];
             image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -127,10 +115,13 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 - (NSArray*)selectedItemNames {
     return _mutableSelectedNames;
 }
+    
+- (NSString*)detailForItem:(id)item {
+    return nil;
+}
 
 - (void)configureCell:(HEMListItemCell*)cell forItem:(id)item {
-    [[cell itemLabel] setFont:[UIFont body]];
-    [[cell itemLabel] setTextColor:[UIColor textColor]];
+    [cell applyStyle];
 }
 
 - (void)configureSelectionImageViewInCell:(UITableViewCell*)cell {
@@ -140,14 +131,13 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     HEMListItemCell* itemCell = (id) cell;
     NSString* name = [[itemCell itemLabel] text];
     BOOL selected = [[self selectedItemNames] containsObject:name];
-    UIColor* tint = selected ? [UIColor tintColor] : [UIColor grey3];
     [[itemCell selectionImageView] setImage:[self selectedImage]];
     [[itemCell selectionImageView] setHighlightedImage:[self highlightedSelectionImage]];
-    [[itemCell selectionImageView] setTintColor:tint];
+    [itemCell applyTintStyleWithHighlighted:selected];
 }
 
 - (NSInteger)indexOfItemWithName:(NSString*)name {
-    return -1;
+    return NSNotFound;
 }
 
 - (void)updateCell:(HEMListItemCell*)cell withItem:(id)item selected:(BOOL)selected {
@@ -174,9 +164,10 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
 
 #pragma mark - Presenter Events
 
-- (void)willAppear {
-    [super willAppear];
-    [self setDefaultSelectionImages];
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self tableView] applyStyle];
+    [[self tableView] reloadData];
 }
 
 - (void)didAppear {
@@ -205,7 +196,16 @@ static CGFloat const HEMListPresenterSelectionDelay = 0.15f;
     }
 }
 
+- (CGFloat)heightForFooterInSection:(NSInteger)section {
+    return HEMSettingsHeaderFooterHeightWithTitle;
+}
+    
+- (UIView*)viewForFooterInSection:(NSInteger)section {
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
+}
+
 - (void)willNotifyDelegateOfSelection {}
+- (void)didNotifyDelegateOfSelection {}
 
 #pragma mark - Nav Item
 
@@ -230,14 +230,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    if ([cell isKindOfClass:[HEMListItemCell class]]) {
-        HEMListItemCell* listCell = (id)cell;
-        [listCell flashTouchIndicator];
-    }
-    
     [self updateCell:cell withItem:item selected:YES];
     
     if (![tableView allowsMultipleSelection]) {
+        NSArray<NSIndexPath*>* visiblePaths = [tableView indexPathsForVisibleRows];
+        for(NSIndexPath* path in visiblePaths) {
+            if (![path isEqual:indexPath]) {
+                [self tableView:tableView didDeselectRowAtIndexPath:path];
+            }
+        }
+        
         [self willNotifyDelegateOfSelection];
         // add a delay to let delegate now selection has been made so dismissal
         // of the controller can be done
@@ -252,6 +254,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if ([[strongSelf delegate] respondsToSelector:@selector(didSelectItem:atIndex:from:)]) {
                 [[strongSelf delegate] didSelectItem:item atIndex:index from:strongSelf];
             }
+            [strongSelf didNotifyDelegateOfSelection];
         });
     }
 }
@@ -269,6 +272,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - UITableViewDataSource
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = HEMListItemBaseHeight;
+    
+    id item = [self items][[indexPath row]];
+    NSString* detail = [self detailForItem:item];
+    
+    if ([detail length] > 0) {
+        CGFloat maxWidth = CGRectGetWidth([tableView bounds]) - HEMListItemDetailLeftMargin - HEMListItemDetailRightMargin;
+        UIFont* detailFont = [SenseStyle valueWithGroup:GroupListItem property:ThemePropertyDetailFont];
+        height += [detail heightBoundedByWidth:maxWidth usingFont:detailFont] + HEMListItemDetailTextSpacing;
+    }
+    
+    return height;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -277,23 +295,35 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self items] count];
 }
+    
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return [self heightForFooterInSection:section];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return HEMSettingsHeaderFooterHeightWithTitle;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    HEMSettingsHeaderFooterView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [header setTitle:[[self title] uppercaseString]];
     return header;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
+    return [self viewForFooterInSection:section];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard listItemReuseIdentifier]];
+    id item = [self items][[indexPath row]];
+    NSString* detail = [self detailForItem:item];
+    NSString* identifier = [HEMMainStoryboard listItemReuseIdentifier];
+    if (detail != nil) {
+        identifier = [HEMMainStoryboard listItemDetailReuseIdentifier];
+    }
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    [self configureSelectionImageViewInCell:(id)cell];
+    return cell;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

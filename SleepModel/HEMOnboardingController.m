@@ -10,6 +10,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIBarButtonItem+HEMNav.h"
+#import "Sense-Swift.h"
 
 #import "HEMOnboardingController.h"
 #import "HEMSupportUtil.h"
@@ -84,9 +85,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setEnableBack:YES]; // by default
     [self configureTitle];
     [self configureDescription];
+    [self applyStyle];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -115,16 +118,10 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (void)configureDescription {
     if ([self descriptionLabel] != nil) {
-        UIColor* color = [UIColor grey5];
-        UIFont* font = [UIFont body];
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
         if ([attrDesc length] > 0) {
             NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-            
-            [attrDesc addAttributes:@{NSFontAttributeName : font,
-                                      NSForegroundColorAttributeName : color}
-                              range:NSMakeRange(0, [attrDesc length])];
             
             if (HEMIsIPhone4Family()) {
                 [style setAlignment:NSTextAlignmentCenter];
@@ -135,10 +132,8 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
                              range:NSMakeRange(0, [attrDesc length])];
             
             [[self descriptionLabel] setAttributedText:attrDesc];
+            [[self descriptionLabel] applyDescriptionStyleWithOverride:NO];
         } else {
-            [[self descriptionLabel] setTextColor:color];
-            [[self descriptionLabel] setFont:font];
-            
             if (HEMIsIPhone4Family()) {
                 [[self descriptionLabel] setTextAlignment:NSTextAlignmentCenter];
             }
@@ -359,9 +354,11 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate {
     
-    [[secondaryButton titleLabel] setFont:[UIFont button]];
-    [secondaryButton setTitleColor:[UIColor tintColor]
-                          forState:UIControlStateNormal];
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    [[secondaryButton titleLabel] setFont:font];
+    [secondaryButton setTitleColor:color forState:UIControlStateNormal];
 
     if (hasDelegate) {
         NSString* done = NSLocalizedString(@"status.success", nil);

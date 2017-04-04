@@ -6,8 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMSleepSoundConfigurationCell.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfCellSeparatorHeight = 0.5f;
 static CGFloat const HEMSleepSoundConfAnimDuration = 0.5f;
@@ -23,17 +23,27 @@ static CGFloat const HEMSleepSoundGraphMinScale = 0.3f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[self titleLabel] setFont:[UIFont bodyBold]];
-    [[self playingLabel] setFont:[UIFont bodyBold]];
-    
-    [[self titleSeparator] setBackgroundColor:[UIColor separatorColor]];
-    [[self soundSeparator] setBackgroundColor:[UIColor separatorColor]];
-    [[self durationSeparator] setBackgroundColor:[UIColor separatorColor]];
-    
     [[self titleSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self soundSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     [[self durationSeparatorHeight] setConstant:HEMSleepSoundConfCellSeparatorHeight];
     
+    static NSString* leftImageKey = @"sense.sound.graph.left";
+    static NSString* rightImageKey = @"sense.sound.graph.right";
+    UIImage* soundGraphLeft = [SenseStyle imageWithAClass:[self class]
+                                             propertyName:leftImageKey];
+    UIImage* soundGraphRight = [SenseStyle imageWithAClass:[self class]
+                                             propertyName:rightImageKey];
+    UIImage* soundIcon = [[[self soundImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage* durationIcon = [[[self durationImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage* volumeIcon = [[[self volumeImageView] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    [[self soundGraphLeftView] setImage:soundGraphLeft];
+    [[self soundGraphRightView] setImage:soundGraphRight];
+    [[self soundImageView] setImage:soundIcon];
+    [[self durationImageView] setImage:durationIcon];
+    [[self volumeImageView] setImage:volumeIcon];
+    
+    [[self overlay] applyDisabledOverlayStyle];
     [[self overlay] setAlpha:1.0f];
     [[self soundAccessoryView] setAlpha:0.0f];
     [[self durationAccessoryView] setAlpha:0.0f];
@@ -42,6 +52,8 @@ static CGFloat const HEMSleepSoundGraphMinScale = 0.3f;
     [[self soundValueLabel] setAlpha:0.0f];
     [[self durationValueLabel] setAlpha:0.0f];
     [[self volumeValueLabel] setAlpha:0.0f];
+    
+    [self applyStyle];
     
     [self deactivate:YES];
 }
@@ -132,6 +144,45 @@ static CGFloat const HEMSleepSoundGraphMinScale = 0.3f;
         [[[self soundGraphRightView] layer] removeAllAnimations];
         [[[self soundGraphLeftView] layer] removeAllAnimations];
     }];
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    UIFont* textFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIColor* detailColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+    
+    [[self soundGraphLeftView] setBackgroundColor:[self backgroundColor]];
+    [[self soundGraphRightView] setBackgroundColor:[self backgroundColor]];
+    [[self overlay] applyDisabledOverlayStyle];
+    [[self titleLabel] setBackgroundColor:[self backgroundColor]];
+    [[self titleLabel] setTextColor:titleColor];
+    [[self titleLabel] setFont:titleFont];
+    [[self playingLabel] setBackgroundColor:[self backgroundColor]];
+    [[self playingLabel] setTextColor:titleColor];
+    [[self playingLabel] setFont:titleFont];
+    [[self titleSeparator] applySeparatorStyle];
+    [[self soundImageView] setTintColor:tintColor];
+    [[self soundLabel] setFont:textFont];
+    [[self soundLabel] setTextColor:textColor];
+    [[self soundValueLabel] setTextColor:detailColor];
+    [[self soundValueLabel] setFont:textFont];
+    [[self soundSeparator] applySeparatorStyle];
+    [[self durationImageView] setTintColor:tintColor];
+    [[self durationLabel] setTextColor:textColor];
+    [[self durationLabel] setFont:textFont];
+    [[self durationValueLabel] setFont:textFont];
+    [[self durationValueLabel] setTextColor:detailColor];
+    [[self durationSeparator] applySeparatorStyle];
+    [[self volumeImageView] setTintColor:tintColor];
+    [[self volumeLabel] setTextColor:textColor];
+    [[self volumeLabel] setFont:textFont];
+    [[self volumeValueLabel] setFont:textFont];
+    [[self volumeValueLabel] setTextColor:detailColor];
 }
 
 @end

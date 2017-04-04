@@ -14,10 +14,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* categoryLabel;
 @property (nonatomic, weak) IBOutlet UILabel* messageLabel;
 
-+ (CGFloat)heightWithCategory:(NSString*)category
-                 categoryFont:(UIFont*)categoryFont
-                      message:(NSString*)message
-                  messageFont:(UIFont*)messageFont
-                    fullWidth:(CGFloat)width;
++ (CGFloat)heightWithCategory:(NSString*)category message:(NSString*)message fullWidth:(CGFloat)width;
+- (void)applyStyle;
 
 @end

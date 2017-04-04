@@ -1,7 +1,7 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMSleepEventCollectionViewCell.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -22,14 +22,15 @@ CGFloat const HEMEventPlayButtonDiameter = 48.f;
 CGFloat const HEMEventPlayButtonMargin = 8.f;
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text {
-    return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForEventMessageText]) trim];
+    return [markdown_to_attr_string(text, 0, [HEMEventBubbleView messageAttributes]) trim];
 }
 
 - (void)layoutWithImage:(UIImage *)image
                 message:(NSString *)text
                    time:(NSAttributedString *)timeText
                waveform:(HEMWaveform *)waveform {
-    self.eventTypeImageView.image = image;
+    UIImage* icon = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.eventTypeImageView.image = icon;
     [self displayAudioViewsWithWaveform:waveform];
     [self.contentContainerView setMessageText:[[self class] attributedMessageFromText:text] timeText:timeText];
     self.contentContainerView.frame = [self containerFrame];
@@ -62,6 +63,15 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    Class baseClass = [HEMSleepSegmentCollectionViewCell class];
+    UIColor* hintColor = [SenseStyle colorWithAClass:baseClass property:ThemePropertyHintColor];
+    UIFont* hintFont = [SenseStyle fontWithAClass:baseClass property:ThemePropertyHintFont];
+    UIColor* tintColor = [SenseStyle colorWithAClass:[HEMEventBubbleView class]
+                                            property:ThemePropertyTintColor];
+    [[self eventTypeImageView] setTintColor:tintColor];
+    [[self eventTimeLabel] setTextColor:hintColor];
+    [[self eventTimeLabel] setFont:hintFont];
     [self displayAudioViewsWithWaveform:nil];
 }
 
@@ -72,16 +82,6 @@ CGFloat const HEMEventPlayButtonMargin = 8.f;
     self.contentContainerView.alpha = 1;
     [self.contentContainerView setMessageText:nil timeText:nil];
     [self.playButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
-}
-
-- (void)prepareForEntryAnimation {
-    [super prepareForEntryAnimation];
-    self.contentContainerView.alpha = 0;
-}
-
-- (void)cancelEntryAnimation {
-    [super cancelEntryAnimation];
-    self.contentContainerView.alpha = 1;
 }
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {

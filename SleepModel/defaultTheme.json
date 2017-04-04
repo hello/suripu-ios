@@ -1,0 +1,801 @@
+{
+    "style.app" : {
+        "style.status.bar.style" : "style.status.bar.LIGHT"
+    },
+    
+    "#UIView" : {
+        "sense.background.fill.color" : "@color/white",
+        "sense.disabled.overlay.color" : "@color/light.disabled.overlay",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMExpansionHeaderView" : {
+        "style.group.parent" : "sense.tableview.fill",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UIBarButtonItem" : {
+        "style.tint.color" : "@color/black"
+    },
+    
+    "#UILabel" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UITabBar" : {
+        "style.bar.tint.color" : "@color/white",
+        "style.tint.color" : "@color/blue.6",
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/blue.6",
+        "style.translucent" : false,
+        "sense.trends.icon" : "@image/trendsTabBarIcon",
+        "sense.trends.highlighted.icon" : "@image/trendsTabBarIconHighlighted",
+        "sense.feed.icon" : "@image/feedTabBarIcon",
+        "sense.feed.highlighted.icon" : "@image/feedTabBarIconHighlighted",
+        "sense.sounds.icon" : "@image/soundsTabBarIcon",
+        "sense.sounds.highlighted.icon" : "@image/soundsTabBarIconHighlighted",
+        "sense.conditions.icon" : "@image/senseTabBarIcon",
+        "sense.conditions.highlighted.icon" : "@image/senseTabBarIconHighlighted"
+    },
+    
+    "#UIToolbar" : {
+        "style.bar.tint.color" : "@color/white",
+        "style.tint.color" : "@color/blue.6",
+        "style.translucent" : false
+    },
+    
+    "#UIButton" : {
+        "style.background.color" : "@color/clear",
+        "style.primary.button.text.font" : "@font/button",
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.primary.button.text.disabled.color" : "@color/light.button.disabled.text",
+        "style.primary.button.text.highlighted.color" : "@color/blue.7",
+        "style.secondary.button.text.font" : "@font/button",
+        "style.secondary.button.text.color" : "@color/light.button.text",
+        "style.secondary.button.text.disabled.color" : "@color/light.button.disabled.text"
+    },
+    
+    "#UINavigationBar" : {
+        "style.bar.tint.color" : "@color/white",
+        "style.tint.color" : "@color/black",
+        "style.text.color" : "@color/black",
+        "style.text.font" : "@font/title.1",
+        "style.separator.color" : "@color/light.separator",
+        "style.include.shadow" : false,
+        "style.translucent" : false
+    },
+    
+    "#HEMActionButton" :  {
+        "style.background.color" : "@color/blue.6",
+        "style.background.highlighted.color" : "@color/blue.7",
+        "style.background.disabled.color" : "@color/disabled.button",
+        "style.text.color" : "@color/white",
+        "style.text.disabled.color" : "@color/dark.disabled.text",
+        "style.text.highlighted.color" : "@color/white",
+        "style.text.font" : "@font/button",
+        "sense.activity.color" : "@color/blue.6"
+    },
+    
+    "#UICollectionView" : {
+        "style.background.color" : "@color/grey.3"
+    },
+    
+    "#UIScrollView" : {
+        "style.background.color" : "@color/grey.3"
+    },
+    
+    "#HEMCardCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/light.separator",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.font" : "@font/body.2",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMAlarmListCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.disabled.color" : "@color/light.disabled.text",
+        "sense.alarm.title.font" : "@font/caption.1",
+        "sense.alarm.meridien.font" : "@font/body.1",
+        "sense.alarm.time.font" : "@font/display.2"
+    },
+    
+    "#HEMAlarmExpansionListCell" : {
+        "style.group.parent" : "#HEMAlarmListCell",
+        "sense.expansion.detail.color" : "@color/light.secondary.text",
+        "sense.expansion.detail.font" : "@font/body.small",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
+    "#HEMDescriptionHeaderView" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/title.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#HEMDeviceCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
+    "#UIImage" : {
+        "style.tint.color" : "@color/light.icon.normal",
+        "style.tint.disabled.color" : "@color/light.icon.disabled",
+        "style.tint.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMTextFooterCollectionReusableView" : {
+        "style.group.parent" : "#UITextView",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#Sense.CollapsableActionCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
+    "#UITextView" : {
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1",
+        "style.link.color" : "@color/blue.6"
+    },
+    
+    "sense.attributed.string" : {
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMDeviceActionCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.tint.color" : "@color/black"
+    },
+    
+    "#HEMTextFieldCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.color" : "@color/light.primary.text",
+        "style.keyboard.appearance" : "sense.LIGHT"
+    },
+    
+    "#HEMSimpleLineTextField" : {
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.tint.highlighted.color" : "@color/blue.6",
+        "style.tint.color" : "@color/light.separator"
+    },
+    
+    "#HEMTextCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/grey.5"
+    },
+    
+    "sense.collectionview.fill" : {
+        "style.group.parent" : "#UICollectionView",
+        "style.background.color" : "@color/white"
+    },
+    
+    "sense.header.or.footer" : {
+        "style.background.color" : "@color/grey.3",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/body.small"
+    },
+    
+    "sense.sensor.card" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.2",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.hint.font" : "@font/caption.1",
+        "sense.sensor.value.font" : "@font/headline",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "sense.tableview" : {
+        "style.background.color" : "@color/grey.3",
+        "style.separator.color" : "@color/light.separator",
+        "style.text.hint.color" : "@color/light.disabled.text",
+        "style.text.hint.font" : "@font/body.small",
+        "style.tint.color" : "@color/light.disabled.text"
+    },
+    
+    "sense.tableview.fill" : {
+        "style.group.parent" : "sense.tableview",
+        "style.background.color" : "@color/white"
+    },
+    
+    "sense.list.item" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.detail.font" : "@font/body.small",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.separator.color" : "@color/light.separator",
+        "style.link.color" : "@color/blue.6",
+        "style.tint.color" : "@color/black",
+        "style.background.highlighted.color" : "@color/grey.1"
+    },
+    
+    "sense.list.item.selection" : {
+        "style.group.parent" : "sense.list.item",
+        "style.tint.color" : "@color/grey.3",
+        "style.tint.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#UIViewController" : {
+        "style.background.color" : "@color/white"
+    },
+    
+    "#HEMOnboardingController" : {
+        "style.group.parent" : "#UIViewController",
+        "style.text.font" : "@font/title.2",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.secondary.button.text.font" : "@font/button",
+        "style.secondary.button.text.color" : "@color/blue.6"
+    },
+    
+    "sense.warning.view" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.2",
+        "style.separator.color" : "@color/light.separator",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "sense.activity.cover.view" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/headline",
+        "style.tint.color" : "@color/blue.7"
+    },
+    
+    "sense.volume.control" : {
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/headline",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.primary.button.text.color" : "@color/white",
+        "style.secondary.button.text.color" : "@color/blue.6",
+        "style.bar.tint.color" : "@color/white",
+        "sense.volume.bar.tint.color" : "@color/blue.6",
+        "sense.volume.bar.color" : "@color/grey.3",
+        "sense.volume.number.font" : "@font/display.4"
+    },
+    
+    "#HEMURLImageView" : {
+        "style.background.color" : "@color/grey.3",
+        "style.border.color" : "@color/grey.2"
+    },
+    
+    "sense.condition" : {
+        "sense.alert" : "@color/red.6",
+        "sense.warning" : "@color/yellow.6",
+        "sense.ideal" : "@color/green.6",
+        "sense.default" : "@color/light.separator"
+    },
+    
+    "sense.sleep.depth" : {
+        "sense.light" : "@color/sleep.depth.light",
+        "sense.medium" : "@color/sleep.depth.medium",
+        "sense.deep" : "@color/sleep.depth.deep"
+    },
+    
+    "sense.sleep.depth.alpha" : {
+        "sense.light" : "@color/day.timeline.sleep.depth.light",
+        "sense.medium" : "@color/day.timeline.sleep.depth.medium",
+        "sense.deep" : "@color/day.timeline.sleep.depth.deep"
+    },
+    
+    "sense.action" : {
+        "style.tint.color" : "@color/blue.6"
+    },
+    
+    "sense.chart.gradient" : {
+        "sense.use.sensor.color" : true,
+        "sense.top.alpha": 0.8,
+        "sense.bottom.alpha" : 0.2
+    },
+    
+    "sense.sub.navigation" : {
+        "style.background.color" : "@color/white",
+        "style.text.font" : "@font/button",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.highlighted.color" : "@color/black"
+    },
+    
+    "#Sense.SlidingNavigationTitleView" : {
+        "style.group.parent" : "sense.sub.navigation",
+        "style.text.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMSensorValueCollectionViewCell" : {
+        "style.text.color" : "@color/grey.5",
+        "style.text.font" : "@font/body.1",
+        "sense.value.font" : "@font/display.4",
+        "sense.value.unit.font" : "@font/headline",
+    },
+    
+    "#HEMSensorChartCollectionViewCell" : {
+        "style.group.parent" : "sense.sensor.card"
+    },
+    
+    "#HEMSensorScaleCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/title.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.hint.font" : "@font/caption.1",
+        "style.text.hint.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMSensorAboutCollectionViewCell" : {
+        "style.text.font" : "@font/title.1",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.detail.font" : "@font/body.1"
+    },
+    
+    "#UISwitch" : {
+        "style.tint.color" : "@color/grey.2",
+        "style.tint.highlighted.color" : "@color/blue.6",
+        "style.background.color" : "@color/white"
+    },
+    
+    "#HEMAlarmTableViewCell" : {
+        "style.group.parent" : "sense.list.item"
+    },
+    
+    "#HEMClockPickerView" : {
+        "style.background.color" : "@color/white",
+        "style.separator.color" : "@color/light.separator",
+        "style.text.font" : "@font/display.3",
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.text.detail.font" : "@font/display.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.text.hint.font" : "@font/body.1"
+    },
+    
+    "sense.info" : {
+        "style.text.font" : "@font/title.1",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.secondary.text",
+        "style.primary.button.text.color" : "@color/light.button.text",
+        "style.background.color" : "@color/white",
+        "sense.smart.alarm.image" : "@image/smartAlarmDialog",
+        "sense.expansion.image" : "@image/expInfoIllustration",
+        "sense.pill.color.image" : "@image/pill_color_dialog"
+    },
+    
+    "#HEMAudioButton" : {
+        "style.tint.color" : "@color/blue.6",
+        "style.text.font" : "@font/caption.1",
+        "style.text.color" : "@color/light.disabled.text"
+    },
+    
+    "sense.expansion.range.picker" : {
+        "style.group.parent" : "#HEMClockPickerView",
+        "style.primary.button.text.font" : "@font/button.large",
+        "style.primary.button.text.color" : "@color/white",
+        "style.primary.button.text.highlighted.color" : "@color/white",
+        "style.primary.button.text.disabled.color" : "@color/light.disabled.text",
+        "sense.button.background.color" : "@color/blue.6",
+        "sense.button.background.pressed.color" : "@color/blue.7",
+        "sense.button.background.disabled.color" : "@color/disabled.button"
+    },
+    
+    "#HEMSleepSoundConfigurationCell" : {
+        "style.group.parent" : "sense.list.item",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@color/light.primary.text",
+        "sense.sound.graph.left" : "@image/soundGraphLeft",
+        "sense.sound.graph.right" : "@image/soundGraphRight"
+    },
+    
+    "#HEMQuestionCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.secondary.text",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.primary.button.text.font" : "@font/button.large",
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.secondary.button.text.font" : "@font/button.large",
+        "style.secondary.button.text.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMInsightCollectionViewCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.disabled.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.primary.button.text.font" : "@font/button",
+        "style.primary.button.text.color" : "@color/light.button.text",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "sense.insight" : {
+        "style.group.parent" : "#HEMInsightCollectionViewCell",
+        "style.title.font" : "@font/headline",
+        "style.background.color" : "@color/white",
+        "style.primary.button.text.color" : "@color/blue.6",
+        "style.primary.button.text.disabled.color" : "@color/light.button.disabled.text",
+        "style.secondary.button.text.font" : "@font/button",
+        "style.secondary.button.text.color" : "@color/light.button.text",
+        "style.border.color" : "@color/light.separator"
+    },
+    
+    "sense.question" : {
+        "style.title.font" : "@font/headline",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMResponseCell" : {
+        "style.text.font" : "@font/title.1",
+        "style.text.color" : "@color/blue.2",
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.separator.color" : "@color/highlighted.separator"
+    },
+    
+    "#HEMWelcomeVoiceCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.text.font" : "@font/caption.2"
+    },
+    
+    "#HEMVoiceExampleView" : {
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/body.small",
+        "style.text.detail.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMVoiceGroupHeaderCell" : {
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMVoiceExampleGroupCell" : {
+        "style.group.parent" : "#HEMVoiceGroupHeaderCell",
+        "style.title.font" : "@font/body.2"
+    },
+    
+    "#HEMTrendsBaseCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMTrendsBubbleView" : {
+        "style.text.color" : "@color/white",
+        "style.text.font" : "@font/trends.sleep.depth.value",
+        "style.text.detail.font" : "@font/trends.sleep.depth.unit",
+        "style.title.font" : "@font/caption.1",
+        "style.text.color" : "@color/white",
+        "style.text.detail.color" : "@color/white",
+        "style.title.color" : "@color/white"
+    },
+    
+    "sense.trends.titles" : {
+        "style.text.font" : "@font/caption.1",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.text.highlighted.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMBarChartView" : {
+        "sense.bar.color" : "@color/blue.3",
+        "sense.bar.highlighted.color" : "@color/highlighted.bar",
+        "style.separator.color" : "@color/light.separator"
+    },
+    
+    "#HEMTrendsAverageView" : {
+        "style.title.font" :  "@font/caption.1",
+        "style.title.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMTrendsScoreLabel" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/light.separator"
+    },
+    
+    "#Sense.StatusMessageCell" : {
+        "style.background.color" : "@color/white",
+        "style.title.color" : "@color/light.primary.text",
+        "style.title.font" : "@font/title.2",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMSleepSummaryCollectionViewCell" : {
+        "style.background.color" : "@color/white",
+        "style.primary.button.text.font" : "@font/body.2",
+        "style.primary.button.text.color" : "@color/light.secondary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.text.detail.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMSleepScoreGraphView" : {
+        "style.background.color" : "@color/white",
+        "style.border.color" : "@color/light.separator",
+        "style.tint.color" : "@color/blue.6",
+        "style.text.font" : "@font/display.4",
+        "style.background.highlighted.color" : "@color/blue.1"
+    },
+    
+    "#HEMMiniSleepScoreGraphView" : {
+        "style.group.parent" : "#HEMSleepScoreGraphView"
+    },
+    
+    "#HEMSleepSegmentCollectionViewCell" : {
+        "style.background.color" : "@color/blue.2",
+        "style.text.hint.font" : "@font/caption.1",
+        "style.text.hint.color" : "@color/blue.6"
+    },
+    
+    "#HEMTimelineFooterCollectionReusableView" : {
+        "style.background.color" : "@color/blue.2"
+    },
+    
+    "#HEMEventBubbleView" : {
+        "style.background.color" : "@color/white",
+        "style.background.highlighted.color" : "@color/light.event.pressed.state",
+        "style.text.font" : "@font/body.small",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/caption.1",
+        "style.text.detail.color" : "@color/light.disabled.text",
+        "style.tint.color" : "@color/blue.6"
+    },
+    
+    "#HEMBreakdownSummaryCell" : {
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMBreakdownLineCell" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/headline"
+    },
+    
+    "sense.transparent.overlay" : {
+        "style.background.color" : "@color/light.transparent.overlay"
+    },
+    
+    "#HEMSleepHistoryViewController" : {
+        "style.title.color" : "@color/light.primary.text",
+        "style.title.font" : "@font/display.1",
+        "style.primary.button.text.color" : "@color/blue.6"
+    },
+    
+    "#HEMMiniGraphCollectionViewCell" : {
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/title.2",
+        "style.text.detail.color" : "@color/light.primary.text",
+        "style.text.detail.font" : "@font/caption.1"
+    },
+    
+    "#HEMActionSheetTitleView" : {
+        "style.background.color" : "@color/white",
+        "style.title.color" : "@color/light.primary.text",
+        "style.title.font" : "@font/title.2",
+        "style.text.font" : "@color/body.1",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.separator.color" : "@color/light.separator",
+        "style.link.color" : "@color/blue.6"
+    },
+    
+    "#HEMActionSheetOptionCell" : {
+        "style.background.color" : "@color/white",
+        "style.background.highlighted.color" : "@color/grey.1",
+        "style.title.color" : "@color/blue.6",
+        "style.title.font" : "@font/body.2",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMEventAdjustConfirmationView" : {
+        "style.group.parent" : "sense.activity.cover.view",
+        "style.text.font" : "@font/title.1",
+        "style.text.detail.font" : "@font/body.1",
+        "style.text.detail.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMActionSheetViewController" : {
+        "style.title.font" : "@font/caption.2",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMTimelineFeedbackViewController" : {
+        "style.title.font" : "@font/headline",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "sense.timeline.error" : {
+        "style.background.color" : "@color/white",
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
+    },
+    
+    "sense.sleep.score.icon" : {
+        "style.background.highlighted.color" : "@color/blue.2",
+        "style.text.font" : "@font/tab.icon",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/blue.6",
+        "style.border.color" : "@color/light.secondary.text",
+        "style.border.highlighted.color" : "@color/blue.6"
+    },
+    
+    "#HEMSenseRequiredCollectionViewCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "sense.warning.image" : "@image/noSense"
+    },
+    
+    "#HEMActionView" : {
+        "style.group.parent" : "#UIView",
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
+    },
+    
+    "#HEMMacAddressHeaderView" : {
+        "style.background.color" : "@color/white",
+        "style.title.font" : "@font/title.1",
+        "style.title.color" : "@color/light.primary.text"
+    },
+    
+    "#UIPickerView" : {
+        "style.background.color" : "@color/white",
+        "style.text.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1"
+    },
+    
+    "#HEMConfirmationView" : {
+        "style.background.color" : "@color/dark.disabled.overlay",
+        "style.text.color" : "@color/white",
+        "style.text.font" : "@color/body.2"
+    },
+    
+    "#HEMIntroMessageCell" : {
+        "style.group.parent" : "#HEMCardCollectionViewCell",
+        "style.title.font" : "@font/body.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text"
+    },
+    
+    "sense.sleep.sounds.state" : {
+        "sense.update.image" : "@image/sleepSoundSenseNeedsUpdate",
+        "sense.downloading.image" : "@image/sleepSoundSenseDownloading",
+        "sense.offline.image" : "@image/sleepSoundSenseOffline"
+    },
+    
+    "sense.pairing" : {
+        "sense.background.image" : "@image/senseBackground",
+        "sense.image" : "@image/senseBlue"
+    },
+    
+    "sense.pill.pairing" : {
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair"
+    },
+    
+    "#HEMAlertView" : {
+        "style.background.color" : "@color/white",
+        "style.title.font" : "@font/title.2",
+        "style.title.color" : "@color/light.primary.text",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text",
+        "style.secondary.button.text.font" : "@font/button",
+        "style.secondary.button.text.color" : "@color/blue.6"
+    },
+    
+    "#HEMAlertTextView" : {
+        "style.link.color" : "@color/blue.6",
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.secondary.text",
+        "style.text.highlighted.color" : "@color/light.primary.text"
+    },
+
+    "sense.settings.footer" : {
+        "style.text.font" : "@font/body.small",
+        "style.text.color" : "@color/light.disabled.text",
+        "style.link.color" : "@color/blue.6"
+    },
+    
+    "#HEMNoBLEViewController" : {
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.primary.text"
+    },
+    
+    "#HEMUpgradeSensePresenter" : {
+        "sense.illustration" : "@image/sensePlacement"
+    },
+    
+    "#HEMSenseUpgradedViewController" : {
+        "sense.illustration" : "@image/senseUpgraded"
+    },
+    
+    "#HEMPillSetupViewController" : {
+        "sense.illustration" : "@image/pillSetup",
+        "sense.pill.clipping.url" : "video.url.onboarding.pill-setup"
+    },
+    
+    "#HEMSetupDoneViewController" : {
+        "sense.illustration" : "@image/sensePlacement"
+    },
+    
+    "sense.factory.reset" : {
+        "sense.illustration" : "@image/originalSense"
+    },
+    
+    "sense.voice.tutorial" : {
+        "style.group.parent" : "#HEMOnboardingController",
+        "sense.table.image" : "@image/senseTable",
+        "sense.command.text.font" : "@font/headline",
+        "sense.command.text.small.font" : "@font/title.2",
+        "sense.command.text.color" : "@color/light.primary.text",
+    },
+    
+    "sense.pill.dfu" : {
+        "style.group.parent" : "#HEMOnboardingController",
+        "style.tint.color" : "@color/blue.6",
+        "sense.illustration" : "@image/sleepPillDFU",
+        "sense.shake.pill.image" : "@image/pairing_your_sleep_pill",
+        "sense.shake.pill.video.key" : "video.url.onboarding.pill-pair"
+    },
+    
+    "#HEMProfileImageView" : {
+        "style.background.color" : "@color/white"
+    },
+    
+    "#HEMPhotoHeaderView" : {
+        "style.icon.image" : "@image/addIconLight"
+    },
+    
+    "#HEMSensorGroupMemberView" : {
+        "style.text.font" : "@font/body.1",
+        "style.text.color" : "@color/light.primary.text"
+    },
+    
+    "sense.warning.icon" : {
+        "style.icon.image" : "@image/warningIcon",
+        "style.tint.color" : "@color/red.6"
+    }
+}

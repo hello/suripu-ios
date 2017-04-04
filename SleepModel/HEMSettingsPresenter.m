@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowNotifications,
     HEMSettingsAccountRowExpansions,
     HEMSettingsAccountRowVoice,
+    HEMSettingsAccountRowNightMode,
     HEMSettingsAccountRowCount
 };
 
@@ -72,11 +73,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 
 - (void)bindWithTableView:(UITableView*)tableView {
     // header
-    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];
+    UIView* header = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [tableView setTableHeaderView:header];
     [tableView setTableFooterView:[self versionView]];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView applyStyle];
     [self setTableView:tableView];
 }
 
@@ -95,6 +97,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 - (void)didAppear {
     [super didAppear];
     [self refreshSections];
+}
+
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self tableView] applyStyle];
+    [[self tableView] reloadData];
 }
 
 #pragma mark - Presentation logic
@@ -188,6 +196,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
             [rows addObject:@(HEMSettingsAccountRowVoice)];
         }
         
+        [rows addObject:@(HEMSettingsAccountRowNightMode)];
+        
         [sections addObject:rows];
         
         // misc
@@ -235,6 +245,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
                 return NSLocalizedString(@"settings.expansions", nil);
             case HEMSettingsAccountRowVoice:
                 return NSLocalizedString(@"settings.voice", nil);
+            case HEMSettingsAccountRowNightMode:
+            return NSLocalizedString(@"settings.night-mode", nil);
         }
     } else {
         switch ([rowType unsignedIntegerValue]) {
@@ -269,7 +281,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:YES];;
+    return [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -288,10 +300,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         return;
     }
 
-    [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell applyStyle];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
     [cell showStyledAccessoryViewIfNone];
 }
 
@@ -330,6 +340,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 return HEMSettingsCategoryExpansions;
             case HEMSettingsAccountRowVoice:
                 return HEMSettingsCategoryVoice;
+            case HEMSettingsAccountRowNightMode:
+                return HEMSettingsCategoryNightMode;
         }
     } else {
         switch ([rowType unsignedIntegerValue]) {

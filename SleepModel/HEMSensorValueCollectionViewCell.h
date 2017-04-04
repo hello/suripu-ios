@@ -16,7 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *valueReplacementImageView;
 
++ (UIFont*)smallValueUnitFont;
++ (UIFont*)valueFont;
 - (void)replaceValueWithImage:(nullable UIImage*)image;
+- (void)applyStyle;
 
 @end
 

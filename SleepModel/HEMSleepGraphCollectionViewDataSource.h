@@ -10,8 +10,6 @@
 
 @required
 
-- (BOOL)shouldHideSegmentCellContents;
-
 - (void)toggleAudio:(UIButton*)button;
 
 - (void)shareTimeline:(id)sender;
@@ -93,8 +91,6 @@
  *  @return summary text
  */
 - (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
-
-- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
 

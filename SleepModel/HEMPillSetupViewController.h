@@ -11,4 +11,6 @@
 
 @interface HEMPillSetupViewController : HEMOnboardingController
 
+@property (nonatomic, assign, getter=isCancellable) BOOL cancellable;
+
 @end

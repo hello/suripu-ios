@@ -1,4 +1,4 @@
-
+#import "Sense-Swift.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
@@ -27,7 +27,9 @@ static CGFloat const HEMMiniGraphLoadingStopDuration = 0.75f;
     self.rightBorderView.hidden = YES;
     self.sleepScoreView.alpha = 0.0f;
     self.graphView.alpha = 0.0f;
-    
+    [self.leftBorderView applySeparatorStyle];
+    [self.rightBorderView applySeparatorStyle];
+    [self applyStyle];
     [self.activityView stop];
 }
 
@@ -65,6 +67,13 @@ static CGFloat const HEMMiniGraphLoadingStopDuration = 0.75f;
                              } completion:nil];
         }];
     }
+}
+
+- (void)applyStyle {
+    self.dayLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    self.dayLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    self.dayOfWeekLabel.font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
+    self.dayOfWeekLabel.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
 }
 
 @end

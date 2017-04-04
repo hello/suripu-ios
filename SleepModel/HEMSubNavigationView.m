@@ -6,9 +6,10 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMSubNavigationView.h"
 #import "HEMNavigationShadowView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 
@@ -42,6 +43,8 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
 - (void)addShadowView {
     HEMNavigationShadowView* shadowView
         = [[HEMNavigationShadowView alloc] initWithNavigationBar:self];
+    [shadowView setAlpha:0.0f];
+    [shadowView setBackgroundColor:[UIColor clearColor]];
     [self addSubview:shadowView];
     [self setShadowView:shadowView];
     [self setClipsToBounds:NO];
@@ -128,6 +131,28 @@ static CGFloat const HEMSubNavigationViewBorderHeight = 1.0f;
         if ([subview isKindOfClass:[UIControl class]]) {
             UIControl* subControl = (UIControl*) subview;
             [subControl setSelected:tag == [subControl tag]];
+        }
+    }
+}
+
+- (void)applyStyle {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyTextColor];
+    UIColor* highlightedColor = [SenseStyle colorWithGroup:GroupSubNav property:ThemePropertyTextHighlightedColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupSubNav property:ThemePropertyTextFont];
+    
+    [self setBackgroundColor:bgColor];
+    [[self shadowView] setBackgroundColor:[UIColor clearColor]];
+    
+    for (UIView* subview in [self subviews]) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton* subControl = (UIButton*) subview;
+            [subControl setBackgroundColor:bgColor];
+            [subControl setTitleColor:textColor forState:UIControlStateNormal];
+            [subControl setTitleColor:highlightedColor forState:UIControlStateSelected];
+            [[subControl titleLabel] setFont:textFont];
+        } else if (![subview isKindOfClass:[UIControl class]]){
+            [subview applySeparatorStyle];
         }
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 8/15/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMPillDescriptionPresenter.h"
 #import "HEMOnboardingService.h"
 
@@ -32,6 +32,11 @@
 }
 
 - (void)bindWithLaterButton:(UIButton*)laterButton {
+    Class aClass = [HEMOnboardingController class];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertySecondaryButtonTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertySecondaryButtonTextFont];
+    [[laterButton titleLabel] setFont:font];
+    [laterButton setTitleColor:color forState:UIControlStateNormal];
     [laterButton setHidden:YES];
     [laterButton setUserInteractionEnabled:NO];
 }

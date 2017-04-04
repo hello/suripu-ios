@@ -7,6 +7,8 @@
 //
 #import "UICollectionViewCell+HEMCard.h"
 
+#import "Sense-Swift.h"
+
 #import "HEMTextCollectionViewCell.h"
 #import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
@@ -22,6 +24,10 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 
 @implementation HEMTextCollectionViewCell
 
++ (UIFont*)defaultTextFont {
+    return [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+}
+
 + (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width {
     CGFloat textWidth = width - (2 * HEMTextCollectionHorzPadding);
     return [text heightBoundedByWidth:textWidth usingFont:font];
@@ -35,6 +41,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self configureContentView];
+    [self applyStyle];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -72,9 +79,7 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
     [[self contentView] setBackgroundColor:[UIColor clearColor]];
     
     [[self textLabel] setNumberOfLines:0];
-    [[self textLabel] setBackgroundColor:[UIColor clearColor]];
-    
-    [[self separator] setBackgroundColor:[UIColor separatorColor]];
+    [self applyStyle];
 }
 
 - (void)prepareForReuse {
@@ -84,7 +89,20 @@ static CGFloat const HEMTextCollectionHorzPadding = 24.0f;
 }
 
 - (void)displayAsACard:(BOOL)card {
-    [super displayAsACard:YES];
+    [super displayAsACard:card];
+}
+
+- (void)applyStyle {
+    UIColor* borderColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIFont* font = [[self class] defaultTextFont];
+    [[self textLabel] setTextColor:textColor];
+    [[self textLabel] setFont:font];
+    [[self separator] applySeparatorStyle];
+    [self setBackgroundColor:bgColor];
+    [[self contentView] setBackgroundColor:bgColor];
+    [[self layer] setBorderColor:[borderColor CGColor]];
 }
 
 @end

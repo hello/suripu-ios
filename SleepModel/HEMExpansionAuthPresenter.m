@@ -8,6 +8,7 @@
 
 #import <SenseKit/SENExpansion.h>
 
+#import "Sense-Swift.h"
 #import "UIBarButtonItem+HEMNav.h"
 
 #import "HEMExpansionAuthPresenter.h"
@@ -74,14 +75,33 @@ static NSUInteger const kHEMExpansionLoadMaxAttempts = 2;
          containingBack:(UIButton*)backButton
                 forward:(UIButton*)forwardButton
              andRefresh:(UIButton*)refreshButton {
+    UIImage* buttonImage = [backButton imageForState:UIControlStateNormal];
+    buttonImage = [buttonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [backButton setImage:[buttonImage normalIconStyle] forState:UIControlStateNormal];
+    [backButton setImage:[buttonImage disabledIconStyle] forState:UIControlStateDisabled];
+    [backButton setImage:[buttonImage highlightedIconStyle] forState:UIControlStateHighlighted];
+    
     [backButton setEnabled:NO];
+    [backButton setTintColor:[toolbar tintColor]];
     [backButton addTarget:self action:@selector(goBackAPage) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage* forwardImage = [forwardButton imageForState:UIControlStateNormal];
+    forwardImage = [forwardImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [forwardButton setImage:[forwardImage normalIconStyle] forState:UIControlStateNormal];
+    [forwardButton setImage:[forwardImage disabledIconStyle] forState:UIControlStateDisabled];
+    [forwardButton setImage:[forwardImage highlightedIconStyle] forState:UIControlStateHighlighted];
     
     [forwardButton setEnabled:NO];
     [forwardButton addTarget:self action:@selector(goForwardAPage) forControlEvents:UIControlEventTouchUpInside];
     
+    UIImage* refreshImage = [refreshButton imageForState:UIControlStateNormal];
+    refreshImage = [refreshImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [refreshButton setImage:[refreshImage normalIconStyle] forState:UIControlStateNormal];
+    [refreshButton setImage:[refreshImage disabledIconStyle] forState:UIControlStateDisabled];
+    [refreshButton setImage:[refreshImage highlightedIconStyle] forState:UIControlStateHighlighted];
     [refreshButton setEnabled:NO];
     [refreshButton addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self setBackButton:backButton];
     [self setForwardButton:forwardButton];

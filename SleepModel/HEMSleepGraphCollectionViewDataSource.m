@@ -373,19 +373,14 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
-        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
-        if ([delegate shouldHideSegmentCellContents])
-            [cell prepareForEntryAnimation];
-    }
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / HEMTimelineMaxSleepDepth;
     CGFloat previousFillRatio = 0;
-    color = [UIColor colorForSleepState:segment.sleepState];
+    color = [SenseStyle colorWithSleepState:segment.sleepState useAlpha:YES];
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
+        previousColor = [SenseStyle colorWithSleepState:previousSegment.sleepState useAlpha:YES];
         previousFillRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
@@ -408,11 +403,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     
     NSUInteger sleepDepth = segment.sleepDepth;
-    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
-        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
-        if ([delegate shouldHideSegmentCellContents])
-            [cell prepareForEntryAnimation];
-    }
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.type]];
     NSAttributedString *timeText = nil;
     if (segment.type != SENTimelineSegmentTypeAlarmRang) {
@@ -430,14 +420,14 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
+        previousColor = [SenseStyle colorWithSleepState:previousSegment.sleepState useAlpha:YES];
         previousRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
     }
     
     [cell setSegmentRatio:sleepDepth / HEMTimelineMaxSleepDepth
-            withFillColor:[UIColor colorForSleepState:segment.sleepState]
+            withFillColor:[SenseStyle colorWithSleepState:segment.sleepState useAlpha:YES]
             previousRatio:previousRatio
             previousColor:previousColor];
     [cell.playButton addTarget:collectionView.delegate
@@ -495,8 +485,17 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         unit = [self.meridiemFormatter stringFromDate:date];
     }
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
-    NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
+    NSDictionary *attrs = [self timeTextAttributes];
     return [self.inlineNumberFormatter attributedStringForObjectValue:obj withDefaultAttributes:attrs];
+}
+
+- (NSDictionary*)timeTextAttributes {
+    Class aClass = [HEMEventBubbleView class];
+    UIFont* font = [SenseStyle fontWithAClass:aClass property:ThemePropertyDetailFont];
+    UIColor* color = [SenseStyle colorWithAClass:aClass property:ThemePropertyDetailColor];
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    style.alignment = NSTextAlignmentCenter;
+    return @{ NSFontAttributeName : font, NSParagraphStyleAttributeName : style, NSForegroundColorAttributeName : color };
 }
 
 #pragma mark - Data Parsing
@@ -513,14 +512,6 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         default:
             return @"awake";
     }
-}
-
-- (NSString *)accessibleSummaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *const HEMAccessibleSegmentSummaryFormat = @"sleep-stat.accessibility.sleep-state.%@.format";
-    SENTimelineSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    NSString* depthKey = [self localizationKeyForSleepState:segment.sleepState];
-    NSString* localizedKey = [NSString stringWithFormat:HEMAccessibleSegmentSummaryFormat, depthKey];
-    return [NSString stringWithFormat:NSLocalizedString(localizedKey, nil), (long)segment.duration / 60, (long)segment.sleepDepth];
 }
 
 - (NSAttributedString *)summaryForSegmentAtIndexPath:(NSIndexPath *)indexPath {

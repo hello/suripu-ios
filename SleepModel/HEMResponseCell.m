@@ -6,24 +6,14 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMResponseCell.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 
 @implementation HEMResponseCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    [self setBackgroundColor:[UIColor clearColor]];
-    
-    [[self answerLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self answerLabel] setTextColor:[UIColor tintColor]];
-    [[self answerLabel] setTextAlignment:NSTextAlignmentCenter];
-    [[self answerLabel] setFont:[UIFont h6Bold]];
-    
-    [[self separator] setBackgroundColor:[[UIColor tintColor]
-                                          colorWithAlphaComponent:0.5f]];
+    [self applyStyle];
 }
 
 - (void)updateConstraints {
@@ -34,8 +24,25 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
-    UIColor* color = selected ? [UIColor blue2] : [UIColor tintColor];
+    Class aClass = [HEMResponseCell class];
+    UIColor* textColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextColor];
+    UIColor* highlightedColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextHighlightedColor];
+    UIColor* color = selected ? textColor : highlightedColor;
     [[self answerLabel] setTextColor:color];
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+    
+    Class aClass = [HEMResponseCell class];
+    UIColor* textColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextHighlightedColor];
+    UIFont* textFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+    UIColor* separatorColor = [SenseStyle colorWithAClass:aClass property:ThemePropertySeparatorColor];
+    
+    [[self separator] setBackgroundColor:separatorColor];
+    [[self answerLabel] setFont:textFont];
+    [[self answerLabel] setTextColor:textColor];
+    [[self answerLabel] setTextAlignment:NSTextAlignmentCenter];
 }
 
 @end

@@ -19,12 +19,36 @@ import Foundation
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView?.backgroundColor = UIColor.white
         self.iconView?.image = UIImage(named: "warning")
-        self.titleLabel?.textColor = UIColor.grey6()
-        self.titleLabel?.font = UIFont.body()
         self.messageLabel?.numberOfLines = 0
-        self.separator?.backgroundColor = UIColor.separator()
+        self.applyStyle()
+    }
+    
+}
+
+extension WarningView {
+    
+    static func messageAttributes() -> [String : Any] {
+        let detailFont = SenseStyle.font(group: .warningView, property: .detailFont)
+        let detailColor = SenseStyle.color(group: .warningView, property: .detailColor)
+        return [NSFontAttributeName : detailFont,
+                NSForegroundColorAttributeName : detailColor,
+                NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+    }
+    
+    func applyStyle() {
+        let separatorColor = SenseStyle.color(group: .warningView, property: .separatorColor)
+        let bgColor = SenseStyle.color(group: .warningView, property: .backgroundColor)
+        let textColor = SenseStyle.color(group: .warningView, property: .textColor)
+        let detailColor = SenseStyle.color(group: .warningView, property: .detailColor)
+        let textFont = SenseStyle.font(group: .warningView, property: .textFont)
+        let detailFont = SenseStyle.font(group: .warningView, property: .detailFont)
+        self.contentView?.backgroundColor = bgColor
+        self.titleLabel?.textColor = textColor
+        self.titleLabel?.font = textFont
+        self.messageLabel?.textColor = detailColor
+        self.messageLabel?.font = detailFont
+        self.separator?.backgroundColor = separatorColor
     }
     
 }

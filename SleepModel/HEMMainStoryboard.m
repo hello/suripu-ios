@@ -49,6 +49,7 @@ static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightsFeed = @"insightsFeed";
 static NSString *const _HEMlist = @"list";
 static NSString *const _HEMlistItem = @"listItem";
+static NSString *const _HEMlistItemDetail = @"listItemDetail";
 static NSString *const _HEMloading = @"loading";
 static NSString *const _HEMmessage = @"message";
 static NSString *const _HEMmultiple = @"multiple";
@@ -66,7 +67,6 @@ static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMsleepSound = @"sleepSound";
 static NSString *const _HEMsleepTrends = @"sleepTrends";
 static NSString *const _HEMslideContainer = @"slideContainer";
-static NSString *const _HEMsoundsNavigation = @"soundsNavigation";
 static NSString *const _HEMsummary = @"summary";
 static NSString *const _HEMsummaryViewCell = @"summaryViewCell";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
@@ -109,6 +109,7 @@ static NSString *const _HEMwelcome = @"welcome";
 +(NSString *)infoCellReuseIdentifier { return _HEMinfoCell; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)listItemReuseIdentifier { return _HEMlistItem; }
++(NSString *)listItemDetailReuseIdentifier { return _HEMlistItemDetail; }
 +(NSString *)loadingReuseIdentifier { return _HEMloading; }
 +(NSString *)messageReuseIdentifier { return _HEMmessage; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
@@ -153,7 +154,6 @@ static NSString *const _HEMwelcome = @"welcome";
 +(id)instantiateSleepSoundViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepSound]; }
 +(id)instantiateSleepTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepTrends]; }
 +(id)instantiateSlideContainerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMslideContainer]; }
-+(id)instantiateSoundsNavigationViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsoundsNavigation]; }
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrendsNav]; }
 +(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }

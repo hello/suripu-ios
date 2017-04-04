@@ -5,15 +5,15 @@
 //  Created by Jimmy Lu on 12/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import "markdown_peg.h"
 
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSensorStatus.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMRoomCheckViewController.h"
 #import "HEMActionButton.h"
 #import "HEMRoomCheckView.h"
-#import "HEMMarkdown.h"
 #import "HEMSensorService.h"
 #import "HEMSensorValueFormatter.h"
 #import "HEMStyle.h"
@@ -230,7 +230,7 @@ withColorFromCondition:(SENCondition)condition
 - (UIColor*)sensorValueColorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
     SENCondition condition = [sensor condition];
-    return [UIColor colorForCondition:condition];
+    return [SenseStyle colorWithCondition:condition defaultColor:nil];
 }
 
 - (UIImage*)sensorActivityImageForSensorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {

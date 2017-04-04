@@ -78,12 +78,7 @@ class SlidingNavigationTitleView: UIView {
         let xOrigin = CGFloat(index) * width
         let control = UIButton(type: UIButtonType.custom)
         
-        control.backgroundColor = UIColor.white
-        control.titleLabel?.font = UIFont.body()
         control.setTitle(title, for: UIControlState.normal)
-        control.setTitleColor(UIColor.grey4(), for: UIControlState.normal)
-        control.setTitleColor(UIColor.tint(), for: UIControlState.selected)
-        control.setTitleColor(UIColor.tint(), for: UIControlState.highlighted)
         control.frame = CGRect(origin: CGPoint(x: xOrigin, y: CGFloat(0)),
                                size: CGSize(width: width, height: height))
         control.addTarget(self,
@@ -109,8 +104,6 @@ class SlidingNavigationTitleView: UIView {
         let frame = CGRect(origin: CGPoint(x: CGFloat(0), y: yOrigin),
                            size: CGSize(width: width, height: lineHeight))
         let lineView = UIView(frame: frame)
-        
-        lineView.backgroundColor = UIColor.tint()
         
         self.highlightLine = lineView
         self.addSubview(lineView)
@@ -144,6 +137,28 @@ class SlidingNavigationTitleView: UIView {
         self.highlightLine.frame = frame
         
         self.selectedIndex = controlHighlightIndex
+    }
+    
+    // MARK: General style
+    
+    func applyStyle() {
+        let aClass = SlidingNavigationTitleView.self
+        let titleFont = SenseStyle.font(aClass: aClass, property: .textFont)
+        let titleColor = SenseStyle.color(aClass: aClass, property: .textColor)
+        let highlightedColor = SenseStyle.color(aClass: aClass, property: .textHighlightedColor)
+        self.highlightLine.backgroundColor = SenseStyle.color(aClass: aClass, property: .textHighlightedColor)
+        self.backgroundColor = SenseStyle.color(aClass: aClass, property: .backgroundColor)
+        
+        for control in self.controls {
+            if control is UIButton {
+                let button = control as! UIButton
+                button.titleLabel?.font = titleFont
+                button.backgroundColor = self.backgroundColor
+                button.setTitleColor(titleColor, for: .normal)
+                button.setTitleColor(highlightedColor, for: .highlighted)
+                button.setTitleColor(highlightedColor, for: .selected)
+            }
+        }
     }
     
 }

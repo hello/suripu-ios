@@ -21,9 +21,19 @@ import SenseKit
     // MARK: Public Methods
     
     @objc static func currentRootViewController() -> RootViewController? {
-        let applicationDelegate = UIApplication.shared.delegate
-        let applicationWindow = applicationDelegate?.window
-        return applicationWindow!!.rootViewController as? RootViewController
+        guard let applicationDelegate = UIApplication.shared.delegate else {
+            return nil;
+        }
+        
+        guard let applicationWindow = applicationDelegate.window else {
+            return nil;
+        }
+        
+        guard applicationWindow != nil else {
+            return nil;
+        }
+        
+        return applicationWindow!.rootViewController as? RootViewController
     }
     
     // MARK: - Status Bar

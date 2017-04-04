@@ -16,7 +16,7 @@
 
 #import "Sense-Swift.h"
 
-@interface HEMBaseController()
+@interface HEMBaseController() <Themed>
 
 @property (nonatomic, strong) HEMNavigationShadowView* shadowView;
 @property (nonatomic, assign) BOOL adjustedConstraints;
@@ -37,11 +37,25 @@
 - (UIViewController*)rootViewController {
     return [RootViewController currentRootViewController];
 }
+    
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [[SenseStyle theme] statusBarStyle];
+}
+
+#pragma mark - Themed
+
+- (void)didChangeWithTheme:(Theme *)theme auto:(BOOL)auto_ {
+    [self setNeedsStatusBarAppearanceUpdate];
+    for (HEMPresenter* presenter in [self presenters]) {
+        [presenter didChangeTheme:theme auto:auto_];
+    }
+}
 
 #pragma mark - View Controller Lifecycle Events
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self applyStyle];
     [self listenForAppEvents];
 }
 

@@ -8,6 +8,8 @@
 
 #import <SenseKit/SENExpansion.h>
 
+#import "Sense-Swift.h"
+
 #import "SENRemoteImage+HEMDeviceSpecific.h"
 
 #import "HEMExpansionPresenter.h"
@@ -21,6 +23,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
+#import "HEMActionSheetTitleView.h"
 #import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMExpansionRowType) {
@@ -53,6 +56,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 @property (nonatomic, copy) NSString* configurationName;
 @property (nonatomic, assign, getter=isLoadingConfigs) BOOL loadingConfigs;
 @property (nonatomic, assign, getter=isSwitchEnabled) BOOL switchEnabled;
+@property (nonatomic, strong) UIImage* origNavBarBgImage;
 
 @end
 
@@ -75,18 +79,17 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setTableFooterView:[UIView new]];
+    [tableView applyStyle];
     [self setTableView:tableView];
     
     NSString* iconUri = [[[self expansion] remoteIcon] uriForCurrentDevice];
     
     HEMExpansionHeaderView* headerView = [self headerView];
     [[[headerView urlImageView] layer] setCornerRadius:kHEMExpansionHeaderIconCornerRadius];
-    [[headerView urlImageView] setBackgroundColor:[UIColor grey3]];
     [[headerView urlImageView] setImageWithURL:iconUri];
     [[headerView urlImageView] setContentMode:UIViewContentModeScaleAspectFit];
     [[headerView urlImageView] setClipsToBounds:YES];
     [[[headerView urlImageView] layer] setBorderWidth:kHEMExpansionHeaderIconBorder];
-    [[[headerView urlImageView] layer] setBorderColor:[[UIColor grey2] CGColor]];
     
     __weak typeof(self) weakSelf = self;
     __weak typeof([headerView urlImageView]) weakImageView = [headerView urlImageView];
@@ -98,17 +101,13 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
         }
     }];
     
-    [[headerView titleLabel] setTextColor:[UIColor grey7]];
-    [[headerView titleLabel] setFont:[UIFont bodyBold]];
+    NSString* description = [[self expansion] expansionDescription];
+    NSAttributedString* attrBody = [[NSAttributedString alloc] initWithString:description];
     [[headerView titleLabel] setText:[[self expansion] deviceName]];
-    
-    [[headerView subtitleLabel] setTextColor:[UIColor grey5]];
-    [[headerView subtitleLabel] setFont:[UIFont bodySmall]];
     [[headerView subtitleLabel] setText:[[self expansion] companyName]];
+    [[headerView descriptionLabel] setAttributedText:attrBody];
     
-    [[headerView descriptionLabel] setFont:[UIFont body]];
-    [[headerView descriptionLabel] setTextColor:[UIColor grey5]];
-    [[headerView descriptionLabel] setText:[[self expansion] expansionDescription]];
+    [headerView applyStyle];
 }
 
 - (void)bindWithConnectContainer:(UIView*)container
@@ -125,6 +124,8 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 }
 
 - (void)bindWithNavBar:(UINavigationBar*)navBar {
+    [self setOrigNavBarBgImage:[navBar backgroundImageForBarMetrics:UIBarMetricsDefault]];
+    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [navBar setShadowImage:[UIImage new]];
     [self setNavBar:navBar];
 }
@@ -165,9 +166,16 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 
 #pragma mark - Presenter Events
 
+- (void)willAppear {
+    [super willAppear];
+    [[self tableView] applyFillStyle];
+    [[self connectContainer] setBackgroundColor:[[self tableView] backgroundColor]];
+}
+
 - (void)wasRemovedFromParent {
     [super wasRemovedFromParent];
     if (_navBar) {
+        [_navBar setBackgroundImage:_origNavBarBgImage forBarMetrics:UIBarMetricsDefault];
         [_navBar setShadowImage:[UIImage imageNamed:@"navBorder"]];
     }
 }
@@ -241,6 +249,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
     }
     [self setRows:rows];
 }
+
 #pragma mark - UITableViewDelegate and UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -273,8 +282,7 @@ static CGFloat const kHEMExpansionHeaderIconCornerRadius = 5.0f;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber* rowType = [self rows][[indexPath row]];
     HEMBasicTableViewCell* basicCell = (id)cell;
-    [[basicCell customTitleLabel] setFont:[UIFont body]];
-    [[basicCell customTitleLabel] setTextColor:[UIColor grey6]];
+    [basicCell applyStyle];
     
     switch ([rowType unsignedIntegerValue]) {
         case HEMExpansionRowTypePermissions: {
@@ -345,20 +353,19 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureConfigurationCell:(HEMBasicTableViewCell*)cell {
     NSString* selectedName = [[self selectedConfig] localizedName];
-    UIColor* nameColor = [UIColor grey3];
+    BOOL highlighted = NO;
     if (!selectedName) {
         if ([[self configurations] count] == 0) {
             selectedName = NSLocalizedString(@"empty-data", nil);
         } else { 
             selectedName = NSLocalizedString(@"expansion.config.select", nil);
-            nameColor = [UIColor tintColor];
+            highlighted = YES;
         }
     }
     
     [[cell customTitleLabel] setText:[self configurationName]];
     [[cell customDetailLabel] setText:selectedName];
-    [[cell customDetailLabel] setFont:[UIFont body]];
-    [[cell customDetailLabel] setTextColor:nameColor];
+    [cell detail:highlighted];
     [cell showActivity:[self isLoadingConfigs]];
     
     if ([self isLoadingConfigs]) {
@@ -513,6 +520,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* titleFormat = NSLocalizedString(@"expansion.configuration.options.title.format", nil);
     [sheet setTitle:[[NSString stringWithFormat:titleFormat, configurationName] uppercaseString]];
     
+    Class titleClass = [HEMActionSheetTitleView class];
+    UIColor* titleColor = [SenseStyle colorWithAClass:titleClass
+                                             property:ThemePropertyTextColor];
+    
     __weak typeof (self) weakSelf = self;
     
     for (SENExpansionConfig* config in [self configurations]) {
@@ -523,7 +534,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             selected = YES;
         }
         [sheet addOptionWithTitle:[config localizedName]
-                       titleColor:[UIColor grey7]
+                       titleColor:titleColor
                       description:nil
                         imageName:nil
                          selected:selected

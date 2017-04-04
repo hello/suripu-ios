@@ -1,4 +1,4 @@
-
+#import "Sense-Swift.h"
 #import "HEMMiniSleepScoreGraphView.h"
 #import "HEMStyle.h"
 #import "NSString+HEMUtils.h"
@@ -37,7 +37,7 @@ CGFloat const miniScoreBaseHeight = 72.f;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* sleepScoreOvalColor = [UIColor borderColor];
+    UIColor* sleepScoreOvalColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBorderColor];
 
     //// Variable Declarations
     CGFloat graphPercentageAngle = MAX(MIN(sleepScore > 0 ? (sleepScore < 100 ? 400 - sleepScore * 0.01 * 300 : 0.01) : 0.01, 359), 102);

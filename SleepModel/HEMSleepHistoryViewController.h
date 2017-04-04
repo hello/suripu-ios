@@ -1,7 +1,8 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMSleepHistoryViewController : UIViewController
+@interface HEMSleepHistoryViewController : HEMBaseController
 
 @property (nonatomic, strong) NSDate* selectedDate;
 @end

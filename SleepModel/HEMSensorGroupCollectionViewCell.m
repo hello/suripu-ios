@@ -6,6 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "NSString+HEMUtils.h"
 
 #import "HEMSensorGroupCollectionViewCell.h"
@@ -25,10 +27,11 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
 
 + (CGFloat)heightWithNumberOfMembers:(NSInteger)memberCount
                        conditionText:(NSString*)conditionText
-                       conditionFont:(UIFont*)conditionFont
                            cellWidth:(CGFloat)cellWidth {
+    Class aClass = [HEMCardCollectionViewCell class];
+    UIFont* textFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
     CGFloat maxLabelWidth = cellWidth - (2 * HEMSensorGroupLabelMargin);
-    CGFloat conditionHeight = [conditionText heightBoundedByWidth:maxLabelWidth usingFont:conditionFont];
+    CGFloat conditionHeight = [conditionText heightBoundedByWidth:maxLabelWidth usingFont:textFont];
     return HEMSensorGroupCellBaseHeight + conditionHeight + (HEMSensorGroupMemberHeight * memberCount);
 }
 
@@ -67,6 +70,31 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
     [[self sensorContentView] addSubview:memberView];
     
     return memberView;
+}
+
+- (void)applyStyle {
+    [super applyStyle];
+
+    Class aClass = [HEMCardCollectionViewCell class];
+    UIColor* titleColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextColor];
+    UIColor* detailColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyDetailColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+    [[self groupNameLabel] setTextColor:titleColor];
+    [[self groupNameLabel] setFont:titleFont];
+    [[self groupMessageLabel] setTextColor:detailColor];
+    [[self groupMessageLabel] setFont:titleFont];
+    
+    [[self sensorContentView] setBackgroundColor:[self backgroundColor]];
+    for (UIView* subview in [[self sensorContentView] subviews]) {
+        [subview setBackgroundColor:[self backgroundColor]];
+        if ([subview isKindOfClass:[HEMSensorGroupMemberView class]]) {
+            HEMSensorGroupMemberView* memberView = (id) subview;
+            [[memberView separatorView] applySeparatorStyle];
+            [[memberView nameLabel] setTextColor:titleColor];
+            [[memberView nameLabel] setFont:titleFont];
+            [[memberView valueLabel] setFont:titleFont];
+        }
+    }
 }
 
 @end

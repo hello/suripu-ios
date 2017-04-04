@@ -7,11 +7,10 @@
 //
 
 #import <CGFloatType/CGFloatType.h>
+#import "Sense-Swift.h"
 #import "HEMAlertView.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
 #import "NSString+HEMUtils.h"
 #import "HEMAlertTextView.h"
 #import "HEMScreenUtils.h"
@@ -40,6 +39,22 @@ CGFloat const HEMDialogButtonHorzPadding = 24.0f;
 CGFloat const HEMDialogHorzMargins = 8.0f;
 CGFloat const HEMDialogButtonCornerRadius = 5.0f;
 
++ (NSDictionary*)boldMessageAttributes {
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextHighlightedColor];
+    return @{NSFontAttributeName : font,
+             NSForegroundColorAttributeName : color,
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+}
+    
++ (NSDictionary*)messageAttributes {
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    return @{NSFontAttributeName : font,
+             NSForegroundColorAttributeName : color,
+             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+}
+
 - (instancetype)initWithImage:(UIImage *)image
                         title:(NSString *)title
                          type:(HEMAlertViewType)type
@@ -48,6 +63,9 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
         _type = type;
         _actionsCallbacks = [NSMutableDictionary new];
         _buttons = [NSMutableArray new];
+
+        [self setBackgroundColor:[SenseStyle colorWithAClass:[self class]
+                                                    property:ThemePropertyBackgroundColor]];
         [self layoutElementsWithImage:image title:title message:message];
     }
     return self;
@@ -81,7 +99,6 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     self.contentInsets = UIEdgeInsetsMake(HEMDialogContentTopPadding, HEMDialogContentHorzPadding,
                                           HEMDialogContentBotPadding, HEMDialogContentHorzPadding);
 
-    self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = HEMDialogCornerRadius;
 
     [self addImageViewWithImage:image];
@@ -98,7 +115,7 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     CGFloat height = HEMDialogButtonHeight;
     CGRect frame = CGRectMake(floorCGFloat(alertSize.width/2), alertSize.height - height, 1, height);
     UIView *divider = [[UIView alloc] initWithFrame:frame];
-    divider.backgroundColor = [UIColor colorWithHex:0xE6E6E6 alpha:1.0];
+    [divider applySeparatorStyle];
     [self addSubview:divider];
 }
 
@@ -123,13 +140,13 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     if (self.imageView)
         top = HEMDialogContentSpacing + CGRectGetMaxY(self.imageView.frame);
 
-    UIFont *font = [UIFont h5];
+    UIFont *font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
     CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
     CGFloat width = [self intrinsicContentSize].width - horzPadding;
     CGFloat height = [text heightBoundedByWidth:width usingFont:font];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.contentInsets.left, top, width, height)];
     label.text = text;
-    label.textColor = [UIColor grey6];
+    label.textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
     label.font = font;
     label.numberOfLines = 0;
     self.titleLabel = label;
@@ -217,29 +234,24 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
 - (UIButton *)buttonWithTitle:(NSString *)title style:(HEMAlertViewButtonStyle)style {
     CGRect buttonFrame = [self nextButtonFrame];
     UIButton *button = nil;
-    if (style == HEMAlertViewButtonStyleRoundRect) {
-        button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
-        [[button layer] setCornerRadius:HEMDialogButtonCornerRadius];
-        [button setClipsToBounds:YES];
-    } else {
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = buttonFrame;
-        switch (style) {
-            case HEMAlertViewButtonStyleBlueBoldText:
-                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont bodyBold];
-                break;
-            case HEMAlertViewButtonStyleGrayText:
-                [button setTitleColor:[UIColor grey4] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont body];
-                break;
-            case HEMAlertViewButtonStyleBlueText:
-                [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
-                button.titleLabel.font = [UIFont button];
-                break;
-            default:
-                break;
+    
+    switch (style) {
+        case HEMAlertViewButtonStyleRoundRect:
+            button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
+            [[button layer] setCornerRadius:HEMDialogButtonCornerRadius];
+            [button setClipsToBounds:YES];
+            break;
+        case HEMAlertViewButtonStyleBlueText: {
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = buttonFrame;
+            UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertySecondaryButtonTextColor];
+            UIFont* textFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertySecondaryButtonTextFont];
+            [button setTitleColor:textColor forState:UIControlStateNormal];
+            [[button titleLabel] setFont:textFont];
+            break;
         }
+        default:
+            break;
     }
 
     [button setTitle:title forState:UIControlStateNormal];
@@ -254,5 +266,5 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
         block();
     }
 }
-
+    
 @end

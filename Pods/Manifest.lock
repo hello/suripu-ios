@@ -71,6 +71,7 @@ PODS:
   - SHSProtoBuf (0.9):
     - SHSProtoBuf/non-arc (= 0.9)
   - SHSProtoBuf/non-arc (0.9)
+  - Solar (2.0.0)
   - SORelativeDateTransformer (1.1.10)
   - SVWebViewController (1.0)
   - UICountingLabel (1.2.0)
@@ -83,7 +84,7 @@ PODS:
   - ZendeskSDK/Localization (1.5.4.1):
     - ZendeskSDK/Core
   - ZendeskSDK/Providers (1.5.4.1)
-  - Zip (0.6.0)
+  - Zip (0.7.0)
 
 DEPENDENCIES:
   - Analytics (= 3.0.7)
@@ -100,6 +101,7 @@ DEPENDENCIES:
   - Nocilla
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
+  - Solar
   - SORelativeDateTransformer (from `git@github.com:jrmiddle/SORelativeDateTransformer.git`, commit `51f53d591b7c19da1fcea5a91e5c044089c99410`)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UICountingLabel (~> 1.2.0)
@@ -137,7 +139,7 @@ CHECKOUT OPTIONS:
     :commit: 0451b5e67dec46b8bc48fcad63d9f844cae1bf19
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: da7899ccf7f1747a064727d20ecd41e60ddbfccc
+    :commit: f48ea46d2da43cd72c466dfd51f0ce8de15c8d72
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: 86b2e176097f76d130c858164eca42e15b779073
@@ -172,13 +174,14 @@ SPEC CHECKSUMS:
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
   SenseKit: 4c06c1f859737a5c6eb49b882dfa9192c0ce56f1
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
+  Solar: ea092f7660c1b58d2b754227decb61a1c6710826
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
   ZendeskSDK: 45b7a2812a04c3c5c2510aeeeded5818e6e705a5
-  Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
+  Zip: e34513299ac38c0686d5b24504da7ce343799ab9
 
-PODFILE CHECKSUM: c579d690d29d266073f3e11cc90910d4b06a8351
+PODFILE CHECKSUM: cbf3e193423794dcef8f6cdc8fe7f62cbc7c6524
 
 COCOAPODS: 1.1.1

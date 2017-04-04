@@ -11,7 +11,6 @@
 @interface HEMMacAddressHeaderView : UIView
 
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
-@property (nonatomic, weak) IBOutlet UILabel* macAddressLabel;
 @property (nonatomic, weak) IBOutlet UIButton* actionButton;
 @property (nonatomic, weak) IBOutlet UIView* separator;
 

@@ -54,4 +54,16 @@
                           args:(NSArray *)args
                     attributes:(NSDictionary*)attributes;
 
+/**
+ * Apply additional attributes without overriding ones that exists for substrings
+ *
+ * @param attributes: attributes to apply
+ */
+- (void)applyAttributes:(NSDictionary*)attributes;
+
+/**
+ * Apply the style of a footer
+ */
+- (void)applyFooterStyle;
+
 @end

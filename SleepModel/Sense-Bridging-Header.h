@@ -8,6 +8,7 @@
 
 #import <SenseKit/SenseKit.h>
 #import <SenseKit/SENPairedDevices.h>
+#import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENNotificationSetting.h>
 #import <SenseKit/SENAccount.h>
 
@@ -17,6 +18,7 @@
 #import "NSString+HEMUtils.h"
 #import "NSDate+HEMRelative.h"
 #import "UIBarButtonItem+HEMNav.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMAppDelegate.h"
 
@@ -34,6 +36,7 @@
 #import "HEMVoiceService.h"
 #import "HEMAccountService.h"
 #import "HEMUnreadAlertService.h"
+#import "HEMLocationService.h"
 
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
@@ -68,3 +71,11 @@
 #import "HEMSettingsStoryboard.h"
 #import "HEMListPresenter.h"
 #import "HEMListItemCell.h"
+#import "HEMExpansionHeaderView.h"
+#import "UIImage+HEMBlurTint.h"
+#import "HEMDeviceCollectionViewCell.h"
+#import "HEMPillCollectionViewCell.h"
+#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMTextFieldCollectionViewCell.h"
+#import "HEMTitledTextField.h"
+#import "HEMSimpleLineTextField.h"

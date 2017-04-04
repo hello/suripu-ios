@@ -17,28 +17,37 @@ extension UIImage {
     @objc static func iconFromSleepScore(sleepScore: Int, highlighted: Bool) -> UIImage! {
         let scale = UIScreen.main.scale
         let size = CGSize(width: UIImage.iconSize, height: UIImage.iconSize)
-        let color = highlighted ? UIColor.tint()! : UIColor.grey5()!
+        let borderColor: UIColor
+        let color: UIColor
+        if highlighted {
+            borderColor = SenseStyle.color(group: .sleepScoreIcon, property: .borderHighlightedColor)
+            color = SenseStyle.color(group: .sleepScoreIcon, property: .textHighlightedColor)
+        } else {
+            borderColor = SenseStyle.color(group: .sleepScoreIcon, property: .borderColor)
+            color = SenseStyle.color(group: .sleepScoreIcon, property: .textColor)
+        }
         
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         
         // draw a circle
         let ctx = UIGraphicsGetCurrentContext()!
-        let radius = (size.width - (borderWidth * 2))/2
+        let radius = (size.width - borderWidth) / 2
         let center = CGPoint(x: size.width/2, y: size.height/2)
+        
         ctx.saveGState()
         
         if highlighted {
-            let circleSize = CGSize(width: size.width - borderWidth,
-                                    height: size.height - borderWidth)
-            let circleRect = CGRect(origin: CGPoint.zero, size: circleSize)
-            ctx.setFillColor(UIColor.blue2().cgColor)
+            let fillColor = SenseStyle.color(group: .sleepScoreIcon, property: .backgroundHighlightedColor)
+            let circleRect = CGRect(origin: CGPoint.zero, size: size)
+            ctx.setFillColor(fillColor.cgColor)
             ctx.fillEllipse(in: circleRect)
         }
         
-        ctx.setStrokeColor(color.cgColor)
+        ctx.setStrokeColor(borderColor.cgColor)
         ctx.setLineWidth(borderWidth)
         ctx.addArc(center: center, radius: radius, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: true)
         ctx.drawPath(using: CGPathDrawingMode.stroke)
+        
         ctx.restoreGState()
         
         // draw the text, with default being --
@@ -49,9 +58,11 @@ extension UIImage {
             text = NSString(format: "%ld", sleepScore)
         }
         
+        let font = SenseStyle.font(group: .sleepScoreIcon,
+                                   property: .textFont)
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
-        let attributes: [String : AnyObject] = [NSFontAttributeName: UIFont.h9(),
+        let attributes: [String : AnyObject] = [NSFontAttributeName: font,
                                                 NSParagraphStyleAttributeName: style,
                                                 NSForegroundColorAttributeName : color]
         let textSize = text.sizeBounded(byWidth: size.width, attriburtes: attributes)

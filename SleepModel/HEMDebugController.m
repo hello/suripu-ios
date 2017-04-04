@@ -44,6 +44,8 @@
 #import "HEMIntroService.h"
 #import "HEMVoiceService.h"
 #import "HEMPillDFUStoryboard.h"
+#import "HEMPillSetupViewController.h"
+#import "HEMSenseDFUViewController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -102,6 +104,8 @@
         [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setTitle:NSLocalizedString(@"debug.options.title", nil)];
     
+    [self addForceOTAOptionTo:sheet];
+    [self addPillClippingOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
     [self addShowVoiceTutorialOptionToSheet:sheet];
     [self addShowUpgradePathOptionToSheet:sheet];
@@ -279,6 +283,42 @@
     HEMSelectHostViewController *selectHost = [HEMSelectHostViewController new];
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:selectHost];
     [self showController:navigation animated:YES completion:nil];
+}
+
+#pragma mark Force OTA
+
+- (void)addForceOTAOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.force-ota.title", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showForceOTA];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showForceOTA {
+    HEMSenseDFUViewController* dfuVC = [HEMOnboardingStoryboard instantiateSenseDFUViewController];
+    [dfuVC setCancellable:YES];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:dfuVC];
+    [self showController:nav animated:YES completion:nil];
+}
+
+#pragma mark Pill clipping
+
+- (void)addPillClippingOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.pill-clip.title", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showPillClippingTutorial];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showPillClippingTutorial {
+    HEMPillSetupViewController* setupVC = [HEMOnboardingStoryboard instantiatePillSetupViewController];
+    [setupVC setCancellable:YES];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:setupVC];
+    [self showController:nav animated:YES completion:nil];
 }
 
 #pragma mark Room Check

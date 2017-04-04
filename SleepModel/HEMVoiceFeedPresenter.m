@@ -6,6 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
+
 #import "HEMVoiceFeedPresenter.h"
 #import "HEMVoiceService.h"
 #import "HEMSubNavigationView.h"
@@ -46,7 +48,7 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [collectionView setDelegate:self];
     [collectionView setDataSource:self];
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
+    [collectionView applyStyle];
     [self setCollectionView:collectionView];
     [self updateUI];
 }
@@ -63,6 +65,14 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     }
     [rows addObject:@(HEMVoiceFeedRowTypeCommands)];
     [self setRows:rows];
+    [[self collectionView] reloadData];
+}
+
+#pragma mark - Presenter events
+
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self collectionView] applyStyle];
     [[self collectionView] reloadData];
 }
 
@@ -139,22 +149,19 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
                                             icon:[UIImage imageNamed:[group iconNameSmall]]];
         [exampleView setTag:index++];
         [[exampleView tapGesture] addTarget:self action:@selector(didTapOnCommandGroup:)];
+        [exampleView applyStyle];
     }
+    
+    [commandsCell applyStyle];
 }
 
 - (void)configureWelcomeCell:(HEMWelcomeVoiceCell*)welcomeCell {
     [[welcomeCell titleLabel] setText:[NSLocalizedString(@"voice.welcome.title", nil) uppercaseString]];
-    [[welcomeCell titleLabel] setFont:[UIFont h7]];
-    [[welcomeCell titleLabel] setTextColor:[UIColor grey6]];
     [[welcomeCell messageLabel] setText:NSLocalizedString(@"voice.welcome.message", nil)];
-    [[welcomeCell messageLabel] setFont:[UIFont bodySmall]];
-    [[welcomeCell messageLabel] setTextColor:[UIColor grey5]];
-    [[welcomeCell closeButton] setTintColor:[UIColor grey4]];
-    [[[welcomeCell closeButton] titleLabel] setFont:[UIFont h7Bold]];
     [[welcomeCell closeButton] addTarget:self
                                   action:@selector(dismissWelcome)
                         forControlEvents:UIControlEventTouchUpInside];
-    
+    [welcomeCell applyStyle];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

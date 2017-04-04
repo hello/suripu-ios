@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 7/5/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMSleepPillDfuViewController.h"
 #import "HEMPillDfuPresenter.h"
 #import "HEMDeviceService.h"
@@ -56,6 +56,7 @@
     HEMPillDfuPresenter* dfuPresenter =
         [[HEMPillDfuPresenter alloc] initWithDeviceService:[self deviceService]];
     [dfuPresenter setPillToDfu:[self sleepPillToDfu]];
+    [dfuPresenter bindWithMainView:[self view]];
     [dfuPresenter bindWithTitleLabel:[self titleLabel]
                     descriptionLabel:[self descriptionLabel]];
     [dfuPresenter bindWithActionButton:[self continueButton]];

@@ -72,6 +72,7 @@ class SlideContentPresenter: HEMPresenter {
             self.contentViews.append(controller.view)
         }
         
+        scrollView.backgroundColor = SenseStyle.color(aClass: UIScrollView.self, property: .backgroundColor)
         var contentSize = scrollView.contentSize
         contentSize.width = CGFloat(self.contentViews.count) * scrollView.frame.size.width
         scrollView.contentSize = contentSize
@@ -86,6 +87,7 @@ class SlideContentPresenter: HEMPresenter {
                                                    size: size)
         titleView.highlight(title: self.contentTitles.first!)
         titleView.delegate = self
+        titleView.applyStyle()
         return titleView
     }
     
@@ -163,7 +165,18 @@ class SlideContentPresenter: HEMPresenter {
         }
     }
     
+    func applyStyle() {
+        let bgColor = SenseStyle.color(aClass: UIScrollView.self, property: .backgroundColor)
+        self.contentScrollView.backgroundColor = bgColor
+        self.slidingTitleView?.applyStyle()
+    }
+    
     // MARK: Presenter Events
+    
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
+        self.applyStyle()
+    }
     
     override func willAppear() {
         super.willAppear()
@@ -223,14 +236,13 @@ extension SlideContentPresenter {
         
         navigationBar?.topItem?.leftBarButtonItem = nil
         self.navigationBar = navigationBar
-        self.slidingTitleView = titleView
     }
     
     func bind(scrollView: UIScrollView!) {
         self.configureContent(scrollView: scrollView)
-        scrollView.backgroundColor = UIColor.background()
         scrollView.delegate = self
         self.contentScrollView = scrollView
+        self.applyStyle()
     }
     
 }

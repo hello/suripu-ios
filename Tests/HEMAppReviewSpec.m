@@ -78,16 +78,21 @@ describe(@"HEMAppReview", ^{
 
     describe(@"+hasAppReviewURL", ^{
         
-        it(@"should return YES if url in config", ^{
-            [HEMConfig stub:@selector(stringForConfig:) andReturn:@"url"];
-            BOOL yes = [HEMAppReview hasAppReviewURL];
-            [[@(yes) should] beYes];
-        });
-        
-        it(@"should return NO if url not in config", ^{
-            [HEMConfig stub:@selector(stringForConfig:) andReturn:nil];
-            BOOL no = [HEMAppReview hasAppReviewURL];
-            [[@(no) should] beNo];
+        context(@"url configured", ^{
+            
+            beforeEach(^{
+                [HEMConfig stub:@selector(stringForConfig:) andReturn:theValue(@"url")];
+            });
+            
+            afterEach(^{
+                [HEMConfig clearStubs];
+            });
+           
+            it(@"should return YES if url in config", ^{
+                BOOL yes = [HEMAppReview hasAppReviewURL];
+                [[@(yes) should] beYes];
+            });
+            
         });
         
     });

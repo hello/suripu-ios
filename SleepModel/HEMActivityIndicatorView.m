@@ -57,6 +57,7 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
     [indicator setContentMode:UIViewContentModeScaleAspectFill];
     [indicator setBackgroundColor:[UIColor clearColor]];
     [indicator setFrame:[self bounds]];
+    [indicator setTintColor:[self tintColor]];
 
     CALayer* layer = [indicator layer];
     [self setIndicatorLayer:layer];

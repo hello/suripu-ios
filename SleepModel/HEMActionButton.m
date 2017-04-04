@@ -1,8 +1,7 @@
 
 #import "HEMActionButton.h"
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 static CGFloat const kHEMActionCornerRadius = 3.0f;
@@ -44,17 +43,10 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
 
 - (void)setDefaults {
     [[self layer] setCornerRadius:kHEMActionCornerRadius];
+    
     [self setClipsToBounds:YES];
-    
-    [self.titleLabel setFont:[UIFont button]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
-    
-    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-    
-    [self setBackgroundColor:[UIColor tintColor] forState:UIControlStateNormal];
-    [self setBackgroundColor:[UIColor blue7] forState:UIControlStateHighlighted];
-    [self setBackgroundColor:[UIColor grey3] forState:UIControlStateDisabled];
+    [self applyStyle];
 }
 
 - (void)addActivityView {
@@ -76,6 +68,9 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
         [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
         [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
         [[self activityView] hidesWhenStopped];
+        
+        static NSString* activityKey = @"sense.activity.color";
+        [[self activityView] setColor:[SenseStyle colorWithAClass:[self class] propertyName:activityKey]];
         [self addSubview:[self activityView]];
     }
     

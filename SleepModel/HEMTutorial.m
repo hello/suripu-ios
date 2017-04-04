@@ -11,6 +11,8 @@
 #import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENSensor.h>
 
+#import "Sense-Swift.h"
+
 #import "UIImage+HEMBlurTint.h"
 #import "NSDate+HEMRelative.h"
 #import "UIColor+HEMStyle.h"
@@ -27,8 +29,9 @@
 #pragma mark - Common
 
 + (BOOL)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
+    UIColor* bgColor = [SenseStyle colorWithGroup:GroupTransparentOverlay property:ThemePropertyBackgroundColor];
     UIImage* snapshot = [[controller view] snapshot];
-    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[UIColor lightSeeThroughBackgroundColor]];
+    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:bgColor];
     
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
     [tutorialVC setTutorials:content];
@@ -59,19 +62,25 @@
 }
 
 + (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller {
+    static NSString* imageKey = @"sense.smart.alarm.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
+    
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarm-smart.title", nil)
                                          text:NSLocalizedString(@"tutorial.alarm-smart.message", nil)
-                                        image:[UIImage imageNamed:@"smart_alarm_dialog"]];
+                                        image:image];
     
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
 + (void)showTutorialForPillColor {
+    static NSString* imageKey = @"sense.pill.color.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
+    
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.pill-color.title", nil)
                                          text:NSLocalizedString(@"tutorial.pill-color.message", nil)
-                                        image:[UIImage imageNamed:@"pill_color_dialog"]];
+                                        image:image];
     [self showTutorialWithContent:@[tutorial]];
 }
 
@@ -98,10 +107,12 @@
 }
 
 + (void)showExpansionInfoWithText:(NSString*)text fromController:(UIViewController*)controller {
+    static NSString* imageKey = @"sense.expansion.image";
+    UIImage* image = [SenseStyle imageWithGroup:GroupInfo propertyName:imageKey];
     HEMTutorialContent* tutorial =
     [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"expansion.info.title", nil)
                                          text:text
-                                        image:[UIImage imageNamed:@"expInfoIllustration"]];
+                                        image:image];
     [self showTutorialWithContent:@[tutorial] from:controller];
 }
 

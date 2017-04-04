@@ -5,10 +5,15 @@
 //  Created by Jimmy Lu on 2/4/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMMultiTitleView.h"
 
 @implementation HEMMultiTitleView
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self applyFillStyle];
+}
 
 - (void)clear {
     [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];

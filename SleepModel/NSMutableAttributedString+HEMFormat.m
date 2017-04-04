@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 
 static NSString* const kHEMStringFormatSymbol = @"%@";
@@ -13,9 +14,12 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 @implementation NSMutableAttributedString (HEMFormat)
 
 - (instancetype)initWithFormat:(NSString*)format args:(NSArray*)args {
-    self = [self init];
-    if (self) {
+    if (self = [self init]) {
         [self process:format args:args];
+        
+        UIColor* baseColor = [SenseStyle colorWithGroup:GroupAttributedString property:ThemePropertyTextColor];
+        UIFont* baseFont = [SenseStyle fontWithGroup:GroupAttributedString property:ThemePropertyTextFont];
+        [self applyColor:baseColor andFont:baseFont];
     }
     return self;
 }
@@ -24,8 +28,8 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                           args:(NSArray *)args
                      baseColor:(UIColor*)color
                       baseFont:(UIFont*)font {
-    self = [self initWithFormat:format args:args];
-    if (self) {
+    if (self = [self init]) {
+        [self process:format args:args];
         [self applyColor:color andFont:font];
     }
     return self;
@@ -34,7 +38,8 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 - (instancetype)initWithFormat:(NSString *)format
                           args:(NSArray *)args
                     attributes:(NSDictionary*)attributes {
-    if (self = [self initWithFormat:format args:args]) {
+    if (self = [self init]) {
+        [self process:format args:args];
         [self applyAttributes:attributes];
     }
     return self;
@@ -75,33 +80,65 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                           usingBlock:^(NSDictionary *currentAttributes, NSRange range, BOOL *stop) {
                               for (NSString* key in allKeys) {
-                                  if ([currentAttributes valueForKey:key] == nil
+                                  if ([key isEqualToString:NSFontAttributeName]
+                                      && [currentAttributes valueForKey:key] != nil
                                       && [attributes valueForKey:key] != nil) {
-                                      [self addAttribute:key
-                                                   value:[attributes valueForKey:key]
-                                                   range:range];
+                                      
+                                      UIFont* currentFont = [currentAttributes valueForKey:key];
+                                      UIFont* font = [attributes valueForKey:key];
+                                      if (![[currentFont familyName] isEqualToString:[font familyName]]) {
+                                          [self addAttribute:key value:font range:range];
+                                      }
+                                  } else if ([currentAttributes valueForKey:key] == nil
+                                      && [attributes valueForKey:key] != nil) {
+                                      [self addAttribute:key value:[attributes valueForKey:key] range:range];
                                   }
                               }
                           }];
 }
 
 - (void)applyColor:(UIColor*)color andFont:(UIFont*)font {
+    if (!color && !font) {
+        return;
+    }
+    
+    if ([self length] == 0) {
+        return;
+    }
+    
     [self enumerateAttributesInRange:NSMakeRange(0, [self length])
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-                              if ([attrs valueForKey:NSFontAttributeName] == nil) {
+                              if ([attrs valueForKey:NSFontAttributeName] == nil
+                                  && font) {
                                   [self addAttribute:NSFontAttributeName
                                                value:font
                                                range:range];
                               }
                                   
-                              if ([attrs valueForKey:NSForegroundColorAttributeName] == nil) {
+                              if ([attrs valueForKey:NSForegroundColorAttributeName] == nil
+                                  && color) {
                                   [self addAttribute:NSForegroundColorAttributeName
                                                value:color
                                                range:range];
                               }
                                   
                           }];
+}
+
+- (void)applyFooterStyle {
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupHeaderFooter property:ThemePropertyTextColor];
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupHeaderFooter property:ThemePropertyTextFont];
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
+    if (textFont) {
+        attributes[NSFontAttributeName] = textFont;
+    }
+    if (textColor) {
+        attributes[NSForegroundColorAttributeName] = textColor;
+    }
+    if ([attributes count] > 0) {
+        [self addAttributes:attributes range:NSMakeRange(0, [self length])];
+    }
 }
 
 @end

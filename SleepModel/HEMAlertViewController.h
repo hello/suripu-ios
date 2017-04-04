@@ -20,6 +20,15 @@
 @property (nonatomic) HEMAlertViewType type;
 
 /**
+ * Convenience method to turn a regular message in to a themed, attributed
+ * message
+ *
+ * @param text: the text to transform in to an attributed string with themed properties
+ * @return attributed text
+ */
++ (NSAttributedString *)attributedMessageText:(NSString *)text;
+    
+/**
  * Convenience method to instantiate a confirmation dialog style alert
  *
  * @param title: title for the dialog
@@ -57,21 +66,6 @@
  *  @param controller presenting controller
  */
 + (void)showInfoDialogWithTitle:(NSString*)title message:(NSString*)message controller:(UIViewController*)controller;
-
-/**
- *  Create a dialog with "yes" and "no" as possible options, where answering
- *  "yes" (default) performs an action, and no dismisses the dialog without
- *  further interaction.
- *
- *  @param title         title of the dialog
- *  @param message       dialog message content
- *  @param controller    presenting controller
- *  @param action        block executed when answer is "yes"
- */
-- (instancetype)initBooleanDialogWithTitle:(NSString*)title
-                                   message:(NSString*)message
-                             defaultsToYes:(BOOL)defaultsToYes
-                                    action:(void (^)())action;
 
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 

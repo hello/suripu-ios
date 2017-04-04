@@ -97,6 +97,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
 }
 
 - (void)bindWithCollectionView:(nonnull UICollectionView*)collectionView {
+    [collectionView applyStyle];
     [self setCollectionView:collectionView];
     [[self collectionView] setAlwaysBounceVertical:YES];
     [[self collectionView] setDelegate:self];
@@ -236,6 +237,13 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     [[self attributedBodyCache] removeAllObjects];
 }
 
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self attributedBodyCache] removeAllObjects];
+    [[self collectionView] applyStyle];
+    [[self collectionView] reloadData];
+}
+
 #pragma mark - UICollectionView
 
 #pragma mark Helpers
@@ -273,9 +281,9 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     if (!attributedBody) {
         if ([dataObj isKindOfClass:[SENQuestion class]]) {
             attributedBody = [[NSAttributedString alloc] initWithString:body
-                                                             attributes:[self questionTextAttributes]];
+                                                             attributes:[HEMQuestionCell questionTextAttributes]];
         } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-            attributedBody = markdown_to_attr_string(body, 0, [HEMMarkdown attributesForInsightSummaryText]);
+            attributedBody = markdown_to_attr_string(body, 0, [HEMInsightCollectionViewCell messageAttributes]);
         }
         
         attributedBody = [attributedBody trim];
@@ -283,13 +291,6 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     }
 
     return attributedBody;
-}
-
-- (NSDictionary*)questionTextAttributes {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    return  @{NSFontAttributeName : [UIFont body],
-              NSParagraphStyleAttributeName : style};
 }
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withCellWith:(CGFloat)width {
@@ -421,6 +422,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
             [[textCell textLabel] setText:NSLocalizedString(@"insights.feed.error.message", nil)];
             [[textCell textLabel] setFont:[UIFont body]];
             [textCell displayAsACard:YES];
+            [textCell applyStyle];
         }
     }
     
@@ -434,6 +436,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     [[qCell skipButton] addTarget:self action:@selector(skipQuestion:) forControlEvents:UIControlEventTouchUpInside];
     [[qCell answerButton] setTag:[indexPath row]];
     [[qCell skipButton] setTag:[indexPath row]];
+    [qCell applyStyle];
 }
 
 - (void)configureInsightCell:(HEMInsightCollectionViewCell*)iCell
@@ -459,18 +462,14 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
             if (error) {
                 [SENAnalytics trackError:error];
             } else if (image && imageUrl) {
-                [[strongSelf insightsService] cacheImage:image
-                                           forInsightUrl:imageUrl];
+                [[strongSelf insightsService] cacheImage:image forInsightUrl:imageUrl];
             }
         }];
     }
     
     [[iCell categoryLabel] setText:[self insightCategoryNameForCellAtIndexPath:indexPath]];
-    
     [[iCell shareButton] setTitle:[NSLocalizedString(@"actions.share", nil) uppercaseString]
                          forState:UIControlStateNormal];
-    [[iCell shareButton] setTitleColor:[UIColor grey5] forState:UIControlStateNormal];
-    [[[iCell shareButton] titleLabel] setFont:[UIFont body]];
     [[iCell shareButton] addTarget:self
                             action:@selector(shareInsight:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -484,6 +483,7 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
         [iCell enableShare:NO];
     }
 
+    [iCell applyStyle];
     [self updateInsightImageOffsetOn:iCell];
 }
 

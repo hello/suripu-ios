@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class HEMSimpleLineTextField;
+@class HEMTitledTextField;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HEMTextFieldCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic, weak) IBOutlet HEMTitledTextField* titledTextField;
 
 - (void)setPlaceholderText:(NSString*)placeholderText;
 - (HEMSimpleLineTextField*)textField;

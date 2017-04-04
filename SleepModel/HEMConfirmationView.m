@@ -5,9 +5,8 @@
 //  Created by Jimmy Lu on 6/22/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMConfirmationView.h"
-#import "HEMStyle.h"
 #import "HEMScreenUtils.h"
 #import "NSString+HEMUtils.h"
 
@@ -41,8 +40,9 @@ static CGFloat const HEMConfirmDisplayDuration = 2.0f;
     if (self) {
         _text = [text copy];
         _layout = layout;
-        
-        [self setBackgroundColor:[[UIColor grey7] colorWithAlphaComponent:0.8f]];
+        UIColor* color = [SenseStyle colorWithAClass:[self class]
+                                              property:ThemePropertyBackgroundColor];
+        [self setBackgroundColor:color];
         [[self layer] setCornerRadius:HEMConfirmCornerRadius];
         
         [self addCheckImage];
@@ -72,9 +72,13 @@ static CGFloat const HEMConfirmDisplayDuration = 2.0f;
 }
 
 - (void)addTextLabel {
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:[self class]
+                                     property:ThemePropertyTextFont];
     UILabel* label = [UILabel new];
-    [label setTextColor:[UIColor whiteColor]];
-    [label setFont:[UIFont bodyBold]];
+    [label setTextColor:textColor];
+    [label setFont:font];
     [label setText:[self text]];
     [label setContentMode:UIViewContentModeCenter];
     

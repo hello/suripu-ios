@@ -2,6 +2,8 @@
 #import <UIKit/UIKit.h>
 
 @interface HEMActionButton : UIButton
+    
+@property (nonatomic, strong, readonly) UIActivityIndicatorView* activityView;
 
 /**
  * Changes the button's shape to show an activity indicator

@@ -209,7 +209,7 @@ describe(@"HEMTimelineService", ^{
         __block SENAccount* fakeAccount;
         __block BOOL canView = NO;
         
-        context(@"just created account today", ^{
+        context(@"just created account at midnight", ^{
             
             __block BOOL didSetUserPreference = NO;
             
@@ -222,14 +222,16 @@ describe(@"HEMTimelineService", ^{
                 }];
                 
                 canView = YES;
-                NSDate* today = [NSDate date];
                 
+                NSDate* today = [[NSDate date] dateAtMidnight];
+
                 timelineService = [HEMTimelineService new];
                 
                 fakeAccount = [SENAccount new];
                 [fakeAccount setCreatedAt:today];
                 
-                canView = [timelineService canViewTimelinesBefore:[today previousDay] forAccount:fakeAccount];
+                canView = [timelineService canViewTimelinesBefore:[today previousDay]
+                                                       forAccount:fakeAccount];
             });
             
             afterEach(^{
@@ -297,14 +299,16 @@ describe(@"HEMTimelineService", ^{
                 [prefs stub:@selector(setUserPreference:forKey:) andReturn:[KWValue valueWithBool:YES]];
                 
                 canView = NO;
-                NSDate* today = [NSDate date];
+                NSDate* today = [[NSDate date] dateAtMidnight];
+                NSDate* yesterday = [today previousDay];
                 
                 fakeAccount = [SENAccount new];
-                [fakeAccount setCreatedAt:[today previousDay]];
+                [fakeAccount setCreatedAt:yesterday];
                 
                 timelineService = [HEMTimelineService new];
                 
-                canView = [timelineService canViewTimelinesBefore:[today previousDay] forAccount:fakeAccount];
+                canView = [timelineService canViewTimelinesBefore:[yesterday previousDay]
+                                                       forAccount:fakeAccount];
             });
             
             afterEach(^{

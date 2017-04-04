@@ -34,6 +34,10 @@ static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId
 
 static NSString* const HEMConfigExtSchemePlistKey = @"SenseUrlScheme";
 
+// Json configurations
+
+static NSString* const HEMConfigJsonType = @"json";
+
 @implementation HEMConfig
 
 + (NSString*)stringForConfig:(HEMConf)config {

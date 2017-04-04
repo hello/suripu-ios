@@ -42,11 +42,13 @@ import SenseKit
     
     func bind(tableView: UITableView!) {
         tableView.tableFooterView = HEMSettingsHeaderFooterView(topBorder: false, bottomBorder: false)
-        tableView.isHidden = true // hide first, then show after settings loaded
+        tableView.isHidden = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.applyStyle()
         self.tableView = tableView
         self.warningHeader = tableView.tableHeaderView as? WarningView
+        self.warningHeader?.isHidden = true
         self.load()
     }
     
@@ -59,6 +61,12 @@ import SenseKit
     }
     
     // MARK: Presenter overrides
+    
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
+        self.tableView.applyStyle()
+        self.tableView.reloadData()
+    }
     
     override func didComeBackFromBackground() {
         super.didComeBackFromBackground()
@@ -96,6 +104,7 @@ import SenseKit
         self.reloadTableHeader()
         self.activityIndicator?.isHidden = true
         self.activityIndicator?.stop()
+        self.warningHeader?.isHidden = false
         self.tableView?.isHidden = false
         self.tableView?.reloadData()
     }
@@ -103,9 +112,7 @@ import SenseKit
     fileprivate func attributedWarningMessage() -> NSAttributedString {
         let message = NSLocalizedString("settings.notification.warning.message.not-enabled",
                                         comment: "enable notification message")
-        let attributes: [String: Any] = [NSFontAttributeName : UIFont.body(),
-                                         NSForegroundColorAttributeName : UIColor.grey5(),
-                                         NSParagraphStyleAttributeName: DefaultBodyParagraphStyle()]
+        let attributes = WarningView.messageAttributes()
         return NSAttributedString(string: message, attributes: attributes)
     }
     
@@ -240,12 +247,10 @@ extension NotificationSettingsPresenter: UITableViewDelegate, UITableViewDataSou
         enableSwitch.addTarget(self,
                                action: #selector(NotificationSettingsPresenter.toggle(enableSwitch:)),
                                for: UIControlEvents.valueChanged)
-        
-        cell.backgroundColor = UIColor.white
+
         cell.accessoryView = enableSwitch
         cell.textLabel?.text = setting.localizedName
-        cell.textLabel?.textColor = UIColor.grey6()
-        cell.textLabel?.font = UIFont.body()
+        cell.applyStyle()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

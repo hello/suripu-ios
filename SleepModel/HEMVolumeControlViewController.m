@@ -40,6 +40,7 @@
                  descriptionLabel:[self descriptionLabel]
          descriptionTopConstraint:[self descriptionTopConstraint]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
+    [[self presenter] bindWithNavigationBar:[[self navigationController] navigationBar]];
     [[self presenter] bindWithActivityContainer:[self view]];
     [[self presenter] setDelegate:self];
     [[self presenter] setErrorDelegate:self];

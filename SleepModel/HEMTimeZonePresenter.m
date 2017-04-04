@@ -6,8 +6,8 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
+
 #import "UITableViewCell+HEMSettings.h"
 #import "UIBarButtonItem+HEMNav.h"
 
@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, HEMTimeZoneSection) {
     [tableView setTableFooterView:footer];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
+    [tableView applyStyle];
     
     [self setDoneAction:action];
     [self setTableView:tableView];
@@ -209,8 +210,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         city = [self sortedCityNames][[indexPath row]];
     }
     
-    [[cell textLabel] setTextColor:[UIColor textColor]];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
+    [cell applyStyle];
     [[cell textLabel] setText:city];
     [cell setTag:[indexPath row]];
     [cell setAccessorySelection:isSelected];

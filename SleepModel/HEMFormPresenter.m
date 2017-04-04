@@ -55,6 +55,7 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
     [collectionView setBackgroundColor:[UIColor whiteColor]];
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
+    [collectionView applyFillStyle];
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
@@ -225,12 +226,14 @@ static CGFloat const HEMFormAutoScrollDuration = 0.15f;
         [textField setReturnKeyType:UIReturnKeyNext];
     }
 
+    [fieldCell applyStyle];
     [textField setSecurityEnabled:[self isFieldSecureInRow:row]];
     [textField setDelegate:self];
     [textField setTag:row];
     [textField setKeyboardType:[self keyboardTypeForFieldInRow:row]];
     [textField setAutocorrectionType:[self fieldAutocorrectTypeInRow:row]];
     [textField setAutocapitalizationType:[self fieldCapitalizationTypeInRow:row]];
+    
 }
 
 #pragma mark - UITextFieldDelegate

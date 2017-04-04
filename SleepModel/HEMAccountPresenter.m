@@ -15,6 +15,7 @@
 #import "UIAlertController+HEMPhotoOptions.h"
 #import "UIImagePickerController+HEMProfilePhoto.h"
 #import "UIImage+HEMCompression.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMAccountPresenter.h"
 #import "HEMPresenter+HEMPhoto.h"
@@ -133,14 +134,13 @@ static CGFloat const HEMAccountAudioNoteHorzMargin = 24.0f;
 }
 
 - (void)bindWithTableView:(UITableView*)tableView {
-    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES
-                                                                   bottomBorder:NO];
+    UIView* footerView = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:NO bottomBorder:NO];
     [tableView setTableFooterView:footerView];
-    [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView setBackgroundView:nil];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setSectionFooterHeight:0.0f];
+    [tableView applyStyle];
     
     [self setTableView:tableView];
     
@@ -453,9 +453,9 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (NSAttributedString*)enhancedAudioNote {
     if (!_enhancedAudioNote) {
         NSString* note = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
-        NSDictionary* attributes = @{NSFontAttributeName : [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [UIColor grey4]};
-        _enhancedAudioNote = [[NSAttributedString alloc] initWithString:note attributes:attributes];
+        NSMutableAttributedString* attrNote = [[NSMutableAttributedString alloc] initWithString:note];
+        [attrNote applyFooterStyle];
+        _enhancedAudioNote = attrNote;
     }
     return _enhancedAudioNote;
 }
@@ -551,6 +551,7 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     HEMSettingsHeaderFooterView* footer = [[HEMSettingsHeaderFooterView alloc] initWithTopBorder:YES bottomBorder:NO];
     [footer setAttributedTitle:[self enhancedAudioNote]];
+    [footer setBackgroundColor:[tableView backgroundColor]];
     [footer setTitleInsets:UIEdgeInsetsMake(HEMAccountAudioNoteVertMargin,
                                             HEMAccountAudioNoteHorzMargin,
                                             HEMAccountAudioNoteVertMargin,
@@ -607,7 +608,6 @@ didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIColor* textColor = [UIColor settingsTextColor];
     NSInteger row = [indexPath row];
     NSInteger rows = 1;
     UIImage* icon = nil;
@@ -644,16 +644,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case HEMAccountSectionSignOut:
             [self signOutIcon:&icon title:&title];
-            textColor = [UIColor redColor];
             rows = HEMSignOutRowCount;
             break;
     }
     
+    icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [cell showStyledAccessoryViewIfNone];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
-    [[cell textLabel] setTextColor:textColor];
-    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [[cell detailTextLabel] setText:nil];
     [[cell accessoryView] setHidden:!showAccessory];
     [[cell textLabel] setText:title];
@@ -663,6 +659,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMBasicTableViewCell class]]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
         [basicCell showSeparator:row != rows - 1];
+    }
+    
+    [cell applyStyle];
+    
+    if ([indexPath section] == HEMAccountSectionSignOut) {
+        UIColor* color = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
+        [[cell textLabel] setTextColor:color];
+        [[cell imageView] setTintColor:color];
     }
 }
 

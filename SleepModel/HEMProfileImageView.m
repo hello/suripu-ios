@@ -6,8 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMProfileImageView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 
@@ -39,8 +39,10 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
 }
 
 - (void)configureDefaults {
+    UIColor* bgColor = [SenseStyle colorWithAClass:[self class]
+                                          property:ThemePropertyBackgroundColor];
+    [self setBackgroundColor:bgColor];
     [self setClipsToBounds:YES];
-    [self setBackgroundColor:[UIColor whiteColor]];
     [self setIndicateActivity:YES];
 }
 
@@ -57,7 +59,7 @@ static CGFloat const HEMProfileImageViewAnimeDuration = 0.25f;
     CAShapeLayer* mask = [CAShapeLayer layer];
     [mask setPath:[rectPath CGPath]];
     [mask setFillRule:kCAFillRuleEvenOdd];
-    [mask setFillColor:[[UIColor whiteColor] CGColor]];
+    [mask setFillColor:[[self backgroundColor] CGColor]];
     
     [[self layer] addSublayer:mask];
 }

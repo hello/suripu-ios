@@ -2,6 +2,7 @@
 #import <SenseKit/SENPreference.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "Sense-Swift.h"
 
 #import "HEMHeightPickerViewController.h"
 #import "HEMOnboardingService.h"
@@ -39,11 +40,10 @@ static CGFloat const HEMHeightDefaultInCm = 172.72f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self configureButtons];
     [self configureRuler];
     [self trackAnalyticsEvent:HEMAnalyticsEventHeight];
-
 }
 
 - (void)configureButtons {

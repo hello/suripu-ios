@@ -17,5 +17,7 @@
 + (CGFloat)heightWithTitle:(NSAttributedString*)title
                description:(NSAttributedString*)description
            widthConstraint:(CGFloat)width;
++ (NSAttributedString*)attributedTitle:(NSString*)title;
++ (NSAttributedString*)attributedDescription:(NSString*)description;
 
 @end

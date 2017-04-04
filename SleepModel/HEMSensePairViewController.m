@@ -18,7 +18,9 @@
 #import "HEMOnboardingPairSensePresenter.h"
 
 @interface HEMSensePairViewController() <HEMPairSenseActionDelegate, HEMPresenterErrorDelegate>
-
+    
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundIllustration;
+@property (weak, nonatomic) IBOutlet UIImageView *illustration;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *senseIconHeightConstraint;
@@ -48,7 +50,8 @@
                         descriptionLabel:[self descriptionLabel]
                 descriptionTopConstraint:[self descriptionTopConstraint]];
     [[self presenter] bindWithNavigationItem:[self navigationItem]];
-    [[self presenter] bindWithIllustrationView:nil
+    [[self presenter] bindWithIllustrationView:[self illustration]
+                                backgroundView:[self backgroundIllustration]
                            andHeightConstraint:[self senseIconHeightConstraint]];
     [[self presenter] bindWithNextButton:[self readyButton]];
     [[self presenter] bindWithNotGlowingButton:[self notGlowingButton]];

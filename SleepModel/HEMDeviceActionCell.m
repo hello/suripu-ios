@@ -6,7 +6,7 @@
 //  Copyright © 2015 Hello. All rights reserved.
 //
 
-#import "UIColor+HEMStyle.h"
+#import "Sense-Swift.h"
 
 #import "HEMDeviceActionCell.h"
 #import "HEMActivityIndicatorView.h"
@@ -17,6 +17,7 @@ CGFloat const HEMDeviceActionCellHeight = 56.0f;
 @interface HEMDeviceActionCell()
 
 @property (nonnull, strong) HEMActivityIndicatorView* indicator;
+@property (nonnull, strong) UIView* disabledOverlay;
 
 @end
 
@@ -24,10 +25,7 @@ CGFloat const HEMDeviceActionCellHeight = 56.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    [self setBackgroundColor:[UIColor whiteColor]];
-    [[self topSeparatorView] setBackgroundColor:[UIColor separatorColor]];
-    [[self separatorView] setBackgroundColor:[UIColor separatorColor]];
+    [self applyStyle];
 }
 
 - (void)prepareForReuse {
@@ -65,6 +63,20 @@ CGFloat const HEMDeviceActionCellHeight = 56.0f;
         [[self iconView] setHidden:NO];
         [HEMAnimationUtils grow:[self iconView] completion:nil];
     }
+}
+
+- (void)applyStyle {
+    [[self separatorView] applySeparatorStyle];
+    [[self topSeparatorView] applySeparatorStyle];
+
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTintColor];
+    UIColor* backgroundColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyBackgroundColor];
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    UIFont* textFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    [[self textLabel] setTextColor:textColor];
+    [[self textLabel] setFont:textFont];
+    [[self iconView] setTintColor:tintColor];
+    [self setBackgroundColor:backgroundColor];
 }
 
 @end

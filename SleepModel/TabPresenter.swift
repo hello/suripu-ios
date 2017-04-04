@@ -14,6 +14,8 @@ class TabPresenter: HEMPresenter {
     fileprivate static let indicatorUnicode = "\u{2022}" // bullet point
     
     weak var tabItem: UITabBarItem!
+    fileprivate var iconKey: String?
+    fileprivate var iconHighlightedKey: String?
     fileprivate var icon: UIImage?
     fileprivate var iconHighlighted: UIImage?
     fileprivate var title: String?
@@ -47,7 +49,32 @@ class TabPresenter: HEMPresenter {
         super.init()
     }
     
-    func bind(tabItem: UITabBarItem) {
+    init(styleKey: String?, styleHighlightedKey: String?, title: String?) {
+        if styleKey != nil && styleHighlightedKey != nil {
+            self.iconKey = styleKey
+            self.iconHighlightedKey = styleHighlightedKey
+            self.icon = SenseStyle.image(aClass: UITabBar.self, propertyName: styleKey!)
+            self.iconHighlighted = SenseStyle.image(aClass: UITabBar.self, propertyName: styleHighlightedKey!)
+            self.title = title
+        }
+        super.init()
+    }
+    
+    fileprivate func reloadStyledIcons() {
+        guard let key = self.iconKey else {
+            return
+        }
+        
+        guard let highlightedKey = self.iconHighlightedKey else {
+            return
+        }
+        
+        self.icon = SenseStyle.image(aClass: UITabBar.self, propertyName: key)
+        self.iconHighlighted = SenseStyle.image(aClass: UITabBar.self, propertyName: highlightedKey)
+        self.reloadIcons()
+    }
+    
+    fileprivate func reloadIcons() {
         if self.iconHighlighted != nil {
             self.iconHighlighted = self.iconHighlighted!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         }
@@ -56,15 +83,23 @@ class TabPresenter: HEMPresenter {
             self.icon = self.icon!.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         }
         
-        tabItem.image = self.icon
-        tabItem.selectedImage = self.iconHighlighted
+        self.tabItem.image = self.icon
+        self.tabItem.selectedImage = self.iconHighlighted
+    }
+    
+    func bind(tabItem: UITabBarItem) {
         self.tabItem = tabItem
-        
+        self.reloadIcons()
         self.listenForUnreadUpdates()
         self.checkForUnread()
     }
     
     // MARK: - Presenter Events
+    
+    override func didChange(_ theme: Theme, auto automatically: Bool) {
+        super.didChange(theme, auto: automatically)
+        self.reloadStyledIcons()
+    }
     
     override func didAppear() {
         super.didAppear()

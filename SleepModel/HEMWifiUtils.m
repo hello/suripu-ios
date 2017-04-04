@@ -51,7 +51,8 @@ static CGFloat const HEMWiFiRssiSignalMed = -60.0f;
     } else {
         imageName = [imageName stringByAppendingString:@"Low"];
     }
-    return [UIImage imageNamed:imageName];
+    UIImage* image =  [UIImage imageNamed:imageName];
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 @end

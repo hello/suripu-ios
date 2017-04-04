@@ -22,7 +22,6 @@
 #import "HEMTextCollectionViewCell.h"
 #import "HEMTrendsService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMStyle.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMTimelineService.h"
 #import "HEMCardFlowLayout.h"
@@ -62,8 +61,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView {
     [collectionView setDataSource:self];
     [collectionView setDelegate:self];
-    [collectionView setBackgroundColor:[UIColor backgroundColor]];
-    [[collectionView superview] setBackgroundColor:[UIColor backgroundColor]];
+    [collectionView setHidden:NO];
+    [collectionView applyStyle];
     [self setCollectionView:collectionView];
     [self refreshTrends];
 }
@@ -101,6 +100,12 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     [self refreshTrends];
 }
 
+- (void)didChangeTheme:(Theme *)theme auto:(BOOL)automatically {
+    [super didChangeTheme:theme auto:automatically];
+    [[self collectionView] applyStyle];
+    [[self collectionView] reloadData];
+}
+
 #pragma mark - Global loading indicator
 
 - (void)showLoading:(BOOL)loading {
@@ -109,11 +114,9 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if (loading && trends == nil) {
         [[self loadingIndicator] start];
         [[self loadingIndicator] setHidden:NO];
-        [[self collectionView] setHidden:YES];
     } else if ([[self loadingIndicator] isAnimating]){
         [[self loadingIndicator] stop];
         [[self loadingIndicator] setHidden:YES];
-        [[self collectionView] setHidden:NO];
     }
 }
 
@@ -247,30 +250,21 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     if (!text) {
         return nil;
     }
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h5],
-                                 NSForegroundColorAttributeName : [UIColor grey6],
-                                 NSParagraphStyleAttributeName : style};
+    NSDictionary* attributes = [StatusMessageCell titleAttributes];
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (NSDictionary*)attributesForPartialDataMessageWithColor:(UIColor*)color {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
-    [style setAlignment:NSTextAlignmentCenter];
-    
-    return @{NSFontAttributeName : [UIFont body],
-             NSForegroundColorAttributeName : color,
-             NSParagraphStyleAttributeName : style};
+    NSMutableDictionary* attributes = [[StatusMessageCell messageAttributes] mutableCopy];
+    [attributes setValue:color forKey:NSForegroundColorAttributeName];
+    return attributes;
 }
 
-- (NSAttributedString*)attributedPartialDataMessageWithText:(NSString*)message {
+- (NSAttributedString*)attributedPartialDataMessageWithText:(NSString*)message{
     if (!message) {
         return nil;
     }
-    UIColor* textColor = [UIColor grey5];
-    NSDictionary* attributes = [self attributesForPartialDataMessageWithColor:textColor];
+    NSDictionary* attributes = [StatusMessageCell messageAttributes];
     return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
@@ -280,11 +274,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
         return nil;
     }
     
-    UIColor* boldColor = [UIColor boldTextColor];
-    UIColor* regColor = [UIColor grey5];
-    NSDictionary* boldAttr = [self attributesForPartialDataMessageWithColor:boldColor];
-    NSDictionary* regAttr = [self attributesForPartialDataMessageWithColor:regColor];
-    UIFont* regFont = regAttr[NSFontAttributeName];
+    NSDictionary* boldAttr = [StatusMessageCell boldMessageAttributes];
+    NSDictionary* regAttr = [StatusMessageCell messageAttributes];
     NSParagraphStyle* para = regAttr[NSParagraphStyleAttributeName];
     
     NSString* dayNumberText = [NSString stringWithFormat:@"%ld", (long)daysLeft];
@@ -304,8 +295,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     NSMutableAttributedString* message
         = [[NSMutableAttributedString alloc] initWithFormat:format
                                                        args:args
-                                                  baseColor:regColor
-                                                   baseFont:regFont];
+                                                  baseColor:regAttr[NSForegroundColorAttributeName]
+                                                   baseFont:regAttr[NSFontAttributeName]];
     [message addAttribute:NSParagraphStyleAttributeName
                     value:para
                     range:NSMakeRange(0, [message length])];
@@ -315,12 +306,17 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 
 - (NSAttributedString*)attributedSubtitleTextFromString:(NSString*)string
                                             highlighted:(BOOL)highlighted {
+    
+    UIFont* textFont = [SenseStyle fontWithGroup:GroupTrendsTitles property:ThemePropertyTextFont];
+    UIColor* textColor = [SenseStyle colorWithGroup:GroupTrendsTitles property:ThemePropertyTextColor];
+    UIColor* boldColor = [SenseStyle colorWithGroup:GroupTrendsTitles property:ThemePropertyTextHighlightedColor];
+    
     NSMutableParagraphStyle* paraStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];
     
-    UIColor* textColor = highlighted ? [UIColor grey5] : [UIColor lowImportanceTextColor];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
-                                 NSForegroundColorAttributeName : textColor,
+    UIColor* color = highlighted ? boldColor : textColor;
+    NSDictionary* attributes = @{NSFontAttributeName : textFont,
+                                 NSForegroundColorAttributeName : color,
                                  NSKernAttributeName : @1,
                                  NSParagraphStyleAttributeName : paraStyle};
     
@@ -367,7 +363,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (NSAttributedString*)attributedSleepDurationFromAnnotation:(SENTrendsAnnotation*)annotation {
-    UIColor* color = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
+    UIColor* color = [SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateSound];
     NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
                                  NSForegroundColorAttributeName : color};
     CGFloat averageValue = [[annotation value] CGFloatValue];
@@ -455,8 +451,6 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     UIColor* highlightLabelColor = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
     [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightLabelColor:highlightLabelColor];
-    [barCell setHighlightedBarColor:[[UIColor blue6] colorWithAlphaComponent:0.6f]];
-    [barCell setNormalBarColor:[UIColor blue3]];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];
     [barCell setMinValue:[[graph minValue] CGFloatValue]];
     [barCell setDashLineColor:[UIColor separatorColor]];
@@ -490,8 +484,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (void)configureErrorCell:(HEMTextCollectionViewCell*)textCell {
     [[textCell textLabel] setText:NSLocalizedString(@"trends.loading.error.message", nil)];
     [textCell setBackgroundColor:[UIColor whiteColor]];
-    [[textCell textLabel] setFont:[UIFont body]];
     [textCell displayAsACard:YES];
+    [textCell applyStyle];
 }
 
 #pragma mark - UICollectionView Data Source
@@ -594,6 +588,8 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
             [self setSleepDepthCell:(id)cell];
             [self configureSleepDepthCell:(id)cell forTrendsGraph:graph];
         }
+        
+        [baseCell applyStyle];
     } else if ([cell isKindOfClass:[StatusMessageCell class]]) {
         [self configureMessageCell:(id)cell forTrends:[self selectedTrends]];
     } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) { // error

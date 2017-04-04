@@ -1,54 +1,54 @@
 
-#import "UIFont+HEMStyle.h"
-
+#import "Sense-Swift.h"
 #import "HEMSimpleLineTextField.h"
-#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMSimpleLineHeight = 1.0f;
 static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
 
 @interface HEMSimpleLineTextField()
-
-@property (nonatomic, strong) UIButton* revealSecretButton;
-
-@end
+    
+    @property (nonatomic, strong) UIButton* revealSecretButton;
+    @property (nonatomic, strong) UIColor* lineColor;
+    
+    @end
 
 @implementation HEMSimpleLineTextField
-
+    
 - (id)initWithCoder:(NSCoder*)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        self.backgroundColor = [UIColor clearColor];
-        [self setBorderStyle:UITextBorderStyleNone];
-        [self setTintColor:[UIColor tintColor]];
-        [self setFont:[UIFont body]];
-        [self setTextColor:[UIColor grey6]];
+        [self applyStyle];
         [self setFocus:NO];
     }
     return self;
 }
-
+    
 - (BOOL)becomeFirstResponder {
     BOOL become = [super becomeFirstResponder];
     if (become) [self setFocus:YES];
     return become;
 }
-
+    
 - (BOOL)resignFirstResponder {
     BOOL resign = [super resignFirstResponder];
     if (resign) [self setFocus:NO];
     return resign;
 }
-
+    
 - (void)drawRect:(CGRect)rect {
+    
+    if (![self lineColor]) {
+        [self setLineColor:[SenseStyle colorWithAClass:[self class]
+                                              property:ThemePropertyTintColor]];
+    }
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
     UIColor* lineColor
-        = [self isFirstResponder]
-        ? [UIColor tintColor]
-        : [UIColor separatorColor];
-
+    = [self isFirstResponder]
+    ? [self tintColor]
+    : [self lineColor];
+    
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
     CGContextSetLineWidth(context, HEMSimpleLineHeight);
     
@@ -60,7 +60,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     CGContextRestoreGState(context);
     
 }
-
+    
 - (void)setText:(NSString *)text {
     NSInteger currentLength = [[self text] length];
     if ((currentLength == 0 && [text length] > 0)
@@ -69,19 +69,19 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     }
     [super setText:text];
 }
-
+    
 - (void)setFocus:(BOOL)focus {
-    UIColor* placeholderColor = [self isFirstResponder] ? [UIColor grey3] : [UIColor grey4];
+    UIColor* placeholderColor = [self isFirstResponder] ? [self focusedPlaceholderColor] : [self placeholderColor];
     
     NSDictionary* placeHolderAttrs = @{
-        NSFontAttributeName : [UIFont body],
-        NSForegroundColorAttributeName : placeholderColor
-    };
+                                       NSFontAttributeName : [self font],
+                                       NSForegroundColorAttributeName : placeholderColor
+                                       };
     
     if ([self placeholder]) {
         NSAttributedString* attrText
-            = [[NSAttributedString alloc] initWithString:[self placeholder]
-                                              attributes:placeHolderAttrs];
+        = [[NSAttributedString alloc] initWithString:[self placeholder]
+                                          attributes:placeHolderAttrs];
         
         [self setAttributedPlaceholder:attrText];
     }
@@ -97,7 +97,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     [self setNeedsDisplay];
     [[self focusDelegate] textField:self didGainFocus:focus];
 }
-
+    
 - (void)setSecurityEnabled:(BOOL)securityEnabled {
     _securityEnabled = securityEnabled;
     [self setSecureTextEntry:securityEnabled];
@@ -126,7 +126,7 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
         [self setRightViewMode:UITextFieldViewModeNever];
     }
 }
-
+    
 - (void)toggleTextVisibility {
     BOOL reveal = ![[self revealSecretButton] isSelected];
     if (reveal) {
@@ -135,10 +135,11 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
         [self hideText];
     }
 }
-
+    
 - (void)revealText {
     [[self revealSecretButton] setSelected:YES];
     
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
     UITextPosition* cursorPosition = [self beginningOfDocument];
     
     // must move the cursor back and forth, otherwise cursor is at a position that
@@ -150,18 +151,48 @@ static CGFloat const HEMSimpleLineRevealPadding = 10.0f;
     
     // http://stackoverflow.com/questions/35293379/uitextfield-securetextentry-toggle-set-incorrect-font
     [self setFont:nil];
-    [self setFont:[UIFont body]];
+    [self setFont:font];
     [self layoutIfNeeded];
     
     cursorPosition = [self endOfDocument];
     [self setSelectedTextRange:[self textRangeFromPosition:cursorPosition
                                                 toPosition:cursorPosition]];
 }
-
+    
 - (void)hideText {
     [[self revealSecretButton] setSelected:NO];
     [self setSecureTextEntry:YES];
     [self layoutIfNeeded];
 }
-
+    
+- (void)applyStyle {
+    UIColor* tintColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyTintHighlightedColor];
+    UIColor* lineColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyTintColor];
+    UIColor* placeHolderColor = [SenseStyle colorWithAClass:[self class]
+                                                   property:ThemePropertyHintColor];
+    UIColor* textColor = [SenseStyle colorWithAClass:[self class]
+                                            property:ThemePropertyTextColor];
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    
+    NSString* keyboardStyle = [[SenseStyle theme] valueWithAClass:[self class]
+                                                         property:ThemePropertyKeyboardAppearance];
+    
+    UIKeyboardAppearance keyboard = UIKeyboardAppearanceDefault;
+    if ([keyboardStyle isEqualToString:@"sense.DARK"]) {
+        keyboard = UIKeyboardAppearanceDark;
+    }
+    
+    [self setFont:font];
+    [self setKeyboardAppearance:keyboard];
+    [self setTextColor:textColor];
+    [self setTintColor:tintColor];
+    [self setBorderStyle:UITextBorderStyleNone];
+    [self setBackgroundColor:[UIColor clearColor]];
+    [self setPlaceholderColor:placeHolderColor];
+    [self setFocusedPlaceholderColor:placeHolderColor];
+    [self setLineColor:lineColor];
+}
+    
 @end

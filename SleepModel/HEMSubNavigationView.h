@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)selectControlWithTag:(NSInteger)tag;
 - (BOOL)hasControls;
 - (void)reset;
+- (void)applyStyle;
 
 @end
 

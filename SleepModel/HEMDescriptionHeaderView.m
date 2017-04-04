@@ -6,6 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "NSAttributedString+HEMUtils.h"
+#import "NSMutableAttributedString+HEMFormat.h"
+
+#import "Sense-Swift.h"
 
 #import "HEMDescriptionHeaderView.h"
 #import "HEMStyle.h"
@@ -28,6 +31,41 @@ static CGFloat const HEMDescriptionHeaderDescBotMargin = 32.0f;
             + HEMDescriptionHeaderTextSpacing
             + descHeight
             + HEMDescriptionHeaderDescBotMargin;
+}
+
++ (NSAttributedString*)attributedText:(NSString*)text
+                     forColorProperty:(enum ThemeProperty)colorProp
+                         fontProperty:(enum ThemeProperty)fontProp {
+    UIColor* color = [SenseStyle colorWithAClass:self property:colorProp];
+    UIFont* font = [SenseStyle fontWithAClass:self property:fontProp];
+    
+    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSMutableDictionary* attrs = [NSMutableDictionary dictionaryWithCapacity:3];
+    attrs[NSParagraphStyleAttributeName] = style;
+    
+    if (font) {
+        attrs[NSFontAttributeName] = font;
+    }
+    
+    if (color) {
+        attrs[NSForegroundColorAttributeName] = color;
+    }
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attrs];
+}
+
++ (NSAttributedString*)attributedTitle:(NSString*)title {
+    return [self attributedText:title
+               forColorProperty:ThemePropertyTextColor
+                   fontProperty:ThemePropertyTextFont];
+}
+
++ (NSAttributedString*)attributedDescription:(NSString*)description {
+    return [self attributedText:description
+               forColorProperty:ThemePropertyDetailColor
+                   fontProperty:ThemePropertyDetailFont];
 }
 
 - (void)awakeFromNib {

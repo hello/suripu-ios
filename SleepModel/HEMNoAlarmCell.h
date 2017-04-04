@@ -12,9 +12,9 @@
 
 @interface HEMNoAlarmCell : HEMCardCollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *alarmButton;
 
-+ (CGFloat)heightWithDetail:(NSAttributedString*)attributedDetail cellWidth:(CGFloat)width;
++ (CGFloat)heightWithDetail:(NSString*)detail cellWidth:(CGFloat)width;
+- (void)setMessage:(NSString*)text;
 
 @end

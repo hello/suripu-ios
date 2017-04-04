@@ -28,7 +28,6 @@
 #import "HEMSleepSoundVolume.h"
 #import "HEMTutorial.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMSleepSoundConfigCellHeight = 217.0f;
 static CGFloat const HEMSleepSoundPlayerLoadAnimeDuration = 0.5f;
@@ -576,9 +575,13 @@ typedef NS_ENUM(NSInteger, HEMSleepSoundPlayerState) {
         case HEMSleepSoundPlayerStateError: {
             NSString* text = NSLocalizedString(@"sleep-sounds.error.message", nil);
             UIFont* font = [UIFont body];
-            CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
+            CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+            CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+            CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+            CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+            CGFloat maxWidth = itemSize.width - leftMargin - rightMargin;
             CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
-            itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+            itemSize.height = textHeight + topMargin + botMargin;
             break;
         }
         default:

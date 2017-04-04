@@ -20,7 +20,6 @@
 #import "HEMSenseSettingsDataSource.h"
 #import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceWarning.h"
-#import "HEMStyle.h"
 
 @interface HEMSenseSettingsDataSource()
 

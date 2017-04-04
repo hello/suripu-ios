@@ -11,7 +11,6 @@
 #import "HEMSenseDFUPresenter.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMActivityCoverView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMSenseDFUUpdatedMessageDuration = 2.0f;
 

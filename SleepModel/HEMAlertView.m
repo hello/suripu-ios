@@ -44,7 +44,7 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextHighlightedColor];
     return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : color,
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+             NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle]};
 }
     
 + (NSDictionary*)messageAttributes {
@@ -52,7 +52,7 @@ CGFloat const HEMDialogButtonCornerRadius = 5.0f;
     UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
     return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : color,
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+             NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle]};
 }
 
 - (instancetype)initWithImage:(UIImage *)image

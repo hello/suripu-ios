@@ -37,7 +37,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
     UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
     return @{NSFontAttributeName : bodyFont,
              NSForegroundColorAttributeName : color,
-             NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()};
+             NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle]};
 }
 
 - (instancetype)initWithTitle:(NSString*)title andDescription:(NSAttributedString*)description {

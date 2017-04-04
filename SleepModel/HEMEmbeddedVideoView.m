@@ -12,7 +12,6 @@
 #import <AVFoundation/AVAsset.h>
 
 #import "HEMEmbeddedVideoView.h"
-#import "HEMStyle.h"
 
 static NSString* const HEMEmbeddedVideoPlayerStatusKeyPath = @"status";
 static NSString* const HEMEmbeddedVideoPlayerPlaybackKeepUpKeyPath = @"playbackLikelyToKeepUp";

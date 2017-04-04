@@ -140,7 +140,6 @@
 		BF0B15F31DF6013500DF2373 /* SlidingNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15F21DF6013500DF2373 /* SlidingNavigationTitleView.swift */; };
 		BF0B15F51DF618C100DF2373 /* SlideContentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */; };
 		BF0E37971C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */; };
-		BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E37981C3C70FC00FEA097 /* HEMStyle.m */; };
 		BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */; };
 		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
 		BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */; };
@@ -446,6 +445,7 @@
 		BFBC78B41D2C959E00076235 /* HEMPillFinderPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBC78B31D2C959E00076235 /* HEMPillFinderPresenter.m */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
 		BFBEE9121D18AC69007A986B /* HEMAlarmListPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBEE9111D18AC69007A986B /* HEMAlarmListPresenter.m */; };
+		BFBF28ED1E94460200EF5AE2 /* NSMutableParagraphStyle+Sense.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBF28EC1E94460200EF5AE2 /* NSMutableParagraphStyle+Sense.swift */; };
 		BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */; };
 		BFC0D66D1D9D8F7A00239B89 /* HEMExpansionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0D66C1D9D8F7A00239B89 /* HEMExpansionHeaderView.m */; };
 		BFC0D6701D9D91F400239B89 /* HEMExpansionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0D66F1D9D91F400239B89 /* HEMExpansionViewController.m */; };
@@ -813,7 +813,6 @@
 		BF0B15F41DF618C100DF2373 /* SlideContentPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideContentPresenter.swift; sourceTree = "<group>"; };
 		BF0E37951C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+HEMCard.h"; sourceTree = "<group>"; };
 		BF0E37961C3C5BF000FEA097 /* UICollectionViewCell+HEMCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+HEMCard.m"; sourceTree = "<group>"; };
-		BF0E37981C3C70FC00FEA097 /* HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMStyle.m; sourceTree = "<group>"; };
 		BF0E539F1A37A968002FB083 /* HEMEnablePushViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMEnablePushViewController.h; sourceTree = "<group>"; };
 		BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEnablePushViewController.m; sourceTree = "<group>"; };
 		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
@@ -1164,7 +1163,6 @@
 		BF8A0DDA1BEACC58006B3B70 /* HEMNoAlarmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNoAlarmCell.m; sourceTree = "<group>"; };
 		BF8C09111C2376C5005AB5A7 /* HEMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGradient.h; sourceTree = "<group>"; };
 		BF8C09121C2376C5005AB5A7 /* HEMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGradient.m; sourceTree = "<group>"; };
-		BF8C09141C2381E9005AB5A7 /* HEMStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMStyle.h; sourceTree = "<group>"; };
 		BF8C09151C24B9D2005AB5A7 /* HEMAccountPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAccountPresenter.h; sourceTree = "<group>"; };
 		BF8C09161C24B9D2005AB5A7 /* HEMAccountPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAccountPresenter.m; sourceTree = "<group>"; };
 		BF8C09181C24BB2C005AB5A7 /* HEMAccountService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAccountService.h; sourceTree = "<group>"; };
@@ -1308,6 +1306,7 @@
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		BFBEE9101D18AC69007A986B /* HEMAlarmListPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListPresenter.h; sourceTree = "<group>"; };
 		BFBEE9111D18AC69007A986B /* HEMAlarmListPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListPresenter.m; sourceTree = "<group>"; };
+		BFBF28EC1E94460200EF5AE2 /* NSMutableParagraphStyle+Sense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableParagraphStyle+Sense.swift"; sourceTree = "<group>"; };
 		BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMMapping.h"; sourceTree = "<group>"; };
 		BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMMapping.m"; sourceTree = "<group>"; };
 		BFC0D66B1D9D8F7A00239B89 /* HEMExpansionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMExpansionHeaderView.h; sourceTree = "<group>"; };
@@ -3025,8 +3024,6 @@
 				BFD3CCF01B9F7F8D00643987 /* NSShadow+HEMStyle.m */,
 				BF8C09111C2376C5005AB5A7 /* HEMGradient.h */,
 				BF8C09121C2376C5005AB5A7 /* HEMGradient.m */,
-				BF8C09141C2381E9005AB5A7 /* HEMStyle.h */,
-				BF0E37981C3C70FC00FEA097 /* HEMStyle.m */,
 			);
 			name = Styles;
 			sourceTree = "<group>";
@@ -3401,6 +3398,7 @@
 				BF048A0D1E7B3E7200D1A79E /* HEMOnboardingController+Style.swift */,
 				BF048A0F1E7B7C0A00D1A79E /* UISearchBar+Color.swift */,
 				BF1707721E8A01DF00488EB3 /* UIPickerView+Style.swift */,
+				BFBF28EC1E94460200EF5AE2 /* NSMutableParagraphStyle+Sense.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4419,7 +4417,6 @@
 				BF5F972B1DB6C61800EF460B /* HEMVolumeControlViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				BF6D9B7B1C6D409F00774322 /* HEMIntroMessageCell.m in Sources */,
-				BF0E37991C3C70FC00FEA097 /* HEMStyle.m in Sources */,
 				BF885F2B1CE6750700A92F90 /* HEMNewProfileCollectionViewCell.m in Sources */,
 				BFFCEFD91D074F6800CA0E54 /* HEMLocationService.m in Sources */,
 				BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */,
@@ -4564,6 +4561,7 @@
 				BFB815151BFC1E0D009740D0 /* HEMExtendedHeaderCollectionViewLayout.m in Sources */,
 				BF78E9A91B2763CA0015949F /* HEMTutorialDataSource.m in Sources */,
 				BF3713441E6E2A1600EF9BAB /* UIApplication+Push.swift in Sources */,
+				BFBF28ED1E94460200EF5AE2 /* NSMutableParagraphStyle+Sense.swift in Sources */,
 				BF825CF91D76360E003F34B0 /* HEMRoomConditionsPresenter.m in Sources */,
 				BF21F0361DB02B920057F24E /* HEMVoiceGroupHeaderCell.m in Sources */,
 				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,

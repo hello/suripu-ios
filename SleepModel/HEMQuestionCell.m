@@ -36,7 +36,7 @@ CGFloat const HEMQuestionCellBaseHeight = 141.0f;
 + (NSDictionary*)questionTextAttributes {
     UIColor* bodyColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
     UIFont* bodyFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
-    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* para = [NSMutableParagraphStyle senseStyle];
     [para setAlignment:NSTextAlignmentCenter];
     return @{NSFontAttributeName : bodyFont,
              NSForegroundColorAttributeName : bodyColor,

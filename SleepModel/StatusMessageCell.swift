@@ -23,7 +23,7 @@ class StatusMessageCell: UICollectionViewCell {
     static func titleAttributes() -> [String : Any] {
         let color = SenseStyle.color(aClass: StatusMessageCell.self, property: .titleColor)
         let font = SenseStyle.font(aClass: StatusMessageCell.self, property: .titleFont)
-        let para = DefaultBodyParagraphStyle()!
+        let para = NSMutableParagraphStyle.senseStyle()
         para.alignment = NSTextAlignment.center
         return [NSFontAttributeName : font,
                 NSForegroundColorAttributeName : color,
@@ -33,7 +33,7 @@ class StatusMessageCell: UICollectionViewCell {
     static func messageAttributes() -> [String : Any] {
         let color = SenseStyle.color(aClass: StatusMessageCell.self, property: .textColor)
         let font = SenseStyle.font(aClass: StatusMessageCell.self, property: .textFont)
-        let para = DefaultBodyParagraphStyle()!
+        let para = NSMutableParagraphStyle.senseStyle()
         para.alignment = NSTextAlignment.center
         return [NSFontAttributeName : font,
                 NSForegroundColorAttributeName : color,

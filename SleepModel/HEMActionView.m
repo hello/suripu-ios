@@ -37,7 +37,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 @implementation HEMActionView
     
 + (NSDictionary*)messageAttributes {
-    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* para = [NSMutableParagraphStyle senseStyle];
     [para setAlignment:NSTextAlignmentCenter];
     return @{NSParagraphStyleAttributeName : para,
              NSFontAttributeName : [SenseStyle fontWithAClass:self property:ThemePropertyTextFont],

@@ -21,7 +21,7 @@ CGFloat const HEMWarningCellMessageHorzPadding = 24.0f;
                                            property:ThemePropertyDetailFont];
     UIColor* messageColor = [SenseStyle colorWithGroup:GroupWarningView
                                               property:ThemePropertyDetailColor];
-    return @{NSParagraphStyleAttributeName : DefaultBodyParagraphStyle(),
+    return @{NSParagraphStyleAttributeName : [NSMutableParagraphStyle senseStyle],
              NSForegroundColorAttributeName : messageColor,
              NSFontAttributeName : messageFont};
 }

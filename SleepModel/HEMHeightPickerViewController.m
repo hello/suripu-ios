@@ -9,7 +9,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMRulerView.h"
-#import "HEMStyle.h"
 #import "HEMMathUtil.h"
 #import "HEMAccountUpdateDelegate.h"
 

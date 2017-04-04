@@ -13,7 +13,6 @@
 #import "HEMEmbeddedVideoView.h"
 #import "HEMAnimationUtils.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 static NSString* const HEMPillFinderErrorDomain = @"is.hello.app.pill";
 static CGFloat const HEMPillFinderAnimeDuration = 0.5f;
@@ -57,7 +56,7 @@ static CGFloat const HEMPillFinderScanTimeout = 30.0f;
     UIFont* descFont = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
     UIColor* descColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
     
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     NSString* description = [descriptionLabel text];
     NSAttributedString* attributedDescription =
     [[NSAttributedString alloc] initWithString:description

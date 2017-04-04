@@ -29,7 +29,6 @@
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSensorValueFormatter.h"
-#import "HEMStyle.h"
 #import "HEMSensorChartContainer.h"
 #import "HEMSensorGroupCollectionViewCell.h"
 #import "HEMSensorGroupMemberView.h"
@@ -363,9 +362,13 @@ static CGFloat const kHEMRoomConditionsIntroDescriptionMargin = 32.0f;
             if ([self sensorError]) {
                 NSString* text = NSLocalizedString(@"sensor.data-unavailable", nil);
                 UIFont* font = [HEMTextCollectionViewCell defaultTextFont];
-                CGFloat maxWidth = itemSize.width - (HEMStyleCardErrorTextHorzMargin * 2);
+                CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+                CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+                CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+                CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+                CGFloat maxWidth = itemSize.width - leftMargin - rightMargin;
                 CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
-                itemSize.height = textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+                itemSize.height = textHeight + topMargin + botMargin;
             }
             return itemSize;
         }

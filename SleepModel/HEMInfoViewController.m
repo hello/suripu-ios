@@ -5,11 +5,10 @@
 //  Created by Jimmy Lu on 8/25/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMInfoViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 @interface HEMInfoViewController() <UITableViewDelegate, UITableViewDataSource>
 

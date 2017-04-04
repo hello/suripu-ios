@@ -14,7 +14,6 @@
 #import "HEMExpansionAuthPresenter.h"
 #import "HEMExpansionService.h"
 #import "HEMActivityCoverView.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMExpansionActionDelay = 1.0f;
 static CGFloat const kHEMExpansionActionDelayBeforeLoadingConfigs = 2.0f;

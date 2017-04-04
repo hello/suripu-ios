@@ -20,7 +20,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMHandHoldingService.h"
-#import "HEMStyle.h"
 
 @interface HEMSleepSummarySlideViewController ()<UIGestureRecognizerDelegate, Scrollable, ShortcutHandler>
 

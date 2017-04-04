@@ -16,7 +16,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMVoiceCommandGroup.h"
 #import "HEMVoiceExampleView.h"
-#import "HEMStyle.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     HEMVoiceFeedRowTypeWelcome,

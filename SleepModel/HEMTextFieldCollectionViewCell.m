@@ -9,7 +9,6 @@
 #import "HEMTextFieldCollectionViewCell.h"
 #import "HEMTitledTextField.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMStyle.h"
 
 @class HEMSimpleLineTextField;
 

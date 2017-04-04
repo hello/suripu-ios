@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 5/25/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import "Sense-Swift.h"
 
 #import "HEMSignInFormPresenter.h"
 #import "HEMOnboardingService.h"
@@ -13,7 +14,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMTextCollectionViewCell.h"
 #import "HEMTextFieldCollectionViewCell.h"
-#import "HEMStyle.h"
 #import "HEMTitledTextField.h"
 #import "HEMSimpleLineTextField.h"
 #import "HEMActivityCoverView.h"

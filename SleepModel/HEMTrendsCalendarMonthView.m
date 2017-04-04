@@ -14,7 +14,6 @@
 #import "HEMTrendsDisplayPoint.h"
 #import "HEMMultiTitleView.h"
 #import "HEMTrendsScoreLabel.h"
-#import "HEMStyle.h"
 
 CGFloat const HEMTrendsCalMonthDaySpacing = 14.0f;
 CGFloat const HEMTrendsCalMonthDaySpacingForQuarter = 10.0f;

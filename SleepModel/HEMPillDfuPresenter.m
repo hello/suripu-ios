@@ -77,7 +77,7 @@ static CGFloat const HEMPillDfuWaveAnimeFadeDuration = 0.2f;
     UIFont* descFont = [SenseStyle fontWithGroup:GroupPillDfu property:ThemePropertyDetailFont];
     UIColor* descColor = [SenseStyle colorWithGroup:GroupPillDfu property:ThemePropertyDetailColor];
     
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     NSString* description = [descriptionLabel text];
     NSAttributedString* attributedDescription =
         [[NSAttributedString alloc] initWithString:description

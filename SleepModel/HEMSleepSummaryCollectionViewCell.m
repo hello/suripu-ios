@@ -6,7 +6,6 @@
 #import "HEMTimelineMessageContainerView.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMMarkdown.h"
-#import "HEMStyle.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
@@ -32,7 +31,7 @@ CGFloat const HEMSleepSummaryMessageHorzPadding = 24.0f;
     UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyTextFont];
     UIColor* boldColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextHighlightedColor];
     UIColor* regColor = [SenseStyle colorWithAClass:self property:ThemePropertyTextColor];
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     style.alignment = NSTextAlignmentCenter;
     return @{@(STRONG) : @{ NSFontAttributeName : font,
                             NSForegroundColorAttributeName : boldColor,

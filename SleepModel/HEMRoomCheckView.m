@@ -7,12 +7,12 @@
 //
 #import <UICountingLabel/UICountingLabel.h>
 
+#import "Sense-Swift.h"
 #import "NSString+HEMUtils.h"
 
 #import "HEMRoomCheckView.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMRoomCheckViewSensorIconMoveDuration = 0.25f;
 static CGFloat const kHEMRoomCheckViewSensorIconSpacing = 28.0f;

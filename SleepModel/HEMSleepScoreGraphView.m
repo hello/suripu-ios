@@ -2,7 +2,6 @@
 #import <UICountingLabel/UICountingLabel.h>
 #import "Sense-Swift.h"
 #import "HEMSleepScoreGraphView.h"
-#import "HEMStyle.h"
 
 @interface HEMSleepScoreGraphView ()
 

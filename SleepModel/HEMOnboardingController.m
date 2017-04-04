@@ -20,7 +20,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
@@ -121,7 +120,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
         NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
         
         if ([attrDesc length] > 0) {
-            NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+            NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
             
             if (HEMIsIPhone4Family()) {
                 [style setAlignment:NSTextAlignmentCenter];
@@ -294,7 +293,7 @@ static CGFloat const HEMOnboardingCompletionDelay = 2.0f;
 
 - (void)showBackButtonAsCancelWithSelector:(SEL)action {
     UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:BackIndicator()
+                                                                 image:[SenseStyle navigationBackImage]
                                                                 target:self
                                                                 action:action];
     [self useCancelBarButtonItem:cancelItem];

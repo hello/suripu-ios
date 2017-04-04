@@ -41,7 +41,6 @@
 #import "HEMTimelineHandHoldingPresenter.h"
 #import "HEMHandHoldingService.h"
 #import "HEMNavigationShadowView.h"
-#import "HEMStyle.h"
 #import "HEMTimelineFooterCollectionReusableView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
@@ -151,7 +150,7 @@ static CGFloat const HEMTutorialMessageOffset = 0.0f;
 - (NSAttributedString*)attributedErrorMessage:(NSString*)message {
     UIFont* textFont = [SenseStyle fontWithGroup:GroupTimelineError property:ThemePropertyTextFont];
     UIColor* textColor = [SenseStyle colorWithGroup:GroupTimelineError property:ThemePropertyTextColor];
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     [style setAlignment:NSTextAlignmentCenter];
     [style setParagraphSpacing:-5.0f];
     NSDictionary* attributes = @{NSParagraphStyleAttributeName : style,

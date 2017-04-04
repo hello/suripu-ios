@@ -7,7 +7,6 @@
 //
 
 #import "HEMPillCollectionViewCell.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMPillCollectionViewBaseHeight = 224.0f;
 static CGFloat const HEMPillCollectionViewWithUpdateHeight = 304.0f;

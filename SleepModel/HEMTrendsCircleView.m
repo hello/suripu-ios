@@ -5,9 +5,8 @@
 //  Created by Jimmy Lu on 2/2/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMTrendsCircleView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMTrendsCircleTitleOffset = -5.0f;
 

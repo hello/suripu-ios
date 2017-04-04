@@ -12,7 +12,6 @@
 
 #import "HEMNoAlarmCell.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMNoAlarmCellBaseHeight = 292.0f;
 static CGFloat const kHEMNoAlarmCellHorzMargins = 40.0f;
@@ -39,7 +38,7 @@ static CGFloat const kHEMNoAlarmCellHorzMarginsSmall = 20.0f;
     Class class = [HEMCardCollectionViewCell class];
     UIFont* font = [SenseStyle fontWithAClass:class property:ThemePropertyDetailFont];
     UIColor* color = [SenseStyle colorWithAClass:class property:ThemePropertyDetailColor];
-    NSMutableParagraphStyle* para = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* para = [NSMutableParagraphStyle senseStyle];
     [para setAlignment:NSTextAlignmentCenter];
     return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : color,

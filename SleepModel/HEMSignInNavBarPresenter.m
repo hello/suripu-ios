@@ -6,12 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "UIBarButtonItem+HEMNav.h"
-
+#import "Sense-Swift.h"
 #import "HEMSignInNavBarPresenter.h"
 #import "HEMOnboardingController.h"
-#import "HEMStyle.h"
-
-
 
 @implementation HEMSignInNavBarPresenter
 
@@ -31,7 +28,7 @@
     
     // cancel
     UIBarButtonItem* cancelItem = [UIBarButtonItem cancelItemWithTitle:nil
-                                                                 image:BackIndicator()
+                                                                 image:[SenseStyle navigationBackImage]
                                                                 target:self
                                                                 action:@selector(dismiss)];
     

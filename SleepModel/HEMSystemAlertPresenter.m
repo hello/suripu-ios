@@ -27,7 +27,6 @@
 #import "HEMVoiceService.h"
 #import "HEMPillDFUStoryboard.h"
 #import "HEMActivityCoverView.h"
-#import "HEMStyle.h"
 
 typedef NS_ENUM(NSInteger, HEMSystemAlertType) {
     HEMSystemAlertTypeNetwork = 0,

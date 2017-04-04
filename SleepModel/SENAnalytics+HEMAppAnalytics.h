@@ -274,6 +274,11 @@ extern NSString* const HEMAnalyticsEventUpgradeSwapRequest;
 extern NSString* const HEMAnalyticsEventUpgradeSwapped;
 extern NSString* const HEMAnalyticsEventUpgradeReset;
 
+// night mode
+extern NSString* const kHEMAnalyticsPropNightModeValueOn;
+extern NSString* const kHEMAnalyticsPropNightModeValueOff;
+extern NSString* const kHEMAnalyticsPropNightModeValueAuto;
+
 @interface SENAnalytics (HEMAppAnalytics)
 
 + (void)enableAnalytics;
@@ -286,7 +291,7 @@ extern NSString* const HEMAnalyticsEventUpgradeReset;
 + (void)trackError:(NSError*)error;
 + (void)updateEmail:(NSString*)email;
 + (void)trackAlarmSave:(SENAlarm*)alarm;
-+ (void)trackAlarmToggle:(SENAlarm*)alarm;
++ (void)trackAlarmToggle:(SENAlarm*)alarm;  
 + (void)trackTrendsTimescaleChange:(SENTrendsTimeScale)timescale;
 + (void)trackPhotoAction:(NSString*)source onboarding:(BOOL)onboarding;
 + (void)track:(NSString*)event properties:(NSDictionary*)props onboarding:(BOOL)onboarding;
@@ -294,6 +299,8 @@ extern NSString* const HEMAnalyticsEventUpgradeReset;
 + (void)trackSense:(SENSense*)sense;
 + (NSString*)addPrefixIfNeeded:(NSString*)prefix toEvent:(NSString*)event;
 + (void)trackPushNotification:(PushNotification*)notification;
++ (void)trackUserProperty:(NSString*)name value:(NSString*)value;
++ (void)trackNightModeChangeWithSetting:(NSString*)settingValue;
 
 @end
 

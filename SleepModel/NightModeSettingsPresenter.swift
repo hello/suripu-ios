@@ -154,20 +154,24 @@ class NightModeSettingsPresenter: HEMListPresenter {
                     self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
                         self.waitingOnPermission = false
                         switch status {
-                        case .notEnabled:
-                            fallthrough
-                        case .denied:
-                            let off = NightModeService.Option.off
-                            self.selectedItemNames = [off.localizedDescription()]
-                            self.tableView?.reloadData() // to disable the schedule cell
-                        default:
-                            self.scheduleNightModeFromLocation()
+                            case .notEnabled:
+                                fallthrough
+                            case .denied:
+                                let off = NightModeService.Option.off
+                                self.selectedItemNames = [off.localizedDescription()]
+                                self.tableView?.reloadData() // to disable the schedule cell
+                            default:
+                                self.scheduleNightModeFromLocation()
                         }
                     })
                 } else {
                     self.scheduleNightModeFromLocation()
                 }
-            default:
+            case .alwaysOn:
+                SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueOn)
+                self.nightModeService.save(option: option)
+            case .off:
+                SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueOff)
                 self.nightModeService.save(option: option)
         }
     }
@@ -187,6 +191,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
             scheduled = true
             
             if loc != nil {
+                SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
                 self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
                                                          longitude: Double(loc!.lon))
             } else {

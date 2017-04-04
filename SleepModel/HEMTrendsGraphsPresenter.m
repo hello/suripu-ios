@@ -452,7 +452,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     
     NSArray<NSAttributedString*>* attributedTitles = [self graphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
-    UIColor* highlightLabelColor = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
+    UIColor* highlightLabelColor = [SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateSound];
     [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightLabelColor:highlightLabelColor];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];

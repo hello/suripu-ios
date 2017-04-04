@@ -91,33 +91,11 @@
     return [self body];
 }
 
-+ (UIFont*)settingsTableCellDetailFont {
-    return [self body];
-}
-
 + (UIFont*)settingsHelpFont {
     return [self h7];
 }
 
 #pragma mark - Special custom font sizes
-
-#pragma mark Alarms
-
-+ (UIFont*)alarmMeridiemFont {
-    return [UIFont systemFontOfSize:16.0f weight:UIFontWeightRegular];
-}
-
-+ (UIFont*)alarmNumberFont {
-    return [UIFont systemFontOfSize:28.0f weight:UIFontWeightThin];
-}
-
-+ (UIFont*)alarmSelectedNumberFont {
-    return [UIFont systemFontOfSize:56.0f weight:UIFontWeightThin];
-}
-
-+ (UIFont*)alarmButtonFont {
-    return [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
-}
 
 #pragma mark - Sensor
 
@@ -134,10 +112,6 @@
 
 + (UIFont*)timelineHistoryScoreFontOfSize:(CGFloat)size {
     return [UIFont systemFontOfSize:size weight:UIFontWeightThin];
-}
-
-+ (UIFont*)timelineEventMessageFont {
-    return [UIFont systemFontOfSize:14.0f weight:UIFontWeightLight];
 }
 
 #pragma mark - Trends

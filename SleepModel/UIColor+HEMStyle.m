@@ -18,13 +18,6 @@
                            alpha:alpha];
 }
 
-#pragma mark - Appearance 
-
-+ (void)applyDefaultColorAppearances {
-    [[UITableView appearance] setSeparatorColor:[self grey3]];
-    [[UILabel appearance] setTintColor:[self textColor]];
-}
-
 #pragma mark - Standard Hello Colors from Style Guide
 
 #pragma mark Greys
@@ -254,29 +247,8 @@
     }
 }
 
-+ (UIColor *)colorForSleepState:(SENTimelineSegmentSleepState)state {
-    switch (state) {
-        case SENTimelineSegmentSleepStateLight:
-            return [self blue4];
-        case SENTimelineSegmentSleepStateMedium:
-            return [self blue5];
-        case SENTimelineSegmentSleepStateSound:
-            return [self blue6];
-        case SENTimelineSegmentSleepStateAwake:
-        default:
-            return [self clearColor];
-    }
-}
-
 + (UIColor *)timelineBackgroundColor {
     return [self blue2];
-}
-
-+ (NSArray *)timelineSelectedGradientColorRefs {
-    // if you change the values, you should check the references to ensure the
-    // locations matches the colors
-    return @[(id)[UIColor colorWithHex:0xF5F7FA alpha:1.f].CGColor,
-             (id)[UIColor colorWithHex:0xF5F7FA alpha:0.f].CGColor];
 }
 
 #pragma mark - Background colors
@@ -285,22 +257,8 @@
     return [UIColor colorWithHex:0xEBEDF0 alpha:1.f];
 }
 
-+ (UIColor *)lightBackgroundColor {
-    return [self grey1];
-}
-
-+ (UIColor *)seeThroughBackgroundColor {
-    return [UIColor colorWithHex:0x596980 alpha:0.9];
-}
-
 #pragma mark - Text colors
 
-+ (UIColor *)settingsTextColor {
-    return [self grey6];
-}
-+ (UIColor *)settingsDetailTextColor {
-    return [self grey3];
-}
 + (UIColor *)boldTextColor {
     return [self grey7];
 }
@@ -327,15 +285,6 @@
     return [self grey3];
 }
 
-#pragma mark - Card colors
-
-+ (UIColor *)cardBorderColor {
-    return [self colorWithHex:0xE5E5E5 alpha:1.f];
-}
-+ (UIColor *)cardTitleColor {
-    return [self grey6];
-}
-
 #pragma mark - Separators / Lines
 
 + (UIColor *)separatorColor {
@@ -352,9 +301,6 @@
 }
 + (UIColor *)borderColor {
     return [self grey2];
-}
-+ (UIColor *)touchIndicatorColor {
-    return [self grey1];
 }
 + (NSArray*)loadingIndicatorColorRefs {
     return @[(id)[[UIColor clearColor] CGColor],

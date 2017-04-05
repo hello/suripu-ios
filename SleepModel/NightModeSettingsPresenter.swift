@@ -167,8 +167,8 @@ class NightModeSettingsPresenter: HEMListPresenter {
                             case .notEnabled:
                                 fallthrough
                             case .denied:
-                                let off = NightModeService.Option.off
-                                self.selectedItemNames = [off.localizedDescription()]
+                                let savedOption = self.nightModeService.savedOption()
+                                self.selectedItemNames = [savedOption.localizedDescription()]
                                 self.tableView?.reloadData() // to disable the schedule cell
                                 self.removeTransitionView(animate: false)
                             default:

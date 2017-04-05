@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.22
+
+Fixes:
+
+* Fixed selection issue if denying location when previous selection was Always on
+
 ## 2.1.0.21
 
 New:

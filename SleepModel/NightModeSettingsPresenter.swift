@@ -16,6 +16,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     fileprivate weak var locationService: HEMLocationService!
     fileprivate var footer: UIView?
     fileprivate var waitingOnPermission: Bool
+    fileprivate weak var transitionView: UIView?
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
         let optionsTitle = NSLocalizedString("settings.night-mode.options.title", comment: "table options title")
@@ -142,6 +143,15 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     override func didNotifyDelegateOfSelection() {
         super.didNotifyDelegateOfSelection()
+        // snapshot the screen
+        if self.activityContainerView != nil {
+            if let snapshot = self.activityContainerView!.snapshotView(afterScreenUpdates: false) {
+                snapshot.frame = self.activityContainerView!.bounds
+                self.activityContainerView!.addSubview(snapshot)
+                self.transitionView = snapshot
+            }
+        }
+        
         let selectedName = self.selectedItemNames?.last as? String ?? ""
         guard let option = NightModeService.Option.fromDescription(description: selectedName) else {
             return
@@ -160,6 +170,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
                                 let off = NightModeService.Option.off
                                 self.selectedItemNames = [off.localizedDescription()]
                                 self.tableView?.reloadData() // to disable the schedule cell
+                                self.removeTransitionView(animate: false)
                             default:
                                 self.scheduleNightModeFromLocation()
                         }
@@ -170,9 +181,29 @@ class NightModeSettingsPresenter: HEMListPresenter {
             case .alwaysOn:
                 SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueOn)
                 self.nightModeService.save(option: option)
+                self.removeTransitionView(animate: true)
             case .off:
                 SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueOff)
                 self.nightModeService.save(option: option)
+                self.removeTransitionView(animate: true)
+        }
+
+    }
+    
+    fileprivate func removeTransitionView(animate: Bool) {
+        guard let view = self.transitionView else {
+            return
+        }
+        
+        guard animate == true else {
+            view.removeFromSuperview()
+            return
+        }
+        
+        UIView.animate(withDuration: 0.35, animations: {
+            view.alpha = 0.0
+        }) { (finished: Bool) in
+            view.removeFromSuperview()
         }
     }
     
@@ -194,13 +225,16 @@ class NightModeSettingsPresenter: HEMListPresenter {
                 SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
                 self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
                                                          longitude: Double(loc!.lon))
+                self?.removeTransitionView(animate: true)
             } else {
+                self?.removeTransitionView(animate: false)
                 self?.showLocationError()
             }
             
         })
         
         if error != nil {
+            self.removeTransitionView(animate: false)
             self.showLocationError()
         }
     }

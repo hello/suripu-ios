@@ -238,11 +238,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 [self tableView:tableView didDeselectRowAtIndexPath:path];
             }
         }
-        
-        [self willNotifyDelegateOfSelection];
+
         // add a delay to let delegate now selection has been made so dismissal
         // of the controller can be done
         [tableView setUserInteractionEnabled:NO];
+        
+        [self willNotifyDelegateOfSelection];
+        
         __weak typeof(self) weakSelf = self;
         int64_t secs = (int64_t)(HEMListPresenterSelectionDelay * NSEC_PER_SEC);
         dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, secs);

@@ -32,13 +32,17 @@
     [[self listPresenter] bindWithActivityIndicator:[self activityIndicator]];
     [[self listPresenter] setPresenterDelegate:self];
     [[self listPresenter] bindWithNavigationItem:[self navigationItem]];
-    [[self listPresenter] bindWithActivityContainerView:[[self navigationController] view]];
     
     if (![[self listPresenter] delegate]) {
         [[self listPresenter] setDelegate:self];
     }
     
     [self addPresenter:[self listPresenter]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self listPresenter] bindWithActivityContainerView:[[self navigationController] view]];
 }
 
 #pragma mark - Presenter Delegate

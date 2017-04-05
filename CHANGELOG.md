@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0.21
+
+New:
+
+* Added an animation to the selection of the night mode setting
+
+Fixes:
+
+* Fixed issue with the grouped sensor card not using the same font as the single sensor card
+
 ## 2.1.0.20
 
 New:

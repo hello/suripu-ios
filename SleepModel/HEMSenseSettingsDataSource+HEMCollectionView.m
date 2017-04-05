@@ -16,7 +16,6 @@
 #import "HEMWarningCollectionViewCell.h"
 #import "HEMDeviceWarning.h"
 #import "HEMActionButton.h"
-#import "HEMStyle.h"
 
 static NSString* const HEMSenseSettingsHeaderReuseId = @"sectionHeader";
 

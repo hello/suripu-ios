@@ -9,7 +9,6 @@
 
 #import "HEMSleepSoundDurationsPresenter.h"
 #import "HEMListItemCell.h"
-#import "HEMStyle.h"
 
 @implementation HEMSleepSoundDurationsPresenter
 

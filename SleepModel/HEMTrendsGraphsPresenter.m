@@ -239,9 +239,13 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 - (CGFloat)heightForErrorMessageWithItemWidth:(CGFloat)itemWidth {
     NSString* message = NSLocalizedString(@"trends.loading.error.message", nil);
     UIFont* font = [UIFont body];
-    CGFloat maxWidth = itemWidth - (HEMStyleCardErrorTextHorzMargin * 2);
+    CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+    CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+    CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+    CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+    CGFloat maxWidth = itemWidth - leftMargin - rightMargin;
     CGFloat textHeight = [message heightBoundedByWidth:maxWidth usingFont:font];
-    return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+    return textHeight + topMargin + botMargin;
 }
 
 #pragma mark - Attributed Text
@@ -448,7 +452,7 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
     
     NSArray<NSAttributedString*>* attributedTitles = [self graphTitlesFrom:graph];
     NSString* highlightFormat = NSLocalizedString(@"trends.sleep-duration.highlight.format", nil);
-    UIColor* highlightLabelColor = [UIColor colorForSleepState:SENTimelineSegmentSleepStateSound];
+    UIColor* highlightLabelColor = [SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateSound];
     [[barCell titleLabel] setText:[graph title]];
     [barCell setHighlightLabelColor:highlightLabelColor];
     [barCell setMaxValue:[[graph maxValue] CGFloatValue]];

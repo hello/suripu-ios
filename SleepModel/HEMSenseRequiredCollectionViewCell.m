@@ -38,7 +38,7 @@ static CGFloat const kHEMSenseRequiredButtonBottomPadding = 8.0f;
 + (NSDictionary*)descriptionAttributes {
     UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyDetailColor];
     UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyDetailFont];
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     [style setAlignment:NSTextAlignmentCenter];
     return @{NSFontAttributeName : font,
              NSForegroundColorAttributeName : color,

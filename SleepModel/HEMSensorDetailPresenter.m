@@ -19,7 +19,6 @@
 #import "HEMSensorDetailPresenter.h"
 #import "HEMSensorService.h"
 #import "HEMMainStoryboard.h"
-#import "HEMStyle.h"
 #import "HEMSensorValueFormatter.h"
 #import "HEMSensorChartContainer.h"
 #import "HEMSubNavigationView.h"

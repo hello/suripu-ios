@@ -31,7 +31,7 @@ extension HEMOnboardingController {
         let aClass = HEMOnboardingController.self
         return [NSFontAttributeName : SenseStyle.font(aClass: aClass, property: .detailFont),
                 NSForegroundColorAttributeName : SenseStyle.color(aClass: aClass, property: .detailColor),
-                NSParagraphStyleAttributeName : DefaultBodyParagraphStyle()]
+                NSParagraphStyleAttributeName : NSMutableParagraphStyle.senseStyle()]
     }
     
 }

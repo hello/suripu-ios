@@ -7,7 +7,7 @@
 //
 
 #import "HEMFbAutofillButton.h"
-#import "HEMStyle.h"
+#import "Sense-Swift.h"
 
 static CGFloat const HEMFbAutofillCornerRadius = 3.0f;
 static CGFloat const HEMFbAutofillBorderWidth = 1.0f;

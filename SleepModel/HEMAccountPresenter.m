@@ -22,7 +22,6 @@
 #import "HEMAccountService.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMSettingsStoryboard.h"
-#import "HEMStyle.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMGenderPickerViewController.h"

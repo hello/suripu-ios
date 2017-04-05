@@ -5,10 +5,9 @@
 //  Created by Jimmy Lu on 9/8/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMSensorChartContainer.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMSensorChartWidth = 1.0f;
 static CGFloat const kHEMSensorChartScrubStartDelay = 0.15f;

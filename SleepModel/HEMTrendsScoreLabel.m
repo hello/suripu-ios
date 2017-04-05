@@ -7,7 +7,6 @@
 //
 #import "Sense-Swift.h"
 #import "HEMTrendsScoreLabel.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMTrendsScoreBorderWidth = 1.0f;
 static CGFloat const HEMTrendsScoreHighlightWidth = 4.0f;

@@ -10,7 +10,6 @@
 
 #import "HEMStyledNavigationViewController.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 @interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
@@ -37,7 +36,7 @@
 }
 
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {
-    UIImage* defaultBackImage = BackIndicator();
+    UIImage* defaultBackImage = [SenseStyle navigationBackImage];
     UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     viewController.navigationItem.leftBarButtonItem = item;
 }

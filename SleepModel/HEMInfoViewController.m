@@ -5,11 +5,10 @@
 //  Created by Jimmy Lu on 8/25/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-
+#import "Sense-Swift.h"
 #import "HEMInfoViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 
 @interface HEMInfoViewController() <UITableViewDelegate, UITableViewDataSource>
 
@@ -63,12 +62,9 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:[[self infoSource] infoTitleForIndexPath:indexPath]];
-    [[cell textLabel] setTextColor:[UIColor settingsTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTableCellFont]];
     [[cell detailTextLabel] setText:[[self infoSource] infoValueForIndexPath:indexPath]];
-    [[cell detailTextLabel] setTextColor:[UIColor settingsDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell applyStyle];
 }
 
 #pragma mark - Actions

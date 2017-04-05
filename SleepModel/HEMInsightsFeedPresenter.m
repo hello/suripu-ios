@@ -18,7 +18,6 @@
 #import "NSAttributedString+HEMUtils.h"
 
 #import "HEMInsightsFeedPresenter.h"
-#import "HEMStyle.h"
 #import "HEMInsightsService.h"
 #import "HEMQuestionsService.h"
 #import "HEMUnreadAlertService.h"
@@ -297,9 +296,13 @@ static NSInteger const HEMInsightsFeedShareUrlCacheLimit = 5;
     if ([indexPath row] == 0 && [self dataError]) {
         NSString* text = NSLocalizedString(@"insights.feed.error.message", nil);
         UIFont* font = [UIFont body];
-        CGFloat maxWidth = width - (HEMStyleCardErrorTextHorzMargin * 2);
+        CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+        CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+        CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+        CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+        CGFloat maxWidth = width - leftMargin - rightMargin;
         CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
-        return textHeight + (HEMStyleCardErrorTextVertMargin * 2);
+        return textHeight + topMargin + botMargin;
     }
     
     NSAttributedString* attributedBody = [self attributedBodyForCellAtIndexPath:indexPath];

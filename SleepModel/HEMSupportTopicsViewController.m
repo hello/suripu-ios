@@ -15,7 +15,6 @@
 #import "HEMSupportTopicDataSource.h"
 #import "HEMActivityCoverView.h"
 #import "HEMScreenUtils.h"
-#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 
 @interface HEMSupportTopicsViewController () <UITableViewDelegate>

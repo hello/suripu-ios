@@ -9,7 +9,6 @@
 #import "HEMOnboardingService.h"
 #import "HEMAccountService.h"
 #import "HEMTimelineService.h"
-#import "HEMStyle.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 

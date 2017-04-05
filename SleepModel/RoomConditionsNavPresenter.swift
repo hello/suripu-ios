@@ -13,8 +13,7 @@ import Foundation
 }
 
 class RoomConditionsNavPresenter: HEMPresenter {
-    
-    static let settingsButtonHeight = CGFloat(44.0)
+
     weak var navDelegate: RoomConditionsNavDelegate?
     weak var navItem: UINavigationItem?
     
@@ -23,9 +22,11 @@ class RoomConditionsNavPresenter: HEMPresenter {
         settingsIcon = settingsIcon.withRenderingMode(.alwaysTemplate)
         
         let title = NSLocalizedString("current-conditions.title", comment: "room conditions title")
-        let buttonSize = CGSize(width: HEMStyleDefaultNavBarButtonItemWidth,
-                                height: RoomConditionsNavPresenter.settingsButtonHeight)
-        let buttonLeftInset = HEMStyleDefaultNavBarButtonItemWidth - settingsIcon.size.width
+        let width = SenseStyle.value(aClass: UIBarButtonItem.self, property: .sizeWidth) as? NSNumber
+        let height = SenseStyle.value(aClass: UIBarButtonItem.self, property: .sizeHeight) as? NSNumber
+        let buttonWidth = CGFloat(width?.floatValue ?? 0.0)
+        let buttonSize = CGSize(width: buttonWidth, height: CGFloat(height?.floatValue ?? 0.0))
+        let buttonLeftInset = buttonWidth - settingsIcon.size.width
         
         let settingsButton = UIButton.init(type: UIButtonType.custom)
         settingsButton.setImage(settingsIcon, for: UIControlState.normal)

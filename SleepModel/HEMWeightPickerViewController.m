@@ -3,8 +3,8 @@
 #import <SenseKit/SENPreference.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "Sense-Swift.h"
 
-#import "HEMStyle.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMOnboardingService.h"
 #import "HEMActionButton.h"

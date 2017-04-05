@@ -12,9 +12,9 @@
 #import <SVWebViewController/SVModalWebViewController.h>
 
 #import "UIDevice+HEMUtils.h"
+#import "Sense-Swift.h"
 
 #import "HEMSupportUtil.h"
-#import "HEMStyle.h"
 #import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
 #import "HEMAccountService.h"

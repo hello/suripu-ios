@@ -6,9 +6,9 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 
+#import "Sense-Swift.h"
 #import "HEMTitledTextField.h"
 #import "HEMSimpleLineTextField.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMTitledTextFieldAnimeDuration = 0.5f;
 static CGFloat const kHEMTitledTextFieldPlaceholderExtraOffset = 5.0f;

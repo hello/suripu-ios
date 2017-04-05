@@ -24,7 +24,6 @@
 #import "HEMActionSheetTitleView.h"
 #import "HEMThermostatRangePicker.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMStyle.h"
 
 static CGFloat const kHEMAlarmExpRowHeight = 66.0f;
 static NSInteger const kHEMAlarmExpPickerTag = 1;

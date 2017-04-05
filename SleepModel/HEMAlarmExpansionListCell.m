@@ -22,7 +22,6 @@ static NSString* const kHEMAlarmExpansionStyleColorKey = @"sense.expansion.detai
 #import "Sense-Swift.h"
 #import "HEMAlarmExpansionListCell.h"
 #import "HEMCardCollectionViewCell.h"
-#import "HEMStyle.h"
 
 @interface HEMAlarmExpansionListCell()
 

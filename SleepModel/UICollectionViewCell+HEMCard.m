@@ -7,7 +7,7 @@
 //
 
 #import "UICollectionViewCell+HEMCard.h"
-#import "HEMStyle.h"
+#import "NSShadow+HEMStyle.h"
 
 @implementation UICollectionViewCell (HEMCard)
 

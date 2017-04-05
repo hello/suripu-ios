@@ -27,7 +27,8 @@ extension UITextView {
         
         let font = SenseStyle.font(aClass: aClass, property: .textFont)
         let color = SenseStyle.color(aClass: aClass, property: .textColor)
-        let attributes: [String: Any] = [NSParagraphStyleAttributeName : DefaultBodyParagraphStyle,
+        let para = NSMutableParagraphStyle.senseStyle()
+        let attributes: [String: Any] = [NSParagraphStyleAttributeName : para,
                                          NSFontAttributeName : font,
                                          NSForegroundColorAttributeName : color]
         

@@ -7,13 +7,13 @@
 //
 
 #import <AttributedMarkdown/markdown_peg.h>
+#import "Sense-Swift.h"
 #import "HEMMarkdown.h"
-#import "HEMStyle.h"
 
 @implementation HEMMarkdown
 
 + (NSDictionary *)attributesForAlertMessageText {
-    NSMutableParagraphStyle* style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle senseStyle];
     return @{ @(PARA) : @{NSFontAttributeName : [UIFont body],
                           NSForegroundColorAttributeName : [UIColor grey5],
                           NSParagraphStyleAttributeName : style}};
@@ -47,7 +47,7 @@
 }
 
 + (NSDictionary *)attributesForInsightViewText {
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont bodyBold] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold] },
@@ -70,7 +70,7 @@
 }
 
 + (NSDictionary *)attributesForTimelineMessageText {
-    NSMutableParagraphStyle *style = DefaultBodyParagraphStyle();
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle senseStyle];
     style.alignment = NSTextAlignmentCenter;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont bodyBold],

@@ -134,8 +134,8 @@ static NSUInteger const HEMClock12HourCount = 12;
                          }];
     };
     _hourPickerView.unhighlightBlock = ^(NALabelCell *cell) {
-       if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
-           __strong typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+       if (cell.textView.font.pointSize != [strongSelf font].pointSize) {
            cell.textView.font = [strongSelf font];
            cell.textView.transform = CGAffineTransformMakeScale(2, 2);
            [UIView animateWithDuration:0.2f
@@ -196,8 +196,8 @@ static NSUInteger const HEMClock12HourCount = 12;
                        }];
     };
     _minutePickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
-          __strong typeof(weakSelf) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+      if (cell.textView.font.pointSize != [strongSelf font].pointSize) {
           cell.textView.font = [strongSelf font];
           cell.textView.transform = CGAffineTransformMakeScale(2, 2);
           [UIView animateWithDuration:0.2f

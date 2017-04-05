@@ -10,7 +10,6 @@
 #import "NSString+HEMUtils.h"
 
 #import "HEMListPresenter.h"
-#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMListItemCell.h"

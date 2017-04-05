@@ -6,11 +6,10 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import <SenseKit/SENSensor.h>
-
+#import "Sense-Swift.h"
 #import "HEMSensorDetailSubNavPresenter.h"
 #import "HEMSensorService.h"
 #import "HEMSubNavigationView.h"
-#import "HEMStyle.h"
 
 static NSUInteger const kHEMSensorDetailSubNavTagOffset = 1;
 

@@ -10,7 +10,6 @@
 
 #import "HEMBasicTableViewCell.h"
 #import "HEMActivityIndicatorView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMBasicTableViewCellSeparatorHeight = 0.5f;
 static CGFloat const kHEMBasicCellFadeDuration = 0.5f;

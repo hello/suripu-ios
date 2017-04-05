@@ -6,9 +6,8 @@
 //  Copyright © 2016 Hello. All rights reserved.
 //
 #import "NSString+HEMUtils.h"
-
+#import "Sense-Swift.h"
 #import "HEMWhatsNewHeaderView.h"
-#import "HEMStyle.h"
 
 static CGFloat const HEMWhatsNewHeaderBaseHeight = 135.0f;
 static CGFloat const HEMWhatsNewHeaderSideMargin = 24.0f;

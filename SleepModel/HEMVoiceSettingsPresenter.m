@@ -17,7 +17,6 @@
 #import "HEMVoiceService.h"
 #import "HEMDeviceService.h"
 #import "HEMSettingsStoryboard.h"
-#import "HEMStyle.h"
 #import "HEMSettingsHeaderFooterView.h"
 #import "HEMActivityCoverView.h"
 #import "HEMActivityIndicatorView.h"

@@ -75,14 +75,14 @@ static CGFloat const HEMSensorGroupLabelMargin = 16.0f;
 - (void)applyStyle {
     [super applyStyle];
 
-    Class aClass = [HEMCardCollectionViewCell class];
-    UIColor* titleColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyTextColor];
-    UIColor* detailColor = [SenseStyle colorWithAClass:aClass property:ThemePropertyDetailColor];
-    UIFont* titleFont = [SenseStyle fontWithAClass:aClass property:ThemePropertyTextFont];
+    UIColor* titleColor = [SenseStyle colorWithGroup:GroupSensorCard property:ThemePropertyTextColor];
+    UIColor* detailColor = [SenseStyle colorWithGroup:GroupSensorCard property:ThemePropertyDetailColor];
+    UIFont* titleFont = [SenseStyle fontWithGroup:GroupSensorCard property:ThemePropertyTextFont];
+    UIFont* messageFont = [SenseStyle fontWithGroup:GroupSensorCard property:ThemePropertyDetailFont];
     [[self groupNameLabel] setTextColor:titleColor];
     [[self groupNameLabel] setFont:titleFont];
     [[self groupMessageLabel] setTextColor:detailColor];
-    [[self groupMessageLabel] setFont:titleFont];
+    [[self groupMessageLabel] setFont:messageFont];
     
     [[self sensorContentView] setBackgroundColor:[self backgroundColor]];
     for (UIView* subview in [[self sensorContentView] subviews]) {

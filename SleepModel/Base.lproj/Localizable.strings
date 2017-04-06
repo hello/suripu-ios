@@ -192,7 +192,7 @@
 "settings.night-mode.option.scheduled.description" = "Automatic from sunset to sunrise.";
 "settings.night-mode.no-location.message.format" = "%@ must be enabled for Sense to know local sunset and sunrise times.";
 "settings.night-mode.location.service" = "Location Services";
-"settings.night-mode.error.no-location" = "Your location could not be determined at this time. Try moving to a different location and try again.";
+"settings.night-mode.error.no-location" = "Your location could not be determined. Make sure Location Service is enabled or try moving to a different location.";
 "settings.units" = "Units and time";
 "settings.support" = "Support";
 "settings.tell-a-friend" = "Tell a friend about Sense";

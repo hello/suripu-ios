@@ -155,6 +155,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
                 snapshot.frame = self.activityContainerView!.bounds
                 self.activityContainerView!.addSubview(snapshot)
                 self.transitionView = snapshot
+                // the transitionView will be removed when the theme is changed, in didChange:
             }
         }
         
@@ -197,14 +198,13 @@ class NightModeSettingsPresenter: HEMListPresenter {
         self.selectedItemNames = [savedOption.localizedDescription()]
         self.tableView?.reloadData() // to disable the schedule cell
         
+        self.removeTransitionView(animate: true)
+        
         if error != nil {
-            self.removeTransitionView(animate: false)
             // show error
             let title = NSLocalizedString("settings.night-mode", comment: "title, same as screen title")
             let message = NSLocalizedString("settings.night-mode.error.no-location", comment: "no location error")
             self.presenterDelegate?.presentError(withTitle: title, message: message, from: self)
-        } else {
-            self.removeTransitionView(animate: true)
         }
     }
     
@@ -235,7 +235,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
             guard scheduled == false else {
                 return
             }
-
+            
             scheduled = true
             
             if loc != nil {
@@ -245,7 +245,6 @@ class NightModeSettingsPresenter: HEMListPresenter {
             } else if err != nil {
                 self?.revertSelection(error: err)
             } else {
-                SENAnalytics.trackWarning(withMessage: "could not determine location to schedule night mode")
                 self?.revertSelection(error: nil)
             }
             

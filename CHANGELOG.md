@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.23
+
+Fixes:
+
+* Updated background color for scroll views, when in day mode
+
 ## 2.1.0.22
 
 Fixes:

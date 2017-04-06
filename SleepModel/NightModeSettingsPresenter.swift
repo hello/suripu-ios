@@ -215,10 +215,11 @@ class NightModeSettingsPresenter: HEMListPresenter {
         var scheduled = false
         let service = self.locationService
         let error = service?.quickLocation({[weak self] (loc: HEMLocation?, err: Error?) in
+            // to ensure only 1 location is used and to not call it too many times
             guard scheduled == false else {
                 return
             }
-            
+
             scheduled = true
             
             if loc != nil {

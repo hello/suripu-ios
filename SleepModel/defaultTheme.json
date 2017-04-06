@@ -83,11 +83,11 @@
     },
     
     "#UICollectionView" : {
-        "style.background.color" : "@color/grey.3"
+        "style.background.color" : "@color/light.background"
     },
     
     "#UIScrollView" : {
-        "style.background.color" : "@color/grey.3"
+        "style.background.color" : "@color/light.background"
     },
     
     "#HEMCardCollectionViewCell" : {
@@ -192,7 +192,7 @@
     },
     
     "sense.header.or.footer" : {
-        "style.background.color" : "@color/grey.3",
+        "style.background.color" : "@color/light.background",
         "style.text.color" : "@color/light.disabled.text",
         "style.text.font" : "@font/body.small"
     },
@@ -210,7 +210,7 @@
     },
     
     "sense.tableview" : {
-        "style.background.color" : "@color/grey.3",
+        "style.background.color" : "@color/light.background",
         "style.separator.color" : "@color/light.separator",
         "style.text.hint.color" : "@color/light.disabled.text",
         "style.text.hint.font" : "@font/body.small",

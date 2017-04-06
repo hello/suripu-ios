@@ -302,7 +302,6 @@ import UIKit
         if let navVC = controller as? UINavigationController {
             viewControllers = navVC.viewControllers
             viewControllers?.forEach({ (controllerInStack: UIViewController) in
-                print("calling viewcontrollers of nav,", NSStringFromClass(type(of: navVC)))
                 self.apply(viewController: controllerInStack, auto: auto)
             })
         }
@@ -310,7 +309,6 @@ import UIKit
         if let tabVC = controller as? UITabBarController {
             viewControllers = tabVC.viewControllers
             viewControllers?.forEach({ (tabController: UIViewController) in
-                print("calling viewcontrollers of tab,", NSStringFromClass(type(of: tabVC)))
                 self.apply(viewController: tabController, auto: auto)
             })
         }
@@ -319,7 +317,6 @@ import UIKit
             return
         }
         
-        print("notifying controller,", NSStringFromClass(type(of: controller)))
         themedVC.didChange(theme: self, auto: auto)
         controller.childViewControllers.forEach { (child: UIViewController) in
             if viewControllers == nil || viewControllers!.contains(child) == false {

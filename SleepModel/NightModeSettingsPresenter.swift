@@ -17,6 +17,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     fileprivate var footer: UIView?
     fileprivate var waitingOnPermission: Bool
     fileprivate weak var transitionView: UIView?
+    fileprivate var locationActivity: HEMLocationActivity?
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
         let optionsTitle = NSLocalizedString("settings.night-mode.options.title", comment: "table options title")
@@ -74,9 +75,12 @@ class NightModeSettingsPresenter: HEMListPresenter {
         textView.isScrollEnabled = false
         textView.backgroundColor = self.tableView!.backgroundColor
         
+        let enabled = self.locationService.isEnabled()
+        let denied = self.locationService.hasDeniedPermission()
+        
         let footer = UIView()
         footer.addSubview(textView)
-        footer.isHidden = self.locationService.hasDeniedPermission() == false
+        footer.isHidden = denied == false && enabled == true
         
         return footer
     }
@@ -134,7 +138,9 @@ class NightModeSettingsPresenter: HEMListPresenter {
         cell.descriptionLabel?.text = self.detail(forItem: item)
         
         if option == .sunsetToSunrise {
-            self.footer?.isHidden = self.locationService.hasDeniedPermission() == false
+            let enabled = self.locationService.isEnabled()
+            let denied = self.locationService.hasDeniedPermission()
+            self.footer?.isHidden = denied == false && enabled == true
             cell.enable(self.footer?.isHidden == true)
         } else {
             cell.enable(true)
@@ -183,24 +189,24 @@ class NightModeSettingsPresenter: HEMListPresenter {
         self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
             self.waitingOnPermission = false
             switch status {
-            case .notEnabled:
-                fallthrough
-            case .denied:
-                self.revertSelection(error: nil)
-            default:
-                self.scheduleNightModeFromLocation()
+                case .notEnabled:
+                    fallthrough
+                case .denied:
+                    self.revertSelection(withError: false)
+                default:
+                    self.scheduleNightModeFromLocation()
             }
         })
     }
     
-    fileprivate func revertSelection(error: Error?) {
+    fileprivate func revertSelection(withError: Bool) {
         let savedOption = self.nightModeService.savedOption()
         self.selectedItemNames = [savedOption.localizedDescription()]
         self.tableView?.reloadData() // to disable the schedule cell
         
         self.removeTransitionView(animate: true)
         
-        if error != nil {
+        if withError == true {
             // show error
             let title = NSLocalizedString("settings.night-mode", comment: "title, same as screen title")
             let message = NSLocalizedString("settings.night-mode.error.no-location", comment: "no location error")
@@ -228,31 +234,51 @@ class NightModeSettingsPresenter: HEMListPresenter {
     }
     
     fileprivate func scheduleNightModeFromLocation() {
-        var scheduled = false
-        let service = self.locationService
-        let error = service?.quickLocation({[weak self] (loc: HEMLocation?, err: Error?) in
-            // to ensure only 1 location is used and to not call it too many times
-            guard scheduled == false else {
-                return
-            }
-            
-            scheduled = true
-            
-            if loc != nil {
-                SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
-                self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat), longitude: Double(loc!.lon))
-                self?.removeTransitionView(animate: true)
-            } else if err != nil {
-                self?.revertSelection(error: err)
-            } else {
-                self?.revertSelection(error: nil)
-            }
-            
-        })
-        
-        if error != nil {
-            self.revertSelection(error: error)
+        guard let service = self.locationService else {
+            self.revertSelection(withError: false)
+            return
         }
+        
+        var done = false
+        do {
+            self.locationActivity = try service.startLocationActivity({ [weak self] (loc: HEMLocation?, err: Error?) in
+                // to ensure only 1 location is used and to not call it too many times
+                guard done == false else {
+                    return
+                }
+                
+                if loc != nil {
+                    done = true
+                    SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
+                    self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat), longitude: Double(loc!.lon))
+                    self?.removeTransitionView(animate: true)
+                } else if err != nil {
+                    done = true
+                    self?.revertSelection(withError: true)
+                }
+                
+                if done == true {
+                    if let activity = self?.locationActivity, let locService = self?.locationService {
+                        locService.stop(activity)
+                    }
+                }
+                
+            })
+        } catch _ {
+            self.revertSelection(withError: true)
+        }
+    }
+    
+    deinit {
+        guard let service = self.locationService else {
+            return
+        }
+        
+        guard let activity = self.locationActivity else {
+            return
+        }
+        
+        service.stop(activity)
     }
     
 }

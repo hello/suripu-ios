@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0.25
+
+Fixes:
+
+* Prevent multiple calls to update theme
+* Update error message
+
 ## 2.1.0.24
 
 * Adding additional logging for Night Mode to see why animation is disabled on schedule

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0.24
+
+* Adding additional logging for Night Mode to see why animation is disabled on schedule
+
 ## 2.1.0.23
 
 Fixes:

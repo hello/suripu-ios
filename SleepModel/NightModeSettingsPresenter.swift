@@ -167,8 +167,8 @@ class NightModeSettingsPresenter: HEMListPresenter {
                             case .notEnabled:
                                 fallthrough
                             case .denied:
-                                let off = NightModeService.Option.off
-                                self.selectedItemNames = [off.localizedDescription()]
+                                let savedOption = self.nightModeService.savedOption()
+                                self.selectedItemNames = [savedOption.localizedDescription()]
                                 self.tableView?.reloadData() // to disable the schedule cell
                                 self.removeTransitionView(animate: false)
                             default:
@@ -215,10 +215,11 @@ class NightModeSettingsPresenter: HEMListPresenter {
         var scheduled = false
         let service = self.locationService
         let error = service?.quickLocation({[weak self] (loc: HEMLocation?, err: Error?) in
+            // to ensure only 1 location is used and to not call it too many times
             guard scheduled == false else {
                 return
             }
-            
+
             scheduled = true
             
             if loc != nil {

@@ -143,6 +143,12 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     override func didNotifyDelegateOfSelection() {
         super.didNotifyDelegateOfSelection()
+        
+        let selectedName = self.selectedItemNames?.last as? String ?? ""
+        guard let option = NightModeService.Option.fromDescription(description: selectedName) else {
+            return
+        }
+        
         // snapshot the screen
         if self.activityContainerView != nil {
             if let snapshot = self.activityContainerView!.snapshotView(afterScreenUpdates: false) {
@@ -152,29 +158,11 @@ class NightModeSettingsPresenter: HEMListPresenter {
             }
         }
         
-        let selectedName = self.selectedItemNames?.last as? String ?? ""
-        guard let option = NightModeService.Option.fromDescription(description: selectedName) else {
-            return
-        }
-        
         switch option {
             case .sunsetToSunrise:
                 if self.locationService.requiresPermission() == true {
                     self.waitingOnPermission = true
-                    self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
-                        self.waitingOnPermission = false
-                        switch status {
-                            case .notEnabled:
-                                fallthrough
-                            case .denied:
-                                let savedOption = self.nightModeService.savedOption()
-                                self.selectedItemNames = [savedOption.localizedDescription()]
-                                self.tableView?.reloadData() // to disable the schedule cell
-                                self.removeTransitionView(animate: false)
-                            default:
-                                self.scheduleNightModeFromLocation()
-                        }
-                    })
+                    self.requestLocationPermission()
                 } else {
                     self.scheduleNightModeFromLocation()
                 }
@@ -190,25 +178,53 @@ class NightModeSettingsPresenter: HEMListPresenter {
 
     }
     
+    fileprivate func requestLocationPermission() {
+        self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
+            self.waitingOnPermission = false
+            switch status {
+            case .notEnabled:
+                fallthrough
+            case .denied:
+                self.revertSelection(error: nil)
+            default:
+                self.scheduleNightModeFromLocation()
+            }
+        })
+    }
+    
+    fileprivate func revertSelection(error: Error?) {
+        let savedOption = self.nightModeService.savedOption()
+        self.selectedItemNames = [savedOption.localizedDescription()]
+        self.tableView?.reloadData() // to disable the schedule cell
+        
+        if error != nil {
+            self.removeTransitionView(animate: false)
+            // show error
+            let title = NSLocalizedString("settings.night-mode", comment: "title, same as screen title")
+            let message = NSLocalizedString("settings.night-mode.error.no-location", comment: "no location error")
+            self.presenterDelegate?.presentError(withTitle: title, message: message, from: self)
+        } else {
+            self.removeTransitionView(animate: true)
+        }
+    }
+    
     fileprivate func removeTransitionView(animate: Bool) {
         guard let view = self.transitionView else {
+            SENAnalytics.trackWarning(withMessage: "snapshot already removed in night mode settings")
             return
         }
         
         guard animate == true else {
+            SENAnalytics.trackWarning(withMessage: "animation disabled when removing snapshot in night mode settings")
             view.removeFromSuperview()
             return
         }
         
-        UIView.animate(withDuration: 0.35, animations: {
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .beginFromCurrentState, animations: {
             view.alpha = 0.0
         }) { (finished: Bool) in
             view.removeFromSuperview()
         }
-    }
-    
-    fileprivate func showLocationError() {
-        // TODO: throw an alert
     }
     
     fileprivate func scheduleNightModeFromLocation() {
@@ -224,19 +240,19 @@ class NightModeSettingsPresenter: HEMListPresenter {
             
             if loc != nil {
                 SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
-                self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
-                                                         longitude: Double(loc!.lon))
+                self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat), longitude: Double(loc!.lon))
                 self?.removeTransitionView(animate: true)
+            } else if err != nil {
+                self?.revertSelection(error: err)
             } else {
-                self?.removeTransitionView(animate: false)
-                self?.showLocationError()
+                SENAnalytics.trackWarning(withMessage: "could not determine location to schedule night mode")
+                self?.revertSelection(error: nil)
             }
             
         })
         
         if error != nil {
-            self.removeTransitionView(animate: false)
-            self.showLocationError()
+            self.revertSelection(error: error)
         }
     }
     

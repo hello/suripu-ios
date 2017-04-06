@@ -148,7 +148,7 @@ class NightModeService: SENService {
     func scheduleForSunset(latitude: Double, longitude: Double) {
         self.updateLocation(latitude: latitude, longitude: longitude)
         self.save(option: .sunsetToSunrise)
-    }
+    } 
     
     @objc func updateLocation(latitude: Double, longitude: Double) {
         let latKey = NightModeService.settingsLatKey

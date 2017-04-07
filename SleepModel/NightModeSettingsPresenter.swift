@@ -17,6 +17,7 @@ class NightModeSettingsPresenter: HEMListPresenter {
     fileprivate var footer: UIView?
     fileprivate var waitingOnPermission: Bool
     fileprivate weak var transitionView: UIView?
+    fileprivate var locationActivity: HEMLocationActivity?
     
     init(nightModeService: NightModeService, locationService: HEMLocationService) {
         let optionsTitle = NSLocalizedString("settings.night-mode.options.title", comment: "table options title")
@@ -74,9 +75,12 @@ class NightModeSettingsPresenter: HEMListPresenter {
         textView.isScrollEnabled = false
         textView.backgroundColor = self.tableView!.backgroundColor
         
+        let enabled = self.locationService.isEnabled()
+        let denied = self.locationService.hasDeniedPermission()
+        
         let footer = UIView()
         footer.addSubview(textView)
-        footer.isHidden = self.locationService.hasDeniedPermission() == false
+        footer.isHidden = denied == false && enabled == true
         
         return footer
     }
@@ -134,7 +138,9 @@ class NightModeSettingsPresenter: HEMListPresenter {
         cell.descriptionLabel?.text = self.detail(forItem: item)
         
         if option == .sunsetToSunrise {
-            self.footer?.isHidden = self.locationService.hasDeniedPermission() == false
+            let enabled = self.locationService.isEnabled()
+            let denied = self.locationService.hasDeniedPermission()
+            self.footer?.isHidden = denied == false && enabled == true
             cell.enable(self.footer?.isHidden == true)
         } else {
             cell.enable(true)
@@ -143,38 +149,27 @@ class NightModeSettingsPresenter: HEMListPresenter {
     
     override func didNotifyDelegateOfSelection() {
         super.didNotifyDelegateOfSelection()
-        // snapshot the screen
-        if self.activityContainerView != nil {
-            if let snapshot = self.activityContainerView!.snapshotView(afterScreenUpdates: false) {
-                snapshot.frame = self.activityContainerView!.bounds
-                self.activityContainerView!.addSubview(snapshot)
-                self.transitionView = snapshot
-            }
-        }
         
         let selectedName = self.selectedItemNames?.last as? String ?? ""
         guard let option = NightModeService.Option.fromDescription(description: selectedName) else {
             return
         }
         
+        // snapshot the screen
+        if self.activityContainerView != nil {
+            if let snapshot = self.activityContainerView!.snapshotView(afterScreenUpdates: false) {
+                snapshot.frame = self.activityContainerView!.bounds
+                self.activityContainerView!.addSubview(snapshot)
+                self.transitionView = snapshot
+                // the transitionView will be removed when the theme is changed, in didChange:
+            }
+        }
+        
         switch option {
             case .sunsetToSunrise:
                 if self.locationService.requiresPermission() == true {
                     self.waitingOnPermission = true
-                    self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
-                        self.waitingOnPermission = false
-                        switch status {
-                            case .notEnabled:
-                                fallthrough
-                            case .denied:
-                                let savedOption = self.nightModeService.savedOption()
-                                self.selectedItemNames = [savedOption.localizedDescription()]
-                                self.tableView?.reloadData() // to disable the schedule cell
-                                self.removeTransitionView(animate: false)
-                            default:
-                                self.scheduleNightModeFromLocation()
-                        }
-                    })
+                    self.requestLocationPermission()
                 } else {
                     self.scheduleNightModeFromLocation()
                 }
@@ -190,54 +185,100 @@ class NightModeSettingsPresenter: HEMListPresenter {
 
     }
     
+    fileprivate func requestLocationPermission() {
+        self.locationService.requestPermission({ (status: HEMLocationAuthStatus) in
+            self.waitingOnPermission = false
+            switch status {
+                case .notEnabled:
+                    fallthrough
+                case .denied:
+                    self.revertSelection(withError: false)
+                default:
+                    self.scheduleNightModeFromLocation()
+            }
+        })
+    }
+    
+    fileprivate func revertSelection(withError: Bool) {
+        let savedOption = self.nightModeService.savedOption()
+        self.selectedItemNames = [savedOption.localizedDescription()]
+        self.tableView?.reloadData() // to disable the schedule cell
+        
+        self.removeTransitionView(animate: true)
+        
+        if withError == true {
+            // show error
+            let title = NSLocalizedString("settings.night-mode", comment: "title, same as screen title")
+            let message = NSLocalizedString("settings.night-mode.error.no-location", comment: "no location error")
+            self.presenterDelegate?.presentError(withTitle: title, message: message, from: self)
+        }
+    }
+    
     fileprivate func removeTransitionView(animate: Bool) {
         guard let view = self.transitionView else {
+            SENAnalytics.trackWarning(withMessage: "snapshot already removed in night mode settings")
             return
         }
         
         guard animate == true else {
+            SENAnalytics.trackWarning(withMessage: "animation disabled when removing snapshot in night mode settings")
             view.removeFromSuperview()
             return
         }
         
-        UIView.animate(withDuration: 0.35, animations: {
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .beginFromCurrentState, animations: {
             view.alpha = 0.0
         }) { (finished: Bool) in
             view.removeFromSuperview()
         }
     }
     
-    fileprivate func showLocationError() {
-        // TODO: throw an alert
+    fileprivate func scheduleNightModeFromLocation() {
+        guard let service = self.locationService else {
+            self.revertSelection(withError: false)
+            return
+        }
+        
+        var done = false
+        do {
+            self.locationActivity = try service.startLocationActivity({ [weak self] (loc: HEMLocation?, err: Error?) in
+                // to ensure only 1 location is used and to not call it too many times
+                guard done == false else {
+                    return
+                }
+                
+                if loc != nil {
+                    done = true
+                    SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
+                    self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat), longitude: Double(loc!.lon))
+                    self?.removeTransitionView(animate: true)
+                } else if err != nil {
+                    done = true
+                    self?.revertSelection(withError: true)
+                }
+                
+                if done == true {
+                    if let activity = self?.locationActivity, let locService = self?.locationService {
+                        locService.stop(activity)
+                    }
+                }
+                
+            })
+        } catch _ {
+            self.revertSelection(withError: true)
+        }
     }
     
-    fileprivate func scheduleNightModeFromLocation() {
-        var scheduled = false
-        let service = self.locationService
-        let error = service?.quickLocation({[weak self] (loc: HEMLocation?, err: Error?) in
-            // to ensure only 1 location is used and to not call it too many times
-            guard scheduled == false else {
-                return
-            }
-
-            scheduled = true
-            
-            if loc != nil {
-                SENAnalytics.trackNightModeChange(withSetting: kHEMAnalyticsPropNightModeValueAuto)
-                self?.nightModeService.scheduleForSunset(latitude: Double(loc!.lat),
-                                                         longitude: Double(loc!.lon))
-                self?.removeTransitionView(animate: true)
-            } else {
-                self?.removeTransitionView(animate: false)
-                self?.showLocationError()
-            }
-            
-        })
-        
-        if error != nil {
-            self.removeTransitionView(animate: false)
-            self.showLocationError()
+    deinit {
+        guard let service = self.locationService else {
+            return
         }
+        
+        guard let activity = self.locationActivity else {
+            return
+        }
+        
+        service.stop(activity)
     }
     
 }

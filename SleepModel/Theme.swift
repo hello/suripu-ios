@@ -239,8 +239,8 @@ import UIKit
         let app = UIApplication.shared
         let keyWindow = app.delegate?.window
         let rootVC = keyWindow??.rootViewController
-        self.apply(viewController: rootVC, auto: auto)
         self.applyApearances()
+        self.apply(viewController: rootVC, auto: auto)
     }
     
     fileprivate func apply(viewController: UIViewController?, auto: Bool) {
@@ -248,14 +248,17 @@ import UIKit
             return
         }
         
+        var viewControllers: [UIViewController]?
         if let navVC = controller as? UINavigationController {
-            navVC.viewControllers.forEach({ (controllerInStack: UIViewController) in
+            viewControllers = navVC.viewControllers
+            viewControllers?.forEach({ (controllerInStack: UIViewController) in
                 self.apply(viewController: controllerInStack, auto: auto)
             })
         }
         
         if let tabVC = controller as? UITabBarController {
-            tabVC.viewControllers?.forEach({ (tabController: UIViewController) in
+            viewControllers = tabVC.viewControllers
+            viewControllers?.forEach({ (tabController: UIViewController) in
                 self.apply(viewController: tabController, auto: auto)
             })
         }
@@ -266,7 +269,9 @@ import UIKit
         
         themedVC.didChange(theme: self, auto: auto)
         controller.childViewControllers.forEach { (child: UIViewController) in
-            self.apply(viewController: child, auto: auto)
+            if viewControllers == nil || viewControllers!.contains(child) == false {
+                self.apply(viewController: child, auto: auto)
+            }
         }
     }
     

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0.27
+
+New:
+
+* Changes how the action button is managed in the sign in screen (to get passed Apple review)
+
 ## 2.1.0.26
 
 Fixes:

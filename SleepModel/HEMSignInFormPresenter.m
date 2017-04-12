@@ -181,7 +181,6 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 }
 
 - (void)willHideKeyboard:(NSNotification*)note {
-    [self updateToNextButton];
     [[self bottomConstraint] setConstant:[self origBottomMargin]];
     [[self collectionView] updateConstraintsIfNeeded];
 }
@@ -268,17 +267,30 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString* updatedText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
     NSInteger row = [textField tag];
+    NSString* email, *pass = nil;
+    
     switch (row) {
         default:
-        case HEMSignInFormRowEmail:
-            [self updateToNextButton];
-            break;
         case HEMSignInFormRowPass:
-            [self updateToDoneButton];
+            pass = updatedText;
+            email = [[self emailField] text];
+            break;
+        case HEMSignInFormRowEmail:
+            email = updatedText;
+            pass = [[self passField] text];
             break;
     }
+    
+    if ([self isValid:email pass:pass]) {
+        [self updateToDoneButton];
+    } else {
+        [self updateToNextButton];
+    }
+    
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField {
@@ -297,11 +309,15 @@ static CGFloat const HEMSignInFormScrollDuration = 0.25f;
 
 #pragma mark - Sign In
 
-- (BOOL)isInputValid {
+- (BOOL)isValid:(NSString*)email pass:(NSString*)pass {
     // let server determine if input is valid.  check make sure there's characters
+    return [email length] > 0 && [pass length] > 0;
+}
+
+- (BOOL)isInputValid {
     NSString* email = [[self emailField] text];
     NSString* pass = [[self passField] text];
-    return [email length] > 0 && [pass length] > 0;
+    return [self isValid:email pass:pass];
 }
 
 - (void)signInIfValid {

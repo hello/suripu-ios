@@ -821,5 +821,13 @@
     "#HEMSettingsHeaderFooterView" : {
         "style.text.font" : "@font/caption.1",
         "style.text.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMNavigationShadowView" : {
+        "sense.shadow.image" : "@image/topShadow"
+    },
+    
+    "#HEMWifiPickerViewController" : {
+        "sense.shadow.image" : "@image/topShadow"
     }
 }

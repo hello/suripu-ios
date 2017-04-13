@@ -91,6 +91,12 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configurePicker {
+    static NSString* imageKey = @"sense.shadow.image";
+    UIImage* image = [SenseStyle imageWithAClass:[self class] propertyName:imageKey];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [[self topPickerShadow] setImage:image];
+    [[self botPickerShadow] setImage:image];
+    
     UIFont* font = [SenseStyle fontWithAClass:[HEMOnboardingController class]
                                      property:ThemePropertyDetailFont];
     [[self activityView] setBackgroundColor:[[self view] backgroundColor]];

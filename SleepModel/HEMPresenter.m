@@ -8,6 +8,8 @@
 #import <SenseKit/SENAPIClient.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "Sense-Swift.h"
+
 #import "HEMPresenter.h"
 #import "HEMNavigationShadowView.h"
 
@@ -86,7 +88,11 @@
 - (void)didMoveToParent {}
 - (void)wasRemovedFromParent {}
 - (void)didGainConnectivity {}
-- (void)didChangeTheme:(Theme*)theme auto:(BOOL)automatically {}
+- (void)didChangeTheme:(Theme*)theme auto:(BOOL)automatically {
+    if ([self shadowView]) {
+        [[self shadowView] applyStyle];
+    }
+}
 
 - (void)userDidSignOut {}
 

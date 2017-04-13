@@ -56,7 +56,6 @@ static NSString* const kHEMNavigationShadowImageKey = @"sense.shadow.image";
 - (void)configure {
     UIImage* image = [SenseStyle imageWithAClass:[self class]
                                     propertyName:kHEMNavigationShadowImageKey];
-    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     UIImageView* shadowView = [[UIImageView alloc] initWithImage:image];
     [shadowView setContentMode:UIViewContentModeScaleAspectFill];

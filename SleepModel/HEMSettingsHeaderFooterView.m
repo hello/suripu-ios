@@ -63,8 +63,9 @@ static CGFloat const HEMSettingsHeaderFooterTitleMargins = 24.0f;
 }
 
 - (void)setTitle:(NSString*)title {
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont h8],
-                                 NSForegroundColorAttributeName : [UIColor grey4]};
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    UIColor* color = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTextColor];
+    NSDictionary* attributes = @{NSFontAttributeName : font, NSForegroundColorAttributeName : color};
     NSAttributedString* attrTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
     [self setAttributedTitle:attrTitle];
 }

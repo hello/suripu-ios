@@ -558,5 +558,9 @@
     
     "#HEMURLImageView" : {
         "style.border.color" : "@color/dark.separator"
+    },
+    
+    "#HEMSettingsHeaderFooterView" : {
+        "style.text.color" : "@color/dark.disabled.text"
     }
 }

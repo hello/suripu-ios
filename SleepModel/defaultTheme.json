@@ -815,5 +815,10 @@
     "sense.warning.icon" : {
         "style.icon.image" : "@image/warningIcon",
         "style.tint.color" : "@color/red.6"
+    },
+    
+    "#HEMSettingsHeaderFooterView" : {
+        "style.text.font" : "@font/caption.1",
+        "style.text.color" : "@color/light.disabled.text"
     }
 }

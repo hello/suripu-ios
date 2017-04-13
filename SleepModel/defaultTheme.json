@@ -533,7 +533,8 @@
     
     "#HEMTrendsAverageView" : {
         "style.title.font" :  "@font/caption.1",
-        "style.title.color" : "@color/light.disabled.text"
+        "style.title.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/trends.average.value"
     },
     
     "#HEMTrendsScoreLabel" : {

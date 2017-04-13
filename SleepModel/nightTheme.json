@@ -554,5 +554,9 @@
     
     "#HEMSensorGroupMemberView" : {
         "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMURLImageView" : {
+        "style.border.color" : "@color/dark.separator"
     }
 }

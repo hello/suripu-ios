@@ -303,7 +303,7 @@
     
     "#HEMURLImageView" : {
         "style.background.color" : "@color/grey.3",
-        "style.border.color" : "@color/grey.2"
+        "style.border.color" : "@color/light.separator"
     },
     
     "sense.condition" : {

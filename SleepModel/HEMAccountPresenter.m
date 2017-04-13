@@ -649,6 +649,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [cell showStyledAccessoryViewIfNone];
+    [cell applyDetailAccessoryStyle];
     [[cell detailTextLabel] setText:nil];
     [[cell accessoryView] setHidden:!showAccessory];
     [[cell textLabel] setText:title];

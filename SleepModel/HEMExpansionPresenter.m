@@ -362,6 +362,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     
+    if ([[cell customAccessoryView] isKindOfClass:[UIImageView class]]) {
+        UIImageView* accessoryView = (id) [cell customAccessoryView];
+        UIImage* accessory = [[UIImage imageNamed:@"rightArrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [accessoryView setImage:accessory];
+        [cell applyDetailAccessoryStyle];
+    }
+    
     [[cell customTitleLabel] setText:[self configurationName]];
     [[cell customDetailLabel] setText:selectedName];
     [cell detail:highlighted];

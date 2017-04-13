@@ -206,7 +206,7 @@ extension GenderSelectorPresenter: UITableViewDataSource, UITableViewDelegate {
             case .other:
                 title = NSLocalizedString("account.gender.other", comment: "other")
                 detail = self.selectedOtherGender
-                accessoryImage = UIImage(named: "accessory")?.withRenderingMode(.alwaysTemplate)
+                accessoryImage = UIImage(named: "rightArrow")?.withRenderingMode(.alwaysTemplate)
                 if detail == nil || detail!.isEmpty == true {
                     detailTextColor = UIColor.tint()
                     detail = NSLocalizedString("onboarding.gender.select", comment: "default text")

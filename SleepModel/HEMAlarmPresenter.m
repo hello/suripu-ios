@@ -477,7 +477,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UIView*)customAccessoryViewWithHeight:(CGFloat)height {
-    UIImage* accessoryImage = [UIImage imageNamed:@"accessory"];
+    UIImage* accessoryImage = [UIImage imageNamed:@"rightArrow"];
     CGRect accessoryFrame = CGRectZero;
     accessoryFrame.size.height = height;
     accessoryFrame.size.width = accessoryImage.size.width + HEMAlarmConfigCellLightAccessoryPadding;

@@ -120,6 +120,7 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:[[self dataSource] displayNameForRowAtIndexPath:indexPath]];
     [cell showStyledAccessoryViewIfNone];
+    [cell applyDetailAccessoryStyle];
     [cell applyStyle];
 }
 

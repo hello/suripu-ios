@@ -117,8 +117,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsMiscRow) {
         [versionLabel setText:versionText];
         [versionLabel setContentMode:UIViewContentModeBottom];
         [versionLabel setTextAlignment:NSTextAlignmentCenter];
-        [versionLabel setFont:[UIFont settingsHelpFont]];
-        [versionLabel setTextColor:[UIColor textColor]];
         
         UIView* containerView = [UIView new];
         [containerView addSubview:versionLabel];
@@ -302,6 +300,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell applyStyle];
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     [cell showStyledAccessoryViewIfNone];
+    [cell applyDetailAccessoryStyle];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

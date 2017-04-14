@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateVisibilityWithContentOffset:(CGFloat)contentOffset;
 - (void)showSeparator:(BOOL)show;
 - (void)reset;
+- (void)applyStyle;
 
 @end
 

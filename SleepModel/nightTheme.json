@@ -554,5 +554,21 @@
     
     "#HEMSensorGroupMemberView" : {
         "style.text.color" : "@color/dark.primary.text"
+    },
+    
+    "#HEMURLImageView" : {
+        "style.border.color" : "@color/dark.separator"
+    },
+    
+    "#HEMSettingsHeaderFooterView" : {
+        "style.text.color" : "@color/dark.disabled.text"
+    },
+    
+    "#HEMNavigationShadowView" : {
+        "sense.shadow.image" : "@image/topShadowDark"
+    },
+    
+    "#HEMWifiPickerViewController" : {
+        "sense.shadow.image" : "@image/topShadowDark"
     }
 }

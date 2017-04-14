@@ -10,6 +10,7 @@
 #import "HEMNavigationShadowView.h"
 
 static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
+static NSString* const kHEMNavigationShadowImageKey = @"sense.shadow.image";
 
 @interface HEMNavigationShadowView()
 
@@ -21,7 +22,8 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
 @implementation HEMNavigationShadowView
 
 - (instancetype)initWithNavigationBar:(UIView*)navBar {
-    UIImage* image = [UIImage imageNamed:@"topShadow"];
+    UIImage* image = [SenseStyle imageWithAClass:[self class]
+                                    propertyName:kHEMNavigationShadowImageKey];
     CGFloat width = CGRectGetWidth([navBar bounds]);
     CGRect shadowFrame = CGRectZero;
     shadowFrame.size.width = width;
@@ -52,7 +54,9 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
 }
 
 - (void)configure {
-    UIImage* image = [UIImage imageNamed:@"topShadow"];
+    UIImage* image = [SenseStyle imageWithAClass:[self class]
+                                    propertyName:kHEMNavigationShadowImageKey];
+    
     UIImageView* shadowView = [[UIImageView alloc] initWithImage:image];
     [shadowView setContentMode:UIViewContentModeScaleAspectFill];
     [shadowView setAutoresizingMask:UIViewAutoresizingFlexibleWidth
@@ -76,7 +80,7 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
      | UIViewAutoresizingFlexibleTopMargin];
-    [separator setBackgroundColor:[UIColor borderColor]];
+    [separator applySeparatorStyle];
     
     [self addSubview:separator];
     [self setSeparatorView:separator];
@@ -114,6 +118,11 @@ static CGFloat const HEMNavigationShadowViewBorderHeight = 1.0f;
     separatorFrame.size.width = myWidth;
     separatorFrame.origin.x = 0.0f;
     [[self separatorView] setFrame:separatorFrame];
+}
+
+- (void)applyStyle {
+    UIImage* image = [SenseStyle imageWithAClass:[self class] propertyName:kHEMNavigationShadowImageKey];
+    [[self shadowImageView] setImage:image];
 }
 
 @end

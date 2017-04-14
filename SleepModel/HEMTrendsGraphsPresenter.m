@@ -25,6 +25,7 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMTimelineService.h"
 #import "HEMCardFlowLayout.h"
+#import "HEMTrendsAverageView.h"
 
 static CGFloat const HEMTrendsGraphBarWeekBarSpacing = 5.0f;
 static CGFloat const HEMTrendsGraphBarMonthBarSpacing = 2.0f;
@@ -341,40 +342,44 @@ static NSInteger const HEMTrendsGraphAverageRequirement = 3;
 }
 
 - (NSAttributedString*)attributedTitleFromAnnotation:(SENTrendsAnnotation*)annotation {
-    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor lowImportanceTextColor],
-                                 NSFontAttributeName : [UIFont h8]};
-    NSString* title = [annotation title];
+    NSString* title = [[annotation title] uppercaseString];
     if (!title) {
         title = NSLocalizedString(@"empty-data", nil);
     }
     return [[NSAttributedString alloc] initWithString:title
-                                           attributes:attributes];
+                                           attributes:[HEMTrendsAverageView titleAttributes]];
 }
 
 - (NSAttributedString*)attributedScoreFromAnnotation:(SENTrendsAnnotation*)annotation
                                              inGraph:(SENTrendsGraph*)graph{
     NSInteger averageValue = [[annotation value] integerValue];
     SENCondition condition = [[self trendService] conditionForValue:@(averageValue) inGraph:graph];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
-                                 NSForegroundColorAttributeName : [UIColor colorForCondition:condition]};
+    UIColor* conditionColor = [SenseStyle colorWithCondition:condition defaultColor:nil];
+    NSMutableDictionary* mutableAttributes = [[HEMTrendsAverageView valueAttributes] mutableCopy];
+    if (conditionColor) {
+        mutableAttributes[NSForegroundColorAttributeName] = conditionColor;
+    }
     NSString* valueText = nil;
     if (averageValue >= 0) {
         valueText = [NSString stringWithFormat:@"%ld", (long)averageValue];
     } else {
         valueText = NSLocalizedString(@"empty-data", nil);
     }
-    return [[NSAttributedString alloc] initWithString:valueText attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:valueText attributes:mutableAttributes];
 }
 
 - (NSAttributedString*)attributedSleepDurationFromAnnotation:(SENTrendsAnnotation*)annotation {
     UIColor* color = [SenseStyle colorWithSleepState:SENTimelineSegmentSleepStateSound];
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont trendAverageValueFont],
-                                 NSForegroundColorAttributeName : color};
+    // use same attributes as averages
+    NSMutableDictionary* mutableAttributes = [[HEMTrendsAverageView valueAttributes] mutableCopy];
+    if (color) {
+        mutableAttributes[NSForegroundColorAttributeName] = color;
+    }
     CGFloat averageValue = [[annotation value] CGFloatValue];
     NSString* avgFormat = NSLocalizedString(@"trends.sleep-duration.average.format", nil);
     NSString* valueText = [NSString stringWithFormat:avgFormat, averageValue];
     NSMutableAttributedString* attrValue = [[NSMutableAttributedString alloc] initWithString:valueText
-                                                                                  attributes:attributes];
+                                                                                  attributes:mutableAttributes];
     NSRange unitRange = NSMakeRange([valueText length] - 1, 1);
     [attrValue addAttribute:NSFontAttributeName value:[UIFont h5] range:unitRange];
     return attrValue;

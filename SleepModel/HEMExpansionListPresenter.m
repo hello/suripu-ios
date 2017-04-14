@@ -205,7 +205,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } else {
             [maskView removeFromSuperview];
             [basicCell setUserInteractionEnabled:YES];
-            [basicCell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [basicCell showStyledAccessoryViewIfNone];
+            [basicCell applyDetailAccessoryStyle];
         }
     }
 }

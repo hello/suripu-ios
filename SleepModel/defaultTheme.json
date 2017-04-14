@@ -303,7 +303,7 @@
     
     "#HEMURLImageView" : {
         "style.background.color" : "@color/grey.3",
-        "style.border.color" : "@color/grey.2"
+        "style.border.color" : "@color/light.separator"
     },
     
     "sense.condition" : {
@@ -533,7 +533,8 @@
     
     "#HEMTrendsAverageView" : {
         "style.title.font" :  "@font/caption.1",
-        "style.title.color" : "@color/light.disabled.text"
+        "style.title.color" : "@color/light.disabled.text",
+        "style.text.font" : "@font/trends.average.value"
     },
     
     "#HEMTrendsScoreLabel" : {
@@ -815,5 +816,18 @@
     "sense.warning.icon" : {
         "style.icon.image" : "@image/warningIcon",
         "style.tint.color" : "@color/red.6"
+    },
+    
+    "#HEMSettingsHeaderFooterView" : {
+        "style.text.font" : "@font/caption.1",
+        "style.text.color" : "@color/light.disabled.text"
+    },
+    
+    "#HEMNavigationShadowView" : {
+        "sense.shadow.image" : "@image/topShadow"
+    },
+    
+    "#HEMWifiPickerViewController" : {
+        "sense.shadow.image" : "@image/topShadow"
     }
 }

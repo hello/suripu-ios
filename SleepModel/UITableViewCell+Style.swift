@@ -30,4 +30,11 @@ extension UITableViewCell {
         self.accessoryView?.tintColor = tintColor
     }
     
+    @objc func applyDetailAccessoryStyle() {
+        guard let imageView = self.accessoryView as? UIImageView else {
+            return
+        }
+        imageView.tintColor = SenseStyle.color(group: .listItem, property: .detailColor)
+    }
+    
 }

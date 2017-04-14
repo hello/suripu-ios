@@ -10,6 +10,17 @@
 
 @implementation HEMTrendsAverageView
 
++ (NSDictionary*)titleAttributes {
+    UIColor* titleColor = [SenseStyle colorWithAClass:[self class] property:ThemePropertyTitleColor];
+    UIFont* titleFont = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTitleFont];
+    return @{NSFontAttributeName : titleFont, NSForegroundColorAttributeName : titleColor};
+}
+
++ (NSDictionary*)valueAttributes {
+    UIFont* font = [SenseStyle fontWithAClass:[self class] property:ThemePropertyTextFont];
+    return @{NSFontAttributeName : font};
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self applyStyle];

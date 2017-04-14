@@ -47,7 +47,6 @@
     "dark.transparent.overlay" : { "style.color.hex" : "000000", "style.color.alpha" : 0.5 },
     
     "light.background" : { "style.color.hex" : "EBEDF0" },
-    "e" : { "style.color.hex" : "212121" },
     
     "black" : { "style.color.hex" : "000000" },
     "white" : { "style.color.hex" : "FFFFFF" },

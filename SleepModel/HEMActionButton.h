@@ -1,9 +1,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMActivityIndicatorView;
+
 @interface HEMActionButton : UIButton
     
-@property (nonatomic, strong, readonly) UIActivityIndicatorView* activityView;
+@property (nonatomic, strong, readonly) HEMActivityIndicatorView* activityView;
 
 /**
  * Changes the button's shape to show an activity indicator

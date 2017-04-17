@@ -656,6 +656,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell imageView] setImage:icon];
     [[cell detailTextLabel] setText:value];
     
+    if (![[cell accessoryView] isKindOfClass:[UISwitch class]]) {
+        [cell showStyledSelectionViewIfNone];
+    }
+    
     if ([cell isKindOfClass:[HEMBasicTableViewCell class]]) {
         HEMBasicTableViewCell* basicCell = (id) cell;
         [basicCell showSeparator:row != rows - 1];
@@ -668,9 +672,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell textLabel] setTextColor:color];
         [[cell imageView] setTintColor:color];
     }
+    
+    if (!showAccessory) {
+        [cell showStyledSelectionViewIfNone];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
     // not all cells are "tappable"

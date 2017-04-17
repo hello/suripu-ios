@@ -1,17 +1,19 @@
 
 #import "HEMActionButton.h"
+#import "HEMActivityIndicatorView.h"
 
 #import "Sense-Swift.h"
 
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 static CGFloat const kHEMActionCornerRadius = 3.0f;
+static CGFloat const kHEMActionActivitySize = 25.0f;
 
 @interface HEMActionButton()
 
 @property (nonatomic, assign) CGRect originalFrame;
 @property (nonatomic, copy)   NSString* originalTitle;
 @property (nonatomic, assign, getter=isShowingActivity) BOOL showingActivity;
-@property (nonatomic, strong) UIActivityIndicatorView* activityView;
+@property (nonatomic, strong) HEMActivityIndicatorView* activityView;
 @property (nonatomic, weak)   NSLayoutConstraint* widthConstraint;
 
 @end
@@ -51,8 +53,8 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
 
 - (void)addActivityView {
     if ([self activityView] == nil) {
-        [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
-        [[self activityView] setHidesWhenStopped:YES];
+        CGRect activityFrame = CGRectMake(0.0f, 0.0f, kHEMActionActivitySize, kHEMActionActivitySize);
+        [self setActivityView:[[HEMActivityIndicatorView alloc] initWithFrame:activityFrame]];
     }
     // re-center it
     [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
@@ -65,12 +67,9 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
     }
     
     if ([self activityView] == nil) {
-        [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
+        CGRect activityFrame = CGRectMake(0.0f, 0.0f, kHEMActionActivitySize, kHEMActionActivitySize);
+        [self setActivityView:[[HEMActivityIndicatorView alloc] initWithFrame:activityFrame]];
         [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
-        [[self activityView] hidesWhenStopped];
-        
-        static NSString* activityKey = @"sense.activity.color";
-        [[self activityView] setColor:[SenseStyle colorWithAClass:[self class] propertyName:activityKey]];
         [self addSubview:[self activityView]];
     }
     
@@ -104,7 +103,8 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
                      }
                      completion:^(BOOL finished) {
                          [self addActivityView];
-                         [[self activityView] startAnimating];
+                         [[self activityView] start];
+                         [[self activityView] setHidden:NO];
                      }];
 }
 
@@ -123,14 +123,16 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
                      }
                      completion:^(BOOL finished) {
                          [self addActivityView];
-                         [[self activityView] startAnimating];
+                         [[self activityView] start];
+                         [[self activityView] setHidden:NO];
                      }];
 }
 
 - (void)stopActivity {
     if (![self isShowingActivity]) return;
     
-    [[self activityView] stopAnimating];
+    [[self activityView] stop];
+    [[self activityView] setHidden:YES];
     [UIView animateWithDuration:0.25f
                           delay:0.0f
                         options:UIViewAnimationOptionBeginFromCurrentState
@@ -145,7 +147,8 @@ static CGFloat const kHEMActionCornerRadius = 3.0f;
                      }
                      completion:^(BOOL finished) {
                          [self setShowingActivity:NO];
-                         [[self activityView] stopAnimating];
+                         [[self activityView] stop];
+                         [[self activityView] setHidden:YES];
                          [self setTitle:[self originalTitle] forState:UIControlStateNormal];
                          [self setTitle:[self originalTitle] forState:UIControlStateDisabled];
                          [self setEnabled:YES];

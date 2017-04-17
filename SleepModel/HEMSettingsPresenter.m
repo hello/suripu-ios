@@ -301,6 +301,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     [cell showStyledAccessoryViewIfNone];
     [cell applyDetailAccessoryStyle];
+    [cell showStyledSelectionViewIfNone];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

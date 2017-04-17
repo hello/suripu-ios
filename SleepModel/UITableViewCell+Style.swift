@@ -37,4 +37,15 @@ extension UITableViewCell {
         imageView.tintColor = SenseStyle.color(group: .listItem, property: .detailColor)
     }
     
+    @objc func showStyledSelectionViewIfNone() {
+        guard self.selectedBackgroundView == nil else {
+            return
+        }
+        
+        let view = UIView(frame: self.bounds)
+        view.backgroundColor = SenseStyle.color(group: .listItem, property: .backgroundHighlightedColor)
+        self.selectedBackgroundView = view
+        self.selectionStyle = UITableViewCellSelectionStyle.default
+    }
+    
 }

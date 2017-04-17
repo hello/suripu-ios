@@ -207,6 +207,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [basicCell setUserInteractionEnabled:YES];
             [basicCell showStyledAccessoryViewIfNone];
             [basicCell applyDetailAccessoryStyle];
+            [basicCell showStyledSelectionViewIfNone];
         }
     }
 }
@@ -216,6 +217,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     NSInteger row = [indexPath row];
     if (row < [[self expansions] count] && ![self loadError]) {
         SENExpansion* expansion = [self expansions][[indexPath row]];

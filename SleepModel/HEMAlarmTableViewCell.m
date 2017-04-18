@@ -27,6 +27,13 @@ static CGFloat const kHEMAlarmCellFadeDuration = 0.5f;
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"settingsLoader"]];
     
+    if ([self customAccessoryView]) {
+        UIImage* accessoryImage = [UIImage imageNamed:@"rightArrow"];
+        accessoryImage = [accessoryImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [[self customAccessoryView] setImage:accessoryImage];
+        [self applyTintStyleWithHighlighted:NO];
+    }
+    
     [self setSelectionStyle:UITableViewCellSelectionStyleDefault];
     [self setSelectedBackgroundView:[UIView new]];
     [self applyStyle];

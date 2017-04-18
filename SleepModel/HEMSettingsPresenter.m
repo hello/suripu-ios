@@ -301,6 +301,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     [cell showStyledAccessoryViewIfNone];
     [cell applyDetailAccessoryStyle];
+    [cell showStyledSelectionView];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -308,6 +309,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
     NSArray* rows = [self sections][section];

@@ -477,7 +477,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UIView*)customAccessoryViewWithHeight:(CGFloat)height {
-    UIImage* accessoryImage = [UIImage imageNamed:@"rightArrow"];
+    UIImage* accessoryImage = [[UIImage imageNamed:@"rightArrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     CGRect accessoryFrame = CGRectZero;
     accessoryFrame.size.height = height;
     accessoryFrame.size.width = accessoryImage.size.width + HEMAlarmConfigCellLightAccessoryPadding;
@@ -549,7 +549,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                                      inExpansions:[self expansions]];
         if (expansion) {
             CGFloat height = CGRectGetHeight([expansionCell bounds]);
-            accessoryView = [self customAccessoryViewWithHeight:height];
+            if ([expansionCell accessoryView] == nil) {
+                accessoryView = [self customAccessoryViewWithHeight:height];
+            } else {
+                accessoryView = [expansionCell accessoryView];
+            }
             detail = [self detailValueForExpansion:expansion customTextColor:&detailColor];
         } else {
             showError = YES;
@@ -584,6 +588,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (detailColor) {
         [[expansionCell detailLabel] setTextColor:detailColor];
+        [expansionCell applyTintStyleWithHighlighted:YES];
     }
 }
 

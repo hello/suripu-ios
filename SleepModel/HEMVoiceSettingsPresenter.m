@@ -306,6 +306,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [basicCell detail:highlightDetail];
         [basicCell showCustomAccessoryView:showCustomAccessory];
         [basicCell setSelectionStyle:selectionStyle];
+        
+        if (selectionStyle != UITableViewCellSelectionStyleNone) {
+            [basicCell showStyledSelectionView];
+        }
     }
 }
 

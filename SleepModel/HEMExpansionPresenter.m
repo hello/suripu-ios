@@ -377,13 +377,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self isLoadingConfigs]) {
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     } else {
-        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        [cell showStyledSelectionView];
     }
 }
 
 - (void)configureRemoveAccessCell:(HEMBasicTableViewCell*)cell {
+    UIColor* alertColor = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
     [[cell customTitleLabel] setText:NSLocalizedString(@"expansion.action.remove", nil)];
-    [[cell customTitleLabel] setTextColor:[UIColor red6]];
+    [[cell customTitleLabel] setTextColor:alertColor];
+    [cell showStyledSelectionView];
 }
 
 #pragma mark - Actions

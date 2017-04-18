@@ -657,7 +657,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell detailTextLabel] setText:value];
     
     if (![[cell accessoryView] isKindOfClass:[UISwitch class]]) {
-        [cell showStyledSelectionViewIfNone];
+        [cell showStyledSelectionView];
     }
     
     if ([cell isKindOfClass:[HEMBasicTableViewCell class]]) {
@@ -671,10 +671,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         UIColor* color = [SenseStyle colorWithCondition:SENConditionAlert defaultColor:nil];
         [[cell textLabel] setTextColor:color];
         [[cell imageView] setTintColor:color];
-    }
-    
-    if (!showAccessory) {
-        [cell showStyledSelectionViewIfNone];
     }
 }
 

@@ -207,7 +207,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [basicCell setUserInteractionEnabled:YES];
             [basicCell showStyledAccessoryViewIfNone];
             [basicCell applyDetailAccessoryStyle];
-            [basicCell showStyledSelectionViewIfNone];
+            [basicCell showStyledSelectionView];
         }
     }
 }

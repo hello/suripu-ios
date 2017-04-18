@@ -29,6 +29,9 @@ static CGFloat const kHEMBasicCellFadeDuration = 0.5f;
     [[self activityView] setUserInteractionEnabled:NO];
     [[self activityView] setIndicatorImage:[UIImage imageNamed:@"settingsLoader"]];
     [self setOrigLeadingAccessoryMargin:[[self leadingCustomAccessoryConstraint] constant]];
+    
+    UIView* selectedBackgroundView = [[UIView alloc] initWithFrame:[self bounds]];
+    [self setSelectedBackgroundView:selectedBackgroundView];
 }
 
 - (void)showSeparator:(BOOL)show {

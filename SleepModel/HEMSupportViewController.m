@@ -124,9 +124,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell showStyledAccessoryViewIfNone];
     [cell applyDetailAccessoryStyle];
     [cell applyStyle];
+    [cell showStyledSelectionView];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch ([indexPath row]) {
         case HEMSupportRowIndexUserGuide: {

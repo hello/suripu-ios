@@ -122,9 +122,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [cell showStyledAccessoryViewIfNone];
     [cell applyDetailAccessoryStyle];
     [cell applyStyle];
+    [cell showStyledSelectionView];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     NSString* value = [[self dataSource] topicForRowAtIndexPath:indexPath];
     [[HEMZendeskService sharedService] configureRequestWithTopic:value completion:^{
         [ZDKRequests showRequestCreationWithNavController:[self navigationController]];

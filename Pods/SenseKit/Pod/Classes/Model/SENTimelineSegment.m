@@ -58,6 +58,7 @@ NSDictionary* SENTimelineSegmentTypeMapping() {
             @"WOKE_UP": @(SENTimelineSegmentTypeWokeUp),
             @"ALARM_RANG": @(SENTimelineSegmentTypeAlarmRang),
             @"UNKNOWN": @(SENTimelineSegmentTypeUnknown),
+            @"SLEEP_DISTURBANCE": @(SENTimelineSegmentTypeDisturbance)
         };
     });
     return mapping;

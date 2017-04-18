@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, SENTimelineSegmentType) {
     SENTimelineSegmentTypeGotOutOfBed,
     SENTimelineSegmentTypeWokeUp,
     SENTimelineSegmentTypeAlarmRang,
-    SENTimelineSegmentTypeUnknown
+    SENTimelineSegmentTypeUnknown,
+    SENTimelineSegmentTypeDisturbance // must come after unknown to avoid decoding issues.  Order matters
 };
 
 typedef NS_ENUM(NSInteger, SENTimelineSegmentAction) {

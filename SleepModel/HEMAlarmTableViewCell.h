@@ -18,6 +18,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *infoButton;
 @property (nonatomic, weak) IBOutlet HEMActivityIndicatorView* activityView;
 @property (nonatomic, weak) IBOutlet UIImageView* errorIcon;
+@property (weak, nonatomic) IBOutlet UIImageView *customAccessoryView;
 
 - (void)showActivity:(BOOL)show;
 

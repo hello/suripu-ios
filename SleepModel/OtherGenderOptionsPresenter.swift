@@ -26,7 +26,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         self.onboardingService = onboardingService
         self.account = account
         let selectedGender = account?.customGender
-        let selectedOptions = selectedGender != nil ? [selectedGender] : nil
+        let selectedOptions: [Any] = selectedGender != nil ? [selectedGender!] : []
         let title = NSLocalizedString("onboarding.gender.title", comment: "table title")
         super.init(title: title, items: [], selectedItemNames: selectedOptions)
     }
@@ -131,6 +131,7 @@ class OtherGenderOptionsPresenter: HEMListPresenter {
         
         self.listenForKeyboardEvents()
         self.searchBar = UISearchBar()
+        self.searchBar!.returnKeyType = .done
         self.searchBar!.setImage(searchIcon, for: UISearchBarIcon.search, state: UIControlState.normal)
         self.searchBar!.isHidden = true
         self.searchBar!.delegate = self
@@ -215,6 +216,10 @@ extension OtherGenderOptionsPresenter: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.items = self.search(input: searchText)
         self.tableView?.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(false)
     }
     
 }

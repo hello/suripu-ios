@@ -561,8 +561,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
         case SENTimelineSegmentTypeSleepTalked:
         case SENTimelineSegmentTypeSnored:
             return [UIImage imageNamed:@"snoringEventIcon"];
+            
+        case SENTimelineSegmentTypeDisturbance:
         case SENTimelineSegmentTypeGenericSound:
             return [UIImage imageNamed:@"noiseEventIcon"];
+            
         case SENTimelineSegmentTypeInBed:
         case SENTimelineSegmentTypeUnknown:
         default:

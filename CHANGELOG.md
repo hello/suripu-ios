@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.1.1
+
+New:
+
+* Cleaned up old style class
+* Design tweaks that were punted
+* Pill pairing now uses custom spinner
+* Added, or updated, pressed down states for list items
+
 ## 2.1.0.27
 
 New:

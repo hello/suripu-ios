@@ -19,4 +19,12 @@
  */
 + (void)getRecentVoiceCommands:(SENAPIDataBlock)completion;
 
+/**
+ * @discussion
+ * Get a list of supported voice commands
+ *
+ * @param completion: the callback to make when commands or error have been retrieved
+ */
++ (void)getSupportedVoiceCommands:(SENAPIDataBlock)completion;
+
 @end

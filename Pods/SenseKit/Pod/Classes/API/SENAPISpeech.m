@@ -5,11 +5,13 @@
 //  Created by Jimmy Lu on 7/28/16.
 //
 //
+#import "Model.h"
 #import "SENAPISpeech.h"
-#import "SENSpeechResult.h"
 
 static NSString* const SENAPISpeechResource = @"v1/speech";
 static NSString* const SENAPISpeechOnboarding = @"onboarding";
+static NSString* const SENAPIVoiceResource = @"v2/voice";
+static NSString* const SENAPIVoiceCommandsParam = @"voice_command_topics";
 
 @implementation SENAPISpeech
 
@@ -26,6 +28,24 @@ static NSString* const SENAPISpeechOnboarding = @"onboarding";
             }
         }
         completion (results, error);
+    }];
+}
+
++ (void)getSupportedVoiceCommands:(SENAPIDataBlock)completion {
+    [SENAPIClient GET:SENAPIVoiceResource parameters:nil completion:^(id data, NSError *error) {
+        NSMutableArray<SENVoiceCommandGroup*>* commands = nil;
+        if ([data isKindOfClass:[NSDictionary class]] && !error) {
+            NSArray* commandObjs = SENObjectOfClass(data[SENAPIVoiceCommandsParam], [NSArray class]);
+            commands = [NSMutableArray arrayWithCapacity:[commandObjs count]];
+            NSDictionary* commandDict = nil;
+            for (id commandObj in commandObjs) {
+                commandDict = SENObjectOfClass(commandObj, [NSDictionary class]);
+                if (commandDict) {
+                    [commands addObject:[[SENVoiceCommandGroup alloc] initWithDictionary:commandDict]];
+                }
+            }
+        }
+        completion (commands, error);
     }];
 }
 

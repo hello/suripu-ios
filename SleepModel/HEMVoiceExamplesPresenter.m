@@ -5,10 +5,13 @@
 //  Created by Jimmy Lu on 10/13/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENVoiceCommandGroup.h>
+#import <SenseKit/SENRemoteImage.h>
+
 #import "Sense-Swift.h"
+#import "SENRemoteImage+HEMDeviceSpecific.h"
 
 #import "HEMVoiceExamplesPresenter.h"
-#import "HEMVoiceCommandGroup.h"
 #import "HEMVoiceGroupHeaderCell.h"
 #import "HEMVoiceExampleGroupCell.h"
 #import "HEMMainStoryboard.h"
@@ -21,7 +24,7 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     UICollectionViewDelegateFlowLayout
 >
 
-@property (nonatomic, strong) HEMVoiceCommandGroup* group;
+@property (nonatomic, strong) SENVoiceCommandGroup* group;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak) UINavigationBar* navBar;
 @property (nonatomic, strong) NSDictionary* examplesBodyAttributes;
@@ -31,7 +34,7 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 
 @implementation HEMVoiceExamplesPresenter
 
-- (instancetype)initWithCommandGroup:(HEMVoiceCommandGroup*)group {
+- (instancetype)initWithCommandGroup:(SENVoiceCommandGroup*)group {
     if (self = [super init]) {
         _group = group;
         [self prepareCommands];
@@ -60,12 +63,12 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 - (void)prepareCommands {
     [self setExamplesBodyAttributes:[HEMVoiceExampleGroupCell examplesAttributes]];
     
-    NSUInteger count = [[[self group] examples] count];
+    NSUInteger count = [[[self group] groups] count];
     NSUInteger index = 0;
     NSMutableArray* appendedCommands = [NSMutableArray arrayWithCapacity:count];
-    for (HEMVoiceCommandExamples* examples in [[self group] examples]) {
+    for (SENVoiceCommandSubGroup* subGroup in [[self group] groups]) {
         NSMutableString* groupCommands = [NSMutableString new];
-        for (NSString* command in [examples commands]) {
+        for (NSString* command in [subGroup commands]) {
             if ([groupCommands length] > 0) {
                 [groupCommands appendFormat:@"\n%@", command];
             } else {
@@ -100,12 +103,12 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
     itemSize.width = CGRectGetWidth([[collectionView superview] bounds]);
     
     if ([indexPath row] == 0) {
-        itemSize.height = [HEMVoiceGroupHeaderCell heightWithCategory:[[self group] categoryName]
-                                                              message:[[self group] message]
+        itemSize.height = [HEMVoiceGroupHeaderCell heightWithCategory:[[self group] localizedTitle]
+                                                              message:[[self group] localizedExample]
                                                             fullWidth:itemSize.width];
     } else {
-        HEMVoiceCommandExamples* commandGroup = [[self group] examples][[indexPath row] -1];
-        NSString* groupCategoryName = [commandGroup categoryName];
+        SENVoiceCommandSubGroup* commandGroup = [[self group] groups][[indexPath row] -1];
+        NSString* groupCategoryName = [commandGroup localizedTitle];
         NSAttributedString* groupCommands = [self appendedCommands][[indexPath row] - 1];
         itemSize.height = [HEMVoiceExampleGroupCell heightWithCategoryName:groupCategoryName
                                                                   examples:groupCommands
@@ -144,15 +147,16 @@ static CGFloat const kHEMVoiceExamplesBottomInset = 20.0f;
 }
 
 - (void)configureHeaderCell:(HEMVoiceGroupHeaderCell*)headerCell {
-    [[headerCell imageView] setImage:[UIImage imageNamed:[[self group] iconNameLarge]]];
-    [[headerCell categoryLabel] setText:[[self group] categoryName]];
-    [[headerCell messageLabel] setText:[[self group] message]];
+    SENRemoteImage* image = [[self group] iconImage];
+    [[headerCell imageView] setImageWithURL:[image uriForCurrentDevice]];
+    [[headerCell categoryLabel] setText:[[self group] localizedTitle]];
+    [[headerCell messageLabel] setText:[[self group] localizedExample]];
     [headerCell applyStyle];
 }
 
 - (void)configureExamplesCell:(HEMVoiceExampleGroupCell*)examplesCell atRow:(NSInteger)row {
-    HEMVoiceCommandExamples* commandGroup = [[self group] examples][row -1];
-    NSString* groupCategoryName = [commandGroup categoryName];
+    SENVoiceCommandSubGroup* group = [[self group] groups][row -1];
+    NSString* groupCategoryName = [group localizedTitle];
     NSAttributedString* groupCommands = [self appendedCommands][row - 1];
     [[examplesCell categoryLabel] setText:groupCategoryName];
     [[examplesCell examplesLabel] setAttributedText:groupCommands];

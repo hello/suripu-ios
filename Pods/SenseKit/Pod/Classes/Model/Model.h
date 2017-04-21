@@ -35,6 +35,7 @@
 #import "SENSenseVoiceSettings.h"
 #import "SENSystemAlert.h"
 #import "SENNotificationSetting.h"
+#import "SENVoiceCommandGroup.h"
 
 void SENClearModel();
 

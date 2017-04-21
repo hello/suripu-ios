@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon-32-expansions.png",
+      "filename" : "icon_voice_default.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon-32-expansions@2x.png",
+      "filename" : "icon_voice_default@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon-32-expansions@3x.png",
+      "filename" : "icon_voice_default@3x.png",
       "scale" : "3x"
     }
   ],

@@ -124,8 +124,8 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
         return;
     }
     
-    // clear it, in case something is lingering and download takes a little bit
-    // of time.  This will prevent it from showing a previous image if one was
+    // clear it, in case something is lingering and  takes a little bit
+    // of time.  This will prevent it from showing a previodownloadus image if one was
     // set previously
     [self resetState];
     
@@ -170,6 +170,11 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
         NSString* imageUrl = [[request URL] absoluteString];
         [strongSelf showActivity:NO];
         [strongSelf setDownloadReceipt:nil];
+        
+        if ([strongSelf errorImage]) {
+            [strongSelf setImage:[strongSelf errorImage]];
+        }
+        
         if (completion) {
             completion (nil, imageUrl, error);
         }
@@ -180,7 +185,7 @@ static CGFloat const HEMURLImageActivitySize = 24.0f;
     if (show) {
         if (![self activityIndicator]) {
             HEMActivityIndicatorView* activity
-                = [[HEMActivityIndicatorView alloc] initWithImage:[UIImage imageNamed:@"loaderWhite"]
+                = [[HEMActivityIndicatorView alloc] initWithImage:[UIImage imageNamed:@"loading"]
                                                          andFrame:[self frameForActivityIndicator]];
             [self setActivityIndicator:activity];
             [self addSubview:activity];

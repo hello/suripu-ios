@@ -16,8 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIView *separator;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
-+ (CGFloat)heightWithMessage:(NSString*)message
-                    withFont:(UIFont*)font
-                   cellWidth:(CGFloat)cellWidth;
++ (CGFloat)heightWithMessage:(NSString*)message cellWidth:(CGFloat)cellWidth;
 
 @end

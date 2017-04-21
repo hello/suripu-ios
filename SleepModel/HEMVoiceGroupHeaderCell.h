@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMURLImageView;
+
 @interface HEMVoiceGroupHeaderCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView* imageView;
+@property (nonatomic, weak) IBOutlet HEMURLImageView* imageView;
 @property (nonatomic, weak) IBOutlet UILabel* categoryLabel;
 @property (nonatomic, weak) IBOutlet UILabel* messageLabel;
 

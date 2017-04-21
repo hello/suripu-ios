@@ -9,10 +9,11 @@
 #import "HEMPresenter.h"
 
 @class HEMVoiceCommandGroup;
+@class SENVoiceCommandGroup;
 
 @interface HEMVoiceExamplesPresenter : HEMPresenter
 
-- (instancetype)initWithCommandGroup:(HEMVoiceCommandGroup*)group;
+- (instancetype)initWithCommandGroup:(SENVoiceCommandGroup*)group;
 - (void)bindWithCollectionView:(UICollectionView*)collectionView;
 - (void)bindWithNavigationBar:(UINavigationBar*)navBar;
 - (BOOL)hasNavBar;

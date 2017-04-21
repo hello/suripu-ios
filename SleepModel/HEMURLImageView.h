@@ -16,6 +16,12 @@ typedef void(^HEMURLImageCallback)(UIImage* _Nullable image, NSString* _Nullable
 
 /**
  * @discussion
+ * the error image to use, if the remote image could not be retrieved
+ */
+@property (nonatomic, strong, nullable) UIImage* errorImage;
+
+/**
+ * @discussion
  * the current image url referenced, if any
  */
 @property (nonatomic, copy, readonly, nullable) NSString* currentImageURL;

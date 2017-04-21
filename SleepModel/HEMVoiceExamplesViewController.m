@@ -5,10 +5,9 @@
 //  Created by Jimmy Lu on 10/13/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
-
+#import <SenseKit/SENVoiceCommandGroup.h>
 #import "HEMVoiceExamplesViewController.h"
 #import "HEMVoiceExamplesPresenter.h"
-#import "HEMVoiceCommandGroup.h"
 
 @interface HEMVoiceExamplesViewController ()
 
@@ -26,9 +25,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSString* category = [[self commandGroup] categoryName];
+    NSString* title = [[self commandGroup] localizedTitle];
     [SENAnalytics track:HEMAnalyticsEventVoiceExamples
-             properties:@{HEMAnalyticsPropCategory : category ?: @"unknown"}];
+             properties:@{HEMAnalyticsPropCategory : title ?: @"unknown"}];
 }
 
 - (void)configurePresenter {

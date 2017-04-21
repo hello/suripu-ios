@@ -15,9 +15,8 @@ static CGFloat kHEMWelcomeVoiceTextMargin = 20.0f;
 
 @implementation HEMWelcomeVoiceCell
 
-+ (CGFloat)heightWithMessage:(NSString*)message
-                    withFont:(UIFont*)font
-                   cellWidth:(CGFloat)cellWidth {
++ (CGFloat)heightWithMessage:(NSString*)message cellWidth:(CGFloat)cellWidth {
+    UIFont* font = [SenseStyle fontWithAClass:self property:ThemePropertyDetailFont];
     CGFloat labelWidth = cellWidth - (kHEMWelcomeVoiceTextMargin * 2.0f);
     CGFloat height = [message heightBoundedByWidth:labelWidth usingFont:font];
     return kHEMWelcomeVoiceBaseCellHeight + height;

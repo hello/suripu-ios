@@ -9,9 +9,10 @@
 #import "HEMBaseController.h"
 
 @class HEMVoiceCommandGroup;
+@class SENVoiceCommandGroup;
 
 @interface HEMVoiceExamplesViewController : HEMBaseController
 
-@property (nonatomic, strong) HEMVoiceCommandGroup* commandGroup;
+@property (nonatomic, strong) SENVoiceCommandGroup* commandGroup;
 
 @end

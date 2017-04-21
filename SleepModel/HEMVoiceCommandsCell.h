@@ -17,9 +17,11 @@
 @property (assign, nonatomic) NSInteger estimatedNumberOfCommands;
 
 + (CGFloat)heightWithNumberOfCommands:(NSInteger)numberOfCommands;
++ (CGFloat)heightWithCommands:(NSArray<NSString*>*)commands maxWidth:(CGFloat)maxWidth;
 
 - (HEMVoiceExampleView*)addCommandWithCategory:(NSString*)category
                                        example:(NSString*)example
-                                          icon:(UIImage*)icon;
+                                          icon:(NSString*)iconURL
+                                     cellWidth:(CGFloat)cellWidth;
 
 @end

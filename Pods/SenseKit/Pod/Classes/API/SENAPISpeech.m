@@ -11,6 +11,7 @@
 static NSString* const SENAPISpeechResource = @"v1/speech";
 static NSString* const SENAPISpeechOnboarding = @"onboarding";
 static NSString* const SENAPIVoiceResource = @"v2/voice";
+static NSString* const SENAPIVoiceCommandPath = @"commands";
 static NSString* const SENAPIVoiceCommandsParam = @"voice_command_topics";
 
 @implementation SENAPISpeech
@@ -32,7 +33,8 @@ static NSString* const SENAPIVoiceCommandsParam = @"voice_command_topics";
 }
 
 + (void)getSupportedVoiceCommands:(SENAPIDataBlock)completion {
-    [SENAPIClient GET:SENAPIVoiceResource parameters:nil completion:^(id data, NSError *error) {
+    NSString* path = [SENAPIVoiceResource stringByAppendingPathComponent:SENAPIVoiceCommandPath];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
         NSMutableArray<SENVoiceCommandGroup*>* commands = nil;
         if ([data isKindOfClass:[NSDictionary class]] && !error) {
             NSArray* commandObjs = SENObjectOfClass(data[SENAPIVoiceCommandsParam], [NSArray class]);

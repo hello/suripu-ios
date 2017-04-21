@@ -31,6 +31,7 @@ static CGFloat const kHEMVoiceGroupTextMargin = 32.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [[self imageView] setErrorImage:[UIImage imageNamed:@"iconVoiceError"]];
     [self applyStyle];
 }
 
@@ -43,6 +44,8 @@ static CGFloat const kHEMVoiceGroupTextMargin = 32.0f;
     [[self categoryLabel] setTextColor:color];
     [[self messageLabel] setFont:messageFont];
     [[self messageLabel] setTextColor:messageColor];
+    [[self imageView] setContentMode:UIViewContentModeScaleAspectFill];
+    [[self imageView] setBackgroundColor:[self backgroundColor]];
 }
 
 @end

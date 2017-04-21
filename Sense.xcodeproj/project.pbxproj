@@ -184,7 +184,6 @@
 		BF2F4C641DAD977A00502521 /* HEMVoiceFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C631DAD977A00502521 /* HEMVoiceFeedViewController.m */; };
 		BF2F4C681DAD9BEA00502521 /* HEMVoiceCommandsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */; };
 		BF2F4C6C1DADA2DB00502521 /* HEMVoiceFeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */; };
-		BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */; };
 		BF31A5DA1D07AEC20054D82E /* HEMLocationRequestPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */; };
 		BF3326E01D87309B009A3E65 /* HEMSensorDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326DF1D87309B009A3E65 /* HEMSensorDetailViewController.m */; };
 		BF3326E31D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3326E21D8751FF009A3E65 /* HEMSensorValueCollectionViewCell.m */; };
@@ -891,8 +890,6 @@
 		BF2F4C671DAD9BEA00502521 /* HEMVoiceCommandsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommandsCell.m; sourceTree = "<group>"; };
 		BF2F4C6A1DADA2DB00502521 /* HEMVoiceFeedPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceFeedPresenter.h; sourceTree = "<group>"; };
 		BF2F4C6B1DADA2DB00502521 /* HEMVoiceFeedPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceFeedPresenter.m; sourceTree = "<group>"; };
-		BF2F4C6E1DADB22700502521 /* HEMVoiceCommandGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMVoiceCommandGroup.h; sourceTree = "<group>"; };
-		BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMVoiceCommandGroup.m; sourceTree = "<group>"; };
 		BF31A5D81D07AEC20054D82E /* HEMLocationRequestPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationRequestPresenter.h; sourceTree = "<group>"; };
 		BF31A5D91D07AEC20054D82E /* HEMLocationRequestPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationRequestPresenter.m; sourceTree = "<group>"; };
 		BF3326DE1D87309B009A3E65 /* HEMSensorDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDetailViewController.h; sourceTree = "<group>"; };
@@ -2316,15 +2313,6 @@
 			name = Presenters;
 			sourceTree = "<group>";
 		};
-		BF2F4C6D1DADB20D00502521 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				BF2F4C6E1DADB22700502521 /* HEMVoiceCommandGroup.h */,
-				BF2F4C6F1DADB22700502521 /* HEMVoiceCommandGroup.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		BF3583881CAC8F0D00760CD4 /* Force Touch */ = {
 			isa = PBXGroup;
 			children = (
@@ -2689,7 +2677,6 @@
 			isa = PBXGroup;
 			children = (
 				BF21F0231DAEF0430057F24E /* Voice.xcassets */,
-				BF2F4C6D1DADB20D00502521 /* Models */,
 				BF2F4C691DADA2BF00502521 /* Presenters */,
 				BF6098831D4AD6530005C8F0 /* Services */,
 				BF2F4C611DAD975300502521 /* View Controllers */,
@@ -4465,7 +4452,6 @@
 				BFE7B6BE1BEBE5AC0013740C /* HEMSenseRequiredCollectionViewCell.m in Sources */,
 				BF0871C91E552C3B00E57C8C /* GenderSelectorPresenter.swift in Sources */,
 				BF7B2F7D1DB9AE5900A8E602 /* HEMAlarmExpansionSetupViewController.m in Sources */,
-				BF2F4C701DADB22700502521 /* HEMVoiceCommandGroup.m in Sources */,
 				BFC458BE1BDAA2CE008EE871 /* HEMGlobalContants.m in Sources */,
 				BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,

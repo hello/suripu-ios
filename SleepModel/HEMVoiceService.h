@@ -10,8 +10,8 @@
 #import <SenseKit/SENService.h>
 
 @class SENSpeechResult;
-@class HEMVoiceCommandGroup;
 @class SENSenseVoiceSettings;
+@class SENVoiceCommandGroup;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,12 +25,13 @@ extern NSInteger const HEMVoiceServiceMaxVolumeLevel;
 typedef void(^HEMVoiceFeatureHandler)(BOOL enabled);
 typedef void(^HEMVoiceSettingsHandler)(id _Nullable response, NSError* _Nullable error);
 typedef void(^HEVoiceSettingsUpdateHandler)(SENSenseVoiceSettings* updated);
+typedef void(^HEMVoiceAvailableCommandsHandler)(NSArray<SENVoiceCommandGroup*>* commandGroups);
 
 @interface HEMVoiceService : SENService
 
 - (void)startListeningForVoiceResult;
 - (void)stopListeningForVoiceResult;
-- (NSArray<HEMVoiceCommandGroup*>*)availableVoiceCommands;
+- (void)availableVoiceCommands:(HEMVoiceAvailableCommandsHandler)completion;
 - (BOOL)showVoiceIntro;
 - (void)hideVoiceIntro;
 - (void)resetVoiceIntro;

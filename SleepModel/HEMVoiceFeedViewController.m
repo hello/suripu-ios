@@ -5,18 +5,20 @@
 //  Created by Jimmy Lu on 10/11/16.
 //  Copyright © 2016 Hello. All rights reserved.
 //
+#import <SenseKit/SENVoiceCommandGroup.h>
 #import "Sense-Swift.h"
 #import "HEMVoiceFeedViewController.h"
 #import "HEMVoiceExamplesViewController.h"
 #import "HEMVoiceService.h"
-#import "HEMVoiceCommandGroup.h"
 #import "HEMVoiceFeedPresenter.h"
 #import "HEMMainStoryboard.h"
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMVoiceFeedViewController () <HEMVoiceFeedDelegate, Scrollable>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) HEMVoiceCommandGroup* selectedGroup;
+@property (weak, nonatomic) IBOutlet HEMActivityIndicatorView* activityIndicator;
+@property (strong, nonatomic) SENVoiceCommandGroup* selectedGroup;
 
 @end
 
@@ -52,6 +54,7 @@
         [[HEMVoiceFeedPresenter alloc] initWithVoiceService:[self voiceService]];
     [feedPresenter bindWithCollectionView:[self collectionView]];
     [feedPresenter bindWithSubNavigationBar:[self subNavBar]];
+    [feedPresenter bindWithActivityIndicator:[self activityIndicator]];
     [feedPresenter setFeedDelegate:self];
     [self addPresenter:feedPresenter];
 }
@@ -64,7 +67,7 @@
 
 #pragma mark - Feed Delegate
 
-- (void)didTapOnCommandGroup:(HEMVoiceCommandGroup *)group
+- (void)didTapOnCommandGroup:(SENVoiceCommandGroup *)group
                fromPresenter:(HEMVoiceFeedPresenter *)presenter {
     [self setSelectedGroup:group];
     [self performSegueWithIdentifier:[HEMMainStoryboard detailSegueIdentifier]

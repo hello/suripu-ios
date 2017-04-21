@@ -107,8 +107,6 @@ class FeedContentPresenter: SlideContentPresenter {
             return
         }
         self.refreshing = true
-        self.activity?.start()
-        self.activity?.isHidden = false
         self.contentScrollView?.isHidden = true
         
         self.deviceService.refreshMetadata ({ [weak self] (_: Any?, error: Error?) in
@@ -126,9 +124,7 @@ class FeedContentPresenter: SlideContentPresenter {
             } else {
                 self?.updateToExcludeSecondTab()
             }
-
-            self?.activity?.stop()
-            self?.activity?.isHidden = true
+            
             self?.contentScrollView?.isHidden = false
         })
     }

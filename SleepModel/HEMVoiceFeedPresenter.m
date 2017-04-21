@@ -18,6 +18,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMVoiceExampleView.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMTextCollectionViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     HEMVoiceFeedRowTypeWelcome,
@@ -84,6 +85,11 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
     [[self collectionView] reloadData];
 }
 
+- (void)didComeBackFromBackground {
+    [super didComeBackFromBackground];
+    [self loadCommands];
+}
+
 - (void)didAppear {
     [super didAppear];
     [self loadCommands];
@@ -116,17 +122,32 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 #pragma mark - UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [[self commands] count] > 0 ? [[self rows] count] : 0;
+    return [[self commands] count] > 0 ? [[self rows] count] : 1; // at least 1, so we can show error when there are no commands
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSNumber* rowValue = [self rows][[indexPath row]];
-    HEMVoiceFeedRowType type = [rowValue unsignedIntegerValue];
     
     UICollectionViewFlowLayout* layout = (id) collectionViewLayout;
     CGSize itemSize = [layout itemSize];
+    
+    if (![[self activityIndicator] isAnimating] && [[self commands] count] == 0) {
+        UIFont* font = [HEMTextCollectionViewCell defaultTextFont];
+        NSString *text = NSLocalizedString(@"voice.no-data", nil);
+        CGFloat leftMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginLeft];
+        CGFloat rightMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginRight];
+        CGFloat topMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginTop];
+        CGFloat botMargin = [SenseStyle floatWithGroup:GroupErrors property:ThemePropertyMarginBottom];
+        CGFloat maxWidth = itemSize.width - leftMargin - rightMargin;
+        CGFloat textHeight = [text heightBoundedByWidth:maxWidth usingFont:font];
+        CGFloat cardHeight = textHeight + topMargin + botMargin;
+        itemSize.height = cardHeight;
+        return itemSize;
+    }
+    
+    NSNumber* rowValue = [self rows][[indexPath row]];
+    HEMVoiceFeedRowType type = [rowValue unsignedIntegerValue];
     
     switch (type) {
         case HEMVoiceFeedRowTypeWelcome: {
@@ -147,16 +168,22 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString* reuseId = nil;
-    NSNumber* rowValue = [self rows][[indexPath row]];
-    HEMVoiceFeedRowType type = [rowValue unsignedIntegerValue];
-    switch (type) {
-        case HEMVoiceFeedRowTypeWelcome:
-            reuseId = [HEMMainStoryboard welcomeReuseIdentifier];
-            break;
-        default:
-            reuseId = [HEMMainStoryboard commandsReuseIdentifier];
-            break;
+    
+    if (![[self activityIndicator] isAnimating] && [[self commands] count] == 0) {
+        reuseId = [HEMMainStoryboard errorReuseIdentifier];
+    } else {
+        NSNumber* rowValue = [self rows][[indexPath row]];
+        HEMVoiceFeedRowType type = [rowValue unsignedIntegerValue];
+        switch (type) {
+            case HEMVoiceFeedRowTypeWelcome:
+                reuseId = [HEMMainStoryboard welcomeReuseIdentifier];
+                break;
+            default:
+                reuseId = [HEMMainStoryboard commandsReuseIdentifier];
+                break;
+        }
     }
+
     return [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                      forIndexPath:indexPath];
 }
@@ -168,7 +195,14 @@ typedef NS_ENUM(NSUInteger, HEMVoiceFeedRowType) {
         [self configureCommandsCell:(id)cell];
     } else if ([cell isKindOfClass:[HEMWelcomeVoiceCell class]]) {
         [self configureWelcomeCell:(id)cell];
+    } else if ([cell isKindOfClass:[HEMTextCollectionViewCell class]]) {
+        [self configureErrorCell:(id)cell];
     }
+}
+
+- (void)configureErrorCell:(HEMTextCollectionViewCell*)errorCell {
+    NSString *text = NSLocalizedString(@"voice.no-data", nil);
+    [[errorCell textLabel] setText:text];
 }
 
 - (void)configureCommandsCell:(HEMVoiceCommandsCell*)commandsCell {

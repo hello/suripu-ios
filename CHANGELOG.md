@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.1.2
+
+New:
+
+* Voice tab is now hooked up to the server API
+* Added support for SLEEP_DISTURBANCE event in Timeline
+* Other gender screen now uses a done return key and will dismiss keyboard
+
+Fixes:
+
+* Removed an extra activity spiunner that can show if device paired to account has not been determined
+
 ## 2.1.1.1
 
 New:

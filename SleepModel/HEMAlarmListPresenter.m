@@ -665,11 +665,15 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
             alarm.on = !on;
             sender.on = !on;
             [SENAnalytics trackError:error];
-            
-            NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
-            [[strongSelf delegate] showErrorWithTitle:title
-                                              message:[error localizedDescription]
-                                        fromPresenter:strongSelf];
+            // need to check if visible before showing the error b/c the call to update
+            // alarms is async and user might have moved off the screen.  we don't want
+            // to show an alarm error on a different screen
+            if ([strongSelf isVisible]) {
+                NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
+                [[strongSelf delegate] showErrorWithTitle:title
+                                                  message:[error localizedDescription]
+                                            fromPresenter:strongSelf];
+            }
         } else {
             [[strongSelf collectionView] reloadData];
             [SENAnalytics trackAlarmToggle:alarm];

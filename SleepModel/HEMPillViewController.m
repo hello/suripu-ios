@@ -65,7 +65,6 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     [super viewDidLoad];
     [self determineWarnings];
     [self determineRows];
-    [self determinePillUpdateAvailability];
     [self configureCollectionView];
     [SENAnalytics track:kHEMAnalyticsEventPill];
 }
@@ -78,7 +77,7 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
 - (void)determineRows {
     NSMutableArray* rows = [NSMutableArray arrayWithCapacity:2];
     
-    if ([self hasFirmwareUpdateAvailable]) {
+    if ([[self deviceService] isPillFirmwareUpdateAvailable]) {
         [rows addObject:@(HEMPillActionFirmwareUpdate)];
     }
     
@@ -105,12 +104,6 @@ typedef NS_ENUM(NSInteger, HEMPillAction) {
     }
     
     [self setWarnings:warnings];
-}
-
-- (void)determinePillUpdateAvailability {
-    SENPillMetadata* pillMetadata = [[[self deviceService] devices] pillMetadata];
-    [self setFirmwareUpdateAvailable:[pillMetadata firmwareUpdateUrl] != nil
-                                        && ![[self deviceService] shouldSuppressPillFirmwareUpdate]];
 }
 
 - (void)configureCollectionView {

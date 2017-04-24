@@ -165,7 +165,7 @@
     [dialogVC addButtonWithTitle:NSLocalizedString(@"actions.ok", nil)
                            style:HEMAlertViewButtonStyleRoundRect
                           action:nil];
-    [dialogVC showFrom:self];
+    [dialogVC showFrom:[self rootViewController]];
 }
 
 #pragma mark - HEMAlarmControllerDelegate

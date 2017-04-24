@@ -229,6 +229,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
     [self setLoadError:nil];
     [self showDataLoadingIndicatorIfNeeded:YES];
     [self showAddButtonAsLoading:YES];
+    [[self collectionView] setUserInteractionEnabled:NO];
     
     __weak typeof(self) weakSelf = self;
     void(^loadAlarms)(void) = ^{
@@ -238,6 +239,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
             [strongSelf setLoading:NO];
             [strongSelf showDataLoadingIndicatorIfNeeded:NO];
             [strongSelf setLoadError:error];
+            [[strongSelf collectionView] setUserInteractionEnabled:YES];
             
             if (error) {
                 [[strongSelf addButton] setHidden:YES];
@@ -260,6 +262,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
             BOOL hasSense = [devices hasPairedSense];
             NSError* deviceError = error;
             if (deviceError || !hasSense) {
+                
                 if (!hasSense && !deviceError) {
                     deviceError = [NSError errorWithDomain:HEMAlarmListErrorDomain
                                                       code:HEMAlarmListErrorCodeNoSense
@@ -269,6 +272,7 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
                 [strongSelf showDataLoadingIndicatorIfNeeded:NO];
                 [strongSelf setLoadError:deviceError];
                 [[strongSelf addButton] setHidden:YES];
+                [[strongSelf collectionView] setUserInteractionEnabled:YES];
                 [[strongSelf collectionView] reloadData];
             } else {
                 loadAlarms();
@@ -661,11 +665,15 @@ typedef NS_ENUM(NSInteger, HEMAlarmListErrorCode) {
             alarm.on = !on;
             sender.on = !on;
             [SENAnalytics trackError:error];
-            
-            NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
-            [[strongSelf delegate] showErrorWithTitle:title
-                                              message:[error localizedDescription]
-                                        fromPresenter:strongSelf];
+            // need to check if visible before showing the error b/c the call to update
+            // alarms is async and user might have moved off the screen.  we don't want
+            // to show an alarm error on a different screen
+            if ([strongSelf isVisible]) {
+                NSString* title = NSLocalizedString(@"alarm.save-error.title", nil);
+                [[strongSelf delegate] showErrorWithTitle:title
+                                                  message:[error localizedDescription]
+                                            fromPresenter:strongSelf];
+            }
         } else {
             [[strongSelf collectionView] reloadData];
             [SENAnalytics trackAlarmToggle:alarm];

@@ -74,7 +74,7 @@ static CGFloat const HEMTrendsCellLoadingAnimeDuration = 1.0f;
 
 - (UIView*)loadingOverlay {
     if (!_loadingOverlay) {
-        UIColor* bgColor = [UIColor colorWithWhite:1.0f alpha:HEMTrendsCellLoadingAlpha];
+        UIColor* bgColor = [[self backgroundColor] colorWithAlphaComponent:HEMTrendsCellLoadingAlpha];
         UIView* overlay = [UIView new];
         [overlay setBackgroundColor:bgColor];
         _loadingOverlay = overlay;

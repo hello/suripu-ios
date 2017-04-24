@@ -66,16 +66,19 @@ class SlideContentPresenter: HEMPresenter {
         function to allow subclasses to override it
     **/
     func configureContent(scrollView: UIScrollView) {
+        let bgColor = SenseStyle.color(aClass: UIScrollView.self, property: .backgroundColor)
+        
         for controller in self.contentControllers {
             self.visibilityDelegate?.addController(controller: controller,
                                                    from: self)
+            controller.view.backgroundColor = bgColor
             self.contentViews.append(controller.view)
         }
         
-        scrollView.backgroundColor = SenseStyle.color(aClass: UIScrollView.self, property: .backgroundColor)
         var contentSize = scrollView.contentSize
         contentSize.width = CGFloat(self.contentViews.count) * scrollView.frame.size.width
         scrollView.contentSize = contentSize
+        scrollView.backgroundColor = bgColor
     }
     
     /**

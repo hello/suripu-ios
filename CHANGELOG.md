@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.1.1.3
+
+Fixes:
+
+* Upgrade firmware option should now appear in Pill settings
+* Trends loading states are now themed
+* Quickly toggling the alarm switch when the view is refreshed will not cause weird things to happen
+* Alerts shown from the alarm list will now cover the tab bar
+
 ## 2.1.1.2
 
 New:
